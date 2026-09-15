@@ -2,300 +2,559 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#063E31">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0e4736">
   <title>WEALTHDEMO — See What Your Money Can Do</title>
+  <link rel="icon" href="wealthdemo-logo.webp">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,500;0,600;1,500&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="tokens.css">
   <link rel="stylesheet" href="app.css">
 </head>
 <body>
 <main id="wp-building-retirement" class="wp-wrap">
-  <header class="brand-masthead" aria-label="WEALTHDEMO">
-    <a class="brand-identity" href="#" aria-label="WEALTHDEMO home">
-      <img src="wealthdemo-logo.webp" alt="" aria-hidden="true">
-      <span class="brand-wordmark">
-        <strong>WEALTH<span>DEMO</span></strong>
-        <small>See What Your Money Can Do.</small>
-      </span>
-    </a>
-    <div class="brand-context">
-      <span class="brand-context-dot" aria-hidden="true"></span>
-      <span>Private Financial Assessment</span>
+
+  <!-- ============ MASTHEAD ============ -->
+  <header class="wd-masthead" aria-label="WEALTHDEMO">
+    <div class="shell wd-masthead-inner">
+      <a class="brand-identity" href="#" aria-label="WEALTHDEMO home">
+        <img src="wealthdemo-logo.webp" alt="" aria-hidden="true">
+        <span class="brand-wordmark">
+          <strong>WEALTH<span>DEMO</span></strong>
+          <small>See What Your Money Can Do.</small>
+        </span>
+      </a>
+      <div class="masthead-actions">
+        <span class="secure-note">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7"/></svg>
+          Your information is secure
+        </span>
+        <button type="button" class="ghost-btn" id="saveExitBtn">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h4.5A1.5 1.5 0 0 1 20 5.5v13a1.5 1.5 0 0 1-1.5 1.5H14"/><path d="M9.5 15.5 5 12l4.5-3.5"/><path d="M5 12h9"/></svg>
+          Save &amp; Exit
+        </button>
+      </div>
     </div>
   </header>
 
-  <div class="wp-topbar"></div>
-
-  <div class="wp-header">
-    <div class="hero-copy">
-      <div class="hero-eyebrow">Your Financial Future Snapshot</div>
-      <h1>See Where You Stand.<span class="accent">Know What to Do Next.</span></h1>
-      <p>Answer a few simple questions and watch your retirement picture come into focus — clearly, visually, and one step at a time.</p>
-      <div class="hero-points" aria-label="What this snapshot helps you do">
-        <div class="hero-point"><span class="hero-icon">↗</span><span>See Your Progress</span></div>
-        <div class="hero-point"><span class="hero-icon">◎</span><span>Spot Your Gaps</span></div>
-        <div class="hero-point"><span class="hero-icon">✓</span><span>Choose Your Next Step</span></div>
+  <!-- ============ STEPPER ============ -->
+  <nav class="wd-stepper" aria-label="Your progress">
+    <div class="shell">
+      <div class="client-progress">
+        <span><i>1</i><b>About You</b></span>
+        <span><i>2</i><b>Children &amp; College</b></span>
+        <span><i>3</i><b>Protection</b></span>
+        <span><i>4</i><b>Your Legacy</b></span>
+        <span><i>5</i><b>Your Future</b></span>
+        <span><i>6</i><b>Your Risks</b></span>
+        <span><i>7</i><b>Your Options</b></span>
       </div>
     </div>
-    <div class="hero-side">
-      <div>
-        <div class="hero-side-kicker">Your Financial Picture</div>
-        <div class="hero-side-title">Plan today.<br>Live brighter.</div>
-        <div class="hero-side-copy">A clearer view of your retirement, protection, taxes, legacy, and the choices that can move you forward.</div>
+  </nav>
+
+  <div class="wd-body">
+    <div class="shell wd-layout">
+      <div class="wd-main">
+
+        <div id="guidedJourney">
+
+          <!-- ---------- STEP 1 ---------- -->
+          <section class="guided-page active" data-page="0">
+            <div class="guided-head has-hero">
+              <div class="guided-head-top">
+                <div class="guided-head-copy">
+                  <div class="guided-kicker">Step 1 of 7</div>
+                  <h2>About You</h2>
+                  <p>A few details help us create your personalized financial picture.</p>
+                </div>
+                <div class="head-quote"><span>It starts with a clearer picture.</span></div>
+              </div>
+
+              <div class="head-hero">
+                <img src="img-terrace.webp" alt="" aria-hidden="true">
+                <div class="head-hero-card">
+                  <span class="rule"></span>
+                  <strong>A brighter tomorrow starts today.</strong>
+                  <em>Plans today. More tomorrow.</em>
+                </div>
+              </div>
+
+              <ul class="head-points">
+                <li>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.4"/><path d="M5.5 19.5c.9-3.3 3.4-5 6.5-5s5.6 1.7 6.5 5"/></svg>
+                  <div><b>Personalized</b><span>Built around your unique goals</span></div>
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 5.5 6.2v5.1c0 4 2.7 7.6 6.5 9.2 3.8-1.6 6.5-5.2 6.5-9.2V6.2Z"/></svg>
+                  <div><b>Trusted</b><span>Your information stays private</span></div>
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19V11"/><path d="M12 19V5.5"/><path d="M19 19v-5.5"/></svg>
+                  <div><b>Actionable</b><span>Clear insights for what's next</span></div>
+                </li>
+              </ul>
+            </div>
+
+            <div class="guided-content" id="guidedAbout"></div>
+            <div class="guided-nav">
+              <button type="button" data-prev disabled>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 6l-6 6 6 6"/></svg> Back
+              </button>
+              <button type="button" class="primary" data-next>
+                Save &amp; Continue <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13"/><path d="M13 6l6 6-6 6"/></svg>
+              </button>
+            </div>
+          </section>
+
+          <!-- ---------- STEP 2 ---------- -->
+          <section class="guided-page" data-page="1">
+            <div class="guided-head">
+              <div class="guided-head-top">
+                <div class="guided-head-copy">
+                  <div class="guided-kicker">Step 2 of 7</div>
+                  <h2>Children &amp; College</h2>
+                  <p>We'll only show college planning if it applies to your family.</p>
+                </div>
+                <div class="head-quote"><span>Plan for the years that arrive fast.</span></div>
+              </div>
+            </div>
+
+            <div class="guided-content" id="guidedCollege">
+              <div class="college-gate">
+                <div class="card-head">
+                  <span class="card-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.5 21 9l-9 4.5L3 9Z"/><path d="M7 11v4.5c0 1.4 2.2 2.5 5 2.5s5-1.1 5-2.5V11"/></svg>
+                  </span>
+                  <div>
+                    <h3>Do you have children under age 18?</h3>
+                    <p>Choose one. If yes, we'll estimate what college could cost and how your savings compare.</p>
+                  </div>
+                </div>
+                <div class="college-choice">
+                  <button type="button" data-college-choice="yes"><strong>Yes, I do</strong><span>Show me the college planning section.</span></button>
+                  <button type="button" data-college-choice="no"><strong>No</strong><span>Skip college planning and continue.</span></button>
+                </div>
+              </div>
+
+              <div class="college-no" id="collegeNoMessage"><strong>College planning skipped.</strong><br>You can continue to your retirement picture.</div>
+
+              <div class="college-planner" id="collegePlanner">
+                <div class="card-head">
+                  <span class="card-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19V11"/><path d="M12 19V5.5"/><path d="M19 19v-5.5"/></svg>
+                  </span>
+                  <div>
+                    <h3>Build a simple college estimate.</h3>
+                    <p>Add each child under 18. We'll estimate four years of college and compare it with what you're saving.</p>
+                  </div>
+                </div>
+                <div id="collegeChildren"></div>
+                <div class="college-actions">
+                  <button type="button" class="college-add" id="collegeAddChild">+ Add Another Child</button>
+                  <button type="button" class="college-calc" id="collegeCalculate">Calculate College Picture</button>
+                </div>
+                <div class="college-results" id="collegeResults"></div>
+                <div class="college-note">Illustration uses $30,000 annual college cost today, 4 years of college, 5% annual college-cost inflation, and 6% assumed savings growth. Educational estimate only.</div>
+              </div>
+            </div>
+
+            <div class="guided-nav">
+              <button type="button" data-prev><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 6l-6 6 6 6"/></svg> Back</button>
+              <button type="button" class="primary" data-next>Save &amp; Continue <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13"/><path d="M13 6l6 6-6 6"/></svg></button>
+            </div>
+          </section>
+
+          <!-- ---------- STEP 3 ---------- -->
+          <section class="guided-page" data-page="2">
+            <div class="guided-head">
+              <div class="guided-head-top">
+                <div class="guided-head-copy">
+                  <div class="guided-kicker">Step 3 of 7</div>
+                  <h2>Protection</h2>
+                  <p>See your home and income needs separately, then see how one coordinated strategy may address both.</p>
+                </div>
+                <div class="head-quote"><span>Protect what you are building.</span></div>
+              </div>
+            </div>
+
+            <div class="guided-content" id="guidedProtection">
+              <div class="protection-shell">
+                <div class="protection-card">
+                  <div class="protection-kicker">Mortgage protection</div>
+                  <h3>Do you currently have a mortgage?</h3>
+                  <p class="protection-copy">If yes, enter your current monthly mortgage payment and the remaining balance. We'll use those numbers to understand your home-protection need.</p>
+                  <div class="protection-choice">
+                    <button type="button" data-mortgage-choice="yes"><strong>Yes</strong><span>I currently have a mortgage.</span></button>
+                    <button type="button" data-mortgage-choice="no" class="active"><strong>No</strong><span>I do not currently have a mortgage.</span></button>
+                  </div>
+                  <div id="mortgagePlanner" hidden>
+                    <div class="protection-fields">
+                      <div class="protection-field"><label>Your Monthly Mortgage Payment ($)</label><input id="protMortgageMonthly" type="number" min="0" value="2500"><small>Enter the amount you currently pay each month.</small></div>
+                      <div class="protection-field"><label>Remaining Mortgage Balance ($)</label><input id="protMortgageBalance" type="number" min="0" value="250000"><small>Enter the remaining balance on your mortgage.</small></div>
+                    </div>
+                    <div class="protection-result">
+                      <div><small>Your Monthly Mortgage</small><strong id="protMortgagePayment">$0</strong></div>
+                      <div><small>Remaining Home Loan</small><strong id="protMortgageNeed">$0</strong></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="protection-card">
+                  <div class="protection-kicker">Income protection</div>
+                  <h3>If your income stopped today because of sickness, how long could your household keep paying the bills?</h3>
+                  <p class="protection-copy">Choose the number of years you want to test.</p>
+                  <div class="year-choice">
+                    <button type="button" data-protection-years="1" class="active">1 Year</button>
+                    <button type="button" data-protection-years="2">2 Years</button>
+                    <button type="button" data-protection-years="3">3 Years</button>
+                    <button type="button" data-protection-years="4">4 Years</button>
+                    <button type="button" data-protection-years="5">5 Years</button>
+                  </div>
+                  <div class="protection-fields">
+                    <div class="protection-field"><label>Essential Monthly Bills — excluding mortgage ($)</label><input id="protBills" type="number" min="0" value="4000"></div>
+                    <div class="protection-field"><label>Monthly Income That Would Continue ($)</label><input id="protContinue" type="number" min="0" value="0"></div>
+                    <div class="protection-field"><label>Emergency Savings Available ($)</label><input id="protSavings" type="number" min="0" value="18000"></div>
+                  </div>
+                  <div class="income-question" id="protQuestionText">If your income stopped today, could your current plan cover 1 year of essential bills?</div>
+                  <div class="protection-result">
+                    <div><small>Total Bills to Cover</small><strong id="protBillsNeed">$0</strong></div>
+                    <div><small>Estimated Income Protection Gap</small><strong id="protIncomeGap">$0</strong></div>
+                  </div>
+                </div>
+
+                <div class="coordinated-plan">
+                  <div class="protection-kicker">One coordinated protection strategy</div>
+                  <h3>One policy may help address both needs.</h3>
+                  <p class="protection-copy">A life-insurance policy can provide a death benefit for family or mortgage protection. Some policies also include or offer accelerated living-benefit riders that may allow access to part of the death benefit after a qualifying illness or condition.</p>
+                  <div class="coordinated-grid">
+                    <div class="coordinated-item"><small>Home protection objective</small><strong id="combinedMortgage">$0</strong><span>Remaining mortgage balance.</span></div>
+                    <div class="coordinated-item"><small>Income interruption objective</small><strong id="combinedIncome">$0</strong><span>Estimated household gap for the period selected.</span></div>
+                  </div>
+                  <div class="coordinated-answer" id="combinedProtectionMessage">Your numbers will appear here as you complete the page.</div>
+                  <div class="protection-note"><strong>Important:</strong> Living benefits are generally an acceleration of the policy's death benefit, not a separate pool of disability income. Eligibility requires a qualifying event and varies by carrier, policy, rider, and state. This illustration is educational and is not a policy recommendation.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="guided-nav">
+              <button type="button" data-prev><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 6l-6 6 6 6"/></svg> Back</button>
+              <button type="button" class="primary" data-next>Save &amp; Continue <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13"/><path d="M13 6l6 6-6 6"/></svg></button>
+            </div>
+          </section>
+
+          <!-- ---------- STEP 4 ---------- -->
+          <section class="guided-page" data-page="3">
+            <div class="guided-head">
+              <div class="guided-head-top">
+                <div class="guided-head-copy">
+                  <div class="guided-kicker">Step 4 of 7</div>
+                  <h2>Your Legacy</h2>
+                  <p>Legacy planning is about making your wishes clear and helping protect the people you care about.</p>
+                </div>
+                <div class="head-quote"><span>Decide what you leave behind.</span></div>
+              </div>
+            </div>
+
+            <div class="guided-content" id="guidedLegacy">
+              <div class="legacy-shell">
+                <div class="legacy-gate">
+                  <div class="protection-kicker">Your legacy</div>
+                  <h3>Does leaving a legacy to your family matter to you?</h3>
+                  <p>If you had a choice, would you rather decide what your family receives — or leave the outcome to beneficiary designations, your estate documents, and where those are missing, state law and the court process?</p>
+                  <div class="legacy-choice">
+                    <button type="button" data-legacy-choice="yes"><strong>Yes, it matters to me</strong><span>I want to decide what I leave and who receives it.</span></button>
+                    <button type="button" data-legacy-choice="no"><strong>Not a priority right now</strong><span>Skip the legacy estimate for now.</span></button>
+                  </div>
+                </div>
+
+                <div class="legacy-no" id="legacyNoMessage"><strong>Legacy planning skipped.</strong><br>You can come back to this page anytime.</div>
+
+                <div class="legacy-planner" id="legacyPlanner">
+                  <div class="card-head">
+                    <span class="card-icon">
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-6.5-3.9-6.5-8.6A3.7 3.7 0 0 1 12 8.6a3.7 3.7 0 0 1 6.5 2.8C18.5 16.1 12 20 12 20Z"/></svg>
+                    </span>
+                    <div>
+                      <h3>If something happened to you today, what would your family receive?</h3>
+                      <p>This estimate compares your assets, your liabilities, your current life insurance, and the legacy you would like to leave.</p>
+                    </div>
+                  </div>
+                  <div class="legacy-grid">
+                    <div class="legacy-field"><label>Assets ($)</label><input id="legacyOwn" type="number" min="0" value="700000"><small>Home, investments, retirement accounts, cash value life insurance, and other assets you want included.</small></div>
+                    <div class="legacy-field"><label>Liabilities ($)</label><input id="legacyOwe" type="number" min="0" value="300000"><small>Mortgage, loans, credit cards, and other liabilities you want included.</small></div>
+                    <div class="legacy-field"><label>Life insurance you already have ($)</label><input id="legacyInsurance" type="number" min="0" value="100000"></div>
+                    <div class="legacy-field"><label>What would you like to leave your family? ($)</label><input id="legacyGoal" type="number" min="0" value="1000000"></div>
+                  </div>
+                  <div class="legacy-formula">Assets + Life Insurance − Liabilities</div>
+                  <div class="legacy-summary">
+                    <div class="receive"><small>What Your Family Will Receive</small><strong id="legacyToday">$0</strong><span class="receive-sub">Based on what you entered today.</span></div>
+                    <div><small>Your Legacy Goal</small><strong id="legacyGoalOut">$0</strong></div>
+                    <div class="gap"><small>Potential Legacy Gap</small><strong id="legacyGap">$0</strong></div>
+                  </div>
+                  <div class="legacy-question" id="legacyQuestion">If something happened to you today, would the legacy you leave match the legacy you intended?</div>
+
+                  <div class="legacy-education">
+                    <h3>3 tools that can help make your wishes clear</h3>
+                    <p>Tap each box to learn what it does. These tools can work differently depending on the asset, your state, and how your estate plan is set up.</p>
+                    <div class="legacy-tools">
+                      <button type="button" class="legacy-tool" data-legacy-info="will">
+                        <div class="legacy-icon">W</div>
+                        <strong>Will</strong>
+                        <span>States who should receive property that passes through your estate and can name a guardian for minor children.</span>
+                        <em>Tap to learn more →</em>
+                      </button>
+                      <button type="button" class="legacy-tool" data-legacy-info="trust">
+                        <div class="legacy-icon">T</div>
+                        <strong>Trust</strong>
+                        <span>Can provide more control over how and when certain assets are managed and distributed.</span>
+                        <em>Tap to learn more →</em>
+                      </button>
+                      <button type="button" class="legacy-tool" data-legacy-info="tod">
+                        <div class="legacy-icon">TOD</div>
+                        <strong>Transfer on Death</strong>
+                        <span>A TOD designation, beneficiary designation, or TOD deed may let certain assets pass directly to a named beneficiary.</span>
+                        <em>Tap to learn more →</em>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="legacy-note"><strong>Important:</strong> A will, trust, TOD arrangement, and beneficiary designation are not interchangeable. Which document controls can depend on the type of asset and how it is titled. This is educational only, not legal, tax, insurance, or estate-planning advice.</div>
+                </div>
+
+                <div class="legacy-modal" id="legacyInfoModal" aria-hidden="true">
+                  <div class="legacy-modal-card" role="dialog" aria-modal="true" aria-labelledby="legacyModalTitle">
+                    <button type="button" class="legacy-modal-close" id="legacyModalClose" aria-label="Close">×</button>
+                    <h3 id="legacyModalTitle">Legacy Tool</h3>
+                    <div id="legacyModalBody"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="guided-nav">
+              <button type="button" data-prev><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 6l-6 6 6 6"/></svg> Back</button>
+              <button type="button" class="primary" data-next>Save &amp; Continue <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13"/><path d="M13 6l6 6-6 6"/></svg></button>
+            </div>
+          </section>
+
+          <!-- ---------- STEP 5 ---------- -->
+          <section class="guided-page" data-page="4">
+            <div class="guided-head">
+              <div class="guided-head-top">
+                <div class="guided-head-copy">
+                  <div class="guided-kicker">Step 5 of 7</div>
+                  <h2>Your Future</h2>
+                  <p>Your goal, your projected path, and the gap — all in one place.</p>
+                </div>
+                <div class="head-quote"><span>See where today's plan leads.</span></div>
+              </div>
+            </div>
+            <div class="guided-content" id="guidedFuture"></div>
+            <div class="guided-nav">
+              <button type="button" data-prev><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 6l-6 6 6 6"/></svg> Back</button>
+              <button type="button" class="primary" data-next>Save &amp; Continue <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13"/><path d="M13 6l6 6-6 6"/></svg></button>
+            </div>
+          </section>
+
+          <!-- ---------- STEP 6 ---------- -->
+          <section class="guided-page" data-page="5">
+            <div class="guided-head">
+              <div class="guided-head-top">
+                <div class="guided-head-copy">
+                  <div class="guided-kicker">Step 6 of 7</div>
+                  <h2>Your Risks</h2>
+                  <p>Explore only the area you care about. Details stay hidden until you choose them.</p>
+                </div>
+                <div class="head-quote"><span>Know what could move the plan.</span></div>
+              </div>
+            </div>
+            <div class="guided-content" id="guidedRisks"></div>
+            <div class="guided-nav">
+              <button type="button" data-prev><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 6l-6 6 6 6"/></svg> Back</button>
+              <button type="button" class="primary" data-next>Save &amp; Continue <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13"/><path d="M13 6l6 6-6 6"/></svg></button>
+            </div>
+          </section>
+
+          <!-- ---------- STEP 7 ---------- -->
+          <section class="guided-page" data-page="6">
+            <div class="guided-head">
+              <div class="guided-head-top">
+                <div class="guided-head-copy">
+                  <div class="guided-kicker">Step 7 of 7</div>
+                  <h2>Your Options</h2>
+                  <p>Use your retirement picture to decide what you want to improve next.</p>
+                </div>
+                <div class="head-quote"><span>Choose your next step.</span></div>
+              </div>
+            </div>
+            <div class="guided-content" id="guidedOptions"></div>
+            <div class="guided-nav">
+              <button type="button" data-prev><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 6l-6 6 6 6"/></svg> Back</button>
+              <span></span>
+            </div>
+          </section>
+        </div>
+
+        <p class="disclaimer-banner">
+          Educational estimates only — not financial, tax, or legal advice. Full disclosures apply.
+        </p>
       </div>
-      <div class="hero-side-bottom">A brighter tomorrow <span>starts today.</span></div>
+
+      <!-- ============ SNAPSHOT RAIL ============ -->
+      <aside class="wd-rail" aria-label="Your snapshot">
+        <div class="rail-card snap-card">
+          <div class="card-head">
+            <span class="card-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19V11"/><path d="M12 19V5.5"/><path d="M19 19v-5.5"/></svg>
+            </span>
+            <div>
+              <h3>Your Snapshot</h3>
+              <p>See your progress as you build your plan.</p>
+            </div>
+          </div>
+
+          <div class="snap-body">
+            <div class="snap-ring">
+              <svg viewBox="0 0 120 120" aria-hidden="true">
+                <circle class="ring-track" cx="60" cy="60" r="52"></circle>
+                <circle class="ring-value" id="snapRing" cx="60" cy="60" r="52"></circle>
+              </svg>
+              <div class="snap-ring-label">
+                <strong id="snapPct">14%</strong>
+                <small>Assessment<br>Complete</small>
+              </div>
+            </div>
+
+            <ul class="snap-stats">
+              <li>
+                <span class="stat-icon">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="7" rx="7" ry="3"/><path d="M5 7v4.5c0 1.7 3.1 3 7 3s7-1.3 7-3V7"/><path d="M5 11.5V16c0 1.7 3.1 3 7 3s7-1.3 7-3v-4.5"/></svg>
+                </span>
+                <div><strong id="snapSaved">$25,000</strong><small>Saved Today</small></div>
+              </li>
+              <li>
+                <span class="stat-icon">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="6" width="15" height="13.5" rx="2.5"/><path d="M4.5 10.5h15"/><path d="M9 4.5V7M15 4.5V7"/></svg>
+                </span>
+                <div><strong id="snapYears">33</strong><small>Years to Retirement</small></div>
+              </li>
+              <li>
+                <span class="stat-icon">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7.5"/><circle cx="12" cy="12" r="3.5"/></svg>
+                </span>
+                <div><strong id="snapTrack" class="is-good">On Track</strong><small id="snapTrackSub">You're taking the right steps</small></div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="rail-card promo-card">
+          <div class="promo-media">
+            <img src="img-skyline.webp" alt="" aria-hidden="true">
+            <div class="promo-copy">
+              <h4>See What<br>Your Money Can Do.</h4>
+              <span class="rule"></span>
+            </div>
+          </div>
+          <ul class="promo-points">
+            <li>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 5c0 7.2-3.6 11-9 11-2 0-3.5-.6-3.5-.6S6 9 12.5 7.5"/><path d="M5.5 19c.7-2.6 1.8-4.6 3.2-6.2"/></svg>
+              <div><b>Build</b><i>Wealth</i></div>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 5.5 6.2v5.1c0 4 2.7 7.6 6.5 9.2 3.8-1.6 6.5-5.2 6.5-9.2V6.2Z"/></svg>
+              <div><b>Protect</b><i>What Matters</i></div>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 18.5V13"/><path d="M10.5 18.5V9"/><path d="M16 18.5v-4"/><path d="M4.5 9.5 10 5l3.5 3L19.5 4"/></svg>
+              <div><b>Create</b><i>More Options</i></div>
+            </li>
+          </ul>
+        </div>
+
+        <p class="rail-note">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7"/></svg>
+          Everything you enter stays in your browser. Nothing is sent anywhere.
+        </p>
+      </aside>
     </div>
   </div>
 
-  <div class="disclaimer-banner">
-    Educational estimates only — not financial, tax, or legal advice. Full disclosures apply.
-  </div>
-
-  <div class="client-progress" aria-label="Your progress">
-    <span>1 · About You</span><span>2 · Children & College</span><span>3 · Protection</span><span>4 · Your Legacy</span><span>5 · Your Future</span><span>6 · Your Risks</span><span>7 · Your Options</span>
-  </div>
-
-
-  <div id="guidedJourney">
-    <section class="guided-page active" data-page="0">
-      <div class="guided-head"><div class="guided-kicker">Page 1 of 7 · About You</div><h2>Tell us about you.</h2><p>Only the information we need to build your retirement picture.</p></div>
-      <div class="guided-content" id="guidedAbout"></div>
-      <div class="guided-nav"><span></span><button type="button" class="primary" data-next>Children & College →</button></div>
-    </section>
-
-    <section class="guided-page" data-page="1">
-      <div class="guided-head"><div class="guided-kicker">Page 2 of 7 · Children & College</div><h2>Is college part of your family plan?</h2><p>We’ll only show college planning if it applies to your family.</p></div>
-      <div class="guided-content" id="guidedCollege">
-        <div class="college-gate">
-          <h3>Do you have children under age 18?</h3>
-          <p>Choose one. If yes, we’ll help you estimate what college could cost and how your current savings compare.</p>
-          <div class="college-choice">
-            <button type="button" data-college-choice="yes"><strong>Yes, I do</strong><span>Show me the college planning section.</span></button>
-            <button type="button" data-college-choice="no"><strong>No</strong><span>Skip college planning and continue.</span></button>
-          </div>
-        </div>
-
-        <div class="college-no" id="collegeNoMessage"><strong>College planning skipped.</strong><br>You can continue to your retirement picture.</div>
-
-        <div class="college-planner" id="collegePlanner">
-          <div class="wp-section-number">Children & College</div>
-          <h2 style="margin:5px 0 8px;color:var(--navy);font-family:Georgia,'Times New Roman',serif;">Build a simple college estimate.</h2>
-          <div class="subtext" style="margin-bottom:16px;">Add each child under 18. We’ll estimate the future cost of four years of college and compare it with what you’re already saving.</div>
-          <div id="collegeChildren"></div>
-          <div class="college-actions">
-            <button type="button" class="college-add" id="collegeAddChild">+ Add Another Child</button>
-            <button type="button" class="college-calc" id="collegeCalculate">Calculate College Picture</button>
-          </div>
-          <div class="college-results" id="collegeResults"></div>
-          <div class="college-note">Illustration uses $30,000 annual college cost today, 4 years of college, 5% annual college-cost inflation, and 6% assumed savings growth. Educational estimate only.</div>
-        </div>
-      </div>
-      <div class="guided-nav"><button type="button" data-prev>← About You</button><button type="button" class="primary" data-next>Protect What Matters →</button></div>
-    </section>
-
-    <section class="guided-page" data-page="2">
-      <div class="guided-head"><div class="guided-kicker">Page 3 of 7 · Protection</div><h2>Protect your home and your income.</h2><p>See the two needs separately, then see how one coordinated life-insurance strategy may address both objectives.</p></div>
-      <div class="guided-content" id="guidedProtection">
-        <div class="protection-shell">
-          <div class="protection-card">
-            <div class="protection-kicker">Mortgage protection</div>
-            <h3>Do you currently have a mortgage?</h3>
-            <p class="protection-copy">If yes, enter your current monthly mortgage payment and the remaining balance. We’ll use those numbers to understand your home-protection need.</p>
-            <div class="protection-choice">
-              <button type="button" data-mortgage-choice="yes"><strong>Yes</strong><span>I currently have a mortgage.</span></button>
-              <button type="button" data-mortgage-choice="no" class="active"><strong>No</strong><span>I do not currently have a mortgage.</span></button>
-            </div>
-            <div id="mortgagePlanner" hidden>
-              <div class="protection-fields">
-                <div class="protection-field"><label>Your Monthly Mortgage Payment ($)</label><input id="protMortgageMonthly" type="number" min="0" value="2500"><small>Enter the amount you currently pay each month.</small></div>
-                <div class="protection-field"><label>Remaining Mortgage Balance ($)</label><input id="protMortgageBalance" type="number" min="0" value="250000"><small>Enter the remaining balance on your mortgage.</small></div>
-              </div>
-              <div class="protection-result">
-                <div><small>Your Monthly Mortgage</small><strong id="protMortgagePayment">$0</strong></div>
-                <div><small>Remaining Home Loan</small><strong id="protMortgageNeed">$0</strong></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="protection-card">
-            <div class="protection-kicker">Income protection</div>
-            <h3>If your income stopped today because of sickness, how long could your household keep paying the bills?</h3>
-            <p class="protection-copy">Choose the number of years you want to test.</p>
-            <div class="year-choice">
-              <button type="button" data-protection-years="1" class="active">1 Year</button>
-              <button type="button" data-protection-years="2">2 Years</button>
-              <button type="button" data-protection-years="3">3 Years</button>
-              <button type="button" data-protection-years="4">4 Years</button>
-              <button type="button" data-protection-years="5">5 Years</button>
-            </div>
-            <div class="protection-fields">
-              <div class="protection-field"><label>Essential Monthly Bills — excluding mortgage ($)</label><input id="protBills" type="number" min="0" value="4000"></div>
-              <div class="protection-field"><label>Monthly Income That Would Continue ($)</label><input id="protContinue" type="number" min="0" value="0"></div>
-              <div class="protection-field"><label>Emergency Savings Available ($)</label><input id="protSavings" type="number" min="0" value="18000"></div>
-            </div>
-            <div class="income-question" id="protQuestionText">If your income stopped today, could your current plan cover 1 year of essential bills?</div>
-            <div class="protection-result">
-              <div><small>Total Bills to Cover</small><strong id="protBillsNeed">$0</strong></div>
-              <div><small>Estimated Income Protection Gap</small><strong id="protIncomeGap">$0</strong></div>
-            </div>
-          </div>
-
-          <div class="coordinated-plan">
-            <div class="protection-kicker">One coordinated protection strategy</div>
-            <h2 style="margin:0;color:var(--navy);font-family:Georgia,'Times New Roman',serif;">One policy may help address both needs.</h2>
-            <p class="protection-copy" style="margin-top:8px;">A life-insurance policy can provide a death benefit for family or mortgage protection. Some policies also include or offer accelerated living-benefit riders that may allow access to part of the death benefit after a qualifying illness or condition.</p>
-            <div class="coordinated-grid">
-              <div class="coordinated-item"><small>Home protection objective</small><strong id="combinedMortgage">$0</strong><div class="subtext" style="margin-top:5px;font-size:11px;">Remaining mortgage balance.</div></div>
-              <div class="coordinated-item"><small>Income interruption objective</small><strong id="combinedIncome">$0</strong><div class="subtext" style="margin-top:5px;font-size:11px;">Estimated household gap for the period selected.</div></div>
-            </div>
-            <div class="coordinated-answer" id="combinedProtectionMessage">Your numbers will appear here as you complete the page.</div>
-            <div class="protection-note"><strong>Important:</strong> Living benefits are generally an acceleration of the policy’s death benefit, not a separate pool of disability income. Eligibility requires a qualifying event and varies by carrier, policy, rider, and state. This illustration is educational and is not a policy recommendation.</div>
-          </div>
-        </div>
-      </div>
-      <div class="guided-nav"><button type="button" data-prev>← Children & College</button><button type="button" class="primary" data-next>Think About My Legacy →</button></div>
-    </section>
-
-    <section class="guided-page" data-page="3">
-      <div class="guided-head"><div class="guided-kicker">Page 4 of 7 · Your Legacy</div><h2>What do you want your family to receive?</h2><p>Legacy planning is about making your wishes clear and helping protect the people you care about.</p></div>
-      <div class="guided-content" id="guidedLegacy">
-        <div class="legacy-shell">
-          <div class="legacy-gate">
-            <div class="protection-kicker">Your legacy</div>
-            <h3>Does leaving a legacy to your family matter to you?</h3>
-            <p>If you had a choice, would you rather decide what your family receives — or leave the outcome to beneficiary designations, your estate documents, and where those are missing, state law and the court process?</p>
-            <div class="legacy-choice">
-              <button type="button" data-legacy-choice="yes"><strong>Yes, it matters to me</strong><span>I want to decide what I leave and who receives it.</span></button>
-              <button type="button" data-legacy-choice="no"><strong>Not a priority right now</strong><span>Skip the legacy estimate for now.</span></button>
-            </div>
-          </div>
-
-          <div class="legacy-no" id="legacyNoMessage"><strong>Legacy planning skipped.</strong><br>You can come back to this page anytime.</div>
-
-          <div class="legacy-planner" id="legacyPlanner">
-            <div class="wp-section-number">Your Legacy Picture</div>
-            <h2 style="margin:5px 0 8px;color:var(--navy);font-family:Georgia,'Times New Roman',serif;">If something happened to you today, what would your family receive?</h2>
-            <div class="subtext" style="margin-bottom:16px;">This simple estimate compares your assets, your liabilities, your current life insurance, and the legacy amount you would like to leave.</div>
-            <div class="legacy-grid">
-              <div class="legacy-field"><label>Assets ($)</label><input id="legacyOwn" type="number" min="0" value="700000"><small>Home, investments, retirement accounts, cash value life insurance, and other assets you want included.</small></div>
-              <div class="legacy-field"><label>Liabilities ($)</label><input id="legacyOwe" type="number" min="0" value="300000"><small>Mortgage, loans, credit cards, and other liabilities you want included.</small></div>
-              <div class="legacy-field"><label>Life insurance you already have ($)</label><input id="legacyInsurance" type="number" min="0" value="100000"></div>
-              <div class="legacy-field"><label>What would you like to leave your family? ($)</label><input id="legacyGoal" type="number" min="0" value="1000000"></div>
-            </div>
-            <div class="legacy-formula">Assets + Life Insurance − Liabilities</div>
-            <div class="legacy-summary">
-              <div class="receive"><small>What Your Family Will Receive</small><strong id="legacyToday">$0</strong><span class="receive-sub">Based on what you entered today.</span></div>
-              <div><small>Your Legacy Goal</small><strong id="legacyGoalOut">$0</strong></div>
-              <div class="gap"><small>Potential Legacy Gap</small><strong id="legacyGap">$0</strong></div>
-            </div>
-            <div class="legacy-question" id="legacyQuestion">If something happened to you today, would the legacy you leave match the legacy you intended?</div>
-
-            <div class="legacy-education">
-              <h3>3 tools that can help make your wishes clear</h3>
-              <p>Tap each box to learn what it does. These tools can work differently depending on the asset, your state, and how your estate plan is set up.</p>
-              <div class="legacy-tools">
-                <button type="button" class="legacy-tool" data-legacy-info="will">
-                  <div class="legacy-icon">W</div>
-                  <strong>Will</strong>
-                  <span>States who should receive property that passes through your estate and can name a guardian for minor children.</span>
-                  <em>Tap to learn more →</em>
-                </button>
-                <button type="button" class="legacy-tool" data-legacy-info="trust">
-                  <div class="legacy-icon">T</div>
-                  <strong>Trust</strong>
-                  <span>Can provide more control over how and when certain assets are managed and distributed.</span>
-                  <em>Tap to learn more →</em>
-                </button>
-                <button type="button" class="legacy-tool" data-legacy-info="tod">
-                  <div class="legacy-icon">TOD</div>
-                  <strong>Transfer on Death</strong>
-                  <span>A TOD designation, beneficiary designation, or TOD deed may let certain assets pass directly to a named beneficiary.</span>
-                  <em>Tap to learn more →</em>
-                </button>
-              </div>
-            </div>
-
-            <div class="legacy-note"><strong>Important:</strong> A will, trust, TOD arrangement, and beneficiary designation are not interchangeable. Which document controls can depend on the type of asset and how it is titled. This is educational only, not legal, tax, insurance, or estate-planning advice.</div>
-          </div>
-
-          <div class="legacy-modal" id="legacyInfoModal" aria-hidden="true">
-            <div class="legacy-modal-card" role="dialog" aria-modal="true" aria-labelledby="legacyModalTitle">
-              <button type="button" class="legacy-modal-close" id="legacyModalClose" aria-label="Close">×</button>
-              <h3 id="legacyModalTitle">Legacy Tool</h3>
-              <div id="legacyModalBody"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="guided-nav"><button type="button" data-prev>← Protection</button><button type="button" class="primary" data-next>See My Future →</button></div>
-    </section>
-
-    <section class="guided-page" data-page="4">
-      <div class="guided-head"><div class="guided-kicker">Page 5 of 7 · Your Future</div><h2>See the future your current plan is building.</h2><p>Your goal, your projected path, and the gap — all in one place.</p></div>
-      <div class="guided-content" id="guidedFuture"></div>
-      <div class="guided-nav"><button type="button" data-prev>← Your Legacy</button><button type="button" class="primary" data-next>Explore My Risks →</button></div>
-    </section>
-    <section class="guided-page" data-page="5">
-      <div class="guided-head"><div class="guided-kicker">Page 6 of 7 · Your Risks</div><h2>What could affect your plan?</h2><p>Explore only the area you care about. Details stay hidden until you choose them.</p></div>
-      <div class="guided-content" id="guidedRisks"></div>
-      <div class="guided-nav"><button type="button" data-prev>← Your Future</button><button type="button" class="primary" data-next>See My Options →</button></div>
-    </section>
-    <section class="guided-page" data-page="6">
-      <div class="guided-head"><div class="guided-kicker">Page 7 of 7 · Your Options</div><h2>Choose what matters most to you.</h2><p>Use your retirement picture to decide what you want to improve next.</p></div>
-      <div class="guided-content" id="guidedOptions"></div>
-      <div class="guided-nav"><button type="button" data-prev>← Your Risks</button><span></span></div>
-    </section>
-  </div>
-
+  <!-- ============ SOURCE CARDS (moved into the steps by app.js) ============ -->
   <div class="wp-grid">
 
     <!-- LEFT -->
     <div>
 
       <div class="wp-card" id="step1">
-        <div class="wp-section-number">Step 1</div>
-        <h2>What do you have saved today?</h2>
-        <div class="subtext" style="margin-bottom:14px;">Add the retirement or savings accounts you already have. If you are not sure, add what you know.</div>
+        <div class="card-head">
+          <span class="card-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.4"/><path d="M5.5 19.5c.9-3.3 3.4-5 6.5-5s5.6 1.7 6.5 5"/></svg>
+          </span>
+          <div>
+            <h2>Personal Information</h2>
+            <div class="subtext">Tell us a little about yourself, then add what you already have saved.</div>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="wp-field">
+            <div class="wp-label">Your Age<button class="info-btn" data-tip="tipAge">i</button></div>
+            <input id="curAge2" class="wp-input" type="number" value="32">
+            <div id="tipAge" class="wp-tip">Used to calculate how many years your money has to grow.</div>
+          </div>
+          <div class="wp-field">
+            <div class="wp-label">Retirement Age<button class="info-btn" data-tip="tipRetireAge2">i</button></div>
+            <input id="retireAge2" class="wp-input" type="number" value="65">
+            <div id="tipRetireAge2" class="wp-tip">A common target. Enter whatever age feels right for your plan.</div>
+          </div>
+          <div class="wp-field">
+            <div class="wp-label">Annual Income ($)<button class="info-btn" data-tip="tipIncome">i</button></div>
+            <input id="annualIncome" class="wp-input" type="number" value="75000">
+            <div id="tipIncome" class="wp-tip">
+              Used only to size the protection figures below (income replacement in the event of
+              disability or premature death). Not used elsewhere in this calculator.
+            </div>
+          </div>
+        </div>
+
+        <div class="card-head with-action">
+          <span class="card-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19V11"/><path d="M12 19V5.5"/><path d="M19 19v-5.5"/></svg>
+          </span>
+          <div>
+            <h2>Savings &amp; Investments</h2>
+            <div class="subtext">Add the retirement or savings accounts you already have.</div>
+          </div>
+          <button type="button" class="wp-add-btn" id="addSavingsBtn">+ Add Another Account</button>
+        </div>
 
         <div id="savingsItems"></div>
-        <button type="button" class="wp-add-btn" id="addSavingsBtn">+ Add Another Account</button>
         <div class="contrib-mix" id="savingsTotal"></div>
 
-        <div class="wp-field" style="margin-top:16px;">
-          <div class="wp-label">Your Age<button class="info-btn" data-tip="tipAge">i</button></div>
-          <input id="curAge2" class="wp-input" type="number" value="32">
-          <div id="tipAge" class="wp-tip">Used to calculate how many years your money has to grow.</div>
-        </div>
-
-        <div class="wp-field">
-          <div class="wp-label">When would you like to retire?<button class="info-btn" data-tip="tipRetireAge2">i</button></div>
-          <input id="retireAge2" class="wp-input" type="number" value="65">
-          <div id="tipRetireAge2" class="wp-tip">A common target. Enter whatever age feels right for your plan.</div>
-        </div>
-        <div class="wp-field">
-          <div class="wp-label">About how much do you earn each year? ($)<button class="info-btn" data-tip="tipIncome">i</button></div>
-          <input id="annualIncome" class="wp-input" type="number" value="75000">
-          <div id="tipIncome" class="wp-tip">
-            Used only to size the protection figures below (income replacement in the event of
-            disability or premature death). Not used elsewhere in this calculator.
-          </div>
+        <div class="hint-strip">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 18h5"/><path d="M10 21h4"/><path d="M12 3a5.5 5.5 0 0 1 3.3 9.9c-.6.5-.9 1.2-.9 1.9v.2h-4.8v-.2c0-.7-.3-1.4-.9-1.9A5.5 5.5 0 0 1 12 3Z"/></svg>
+          <div><strong>Not sure of the exact numbers?</strong><br>That's okay — you can always come back and update them later.</div>
         </div>
       </div>
 
       <div class="wp-card">
-        <div class="wp-section-number">Step 2</div>
-        <h2>What are you saving each month?</h2>
-        <div class="subtext" style="margin-bottom:14px;">Add the accounts you contribute to and the amount going into each one.</div>
+        <div class="card-head with-action">
+          <span class="card-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5.5v13"/><path d="M15.5 8.5c-.6-1-1.9-1.6-3.5-1.6-2 0-3.3.9-3.3 2.3 0 3.4 7.1 1.7 7.1 5.2 0 1.5-1.5 2.5-3.8 2.5-1.8 0-3.2-.6-3.9-1.7"/></svg>
+          </span>
+          <div>
+            <h2>Monthly Contributions</h2>
+            <div class="subtext">Add the accounts you contribute to and the amount going into each one.</div>
+          </div>
+          <button type="button" class="wp-add-btn" id="addContribBtn">+ Add Another Account</button>
+        </div>
 
         <div id="contribItems"></div>
-        <button type="button" class="wp-add-btn" id="addContribBtn">+ Add Another Account</button>
-
         <div class="contrib-mix" id="contribMix"></div>
 
-        <div class="wp-field" style="margin-top:16px;">
+        <div class="wp-field" style="margin-top:18px;">
           <div class="wp-label">Employer match each month ($)<button class="info-btn" data-tip="tipMatch">i</button></div>
           <input id="employerMatch" class="wp-input" type="number" value="150">
           <div id="tipMatch" class="wp-tip">
@@ -306,8 +565,15 @@
       </div>
 
       <div class="wp-card">
-        <div class="wp-section-number">Step 3</div>
-        <h2>What lifestyle do you want in retirement?</h2>
+        <div class="card-head">
+          <span class="card-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7.5"/><path d="M12 8v4l2.6 1.6"/></svg>
+          </span>
+          <div>
+            <h2>Your Retirement Lifestyle</h2>
+            <div class="subtext">What you want your money to pay for once you stop working.</div>
+          </div>
+        </div>
 
         <div class="wp-field">
           <div class="wp-label">How much would you like to live on each month in retirement? ($)<button class="info-btn" data-tip="tipGoalIncome">i</button></div>
@@ -346,7 +612,7 @@
         </div>
 
         <details class="advanced-box">
-          <summary>Advanced assumptions <span style="font-weight:500;color:var(--muted);">(optional)</span></summary>
+          <summary>Advanced assumptions <span>(optional)</span></summary>
           <div class="advanced-inner">
             <div class="wp-field">
               <div class="wp-label">Inflation (%)<button class="info-btn" data-tip="tipInflation">i</button></div>
@@ -365,7 +631,7 @@
       <div class="chaos-opener">
         <div class="chaos-eyebrow">Explore One Area</div>
         <h2>What would you like to understand better?</h2>
-        <div class="subtext" style="margin-bottom:14px;">Choose one. We’ll show you only the information that matters for that topic.</div>
+        <div class="subtext" style="margin-bottom:16px;">Choose one. We'll show you only the information that matters for that topic.</div>
 
         <div class="chaos-choice-grid">
           <button type="button" class="chaos-choice-btn pink" data-chaos="market">
@@ -409,7 +675,7 @@
 
         <div class="core-picture">
           <div class="core-number"><small>You May Need</small><strong id="goalNestEggOut">$0</strong></div>
-          <div class="core-number"><small>You’re On Track For</small><strong id="projectedBalanceOut">$0</strong></div>
+          <div class="core-number"><small>You're On Track For</small><strong id="projectedBalanceOut">$0</strong></div>
           <div class="core-number gap"><small>Your Gap</small><strong id="snapshotGap">$0</strong></div>
         </div>
 
@@ -424,11 +690,11 @@
           <div class="ss-summary-note" id="ssSummaryNote"></div>
         </div>
 
-        <div class="metric-grid" style="margin-top:12px;">
+        <div class="metric-grid" style="margin-top:14px;">
           <div class="metric tan"><small>Years to Retirement</small><strong id="yearsToRetireOut">0</strong></div>
           <div class="metric blue"><small>Saving Each Month</small><strong id="totalMonthlyOut">$0</strong></div>
         </div>
-        <div class="subtext" id="inflationNote" style="margin-top:12px;font-size:12px;"></div>
+        <div class="subtext" id="inflationNote" style="margin-top:12px;"></div>
       </div>
 
       <div class="wp-card">
@@ -477,20 +743,20 @@
             <option value="lower">Lower than today</option>
             <option value="know">I know my estimated tax rates</option>
           </select>
-          <div class="subtext" style="margin-top:7px;">Not sure? “About the same” is fine for this illustration.</div>
+          <div class="subtext" style="margin-top:8px;">Not sure? "About the same" is fine for this illustration.</div>
         </div>
         <div class="metric-grid hidden-tax-inputs" id="taxAdvancedRates" style="margin-top:14px;">
-          <div class="wp-field" style="margin-bottom:0;"><div class="wp-label" style="font-size:12px;">Tax Rate Today (%)</div><input id="curTaxRate" class="wp-input" type="number" value="22"></div>
-          <div class="wp-field" style="margin-bottom:0;"><div class="wp-label" style="font-size:12px;">Estimated Rate in Retirement (%)</div><input id="futTaxRate" class="wp-input" type="number" value="22"></div>
+          <div class="wp-field" style="margin-bottom:0;"><div class="wp-label">Tax Rate Today (%)</div><input id="curTaxRate" class="wp-input" type="number" value="22"></div>
+          <div class="wp-field" style="margin-bottom:0;"><div class="wp-label">Estimated Rate in Retirement (%)</div><input id="futTaxRate" class="wp-input" type="number" value="22"></div>
         </div>
 
         <div class="tax-result-grid" id="taxResultGrid" style="margin-top:16px;"></div>
 
         <div class="mc-callout gold" style="margin-top:16px;">
-          <div style="font-weight:800;color:var(--navy);font-size:14px;margin-bottom:4px;" id="gapQuestionHeadline">
+          <div class="callout-title" id="gapQuestionHeadline">
             When would you prefer to pay taxes on your retirement money?
           </div>
-          <div class="tax-choice" style="margin:12px 0 0;">
+          <div class="tax-choice">
             <div class="tax-btn" data-gapchoice="now">
               <strong>Tax Now</strong>
               <span>Pay taxes today. Growth is taxed along the way.</span>
@@ -526,7 +792,7 @@
         </div>
       </div>
 
-      <div class="wp-card mc-panel" id="recovery-section" style="padding-top:0;">
+      <div class="wp-card mc-panel" id="recovery-section">
         <div class="mini-calc-head">
           <button type="button" class="mc-close-btn" data-close-target="recovery-section">✕ Close</button>
           <h3>See the Impact of a Market Drop</h3>
@@ -535,14 +801,14 @@
 
         <div class="metric-grid">
           <div class="wp-field" style="margin-bottom:0;">
-            <div class="wp-label" style="font-size:12px;">Amount Invested ($)</div>
+            <div class="wp-label">Amount Invested ($)</div>
             <input id="mlAmount" class="wp-input" type="number" value="100000">
-            <input type="range" id="mlAmountSlider" min="1000" max="1000000" step="1000" value="100000" style="width:100%;margin-top:8px;accent-color:var(--gold);">
+            <input type="range" id="mlAmountSlider" min="1000" max="1000000" step="1000" value="100000">
           </div>
           <div class="wp-field" style="margin-bottom:0;">
-            <div class="wp-label" style="font-size:12px;">Percentage Lost (%)</div>
+            <div class="wp-label">Percentage Lost (%)</div>
             <input id="mlPct" class="wp-input" type="number" value="30">
-            <input type="range" id="mlPctSlider" min="1" max="90" value="30" style="width:100%;margin-top:8px;accent-color:var(--gold);">
+            <input type="range" id="mlPctSlider" min="1" max="90" value="30">
           </div>
         </div>
 
@@ -560,18 +826,18 @@
         </div>
 
         <div style="margin-top:12px;">
-          <div class="subtext" style="display:flex;justify-content:space-between;font-size:11.5px;"><span>Loss</span><span id="mlLossPctLab">30%</span></div>
+          <div class="subtext bar-legend"><span>Loss</span><span id="mlLossPctLab">30%</span></div>
           <div class="bar"><div id="mlLossBar" class="bar-fill" style="background:var(--red);"></div></div>
         </div>
         <div style="margin-top:10px;">
-          <div class="subtext" style="display:flex;justify-content:space-between;font-size:11.5px;"><span>Gain required to recover</span><span id="mlGainPctLab">42.9%</span></div>
+          <div class="subtext bar-legend"><span>Gain required to recover</span><span id="mlGainPctLab">42.9%</span></div>
           <div class="bar"><div id="mlGainBar" class="bar-fill"></div></div>
         </div>
 
         <div class="mc-callout gold" id="mlCallout"></div>
 
-        <div class="subtext" style="margin-top:18px;font-weight:700;color:var(--navy);font-size:13px;">This Isn't Just Hypothetical</div>
-        <div class="subtext" style="font-size:12px;">The market has gone through several real downturns like this over roughly the last 30 years:</div>
+        <div class="block-title">This Isn't Just Hypothetical</div>
+        <div class="subtext">The market has gone through several real downturns like this over roughly the last 30 years:</div>
         <div class="crash-history">
           <div class="crash-row head"><div>Event</div><div>S&amp;P 500</div><div>Recovery</div></div>
           <div class="crash-row"><div class="crash-name">2000&ndash;2002 Dot-Com Crash</div><div class="crash-pct">&minus;49%</div><div class="crash-recovery">Took years to fully recover</div></div>
@@ -579,15 +845,13 @@
           <div class="crash-row"><div class="crash-name">2020 COVID Crash</div><div class="crash-pct">&minus;34%</div><div class="crash-recovery">About 5 months</div></div>
           <div class="crash-row"><div class="crash-name">2022 Bear Market</div><div class="crash-pct">&minus;25%</div><div class="crash-recovery">Roughly 2 years</div></div>
         </div>
-        <div class="wp-report-note" style="margin-top:8px;">
+        <div class="wp-report-note">
           Approximate S&amp;P 500 price declines, rounded for illustration. Past performance does not predict future results.
         </div>
 
         <div class="mc-callout gold" style="margin-top:18px;">
-          <div style="font-weight:800;color:var(--navy);font-size:14px;margin-bottom:4px;">
-            Knowing this, where would you rather have your money?
-          </div>
-          <div class="tax-choice" style="margin:12px 0 0;">
+          <div class="callout-title">Knowing this, where would you rather have your money?</div>
+          <div class="tax-choice">
             <div class="tax-btn" data-marketchoice="variable">
               <strong>Variable Market</strong>
               <span>Full market exposure. Unlimited upside, but you feel every drop like the ones above.</span>
@@ -604,7 +868,7 @@
           <div id="marketQuestionAnswer" style="display:none;margin-top:14px;font-size:13px;line-height:1.55;color:#6b5a2e;"></div>
         </div>
 
-        <div class="wp-report-note" style="margin-top:10px;">
+        <div class="wp-report-note">
           Educational illustration only. This demonstrates the mathematics of percentage losses and recovery.
           It does not predict market returns or recommend a particular investment.
         </div>
@@ -613,7 +877,7 @@
     </div>
   </div>
 
-  <div class="wp-card mc-panel" id="tax-timing-section" style="padding-top:0;">
+  <div class="wp-card mc-panel" id="tax-timing-section">
     <div class="mini-calc-head">
       <button type="button" class="mc-close-btn" data-close-target="tax-timing-section">✕ Close</button>
       <h3>When Do You Want to Pay Taxes?</h3>
@@ -621,17 +885,17 @@
     </div>
 
     <div class="metric-grid">
-      <div class="wp-field" style="margin-bottom:0;"><div class="wp-label" style="font-size:12px;">Money Available Today ($)</div><input id="ttAmount" class="wp-input" type="number" value="100000"></div>
-      <div class="wp-field" style="margin-bottom:0;"><div class="wp-label" style="font-size:12px;">Current Age</div><input id="ttCurAge" class="wp-input" type="number" value="40"></div>
-      <div class="wp-field" style="margin-bottom:0;"><div class="wp-label" style="font-size:12px;">Retirement Age</div><input id="ttRetAge" class="wp-input" type="number" value="67"></div>
-      <div class="wp-field" style="margin-bottom:0;"><div class="wp-label" style="font-size:12px;">Tax Rate You Pay Today (%)</div><input id="ttRateNow" class="wp-input" type="number" value="22"></div>
-      <div class="wp-field" style="margin-bottom:0;"><div class="wp-label" style="font-size:12px;">Expected Annual Growth (%)</div><input id="ttGrowth" class="wp-input" type="number" value="6"></div>
-      <div class="wp-field" style="margin-bottom:0;"><div class="wp-label" style="font-size:12px;">Tax Rate You Expect in Retirement (%)</div><input id="ttRateRet" class="wp-input" type="number" value="25"></div>
+      <div class="wp-field" style="margin-bottom:0;"><div class="wp-label">Money Available Today ($)</div><input id="ttAmount" class="wp-input" type="number" value="100000"></div>
+      <div class="wp-field" style="margin-bottom:0;"><div class="wp-label">Current Age</div><input id="ttCurAge" class="wp-input" type="number" value="40"></div>
+      <div class="wp-field" style="margin-bottom:0;"><div class="wp-label">Retirement Age</div><input id="ttRetAge" class="wp-input" type="number" value="67"></div>
+      <div class="wp-field" style="margin-bottom:0;"><div class="wp-label">Tax Rate You Pay Today (%)</div><input id="ttRateNow" class="wp-input" type="number" value="22"></div>
+      <div class="wp-field" style="margin-bottom:0;"><div class="wp-label">Expected Annual Growth (%)</div><input id="ttGrowth" class="wp-input" type="number" value="6"></div>
+      <div class="wp-field" style="margin-bottom:0;"><div class="wp-label">Tax Rate You Expect in Retirement (%)</div><input id="ttRateRet" class="wp-input" type="number" value="25"></div>
     </div>
 
     <div class="mc-callout green" id="ttSameNote"></div>
 
-    <div class="subtext" style="margin-top:16px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.3px;">Follow Your Money</div>
+    <div class="block-title">Follow Your Money</div>
     <div class="tax3-grid">
       <div class="tax3-card now">
         <h4>Tax Now</h4>
@@ -659,13 +923,13 @@
       </div>
     </div>
 
-    <div class="wp-report-note" style="margin-top:14px;">
+    <div class="wp-report-note">
       Educational illustration only. Simplifies complex tax rules and does not represent a specific product or account.
       Consult a qualified tax professional before making decisions.
     </div>
   </div>
 
-  <div class="wp-card mc-panel" id="disability-section" style="padding-top:0;">
+  <div class="wp-card mc-panel" id="disability-section">
     <div class="mini-calc-head">
       <button type="button" class="mc-close-btn" data-close-target="disability-section">✕ Close</button>
       <h3>If Your Paycheck Stopped Today...</h3>
@@ -673,13 +937,13 @@
     </div>
 
     <div class="metric-grid">
-      <div class="wp-field" style="margin-bottom:0;"><div class="wp-label" style="font-size:12px;">Essential Monthly Bills ($)</div><input id="pdBills" class="wp-input" type="number" value="6000"></div>
-      <div class="wp-field" style="margin-bottom:0;"><div class="wp-label" style="font-size:12px;">Income That Would Still Continue ($)</div><input id="pdContinue" class="wp-input" type="number" value="0"></div>
-      <div class="wp-field" style="margin-bottom:0;"><div class="wp-label" style="font-size:12px;">Emergency Savings ($)</div><input id="pdSavings" class="wp-input" type="number" value="18000"></div>
-      <div class="wp-field" style="margin-bottom:0;"><div class="wp-label" style="font-size:12px;">Income-Protection Benefit Available ($)</div><input id="pdBenefit" class="wp-input" type="number" value="80000"></div>
+      <div class="wp-field" style="margin-bottom:0;"><div class="wp-label">Essential Monthly Bills ($)</div><input id="pdBills" class="wp-input" type="number" value="6000"></div>
+      <div class="wp-field" style="margin-bottom:0;"><div class="wp-label">Income That Would Still Continue ($)</div><input id="pdContinue" class="wp-input" type="number" value="0"></div>
+      <div class="wp-field" style="margin-bottom:0;"><div class="wp-label">Emergency Savings ($)</div><input id="pdSavings" class="wp-input" type="number" value="18000"></div>
+      <div class="wp-field" style="margin-bottom:0;"><div class="wp-label">Income-Protection Benefit Available ($)</div><input id="pdBenefit" class="wp-input" type="number" value="80000"></div>
     </div>
     <div class="wp-field" style="margin-top:14px;">
-      <div class="wp-label" style="font-size:12px;">Months You Want Protected</div>
+      <div class="wp-label">Months You Want Protected</div>
       <select id="pdGoal" class="wp-select">
         <option value="6">6 months</option>
         <option value="12" selected>12 months</option>
@@ -693,40 +957,40 @@
     <div class="two-col-compare">
       <div class="compare-panel red">
         <div class="cp-tag">Using Savings Alone</div>
-        <div style="font-weight:700;color:var(--navy);font-size:13px;">Emergency Fund Only</div>
+        <div class="cp-title">Emergency Fund Only</div>
         <div class="cp-num" id="pdEfMonths">0 months</div>
         <div class="dot-row" id="pdEfDots"></div>
-        <div class="subtext" style="font-size:11px;" id="pdEfNote"></div>
+        <div class="subtext" id="pdEfNote"></div>
         <div class="cp-row"><span>To cover your goal with savings alone</span><strong id="pdEfNeed">$0</strong></div>
       </div>
       <div class="compare-panel green">
         <div class="cp-tag">Savings + Benefit</div>
-        <div style="font-weight:700;color:var(--navy);font-size:13px;">Fund + Income Protection</div>
+        <div class="cp-title">Fund + Income Protection</div>
         <div class="cp-num" id="pdCombMonths">0 months</div>
         <div class="dot-row" id="pdCombDots"></div>
-        <div class="subtext" style="font-size:11px;" id="pdCombNote"></div>
+        <div class="subtext" id="pdCombNote"></div>
         <div class="cp-row"><span>Total resources available</span><strong id="pdCombTotal">$0</strong></div>
       </div>
     </div>
 
-    <div class="subtext" style="margin-top:18px;font-weight:700;color:var(--navy);font-size:13px;">What If You Don't Need the Whole Benefit Right Away?</div>
-    <div class="subtext" style="font-size:11.5px;margin-bottom:10px;">See what a leftover amount could grow into if invested instead of spent.</div>
+    <div class="block-title">What If You Don't Need the Whole Benefit Right Away?</div>
+    <div class="subtext" style="margin-bottom:10px;">See what a leftover amount could grow into if invested instead of spent.</div>
     <div class="metric-grid">
-      <div class="wp-field" style="margin-bottom:0;"><div class="wp-label" style="font-size:12px;">Amount Not Needed Right Now ($)</div><input id="pdLeftover" class="wp-input" type="number" value="30000"></div>
-      <div class="wp-field" style="margin-bottom:0;"><div class="wp-label" style="font-size:12px;">Years Invested</div><input id="pdYears" class="wp-input" type="number" value="10"></div>
+      <div class="wp-field" style="margin-bottom:0;"><div class="wp-label">Amount Not Needed Right Now ($)</div><input id="pdLeftover" class="wp-input" type="number" value="30000"></div>
+      <div class="wp-field" style="margin-bottom:0;"><div class="wp-label">Years Invested</div><input id="pdYears" class="wp-input" type="number" value="10"></div>
     </div>
-    <div class="quad-stat" style="grid-template-columns:1fr 1fr;">
+    <div class="quad-stat two">
       <div class="qs-item tan"><div class="qs-lab">Illustrated at 6%</div><div class="qs-num" id="pd6pct">$0</div></div>
       <div class="qs-item tan"><div class="qs-lab">Illustrated at 8%</div><div class="qs-num" id="pd8pct">$0</div></div>
     </div>
 
-    <div class="wp-report-note" style="margin-top:10px;">
+    <div class="wp-report-note">
       Educational illustration only. Income-protection/living-benefit availability, qualifying conditions, and payout
       amounts vary by carrier and policy. Growth assumptions are hypothetical and not guaranteed.
     </div>
   </div>
 
-  <div class="wp-card mc-panel" id="death-section" style="padding-top:0;">
+  <div class="wp-card mc-panel" id="death-section">
     <div class="mini-calc-head">
       <button type="button" class="mc-close-btn" data-close-target="death-section">✕ Close</button>
       <h3>DIME Life Insurance Needs Calculator</h3>
@@ -734,21 +998,21 @@
     </div>
 
     <div class="metric-grid">
-      <div class="wp-field" style="margin-bottom:0;"><div class="wp-label" style="font-size:12px;">D &mdash; Outstanding Debts ($)</div><input id="dimeDebt" class="wp-input" type="number" value="30000"></div>
+      <div class="wp-field" style="margin-bottom:0;"><div class="wp-label">D &mdash; Outstanding Debts ($)</div><input id="dimeDebt" class="wp-input" type="number" value="30000"></div>
       <div class="wp-field" style="margin-bottom:0;">
-        <div class="wp-label" style="font-size:12px;">I &mdash; Annual Income to Replace ($)</div>
+        <div class="wp-label">I &mdash; Annual Income to Replace ($)</div>
         <input id="dimeIncome" class="wp-input" type="number" value="75000">
       </div>
-      <div class="wp-field" style="margin-bottom:0;"><div class="wp-label" style="font-size:12px;">M &mdash; Remaining Mortgage Balance ($)</div><input id="dimeMortgage" class="wp-input" type="number" value="250000"></div>
-      <div class="wp-field" style="margin-bottom:0;"><div class="wp-label" style="font-size:12px;">E &mdash; Number of Children</div><input id="dimeKids" class="wp-input" type="number" value="2"></div>
+      <div class="wp-field" style="margin-bottom:0;"><div class="wp-label">M &mdash; Remaining Mortgage Balance ($)</div><input id="dimeMortgage" class="wp-input" type="number" value="250000"></div>
+      <div class="wp-field" style="margin-bottom:0;"><div class="wp-label">E &mdash; Number of Children</div><input id="dimeKids" class="wp-input" type="number" value="2"></div>
     </div>
     <div class="metric-grid" style="margin-top:12px;">
       <div class="wp-field" style="margin-bottom:0;">
-        <div class="wp-label" style="font-size:12px;">Years of Income Replacement</div>
+        <div class="wp-label">Years of Income Replacement</div>
         <input id="dimeYears" class="wp-input" type="number" value="10">
-        <input type="range" id="dimeYearsSlider" min="1" max="30" value="10" style="width:100%;margin-top:8px;accent-color:var(--gold);">
+        <input type="range" id="dimeYearsSlider" min="1" max="30" value="10">
       </div>
-      <div class="wp-field" style="margin-bottom:0;"><div class="wp-label" style="font-size:12px;">Estimated Education Need Per Child ($)</div><input id="dimeEduEach" class="wp-input" type="number" value="75000"></div>
+      <div class="wp-field" style="margin-bottom:0;"><div class="wp-label">Estimated Education Need Per Child ($)</div><input id="dimeEduEach" class="wp-input" type="number" value="75000"></div>
     </div>
 
     <div class="quad-stat">
@@ -764,42 +1028,47 @@
       <div class="rb-sub">Debt + Income Replacement + Mortgage + Education</div>
     </div>
 
-    <div class="subtext" style="margin-top:14px;font-weight:700;color:var(--navy);font-size:13px;">Subtract Existing Resources</div>
+    <div class="block-title">Subtract Existing Resources</div>
     <div class="metric-grid" style="margin-top:8px;">
-      <div class="wp-field" style="margin-bottom:0;"><div class="wp-label" style="font-size:12px;">Existing Life Insurance Coverage ($)</div><input id="dimeExistingCov" class="wp-input" type="number" value="100000"></div>
-      <div class="wp-field" style="margin-bottom:0;"><div class="wp-label" style="font-size:12px;">Available Savings / Liquid Assets ($)</div><input id="dimeSavingsInput" class="wp-input" type="number" value="25000"></div>
+      <div class="wp-field" style="margin-bottom:0;"><div class="wp-label">Existing Life Insurance Coverage ($)</div><input id="dimeExistingCov" class="wp-input" type="number" value="100000"></div>
+      <div class="wp-field" style="margin-bottom:0;"><div class="wp-label">Available Savings / Liquid Assets ($)</div><input id="dimeSavingsInput" class="wp-input" type="number" value="25000"></div>
     </div>
 
-    <div class="mc-callout gold" style="text-align:center;margin-top:14px;">
-      <div style="font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.3px;">Estimated Additional Coverage Gap</div>
-      <div style="font-family:'Georgia','Times New Roman',serif;font-size:24px;font-weight:800;color:var(--navy);margin-top:4px;" id="dimeGapBand">$0</div>
+    <div class="mc-callout gold gap-band">
+      <div class="gap-band-lab">Estimated Additional Coverage Gap</div>
+      <div class="gap-band-num" id="dimeGapBand">$0</div>
     </div>
 
-    <div class="wp-report-note" style="margin-top:10px;">
+    <div class="wp-report-note">
       Educational estimate only. The DIME method is a simplified needs-analysis framework and does not account for
       every household variable. Review actual insurance needs with a qualified professional.
     </div>
   </div>
 
-  <div class="wp-card">
-    <div class="wp-section-number">Your Report</div>
-    <h2>Get a PDF of Your Retirement Path</h2>
-    <div class="subtext" style="margin-bottom:14px;">
-      Your PDF will include your complete WEALTHDEMO journey: About You, Children &amp; College, Protection, Legacy, Your Future, Your Risks, and Your Options. Any risk calculators you explored will also be included.
+  <div class="wp-card report-card">
+    <div class="card-head">
+      <span class="card-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3.5h5.5L18 8v12.5H8Z"/><path d="M13.5 3.5V8H18"/><path d="M10.5 12.5h5M10.5 16h5"/></svg>
+      </span>
+      <div>
+        <h2>Get a PDF of Your Retirement Path</h2>
+        <div class="subtext">Your PDF includes your complete journey: About You, Children &amp; College, Protection, Legacy, Your Future, Your Risks, and Your Options.</div>
+      </div>
     </div>
-    <div class="wp-field"><div class="wp-label">Full Name</div><input id="clientName2" class="wp-input" type="text" placeholder="Jane Smith"></div>
-    <div class="wp-field"><div class="wp-label">Email</div><input id="clientEmail2" class="wp-input" type="email" placeholder="jane@example.com"></div>
-    <div class="wp-field"><div class="wp-label">Phone Number</div><input id="clientPhone2" class="wp-input" type="tel" placeholder="(555) 123-4567"></div>
+    <div class="field-row">
+      <div class="wp-field"><div class="wp-label">Full Name</div><input id="clientName2" class="wp-input" type="text" placeholder="Jane Smith"></div>
+      <div class="wp-field"><div class="wp-label">Email</div><input id="clientEmail2" class="wp-input" type="email" placeholder="jane@example.com"></div>
+      <div class="wp-field"><div class="wp-label">Phone Number</div><input id="clientPhone2" class="wp-input" type="tel" placeholder="(555) 123-4567"></div>
+    </div>
     <button id="generateReportBtn2" class="wp-report-btn">Download PDF Report</button>
     <div id="reportStatus2" class="wp-report-status"></div>
     <div class="wp-report-note">Your name, email, and phone number are used only to personalize this PDF. Nothing is sent anywhere.</div>
   </div>
 
-  <div class="disclaimer-banner" style="text-align:center;">
-    Educational estimates only — not financial, tax, or legal advice. Full disclosures apply.
-  </div>
+  <div class="wd-toast" id="wdToast" role="status" aria-live="polite"></div>
 </main>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="app.js"></script>
+<script src="shell.js"></script>
 </body>
 </html>
