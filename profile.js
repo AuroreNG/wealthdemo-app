@@ -16,6 +16,7 @@ window.WD = window.WD || {};
   const BLANK = {
     name: "", firm: "", title: "", licence: "",
     email: "", phone: "", book: "", colour: "#0d4435",
+    site: "",             /* where the published site lives, e.g. https://you.github.io/app/ */
     tier: "full"          /* full | core — which tools this account may send */
   };
 

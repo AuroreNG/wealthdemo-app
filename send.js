@@ -79,8 +79,22 @@
   /* ============================================================
      the link
      ============================================================ */
+  /* A link is only worth anything if the client can open it. Inside a preview
+     frame the page's own address is an internal one that refuses to load in a
+     tab, so the published address has to be stated rather than guessed. */
   function base() {
+    const site = (P.read().site || "").trim();
+    if (site) return site.replace(/\/?(index\.html)?$/, "") + "/";
     return location.origin + location.pathname.replace(/[^/]*$/, "");
+  }
+
+  function hostLooksPublic() {
+    if ((P.read().site || "").trim()) return true;
+    const h = location.hostname;
+    if (!h || h === "localhost" || h === "127.0.0.1") return false;
+    /* an artifact preview is served from a frame path that cannot be opened directly */
+    if (/(^|\.)claude\.ai$/i.test(h)) return false;
+    return true;
   }
 
   function build() {
@@ -128,6 +142,13 @@
     $("bnBig").textContent = "3 min";
     $("meetNote").textContent = meet ? whenText(meet) : "Optional — adds a countdown to their invitation.";
     $("expNote").textContent = meet ? whenText(meet) : "Not set";
+
+    const ok = hostLooksPublic();
+    $("outBox").classList.toggle("is-warn", !ok);
+    $("outNote").textContent = ok
+      ? "This link carries everything. It is not stored anywhere \u2014 the whole assessment travels inside the address."
+      : "This address only works here, inside the preview. Open \u201cYour details\u201d and put in where your site is published, " +
+        "and the link below becomes one your client can actually open.";
 
     qr(url);
     return url;
@@ -206,7 +227,7 @@
      your details
      ============================================================ */
   const PF = [["pName", "name"], ["pFirm", "firm"], ["pEmail", "email"], ["pPhone", "phone"],
-              ["pBook", "book"], ["pLic", "licence"], ["pColour", "colour"]];
+              ["pBook", "book"], ["pLic", "licence"], ["pColour", "colour"], ["pSite", "site"]];
 
   function loadProfile() {
     const p = P.read();
