@@ -1,0 +1,226 @@
+/* ============================================================
+   WEALTHDEMO — What Would You Leave Behind?
+   (builds on rule72.css for .rates, .money-in, .slider, .clock)
+   ============================================================ */
+
+/* one palette for the five asset types, used in every view */
+.lg-home   { --a: #2563a8; }
+.lg-retire { --a: #9a6a12; }
+.lg-save   { --a: #0d7a5f; }
+.lg-other  { --a: #6b5ca5; }
+.lg-life   { --a: #0f5f7a; }
+
+.lg-rates .rate-vs { font-size: 10px; }
+.lg-rates .rate-side[data-side="debt"] header b { color: #8f2031; }
+.lg-rates .rate-row label { display: flex; align-items: center; gap: 8px; }
+.sw {
+  width: 10px; height: 10px; border-radius: 3px; flex: none;
+  background: var(--a, var(--wd-muted));
+}
+.lg-note {
+  margin: 12px 0 0; padding-top: 12px;
+  border-top: 1px dashed var(--wd-line);
+  font-size: 11.5px; line-height: 1.55; color: var(--wd-muted);
+}
+.goal-row { align-items: center; }
+.timing .slider.slim {
+  flex: 1 1 200px; max-width: 340px; margin: 0;
+  --c: #2f4f45; --c-soft: rgba(47,79,69,.18);
+}
+
+/* ============================================================
+   on paper, and after
+   ============================================================ */
+.lg-panel { margin-bottom: 22px; }
+.lg-chart { width: 100%; height: auto; display: block; }
+.lg-chart rect { stroke: none; }
+.lg-chart text { stroke: none; }
+.lg-base { stroke: rgba(6,26,20,.22); stroke-width: 1.3; }
+
+.lg-chart .lg-home   { fill: #2563a8; }
+.lg-chart .lg-retire { fill: #9a6a12; }
+.lg-chart .lg-save   { fill: #0d7a5f; }
+.lg-chart .lg-other  { fill: #6b5ca5; }
+.lg-chart .lg-life   { fill: #0f5f7a; }
+.lg-chart .lg-cut    { fill: #b3283c; opacity: .82; }
+.lg-chart .lg-net    { fill: #0b5e4a; }
+.lg-chart .lg-gapblock {
+  fill: rgba(154,106,18,.13);
+  stroke: #9a6a12; stroke-width: 1.4; stroke-dasharray: 5 4;
+}
+
+.lg-chart .lg-in {
+  font-size: 11.5px; font-weight: 700; fill: #fff;
+  font-variant-numeric: tabular-nums;
+}
+.lg-chart .lg-gaptxt {
+  font-size: 11.5px; font-weight: 700; fill: #7a520c;
+  font-variant-numeric: tabular-nums;
+}
+.lg-chart .lg-goal { stroke: #9a6a12; stroke-width: 1.4; stroke-dasharray: 6 5; opacity: .75; }
+.lg-chart .lg-goal-lab {
+  font-size: 10.5px; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; fill: #7a520c;
+}
+.lg-chart .lg-arrow {
+  fill: none; stroke: rgba(6,26,20,.3); stroke-width: 1.6;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+.lg-chart .lg-cap {
+  font-size: 10.5px; font-weight: 700; letter-spacing: .09em;
+  text-transform: uppercase; fill: var(--wd-muted);
+}
+.lg-chart .lg-capv {
+  font-family: var(--wd-serif, "Playfair Display", Georgia, serif);
+  font-size: 21px; font-weight: 600; fill: var(--wd-ink);
+}
+.lg-chart .lg-capv.is-bad  { fill: #8f2031; }
+.lg-chart .lg-capv.is-good { fill: #0b5e4a; }
+
+/* the list of what came off */
+.cut-list {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin: 16px 0 0; padding: 14px 0 0; list-style: none;
+  border-top: 1px dashed var(--wd-line);
+}
+.cut-list li {
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 12px; border-radius: 9px;
+  background: rgba(179,40,60,.05);
+  border: 1px solid rgba(179,40,60,.18);
+  font-size: 12.5px; color: var(--wd-ink-soft);
+}
+.cut-dot { width: 8px; height: 8px; border-radius: 2px; background: #b3283c; opacity: .82; flex: none; }
+.cut-list b { font-weight: 600; color: var(--wd-ink); }
+.cut-list em { font-style: normal; font-size: 11.5px; color: var(--wd-muted); }
+.cut-list .cut-v { font-weight: 700; color: #8f2031; font-variant-numeric: tabular-nums; }
+.cut-list .cut-none { background: none; border-color: var(--wd-line); color: var(--wd-muted); }
+
+/* ---------- the three cards ---------- */
+.lg-grid { margin-bottom: 22px; }
+.lg-grid .clock-big b { font-size: 34px; }
+.lg-grid .clock[data-tint="sun"] { --acc: #9a6a12; --acc-soft: rgba(154,106,18,.11); --acc-ink: #7a520c; }
+.lg-grid .clock-sub { margin-bottom: 16px; }
+.lg-grid .clock footer { margin-top: auto; }
+
+/* ============================================================
+   what a dollar of each is worth
+   ============================================================ */
+.pd-panel { margin-bottom: 22px; }
+.per-dollar { display: flex; flex-direction: column; gap: 3px; margin-top: 12px; }
+.pd-row {
+  display: grid;
+  grid-template-columns: 210px minmax(0, 1fr) 210px 138px 116px;
+  align-items: center; gap: 14px;
+  padding: 9px 12px; border-radius: 9px;
+  transition: background .12s ease;
+}
+.pd-row:hover { background: rgba(6,26,20,.03); }
+.pd-row.is-empty { opacity: .42; }
+.pd-name { display: flex; align-items: center; gap: 9px; font-size: 13.5px; font-weight: 600; color: var(--wd-ink); }
+.pd-name i { width: 10px; height: 10px; border-radius: 3px; flex: none; background: var(--a, var(--wd-muted)); }
+.pd-bar { height: 10px; border-radius: 5px; background: rgba(6,26,20,.07); overflow: hidden; }
+.pd-bar i { display: block; height: 100%; border-radius: 5px; background: linear-gradient(90deg, #0d7a5f, #14956f); }
+.pd-v {
+  text-align: right; font-size: 14px; font-weight: 600; color: var(--wd-ink);
+  font-variant-numeric: tabular-nums;
+}
+.pd-v em { font-style: normal; color: var(--wd-muted); margin: 0 4px; }
+.pd-c {
+  text-align: right; font-size: 13.5px; font-weight: 700; color: #8f2031;
+  font-variant-numeric: tabular-nums;
+}
+.pd-c.is-clean { color: var(--wd-emerald-800, #0b5e4a); }
+.pd-tag {
+  justify-self: end;
+  padding: 3px 9px; border-radius: 20px;
+  font-size: 10.5px; font-weight: 600;
+  border: 1px solid var(--wd-line); color: var(--wd-muted);
+  background: rgba(255,255,255,.7); white-space: nowrap;
+}
+
+/* ============================================================
+   closing the gap
+   ============================================================ */
+.closer {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center; gap: 22px;
+  padding: 22px 26px; margin-bottom: 26px;
+  border-radius: 16px;
+  background: linear-gradient(120deg, #eef5f2, #fbfdfc 62%);
+  border: 1px solid rgba(13, 122, 95, .2);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 14px 28px -24px rgba(6,26,20,.3);
+}
+.closer[hidden] { display: none; }
+.cl-ico {
+  display: grid; place-items: center;
+  width: 46px; height: 46px; border-radius: 12px;
+  background: rgba(13, 122, 95, .11);
+}
+.cl-ico svg { width: 23px; height: 23px; fill: none; stroke: #0b5e4a; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.cl-body .eyebrow { color: #0d7a5f; }
+.cl-body h3 {
+  margin: 5px 0 6px;
+  font-family: var(--wd-serif, "Playfair Display", Georgia, serif);
+  font-size: 23px; font-weight: 600; color: #0b3b2f; letter-spacing: -.01em;
+}
+.cl-body p { margin: 0; font-size: 13.5px; line-height: 1.6; color: var(--wd-ink-soft); }
+
+.cl-figs { display: flex; gap: 22px; }
+.cl-figs > div {
+  min-width: 150px; text-align: right;
+  padding: 12px 15px; border-radius: 10px;
+  background: rgba(255,255,255,.75);
+  border: 1px solid rgba(13,122,95,.16);
+}
+.cl-figs small {
+  display: block; font-size: 10px; font-weight: 700; letter-spacing: .09em;
+  text-transform: uppercase; color: var(--wd-muted); margin-bottom: 4px;
+}
+.cl-figs b {
+  display: block;
+  font-family: var(--wd-serif, "Playfair Display", Georgia, serif);
+  font-size: 25px; font-weight: 600; color: #0b5e4a; line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.cl-figs em { display: block; margin-top: 4px; font-size: 11px; font-style: normal; color: var(--wd-muted); }
+.cl-figs .is-alt { border-color: rgba(154,106,18,.24); background: rgba(250,246,236,.8); }
+.cl-figs .is-alt b { color: #7a520c; }
+
+/* ---------- narrower ---------- */
+@media (max-width: 1180px) {
+  .pd-row { grid-template-columns: 180px minmax(0, 1fr) 190px 120px; }
+  .pd-tag { display: none; }
+}
+@media (max-width: 1080px) {
+  .closer { grid-template-columns: auto minmax(0, 1fr); gap: 16px 18px; }
+  .cl-figs { grid-column: 1 / -1; }
+  .cl-figs > div { flex: 1; text-align: left; }
+}
+@media (max-width: 860px) {
+  .lg-rates .rate-vs { margin: -19px auto; }
+}
+@media (max-width: 720px) {
+  .pd-row { grid-template-columns: minmax(0, 1fr) auto; gap: 5px 10px; padding: 11px 12px; }
+  .pd-bar { grid-column: 1 / -1; order: 3; }
+  .pd-name { grid-column: 1; }
+  .pd-v { grid-column: 2; text-align: right; font-size: 13px; }
+  .pd-c { grid-column: 1 / -1; order: 4; text-align: left; font-size: 12px; }
+  .pd-tag { display: none; }
+  .closer { padding: 18px 16px; }
+  .cl-body h3 { font-size: 19px; }
+  .cl-figs { flex-direction: column; gap: 10px; }
+  .cl-figs b { font-size: 21px; }
+  .lg-chart .lg-capv { font-size: 15px; }
+  .lg-chart .lg-cap { font-size: 8.5px; letter-spacing: .05em; }
+  .lg-chart .lg-in, .lg-chart .lg-gaptxt { font-size: 9.5px; }
+  .lg-chart .lg-goal-lab { font-size: 8.5px; }
+  .cut-list li { font-size: 11.5px; padding: 6px 10px; }
+  .cut-list em { display: none; }
+  .timing .slider.slim { flex-basis: 100%; max-width: none; }
+}
+
+@media print {
+  .closer { box-shadow: none; }
+}

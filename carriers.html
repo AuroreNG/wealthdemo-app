@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0d4435">
+  <title>Carrier Navigator — WEALTHDEMO</title>
+  <link rel="icon" href="wealthdemo-logo.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="tokens.css?v=33">
+  <link rel="stylesheet" href="site.css?v=33">
+  <link rel="stylesheet" href="tool.css?v=33">
+  <link rel="stylesheet" href="carriers.css?v=33">
+  <link rel="stylesheet" href="explain.css?v=33">
+</head>
+<body data-page="app">
+
+<header class="site-nav">
+  <div class="shell site-nav-inner">
+    <a class="brand-identity" href="home.html">
+      <img src="wealthdemo-logo.webp" alt="" aria-hidden="true">
+      <span class="brand-wordmark">
+        <strong>WEALTH<span>DEMO</span></strong>
+        <small>See What Your Money Can Do.</small>
+      </span>
+    </a>
+
+    <nav class="site-links">
+      <a href="home.html">Tools</a>
+      <a href="blueprint.html">Planning</a>
+      <a href="send.html">Assessments</a>
+      <a href="carriers.html" class="active">Carriers</a>
+      <a href="home.html#about">About</a>
+    </nav>
+
+    <div class="nav-search">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+      <input id="navSearch" type="search" placeholder="Search tools, topics, or goals…" autocomplete="off" aria-label="Search tools">
+      <kbd>⌘K</kbd>
+    </div>
+
+    <div class="site-actions">
+      <a class="premium-btn" href="#" data-billing>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5 7.5 12l4.5-5 4.5 5L20 8.5V17H4Z"/></svg>
+        Go Premium
+      </a>
+      <span class="nav-divider"></span>
+      <div class="account">
+        <button type="button" class="account-btn" id="accountBtn" aria-expanded="false">
+          <span class="avatar" id="accountInitials">SB</span>
+          <span class="hello">Hello, <b id="accountName">there</b></span>
+          <svg class="caret" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+        </button>
+        <div class="account-menu" id="accountMenu" hidden>
+          <span class="account-email" id="accountEmail">Signed in</span>
+          <a href="blueprint.html">Open Financial Blueprint</a>
+          <button type="button" data-logout>Log out</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="shell tool-wrap">
+
+  <div class="tool-topbar">
+    <a class="back-btn" href="home.html">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H6"/><path d="m11 6-6 6 6 6"/></svg>
+      Back to tools
+    </a>
+    <div class="topbar-right">
+      <label class="client-field">
+        <span>Client</span>
+        <input id="clientName" type="text" placeholder="Name for this case" autocomplete="off">
+      </label>
+      <button type="button" class="ghost-btn tall" id="printCase">Print</button>
+      <button type="button" class="send-btn" id="copyCase">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2.5"/><path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4h-9A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8"/></svg>
+        Copy case file
+      </button>
+    </div>
+  </div>
+
+  <section class="tool-hero">
+    <svg class="hero-lines" viewBox="0 0 900 220" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M420 230C540 170 620 120 900 96"/>
+      <path d="M440 240C580 180 660 132 900 126"/>
+      <path d="M470 250C620 196 700 160 900 158"/>
+      <path d="M500 262C660 212 740 190 900 192"/>
+    </svg>
+    <span class="hero-tile">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V9l8-5 8 5v10"/><path d="M9 19v-6h6v6"/></svg>
+    </span>
+    <div class="hero-text">
+      <span class="hero-eyebrow">Placement</span>
+      <h1>Carrier Navigator</h1>
+      <p>Pre-screen the case, see what each carrier actually publishes, and get the exact next action — before you quote a class.</p>
+    </div>
+    <div class="hero-aside">
+      <b>Right carrier.</b>
+      <b>Right evidence. First time.</b>
+    </div>
+  </section>
+
+  <div class="match-layout">
+
+    <!-- ---------- intake ---------- -->
+    <aside class="panel profile-panel" id="intake">
+      <div class="panel-head">
+        <span class="panel-ico" data-tint="mint"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3.5h5.5L18 8v12.5H8Z"/><path d="M13.5 3.5V8H18"/><path d="M10.5 12.5h5M10.5 16h5"/></svg></span>
+        <div><h2>Case Intake</h2><p>Product path first — carrier-level assumptions are not enough.</p></div>
+      </div>
+
+      <label class="group-label">Product path</label>
+      <div class="need-grid" id="pathGrid"></div>
+
+      <div class="p-row">
+        <div class="f-body">
+          <label for="cAge">Current age</label>
+          <div class="control"><input id="cAge" type="number" min="0" max="100" inputmode="numeric"></div>
+          <small>Controls issue age and accelerated eligibility.</small>
+        </div>
+        <div class="f-body">
+          <label for="cState">State of residence</label>
+          <div class="control"><select id="cState"></select></div>
+          <small>Forms and riders vary.</small>
+        </div>
+      </div>
+
+      <div class="f-body">
+        <label for="cAmount">Coverage amount or premium ($)</label>
+        <div class="control"><input id="cAmount" type="number" min="0" step="10000" inputmode="numeric"></div>
+        <small>Controls evidence requirements and financial review.</small>
+      </div>
+
+      <div id="lifeBlock">
+        <label class="group-label">Flag anything present</label>
+        <div class="flag-row" id="condRow"></div>
+      </div>
+
+      <div id="annuityBlock" hidden>
+        <label class="group-label">Suitability</label>
+        <div class="f-body"><label for="aFunding">Funding source</label><div class="control"><input id="aFunding" type="text" placeholder="Qualified, nonqualified, transfer, rollover, replacement"></div></div>
+        <div class="f-body"><label for="aLiquid">Liquid assets after purchase</label><div class="control"><input id="aLiquid" type="text" placeholder="What's left accessible"></div></div>
+        <div class="f-body"><label for="aHorizon">Time horizon vs surrender period</label><div class="control"><input id="aHorizon" type="text" placeholder="Can they hold through the surrender term?"></div></div>
+        <div class="f-body"><label for="aIncome">Income need and risk tolerance</label><div class="control"><input id="aIncome" type="text" placeholder="Supports best-interest documentation"></div></div>
+      </div>
+
+      <div class="f-body">
+        <label for="cExisting">Existing and pending coverage</label>
+        <div class="control"><input id="cExisting" type="text" placeholder="Supports replacement review"></div>
+      </div>
+    </aside>
+
+    <!-- ---------- results ---------- -->
+    <section class="results">
+      <div class="results-head">
+        <h2 id="navCount">—</h2>
+        <span class="results-note">Pre-screening only. Underwriting decides.</span>
+      </div>
+
+      <div class="notice" id="navEmpty" hidden>
+        <b>No documented carrier writes this path yet.</b>
+        <p>Seven partners are documented in the Carrier Navigator workbook. The rest of the board is listed below and can be added as their guides are reviewed.</p>
+      </div>
+
+      <div class="capture-panel" id="captureBlock" hidden>
+        <div class="cap-head">
+          <span class="panel-ico" data-tint="sun"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 18h5"/><path d="M10 21h4"/><path d="M8 13.5A5 5 0 1 1 16 13.5c-.9 1.1-1.4 2-1.5 3h-5c-.1-1-.6-1.9-1.5-3Z"/></svg></span>
+          <div>
+            <h3>Capture before you quote <b id="captureCount">0</b></h3>
+            <p>Every carrier in this path will ask for these. Getting them on the first call is what stops a case stalling.</p>
+          </div>
+        </div>
+        <ul class="capture-list" id="captureList"></ul>
+      </div>
+
+      <div class="nav-grid" id="navGrid"></div>
+
+      <details class="fold" id="offBlock" hidden>
+        <summary><b id="offCount">0</b> documented carriers are on a different path</summary>
+        <ul class="out-list" id="offList"></ul>
+      </details>
+
+      <details class="fold">
+        <summary><b id="rosterCount">0</b> partners on the board are not documented yet</summary>
+        <p class="fold-note">These carriers are part of the partner board but have no entry in the Carrier Navigator workbook, so nothing is screened against them. Adding one means recording its rule type, what it publishes, the exact next action and the source.</p>
+        <div class="unset-list" id="rosterList"></div>
+      </details>
+
+      <p class="nav-disclaimer">
+        Use this as a pre-screening navigator. Final underwriting decisions depend on the exact product, state,
+        application date, medical records, prescription history, MIB data, motor vehicle records, financial
+        justification, and the carrier underwriter.
+      </p>
+    </section>
+  </div>
+</div>
+
+<script src="auth.js?v=33"></script>
+<script src="agent.js?v=33"></script>
+<script src="site.js?v=33"></script>
+<script src="explain.js?v=33"></script>
+<script src="carriers.js?v=33"></script>
+<script src="match.js?v=33"></script>
+</body>
+</html>

@@ -1,0 +1,222 @@
+/* ============================================================
+   WEALTHDEMO — Rent vs. Buy
+   (builds on paycheck.css for .banner, .deck, .rail, .runway,
+    .versus, .reads, .later, .fineprint)
+   ============================================================ */
+
+/* ---------- home / car ---------- */
+.rb-mode {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4px;
+  min-width: 190px;
+  padding: 4px; margin-bottom: 18px;
+  border-radius: 10px;
+  background: rgba(6, 26, 20, .05);
+}
+.rb-mode button {
+  height: 36px; padding: 0 8px;
+  border: 0; border-radius: 7px;
+  background: none; cursor: pointer;
+  font: inherit; font-size: 13px; font-weight: 600; color: var(--wd-muted);
+  transition: background .13s ease, color .13s ease, box-shadow .13s ease;
+}
+.rb-mode button:hover { color: var(--wd-ink); }
+.rb-mode button.on {
+  background: #fff; color: #0b5e4a;
+  box-shadow: 0 1px 3px rgba(6,26,20,.14);
+}
+
+.calc-grid > 
+.calc .field[hidden] { display: none; }
+#railHome[hidden], #railCar[hidden] { display: none; }
+
+/* ============================================================
+   the three headline numbers
+   ============================================================ */
+.rb-heads {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px;
+}
+.rb-head {
+  padding: 16px 18px; border-radius: 14px;
+  background: #fff; border: 1px solid var(--wd-line);
+  box-shadow: 0 10px 24px -22px rgba(6,26,20,.5);
+}
+.rb-head small {
+  display: block; font-size: 10px; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--wd-muted); margin-bottom: 7px;
+}
+.rb-head b {
+  display: block;
+  font-family: var(--wd-serif, "Playfair Display", Georgia, serif);
+  font-size: 30px; font-weight: 600; line-height: 1; letter-spacing: -.02em;
+  font-variant-numeric: tabular-nums;
+}
+.rb-head em {
+  display: block; margin-top: 7px; font-style: normal;
+  font-size: 11.5px; color: var(--wd-muted);
+}
+.rb-head[data-side="a"] { box-shadow: inset 0 3px 0 #2f6bb5, 0 10px 24px -22px rgba(6,26,20,.5); }
+.rb-head[data-side="a"] b { color: #1d4f86; }
+.rb-head[data-side="b"] { box-shadow: inset 0 3px 0 #0d7a5f, 0 10px 24px -22px rgba(6,26,20,.5); }
+.rb-head[data-side="b"] b { color: #0b5e4a; }
+.rb-head[data-side="d"] {
+  background: linear-gradient(120deg, rgba(179,40,60,.06), #fff 60%);
+  border-color: rgba(179,40,60,.2);
+  box-shadow: inset 0 3px 0 #b3283c, 0 10px 24px -22px rgba(6,26,20,.5);
+}
+.rb-head[data-side="d"] b { color: #8f2031; }
+.rb-head[data-side="d"].is-flip {
+  background: linear-gradient(120deg, rgba(13,122,95,.06), #fff 60%);
+  border-color: rgba(13,122,95,.2);
+  box-shadow: inset 0 3px 0 #0d7a5f, 0 10px 24px -22px rgba(6,26,20,.5);
+}
+.rb-head[data-side="d"].is-flip b { color: #0b5e4a; }
+
+/* ============================================================
+   the break-even picture
+   ============================================================ */
+.rb-cross .rw-key i.k-rent { background: #2f6bb5; }
+.rb-cross .rw-key i.k-buy  { background: #0d7a5f; }
+
+.rb-svg { width: 100%; height: auto; display: block; }
+.rb-svg text { stroke: none; }
+
+.rb-band { stroke: none; }
+.rb-band.is-rent { fill: rgba(47,107,181,.13); }
+.rb-band.is-buy  { fill: rgba(13,122,95,.14); }
+
+.rb-l-rent {
+  fill: none; stroke: #2f6bb5; stroke-width: 2.6;
+  stroke-linejoin: round; stroke-linecap: round;
+}
+.rb-l-buy {
+  fill: none; stroke: #0d7a5f; stroke-width: 2.6;
+  stroke-linejoin: round; stroke-linecap: round;
+}
+.rb-zero { stroke: rgba(6,26,20,.2); stroke-width: 1; stroke-dasharray: 3 3; }
+.rb-base { stroke: rgba(6,26,20,.2); stroke-width: 1.1; }
+
+.rb-cross-line { stroke: #9a6a12; stroke-width: 1.4; stroke-dasharray: 6 5; opacity: .85; }
+.rb-dot { fill: #fff; stroke: #9a6a12; stroke-width: 2.6; }
+.rb-cross-lab {
+  font-size: 10px; font-weight: 700; letter-spacing: .1em; fill: #7a520c;
+}
+.rb-cross-lab.is-none { fill: #1d4f86; }
+
+.rb-costx { stroke: rgba(6,26,20,.42); stroke-width: 1.4; }
+.rb-costx-lab { font-size: 9.5px; fill: var(--wd-muted); letter-spacing: .03em; }
+
+.rb-cap-rent { font-size: 12.5px; font-weight: 700; fill: #1d4f86; font-variant-numeric: tabular-nums; }
+.rb-cap-buy  { font-size: 12.5px; font-weight: 700; fill: #0b5e4a; font-variant-numeric: tabular-nums; }
+.rb-ax   { font-size: 10.5px; fill: var(--wd-muted); font-variant-numeric: tabular-nums; }
+.rb-tick { font-size: 10.5px; fill: var(--wd-muted); font-variant-numeric: tabular-nums; }
+
+.rb-scrub {
+  display: flex; align-items: center; gap: 16px;
+  margin-top: 14px; padding-top: 14px;
+  border-top: 1px dashed var(--wd-line);
+}
+.rb-scrub label {
+  flex: none; font-size: 10.5px; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--wd-muted);
+}
+.rb-scrub .slider.wide { flex: 1; margin: 0; --c: #2f4f45; --c-soft: rgba(47,79,69,.18); }
+.rb-scrub b {
+  flex: none; min-width: 74px; text-align: right;
+  font-size: 16px; font-weight: 700; color: var(--wd-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============================================================
+   the monthly columns
+   ============================================================ */
+.rb-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.rb-col {
+  border-radius: 14px; overflow: hidden;
+  background: #fff; border: 1px solid var(--wd-line);
+}
+.rb-col header {
+  padding: 11px 16px;
+  font-size: 11px; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: #fff;
+}
+.rb-col[data-side="a"] header { background: #2f6bb5; }
+.rb-col[data-side="b"] header { background: #0d7a5f; }
+.rb-col ul { margin: 0; padding: 4px 16px 10px; list-style: none; }
+.rb-col li {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 14px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--wd-line);
+  font-size: 13.5px; color: var(--wd-ink-soft);
+}
+.rb-col li:last-child { border-bottom: none; }
+.rb-col li b { font-weight: 700; color: var(--wd-ink); font-variant-numeric: tabular-nums; }
+.rb-col li.is-total { font-weight: 600; color: var(--wd-ink); }
+.rb-col[data-side="a"] li.is-total b { color: #1d4f86; }
+.rb-col[data-side="b"] li.is-total b { color: #0b5e4a; }
+
+/* ============================================================
+   position at the horizon
+   ============================================================ */
+.rb-versus .vs[data-kind="alone"]  { --c: #2f6bb5; --c-ink: #1d4f86; --c-soft: rgba(47,107,181,.09); }
+.rb-versus .vs[data-kind="alone"].is-short { --c: #9a6a12; --c-ink: #7a520c; --c-soft: rgba(154,106,18,.1); }
+.rb-versus .vs[data-kind="both"]   { --c: #0d7a5f; --c-ink: #0b5e4a; --c-soft: rgba(13,122,95,.09); }
+.rb-versus .vs[data-kind="both"].is-warn { --c: #9a6a12; --c-ink: #7a520c; --c-soft: rgba(154,106,18,.1); }
+.rb-versus .vs-big { font-size: 34px; }
+
+.rb-lines { margin: 14px 0 16px; padding: 0; list-style: none; }
+.rb-lines li {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+  padding: 6px 0;
+  font-size: 12.5px; color: var(--wd-muted);
+}
+.rb-lines li + li { border-top: 1px dashed var(--wd-line); }
+.rb-lines li b {
+  font-size: 13.5px; font-weight: 700; color: var(--wd-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============================================================
+   what people forget
+   ============================================================ */
+.rb-forget { grid-template-columns: minmax(0, 1fr); }
+.rb-forget-body {
+  display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 22px 30px; align-items: start;
+}
+.rb-forget .chips { margin: 0; }
+.rb-forget .chips li {
+  padding: 6px 12px; border-radius: 20px;
+  font-size: 12px; font-weight: 500;
+  border: 1px solid var(--wd-line); color: var(--wd-ink-soft);
+  background: rgba(255,255,255,.7);
+}
+.rb-key-q {
+  margin: 0; padding: 16px 18px;
+  border-radius: 12px;
+  background: rgba(6, 26, 20, .035);
+  border-left: 3px solid var(--wd-emerald-700, #0d4435);
+  font-size: 13.5px; line-height: 1.65; color: var(--wd-ink-soft);
+}
+.rb-key-q b { color: var(--wd-ink); }
+
+/* ============================================================
+   narrower
+   ============================================================ */
+@media (max-width: 900px) {
+  .rb-heads { grid-template-columns: minmax(0, 1fr); }
+  .rb-forget-body { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 760px) {
+  .rb-cols { grid-template-columns: minmax(0, 1fr); }
+  .rb-scrub { flex-wrap: wrap; }
+  .rb-scrub .slider.wide { flex-basis: 100%; order: 3; }
+  .rb-scrub b { margin-left: auto; text-align: right; }
+  .rb-head b { font-size: 26px; }
+  .rb-versus .vs-big { font-size: 30px; }
+  .rb-svg .rb-cross-lab, .rb-svg .rb-costx-lab { font-size: 8.5px; }
+  .rb-svg .rb-tick, .rb-svg .rb-ax { font-size: 9.5px; }
+}
+
+@media print {
+  .rb-head, .rb-col, .rb-cross { box-shadow: none; }
+}

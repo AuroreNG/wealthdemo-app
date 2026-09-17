@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0d4435">
+  <title>Send an Assessment — WEALTHDEMO</title>
+  <link rel="icon" href="wealthdemo-logo.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="site.css">
+  <link rel="stylesheet" href="tool.css">
+  <link rel="stylesheet" href="rule72.css">
+  <link rel="stylesheet" href="paycheck.css">
+  <link rel="stylesheet" href="send.css">
+  <link rel="stylesheet" href="fold.css">
+</head>
+<body data-page="app" class="sd-page">
+
+<header class="site-nav">
+  <div class="shell site-nav-inner">
+    <a class="brand-identity" href="home.html">
+      <img src="wealthdemo-logo.webp" alt="" aria-hidden="true">
+      <span class="brand-wordmark">
+        <strong>WEALTH<span>DEMO</span></strong>
+        <small>See What Your Money Can Do.</small>
+      </span>
+    </a>
+    <nav class="site-links">
+      <a href="home.html">Tools</a>
+      <a href="blueprint.html">Planning</a>
+      <a href="send.html" class="active">Assessments</a>
+      <a href="home.html#about">About</a>
+    </nav>
+    <div class="nav-search">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+      <input id="navSearch" type="search" placeholder="Search tools, topics, or goals…" autocomplete="off" aria-label="Search tools">
+      <kbd>⌘K</kbd>
+    </div>
+    <div class="site-actions">
+      <a class="premium-btn" href="#" data-billing>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5 7.5 12l4.5-5 4.5 5L20 8.5V17H4Z"/></svg>
+        Go Premium
+      </a>
+      <span class="nav-divider"></span>
+      <div class="account">
+        <button type="button" class="account-btn" id="accountBtn" aria-expanded="false">
+          <span class="avatar" id="accountInitials">SB</span>
+          <span class="hello">Hello, <b id="accountName">there</b></span>
+          <svg class="caret" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+        </button>
+        <div class="account-menu" id="accountMenu" hidden>
+          <span class="account-email" id="accountEmail">Signed in</span>
+          <a href="blueprint.html">Open Financial Blueprint</a>
+          <button type="button" data-logout>Log out</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="shell tool-wrap">
+
+  <div class="tool-topbar">
+    <a class="back-btn" href="home.html">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H6"/><path d="m11 6-6 6 6 6"/></svg>
+      Back to tools
+    </a>
+    <div class="topbar-right">
+      <button type="button" class="rail-reset" id="brandBtn">
+        <svg viewBox="0 0 24 24" aria-hidden="true" style="width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.9;vertical-align:-2px;margin-right:5px">
+          <circle cx="12" cy="8.5" r="3.4"/><path d="M5.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/></svg>
+        Your details
+      </button>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       the banner
+       ============================================================ -->
+  <section class="banner">
+    <div class="bn-q">
+      <span class="bn-eyebrow">Before the meeting</span>
+      <h1>Send an Assessment</h1>
+      <p>Three minutes of questions, answered on their own phone. You get their numbers and a prep sheet before you sit down.</p>
+    </div>
+    <div class="bn-a">
+      <small id="bnLabel">THEY ANSWER IN</small>
+      <b id="bnBig">3 min</b>
+      <em id="bnSub">no account, no app, nothing to install</em>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       compose
+       ============================================================ -->
+  <section class="calc">
+    <div class="calc-head">
+      <div class="calc-title">
+        <h2>Who is it for?</h2>
+        <p>Only the name is needed. Everything else sharpens the invitation.</p>
+      </div>
+    </div>
+
+    <div class="calc-sides">
+      <section class="side" data-side="a">
+        <header>
+          <span class="side-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.4"/><path d="M5.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/></svg></span>
+          <span class="side-name"><b>The client</b><em>Who you are meeting</em></span>
+        </header>
+        <div class="side-grid">
+          <div class="field">
+            <label for="cName">Their name</label>
+            <input id="cName" class="sd-in" type="text" placeholder="Dana Reyes" autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="cEmail">Their email</label>
+            <input id="cEmail" class="sd-in" type="email" placeholder="dana@example.com" autocomplete="off">
+            <small>Used to open your mail app — nothing is sent from here.</small>
+          </div>
+          <div class="field">
+            <label for="cMeet">Meeting</label>
+            <input id="cMeet" class="sd-in" type="datetime-local">
+            <small id="meetNote">&mdash;</small>
+          </div>
+        </div>
+        <p class="side-fact"><span>Their meeting</span><b id="expNote">Not set</b></p>
+      </section>
+
+      <section class="side" data-side="b">
+        <header>
+          <span class="side-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.5 21 9l-9 4.5L3 9Z"/><path d="M7 11v4.6c0 1.4 2.2 2.4 5 2.4s5-1 5-2.4V11"/></svg></span>
+          <span class="side-name"><b>What it covers</b><em>The core three minutes, always</em></span>
+        </header>
+        <p class="sd-note">Every assessment asks the same nine to twelve core questions. These are the extra areas they can open up themselves at the end — tick the ones you want offered.</p>
+        <div class="sd-topics" id="topicList"></div>
+      </section>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       the link
+       ============================================================ -->
+  <div class="results">
+    <section class="sd-out" id="outBox">
+      <div class="sd-out-head">
+        <div>
+          <span class="eyebrow">Their link</span>
+          <h2 id="outTitle">Ready to send</h2>
+          <p id="outNote">This link carries everything. It is not stored anywhere — the whole assessment travels inside the address.</p>
+        </div>
+        <div class="sd-qr" id="qrBox" title="Scan to open on a phone"></div>
+      </div>
+
+      <div class="sd-link">
+        <input id="linkOut" type="text" readonly>
+        <button type="button" id="copyBtn" class="sd-copy">Copy</button>
+      </div>
+
+      <div class="sd-acts">
+        <button type="button" class="sd-primary" id="mailBtn">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 3.5 10.5 13.5"/><path d="M20.5 3.5 14 20.5l-3.5-7-7-3.5Z"/></svg>
+          Open in email
+        </button>
+        <a class="sd-second" id="previewBtn" href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+          See what they see
+        </a>
+        <button type="button" class="sd-second" id="icsBtn">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="6" width="15" height="13.5" rx="2.5"/><path d="M4.5 10.5h15"/><path d="M9 4.5V7M15 4.5V7"/></svg>
+          Add meeting to calendar
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <!-- ---------- what happens next ---------- -->
+  <section class="reads" data-fold="How this works" data-fold-note="Three steps, no accounts, nothing stored on a server">
+    <div class="reads-head">
+      <span class="eyebrow">How this works</span>
+      <h2>You send a link. They answer. It comes back to you.</h2>
+    </div>
+    <div class="sd-steps">
+      <article class="sd-step"><i>1</i><b>You send</b><p>Email, text, or hold up the QR code at the kitchen table. Nothing to install.</p></article>
+      <article class="sd-step"><i>2</i><b>They answer</b><p>Three minutes on their own phone. They see where they stand and can go deeper if they want to.</p></article>
+      <article class="sd-step"><i>3</i><b>It comes back</b><p>They press send, you open their link, and every tool on this site is already filled in with their real numbers.</p></article>
+    </div>
+    <p class="sd-privacy">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 5.5 6.2v5.1c0 4 2.7 7.6 6.5 9.2 3.8-1.6 6.5-5.2 6.5-9.2V6.2Z"/></svg>
+      Everything travels inside the link itself, in the part of a web address that browsers never send to a server. No database, no account, and nothing of theirs sitting anywhere waiting to be leaked.
+    </p>
+  </section>
+
+  <footer class="fineprint" data-fold="The fine print" data-fold-quiet="1">
+    <span class="d-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5"/><path d="M12 7.6h.01"/></svg></span>
+    <p>The assessment produces an educational illustration from what the client tells you, measured against standard planning conventions. It is not advice, not a recommendation, and not a substitute for a full fact-find. Because the link carries the client's answers, treat it with the same care as any document containing their financial details.</p>
+    <span class="d-sign"><i></i> A brighter financial tomorrow</span>
+  </footer>
+</div>
+
+<!-- ============================================================
+     your details
+     ============================================================ -->
+<div class="sd-sheet" id="brandSheet" hidden>
+  <div class="sd-sheet-card" role="dialog" aria-modal="true" aria-label="Your details">
+    <header>
+      <div><span class="eyebrow">Carried on everything they see</span><h2>Your details</h2></div>
+      <button type="button" class="sd-x" id="brandClose" aria-label="Close">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17"/></svg>
+      </button>
+    </header>
+    <div class="sd-sheet-body">
+      <div class="field"><label for="pName">Your name</label><input id="pName" class="sd-in" type="text" placeholder="Sam Bizzall"></div>
+      <div class="field"><label for="pFirm">Firm</label><input id="pFirm" class="sd-in" type="text" placeholder="Bizzall Financial"></div>
+      <div class="field"><label for="pEmail">Email</label><input id="pEmail" class="sd-in" type="email" placeholder="sam@bizzallfinance.com"></div>
+      <div class="field"><label for="pPhone">Phone</label><input id="pPhone" class="sd-in" type="tel" placeholder="(555) 014-2277"></div>
+      <div class="field sd-wide"><label for="pBook">Booking link</label><input id="pBook" class="sd-in" type="url" placeholder="https://calendly.com/you/30min">
+        <small>Shown as a "Book your meeting" button at the end of their assessment.</small></div>
+      <div class="field"><label for="pLic">Licence number</label><input id="pLic" class="sd-in" type="text" placeholder="Optional">
+        <small>Kept on this device. Never travels in a client link.</small></div>
+      <div class="field"><label for="pColour">Your colour</label>
+        <div class="sd-colour"><input id="pColour" type="color" value="#0d4435"><span id="colourHex">#0d4435</span></div>
+        <small>Used across the client's assessment.</small></div>
+    </div>
+    <footer>
+      <span class="sd-preview" id="brandPreview"></span>
+      <button type="button" class="sd-primary" id="brandSave">Save</button>
+    </footer>
+  </div>
+</div>
+
+<script src="auth.js"></script>
+<script src="agent.js"></script>
+<script src="site.js"></script>
+<script src="client.js"></script>
+<script src="profile.js"></script>
+<script src="assess.js"></script>
+<script src="qr.js"></script>
+<script src="send.js"></script>
+<script src="fold.js"></script>
+</body>
+</html>

@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0d4435">
+  <title>Rent vs. Buy — WEALTHDEMO</title>
+  <link rel="icon" href="wealthdemo-logo.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="tokens.css?v=33">
+  <link rel="stylesheet" href="site.css?v=33">
+  <link rel="stylesheet" href="tool.css?v=33">
+  <link rel="stylesheet" href="withdraw.css?v=33">
+  <link rel="stylesheet" href="accounts.css?v=33">
+  <link rel="stylesheet" href="explain.css?v=33">
+  <link rel="stylesheet" href="rule72.css?v=33">
+  <link rel="stylesheet" href="paycheck.css?v=33">
+  <link rel="stylesheet" href="rentbuy.css?v=33">
+  <link rel="stylesheet" href="fold.css?v=33">
+</head>
+<body data-page="app">
+
+<header class="site-nav">
+  <div class="shell site-nav-inner">
+    <a class="brand-identity" href="home.html">
+      <img src="wealthdemo-logo.webp" alt="" aria-hidden="true">
+      <span class="brand-wordmark">
+        <strong>WEALTH<span>DEMO</span></strong>
+        <small>See What Your Money Can Do.</small>
+      </span>
+    </a>
+    <nav class="site-links">
+      <a href="home.html">Tools</a>
+      <a href="blueprint.html">Planning</a>
+      <a href="send.html">Assessments</a>
+      <a href="home.html#categories">Resources</a>
+      <a href="home.html#about">About</a>
+    </nav>
+    <div class="nav-search">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+      <input id="navSearch" type="search" placeholder="Search tools, topics, or goals…" autocomplete="off" aria-label="Search tools">
+      <kbd>⌘K</kbd>
+    </div>
+    <div class="site-actions">
+      <a class="premium-btn" href="#" data-billing>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5 7.5 12l4.5-5 4.5 5L20 8.5V17H4Z"/></svg>
+        Go Premium
+      </a>
+      <span class="nav-divider"></span>
+      <div class="account">
+        <button type="button" class="account-btn" id="accountBtn" aria-expanded="false">
+          <span class="avatar" id="accountInitials">SB</span>
+          <span class="hello">Hello, <b id="accountName">there</b></span>
+          <svg class="caret" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+        </button>
+        <div class="account-menu" id="accountMenu" hidden>
+          <span class="account-email" id="accountEmail">Signed in</span>
+          <a href="blueprint.html">Open Financial Blueprint</a>
+          <button type="button" data-logout>Log out</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="shell tool-wrap">
+
+  <div class="tool-topbar">
+    <a class="back-btn" href="home.html">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H6"/><path d="m11 6-6 6 6 6"/></svg>
+      Back to tools
+    </a>
+    <div class="topbar-right">
+      <button type="button" class="send-btn" id="sendBtn">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 3.5 10.5 13.5"/><path d="M20.5 3.5 14 20.5l-3.5-7-7-3.5Z"/></svg>
+        Send to client
+      </button>
+      <div class="more">
+        <button type="button" class="more-btn" id="moreBtn" aria-label="More options" aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="18" cy="12" r="1.3"/></svg>
+        </button>
+        <div class="more-menu" id="moreMenu" hidden>
+          <button type="button" id="printBtn">Print or save as PDF</button>
+          <button type="button" id="resetBtn">Reset to example figures</button>
+          <a href="paycheck.html">If Your Paycheck Stopped Today</a>
+          <a href="waiting.html">Cost of Waiting</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       the banner
+       ============================================================ -->
+  <section class="banner">
+    <div class="bn-q">
+      <span class="bn-eyebrow" id="bnEyebrow">Real Estate</span>
+      <h1 id="bnTitle">Rent vs. Buy</h1>
+      <p id="bnLead">What each choice costs today, what you'd own later, and the year one finally pulls ahead.</p>
+    </div>
+    <div class="bn-a">
+      <small id="bnLabel">&mdash;</small>
+      <b id="bnBig">&mdash;</b>
+      <em id="bnSub">&mdash;</em>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       the working area
+       ============================================================ -->
+  <!-- ============================================================
+       the calculator
+       ============================================================ -->
+  <!-- ============================================================
+       the calculator
+       ============================================================ -->
+  <section class="calc">
+    <div class="calc-head">
+      <div class="calc-title">
+        <h2>Assumptions</h2>
+        <p>Change anything here and every number below moves with it.</p>
+      </div>
+      <div class="calc-tools">
+        <div class="mode-switch rb-mode" role="group" aria-label="What you're comparing">
+          <button type="button" id="modeHome" class="on">Home</button>
+          <button type="button" id="modeCar">Car</button>
+        </div>
+        <button type="button" class="rail-reset" id="resetBtn2">Reset</button>
+      </div>
+    </div>
+
+    <!-- ---------- home ---------- -->
+    <div class="calc-sides" id="railHome">
+      <section class="side" data-side="a">
+        <header>
+          <span class="side-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 10.5 12 5l7.5 5.5"/><path d="M6.5 9.8V19h11V9.8"/><path d="M10 19v-5h4v5"/></svg></span>
+          <span class="side-name"><b id="legA">Renting</b><em>What it costs to stay put</em></span>
+        </header>
+        <div class="side-grid">
+          <div class="field">
+            <label for="rRent"><span id="labRent">Monthly Rent</span></label>
+            <div class="money-in"><i>$</i><input id="rRent" type="number" min="0" step="50" value="2300" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="rInc"><span id="labRInc">Annual Rent Increase</span></label>
+            <div class="pct-in"><input id="rInc" type="number" min="0" max="20" step="0.1" value="3" inputmode="decimal"><i>%</i></div>
+          </div>
+          <div class="field">
+            <label for="rIns"><span id="labRIns">Renter's Insurance / mo</span></label>
+            <div class="money-in"><i>$</i><input id="rIns" type="number" min="0" step="5" value="25" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="rRet"><span data-term="opportunity">Return on Money Not Used to Buy</span></label>
+            <div class="pct-in"><input id="rRet" type="number" min="0" max="20" step="0.1" value="6" inputmode="decimal"><i>%</i></div>
+          </div>
+        </div>
+        <p class="side-fact"><span id="factAL">&mdash;</span><b id="factA">&mdash;</b></p>
+      </section>
+
+      <section class="side" data-side="b">
+        <header>
+          <span class="side-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2 20 7v5.4c0 4.4-3.3 8-8 8.4-4.7-.4-8-4-8-8.4V7Z"/><path d="m9 12 2.2 2.2L15.5 10"/></svg></span>
+          <span class="side-name"><b id="legB">Buying</b><em>What it costs to own</em></span>
+        </header>
+        <div class="side-grid">
+          <div class="field">
+            <label for="bPrice"><span id="labPrice">Home Price</span></label>
+            <div class="money-in"><i>$</i><input id="bPrice" type="number" min="0" step="5000" value="500000" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="bDown"><span id="labDown">Down Payment</span></label>
+            <div class="money-in"><i>$</i><input id="bDown" type="number" min="0" step="5000" value="50000" inputmode="numeric"></div>
+            <small id="downPct">&mdash;</small>
+          </div>
+          <div class="field">
+            <label for="bRate"><span id="labRate">Mortgage Rate</span></label>
+            <div class="pct-in"><input id="bRate" type="number" min="0" max="25" step="0.05" value="6.5" inputmode="decimal"><i>%</i></div>
+          </div>
+          <div class="field">
+            <label for="bTerm" id="labTerm">Loan Term</label>
+            <select id="bTerm"></select>
+          </div>
+          <div class="field">
+            <label for="bTax"><span data-term="carrying" id="labTax">Property Tax / Year</span></label>
+            <div class="money-in"><i>$</i><input id="bTax" type="number" min="0" step="250" value="9000" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="bIns"><span id="labBIns">Homeowners Insurance / Year</span></label>
+            <div class="money-in"><i>$</i><input id="bIns" type="number" min="0" step="100" value="2400" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="bMaint"><span id="labMaint">Maintenance / Year</span></label>
+            <div class="money-in"><i>$</i><input id="bMaint" type="number" min="0" step="250" value="5000" inputmode="numeric"></div>
+          </div>
+        </div>
+
+        <details class="more">
+          <summary><span>Ongoing and exit costs</span><i></i></summary>
+          <div class="side-grid">
+          <div class="field">
+            <label for="bHoa"><span id="labHoa">HOA / Month</span></label>
+            <div class="money-in"><i>$</i><input id="bHoa" type="number" min="0" step="25" value="100" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="bClose"><span data-term="closingcosts" id="labClose">Closing Costs</span></label>
+            <div class="money-in"><i>$</i><input id="bClose" type="number" min="0" step="1000" value="15000" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="bAppr"><span data-term="appreciation" id="labAppr">Home Appreciation / Year</span></label>
+            <div class="pct-in"><input id="bAppr" type="number" min="-40" max="25" step="0.1" value="3" inputmode="decimal"><i>%</i></div>
+          </div>
+          <div class="field">
+            <label for="bSell"><span data-term="sellingcost" id="labSell">Selling Cost at End</span></label>
+            <div class="pct-in"><input id="bSell" type="number" min="0" max="20" step="0.5" value="6" inputmode="decimal"><i>%</i></div>
+          </div>
+          <div class="field">
+            <label for="bTaxSav"><span data-term="taxbenefit">Est. Tax Savings / Year</span></label>
+            <div class="money-in"><i>$</i><input id="bTaxSav" type="number" min="0" step="500" value="0" inputmode="numeric"></div>
+            <small>Leave at zero unless you have a real figure for this household.</small>
+          </div>
+          </div>
+        </details>
+        <p class="side-fact"><span id="factBL">&mdash;</span><b id="factB">&mdash;</b></p>
+      </section>
+    </div>
+
+    <!-- ---------- car ---------- -->
+    <div class="calc-sides" id="railCar" hidden>
+      <section class="side" data-side="a">
+        <header>
+          <span class="side-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 16.5v2.3h3v-2.3"/><path d="M17 16.5v2.3h3v-2.3"/><path d="M3.5 16.5h17v-4l-1.8-4.3a2 2 0 0 0-1.8-1.2H8.1a2 2 0 0 0-1.8 1.2L4.5 12.5Z"/><path d="M4.5 12.5h15"/></svg></span>
+          <span class="side-name"><b>Leasing</b><em>A payment that never ends</em></span>
+        </header>
+        <div class="side-grid">
+          <div class="field">
+            <label for="cLease">Monthly Lease Payment</label>
+            <div class="money-in"><i>$</i><input id="cLease" type="number" min="0" step="25" value="550" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="cLDown"><span data-term="leaseupfront">Lease Down Payment</span></label>
+            <div class="money-in"><i>$</i><input id="cLDown" type="number" min="0" step="250" value="3000" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="cLTerm">Lease Term</label>
+            <select id="cLTerm">
+              <option value="24">24 months</option>
+              <option value="36" selected>36 months</option>
+              <option value="39">39 months</option>
+              <option value="48">48 months</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="cLFees"><span data-term="leaseupfront">Lease Fees Over Each Term</span></label>
+            <div class="money-in"><i>$</i><input id="cLFees" type="number" min="0" step="100" value="1200" inputmode="numeric"></div>
+            <small id="cTermNote">&mdash;</small>
+          </div>
+          <div class="field">
+            <label for="cMiles"><span data-term="mileage">Expected Excess Mileage / Year</span></label>
+            <div class="pct-in"><input id="cMiles" type="number" min="0" max="100000" step="500" value="0" inputmode="decimal"><i>mi</i></div>
+          </div>
+          <div class="field">
+            <label for="cMileRate">Charge per Excess Mile</label>
+            <div class="money-in"><i>$</i><input id="cMileRate" type="number" min="0" step="0.05" value="0.25" inputmode="numeric"></div>
+          </div>
+        </div>
+        <p class="side-fact"><span id="factCAL">&mdash;</span><b id="factCA">&mdash;</b></p>
+      </section>
+
+      <section class="side" data-side="b">
+        <header>
+          <span class="side-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2 20 7v5.4c0 4.4-3.3 8-8 8.4-4.7-.4-8-4-8-8.4V7Z"/><path d="m9 12 2.2 2.2L15.5 10"/></svg></span>
+          <span class="side-name"><b>Buying</b><em>A payment that stops</em></span>
+        </header>
+        <div class="side-grid">
+          <div class="field">
+            <label for="cPrice">Vehicle Price</label>
+            <div class="money-in"><i>$</i><input id="cPrice" type="number" min="0" step="1000" value="42000" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="cDown">Down Payment</label>
+            <div class="money-in"><i>$</i><input id="cDown" type="number" min="0" step="500" value="5000" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="cApr">APR</label>
+            <div class="pct-in"><input id="cApr" type="number" min="0" max="30" step="0.05" value="6.5" inputmode="decimal"><i>%</i></div>
+          </div>
+          <div class="field">
+            <label for="cLoanTerm">Loan Term</label>
+            <select id="cLoanTerm">
+              <option value="36">36 months</option>
+              <option value="48">48 months</option>
+              <option value="60" selected>60 months</option>
+              <option value="72">72 months</option>
+              <option value="84">84 months</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="cMaint">Maintenance / Year</label>
+            <div class="money-in"><i>$</i><input id="cMaint" type="number" min="0" step="100" value="1200" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="cResale"><span data-term="resale">Est. Resale Value After 5 Years</span></label>
+            <div class="money-in"><i>$</i><input id="cResale" type="number" min="0" step="500" value="21000" inputmode="numeric"></div>
+            <small id="cResaleNote">&mdash;</small>
+          </div>
+        </div>
+
+        <details class="more">
+          <summary><span>Tax, fees and opportunity cost</span><i></i></summary>
+          <div class="side-grid">
+          <div class="field">
+            <label for="cSalesTax"><span data-term="rolledin">Sales Tax Rate</span></label>
+            <div class="pct-in"><input id="cSalesTax" type="number" min="0" max="15" step="0.05" value="6.25" inputmode="decimal"><i>%</i></div>
+          </div>
+          <div class="field">
+            <label for="cReg">Registration &amp; Fees</label>
+            <div class="money-in"><i>$</i><input id="cReg" type="number" min="0" step="100" value="1200" inputmode="numeric"></div>
+            <small id="cLoanNote">&mdash;</small>
+          </div>
+          <div class="field">
+            <label for="cRet"><span data-term="opportunity">Return on Money Not Used to Buy</span></label>
+            <div class="pct-in"><input id="cRet" type="number" min="0" max="20" step="0.1" value="0" inputmode="decimal"><i>%</i></div>
+            <small>Leave at zero to compare pure cost, as most vehicle comparisons do.</small>
+          </div>
+          </div>
+        </details>
+        <p class="side-fact"><span id="factCBL">&mdash;</span><b id="factCB">&mdash;</b></p>
+      </section>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       the answer
+       ============================================================ -->
+  <div class="results">
+
+    <!-- ---------- the three headline numbers ---------- -->
+    <div class="rb-heads">
+      <div class="rb-head" data-side="a"><small id="hdAL">Rent monthly cost</small><b id="hdA">&mdash;</b></div>
+      <div class="rb-head" data-side="b"><small id="hdBL">Buy monthly cost</small><b id="hdB">&mdash;</b></div>
+      <div class="rb-head" data-side="d"><small>Difference today</small><b id="hdD">&mdash;</b><em id="hdDS">&mdash;</em></div>
+    </div>
+
+    <!-- ---------- the crossover ---------- -->
+    <section class="runway rb-cross">
+      <div class="rw-head">
+        <div>
+          <h2 id="crossTitle">The Break-Even</h2>
+          <p id="crossLead">&mdash;</p>
+        </div>
+        <div class="rw-key">
+          <span><i class="k-rent"></i><span id="keyA">Rent &amp; invest</span></span>
+          <span><i class="k-buy"></i><span id="keyB">Buy &amp; build equity</span></span>
+        </div>
+      </div>
+      <div id="crossWrap"></div>
+      <div class="rb-scrub">
+        <label for="rYears">Hold for</label>
+        <input class="slider wide" id="rYears" type="range" min="1" max="30" step="1" value="10" aria-label="Years held">
+        <b id="yearsOut">10 years</b>
+      </div>
+    </section>
+
+    <!-- ---------- the monthly breakdown ---------- -->
+    
+
+    <!-- ---------- position at the horizon ---------- -->
+    <div class="versus rb-versus">
+      <article class="vs" data-kind="alone">
+        <header><b id="posAHead">&mdash;</b><span class="vs-tag" id="posATag">RENT &amp; INVEST</span></header>
+        <strong class="vs-big" id="posA">&mdash;</strong>
+        <ul class="rb-lines" id="posALines"></ul>
+        <footer><span><span data-term="position">Estimated financial position</span></span><b id="posAFoot">&mdash;</b></footer>
+      </article>
+
+      <span class="vs-delta" id="vsDelta">&mdash;</span>
+
+      <article class="vs" data-kind="both">
+        <header><b id="posBHead">&mdash;</b><span class="vs-tag" id="posBTag">BUY &amp; BUILD EQUITY</span></header>
+        <strong class="vs-big" id="posB">&mdash;</strong>
+        <ul class="rb-lines" id="posBLines"></ul>
+        <footer><span>Estimated financial position</span><b id="posBFoot">&mdash;</b></footer>
+      </article>
+    </div>
+
+    <!-- ---------- reading it ---------- -->
+    
+
+  </div>
+
+  <div class="rb-cols" data-fold="The monthly breakdown" data-fold-note="Every line on both sides, side by side">
+        <section class="rb-col" data-side="a">
+          <header id="colAHead">What Renting Costs</header>
+          <ul id="colA"></ul>
+        </section>
+        <section class="rb-col" data-side="b">
+          <header id="colBHead">What Buying Costs</header>
+          <ul id="colB"></ul>
+        </section>
+      </div>
+
+  <section class="reads" data-fold="Reading the comparison" data-fold-note="What these numbers are actually telling you">
+        <div class="reads-head">
+          <span class="eyebrow">Reading the comparison</span>
+          <h2 id="readTitle">&mdash;</h2>
+        </div>
+        <div class="read-grid" id="readGrid"></div>
+      </section>
+
+  <!-- ---------- what people forget ---------- -->
+  <section class="later rb-forget" data-fold="What people often forget" data-fold-note="The costs that quietly decide it">
+    <div class="later-head">
+      <h2 id="forgetTitle">What People Often Forget</h2>
+      <p id="forgetLead">A loan payment is only part of the cost. These are the lines that move the answer.</p>
+    </div>
+    <div class="rb-forget-body">
+      <ul class="chips" id="forgetChips"></ul>
+      <p class="rb-key-q"><b>The key question.</b> <span id="keyQ">&mdash;</span></p>
+    </div>
+  </section>
+
+  <div class="say-it" data-fold="Say it like this" data-fold-note="One sentence you can read out loud">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 10.5h7"/><path d="M8.5 14h4"/><path d="M4.5 5.5h15v12h-9l-5 3.5v-3.5h-1Z"/></svg>
+    <div>
+      <span class="eyebrow light">Say it like this</span>
+      <p id="sayIt">&mdash;</p>
+    </div>
+  </div>
+
+  <footer class="fineprint" data-fold="The fine print" data-fold-note="What this estimate does and doesn't cover" data-fold-quiet="1">
+    <span class="d-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5"/><path d="M12 7.6h.01"/></svg></span>
+    <p>Educational estimate only. Results depend entirely on the assumptions entered and do not account for every tax rule, deduction, financing term, repair, transaction cost, insurance change, vehicle wear, lease restriction or market condition. Home tax benefits vary by individual situation. Investment growth, home appreciation and vehicle resale values are not guaranteed. Consult a licensed professional before acting on any of this.</p>
+    <span class="d-sign"><i></i> A brighter financial tomorrow</span>
+  </footer>
+</div>
+
+<script src="auth.js?v=33"></script>
+<script src="agent.js?v=33"></script>
+<script src="site.js?v=33"></script>
+<script src="explain.js?v=33"></script>
+<script src="rentbuy.js?v=33"></script>
+<script src="fold.js?v=33"></script>
+</body>
+</html>

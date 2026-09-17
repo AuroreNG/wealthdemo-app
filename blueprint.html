@@ -1,0 +1,1126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0e4736">
+  <title>Financial Blueprint — WEALTHDEMO</title>
+  <link rel="icon" href="wealthdemo-logo.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="tokens.css?v=33">
+  <link rel="stylesheet" href="app.css?v=33">
+  <style>
+    /* the masthead row ran past the screen edge on a phone */
+    @media (max-width: 560px) {
+      .wd-masthead-inner { flex-wrap: wrap; row-gap: 10px; }
+      .masthead-actions { flex-wrap: wrap; gap: 10px 14px; min-width: 0; }
+      .masthead-actions .secure-note { font-size: 11.5px; }
+      .masthead-actions .ghost-btn { flex: 0 1 auto; min-width: 0; }
+    }
+  </style>
+</head>
+<body data-page="app">
+<main id="wp-building-retirement" class="wp-wrap">
+
+  <!-- ============ MASTHEAD ============ -->
+  <header class="wd-masthead" aria-label="WEALTHDEMO">
+    <div class="shell wd-masthead-inner">
+      <a class="brand-identity" href="home.html" aria-label="WEALTHDEMO home">
+        <img src="wealthdemo-logo.webp" alt="" aria-hidden="true">
+        <span class="brand-wordmark">
+          <strong>WEALTH<span>DEMO</span></strong>
+          <small>See What Your Money Can Do.</small>
+        </span>
+      </a>
+      <div class="masthead-actions">
+        <a class="ghost-btn" href="home.html">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 6l-6 6 6 6"/></svg>
+          All tools
+        </a>
+        <span class="secure-note">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7"/></svg>
+          Your information is secure
+        </span>
+        <button type="button" class="ghost-btn" id="saveExitBtn">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h4.5A1.5 1.5 0 0 1 20 5.5v13a1.5 1.5 0 0 1-1.5 1.5H14"/><path d="M9.5 15.5 5 12l4.5-3.5"/><path d="M5 12h9"/></svg>
+          Save &amp; Exit
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ STEPPER ============ -->
+  <nav class="wd-stepper" aria-label="Your progress">
+    <div class="shell">
+      <div class="stepper-row">
+      <div class="client-progress">
+        <span><i>1</i><b>About You</b></span>
+        <span><i>2</i><b>College</b></span>
+        <span><i>3</i><b>Protection</b></span>
+        <span><i>4</i><b>Legacy</b></span>
+        <span><i>5</i><b>Future</b></span>
+        <span><i>6</i><b>Risks</b></span>
+        <span><i>7</i><b>Options</b></span>
+      </div>
+      <button type="button" class="how-btn" id="howBtn" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5"/><path d="M12 8.2v.2"/></svg>
+        <span>How this works</span>
+      </button>
+      </div>
+      <div class="stepper-bar"><span id="stepperFill"></span></div>
+    </div>
+  </nav>
+
+  <div class="wd-body">
+    <div class="shell wd-layout">
+      <div class="wd-main">
+
+        <section class="how-panel" id="howPanel" aria-hidden="true">
+          <h3>How this works</h3>
+          <p>Seven short steps. Nothing is sent anywhere — everything stays in this browser.</p>
+          <ul class="how-grid">
+            <li><b>One question at a time</b><span>Answer it, press Continue, and it folds into a summary. The next question opens.</span></li>
+            <li><b>Change anything, anytime</b><span>Press Edit on any answered question to reopen it. Your numbers update everywhere at once.</span></li>
+            <li><b>Stuck on a question?</b><span>Press the <em>i</em> beside it for a plain-language explanation and an example.</span></li>
+            <li><b>It reads as you go</b><span>Smart Insights ranks what matters in your numbers, and Ask answers questions about them — all on this device.</span></li>
+          </ul>
+          <button type="button" class="how-close" id="howClose">Got it</button>
+        </section>
+
+        <div id="guidedJourney">
+
+          <!-- ================= STEP 1 ================= -->
+          <section class="guided-page active" data-page="0">
+            <div class="guided-head has-hero">
+              <div class="guided-head-top">
+                <div class="guided-head-copy">
+                  <div class="guided-kicker">Step 1 of 7</div>
+                  <h2>About You</h2>
+                  <p data-name-line="Thanks, {name}. Let's build your picture.">A few details and your picture starts to take shape.</p>
+                </div>
+                <div class="head-quote"><span>It starts with a clearer picture.</span></div>
+              </div>
+
+              <div class="head-hero">
+                <img src="art-hero.svg" alt="" aria-hidden="true">
+                <img class="hero-photo" src="photo-hero.webp" alt="" aria-hidden="true">
+                <div class="head-hero-card">
+                  <span class="rule"></span>
+                  <strong>A brighter tomorrow starts today.</strong>
+                  <em>Plans today. More tomorrow.</em>
+                </div>
+              </div>
+
+              <ul class="head-points">
+                <li>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.4"/><path d="M5.5 19.5c.9-3.3 3.4-5 6.5-5s5.6 1.7 6.5 5"/></svg>
+                  <div><b>Personalized</b><span>Built around your unique goals</span></div>
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 5.5 6.2v5.1c0 4 2.7 7.6 6.5 9.2 3.8-1.6 6.5-5.2 6.5-9.2V6.2Z"/></svg>
+                  <div><b>Trusted</b><span>Your information stays private</span></div>
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19V11"/><path d="M12 19V5.5"/><path d="M19 19v-5.5"/></svg>
+                  <div><b>Actionable</b><span>Clear insights for what's next</span></div>
+                </li>
+              </ul>
+            </div>
+
+            <div class="guided-content" id="guidedAbout">
+
+              <section class="wp-card q" id="q-name" data-help="Only your first name, and only to personalize what you see here and the PDF at the end. It never leaves this browser." data-help-eg="Example: Jordan" data-title="First — what should we call you?">
+                <div class="wp-field name-field">
+                  <div class="wp-label">Your first name</div>
+                  <input id="firstName" class="wp-input" type="text" placeholder="e.g. Jordan" autocomplete="given-name">
+                </div>
+              </section>
+
+              <section class="wp-card q" id="q-basics" data-help="Your age today and the age you'd like to stop working set how many years your money still has to grow. Annual income is used later to size the protection numbers — nothing else." data-help-eg="Example: 32 today, retiring at 65, earning $75,000." data-title="Your age, your finish line, your income">
+                <div class="field-row">
+                  <div class="wp-field">
+                    <div class="wp-label">Your Age<button class="info-btn" data-tip="tipAge">i</button></div>
+                    <input id="curAge2" class="wp-input" type="number" value="32">
+                    <div id="tipAge" class="wp-tip">Used to calculate how many years your money has to grow.</div>
+                  </div>
+                  <div class="wp-field">
+                    <div class="wp-label">Retirement Age<button class="info-btn" data-tip="tipRetireAge2">i</button></div>
+                    <input id="retireAge2" class="wp-input" type="number" value="65">
+                    <div id="tipRetireAge2" class="wp-tip">A common target. Enter whatever age feels right for your plan.</div>
+                  </div>
+                  <div class="wp-field">
+                    <div class="wp-label">Annual Income ($)<button class="info-btn" data-tip="tipIncome">i</button></div>
+                    <input id="annualIncome" class="wp-input" type="number" value="75000">
+                    <div id="tipIncome" class="wp-tip">
+                      Used only to size the protection figures later (income replacement in the event of
+                      disability or premature death). Not used elsewhere in this calculator.
+                    </div>
+                  </div>
+                </div>
+                <div class="insight" id="insightRunway"></div>
+              </section>
+
+              <section class="wp-card q" id="q-savings" data-help="Anything already set aside for later: 401(k), IRA, savings, brokerage. Choose the account type, roughly what's in it, and the yearly return you expect. Not sure on the return? 6–7% is a common long-term assumption for market accounts." data-help-eg="Example: 401(k) · $25,000 · 7%" data-title="What have you saved so far?">
+                <div class="q-action-row">
+                  <button type="button" class="wp-add-btn" id="addSavingsBtn">+ Add Another Account</button>
+                </div>
+                <div id="savingsItems"></div>
+                <div class="contrib-mix" id="savingsTotal"></div>
+                <div class="hint-strip">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 18h5"/><path d="M10 21h4"/><path d="M12 3a5.5 5.5 0 0 1 3.3 9.9c-.6.5-.9 1.2-.9 1.9v.2h-4.8v-.2c0-.7-.3-1.4-.9-1.9A5.5 5.5 0 0 1 12 3Z"/></svg>
+                  <div><strong>Estimates are fine.</strong> You can come back and refine them anytime.</div>
+                </div>
+              </section>
+
+              <section class="wp-card q" id="q-contrib" data-help="What goes in from here on, month by month — one line per account. Employer match is what your employer adds each month; enter $0 if there isn't one." data-help-eg="Example: 401(k) · $400/mo · 7%, plus a $150 match." data-title="What are you adding each month?">
+                <div class="q-action-row">
+                  <button type="button" class="wp-add-btn" id="addContribBtn">+ Add Another Account</button>
+                </div>
+                <div id="contribItems"></div>
+                <div class="contrib-mix" id="contribMix"></div>
+                <div class="wp-field" style="margin-top:18px;">
+                  <div class="wp-label">Employer match each month ($)<button class="info-btn" data-tip="tipMatch">i</button></div>
+                  <input id="employerMatch" class="wp-input" type="number" value="150">
+                  <div id="tipMatch" class="wp-tip">
+                    If your employer matches part of your contribution, enter that monthly amount.
+                    Treated the same as a Tax Later (pre-tax) contribution. Enter $0 if none.
+                  </div>
+                </div>
+              </section>
+
+              <section class="wp-card q" id="q-lifestyle" data-help="The monthly income you'd want in retirement, in today's money — we add inflation for you. Social Security lowers how much your savings have to produce; use the figure from your SSA statement if you have it." data-help-eg="Example: $6,000/mo, with $2,200/mo from Social Security." data-title="What should retirement pay for?">
+                <div class="wp-field">
+                  <div class="wp-label">Monthly income you'd like in retirement ($)<button class="info-btn" data-tip="tipGoalIncome">i</button></div>
+                  <input id="goalIncome" class="wp-input" type="number" value="6000">
+                  <div id="tipGoalIncome" class="wp-tip">Think about the monthly lifestyle you would like in today's dollars. A simple estimate is okay.</div>
+                </div>
+
+                <div class="ss-planner">
+                  <h3>Include Social Security in your retirement picture</h3>
+                  <div class="ss-intro">Not an investment account, but it is income — so it lowers what your savings must produce.</div>
+                  <div class="ss-input-grid">
+                    <div class="wp-field" style="margin-bottom:0;">
+                      <div class="wp-label">Expected Social Security each month ($)<button class="info-btn" data-tip="tipSSMonthly">i</button></div>
+                      <input id="socialSecurityMonthly" class="wp-input" type="number" value="2200" min="0" step="50">
+                      <div id="tipSSMonthly" class="wp-tip">Use the monthly retirement benefit estimate from your Social Security statement or SSA estimate.</div>
+                    </div>
+                    <div class="wp-field" style="margin-bottom:0;">
+                      <div class="wp-label">Federal filing status in retirement</div>
+                      <select id="ssFilingStatus" class="wp-select">
+                        <option value="single">Single / Head of Household / Qualifying Surviving Spouse</option>
+                        <option value="joint">Married Filing Jointly</option>
+                        <option value="mfs">Married Filing Separately</option>
+                      </select>
+                    </div>
+                    <div class="wp-field" style="margin-bottom:0;">
+                      <div class="wp-label">Other income for the provisional-income estimate ($/month)<button class="info-btn" data-tip="tipSSOther">i</button></div>
+                      <input id="ssOtherIncomeMonthly" class="wp-input" type="number" value="0" min="0" step="100">
+                      <div id="tipSSOther" class="wp-tip">Enter other income that may be included when determining whether Social Security is taxable, such as pension income, wages, interest, or taxable retirement withdrawals. Used only for the Social Security tax illustration.</div>
+                    </div>
+                    <div class="wp-field" style="margin-bottom:0;">
+                      <div class="wp-label">Tax-exempt interest ($/month)<button class="info-btn" data-tip="tipSSTaxExempt">i</button></div>
+                      <input id="ssTaxExemptMonthly" class="wp-input" type="number" value="0" min="0" step="50">
+                      <div id="tipSSTaxExempt" class="wp-tip">Tax-exempt interest is still included in the federal combined-income test used to determine whether Social Security benefits may be taxable.</div>
+                    </div>
+                  </div>
+                </div>
+
+                <details class="advanced-box">
+                  <summary>Advanced assumptions <span>(optional)</span></summary>
+                  <div class="advanced-inner">
+                    <div class="wp-field">
+                      <div class="wp-label">Inflation (%)<button class="info-btn" data-tip="tipInflation">i</button></div>
+                      <input id="inflationRate" class="wp-input" type="number" value="2.5" step="0.1">
+                      <div id="tipInflation" class="wp-tip">Used to estimate how the cost of your desired lifestyle may rise over time.</div>
+                    </div>
+                    <div class="wp-field">
+                      <div class="wp-label">Withdrawal assumption (%)<button class="info-btn" data-tip="tipWithdrawRate2">i</button></div>
+                      <input id="withdrawRate2" class="wp-input" type="number" value="4" step="0.1">
+                      <div id="tipWithdrawRate2" class="wp-tip">Used only to estimate the amount of retirement savings needed to support your monthly goal.</div>
+                    </div>
+                  </div>
+                </details>
+              </section>
+            </div>
+
+            <div class="guided-nav">
+              <button type="button" data-prev disabled>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 6l-6 6 6 6"/></svg> Back
+              </button>
+              <button type="button" class="primary" data-next>
+                Save &amp; Continue <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13"/><path d="M13 6l6 6-6 6"/></svg>
+              </button>
+            </div>
+          </section>
+
+          <!-- ================= STEP 2 ================= -->
+          <section class="guided-page" data-page="1">
+            <div class="guided-head">
+              <div class="guided-head-top">
+                <div class="guided-head-copy">
+                  <div class="guided-kicker">Step 2 of 7</div>
+                  <h2>Children &amp; College</h2>
+                  <p>College planning, only if it applies to you.</p>
+                </div>
+                <div class="head-quote"><span>Plan for the years that arrive fast.</span></div>
+              </div>
+            </div>
+
+            <div class="guided-content" id="guidedCollege">
+              <section class="wp-card q" id="q-college-gate" data-help="This only decides whether the college section appears. Choose No and we skip straight past it — nothing else in your plan changes." data-title="Do you have children under age 18?">
+                <div class="college-choice">
+                  <button type="button" data-college-choice="yes"><strong>Yes, I do</strong><span>Show me the college planning section.</span></button>
+                  <button type="button" data-college-choice="no"><strong>No</strong><span>Skip college planning and continue.</span></button>
+                </div>
+                <div class="college-no" id="collegeNoMessage"><strong>College planning skipped.</strong><br>You can continue to your retirement picture.</div>
+              </section>
+
+              <section class="wp-card q college-planner" id="collegePlanner" data-help="Add each child under 18: their age, what's saved for them, and what you add monthly. We project four years of college — $30,000 a year today, rising 5% a year — against savings growing at 6%." data-help-eg="Example: age 10, $5,000 saved, $300/mo." data-title="Build a simple college estimate">
+                <div id="collegeChildren"></div>
+                <div class="college-actions">
+                  <button type="button" class="college-add" id="collegeAddChild">+ Add Another Child</button>
+                  <button type="button" class="college-calc" id="collegeCalculate">Calculate College Picture</button>
+                </div>
+                <div class="college-results" id="collegeResults"></div>
+                <div class="college-note">Illustration uses $30,000 annual college cost today, 4 years of college, 5% annual college-cost inflation, and 6% assumed savings growth. Educational estimate only.</div>
+              </section>
+            </div>
+
+            <div class="guided-nav">
+              <button type="button" data-prev><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 6l-6 6 6 6"/></svg> Back</button>
+              <button type="button" class="primary" data-next>Save &amp; Continue <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13"/><path d="M13 6l6 6-6 6"/></svg></button>
+            </div>
+          </section>
+
+          <!-- ================= STEP 3 ================= -->
+          <section class="guided-page" data-page="2">
+            <div class="guided-head">
+              <div class="guided-head-top">
+                <div class="guided-head-copy">
+                  <div class="guided-kicker">Step 3 of 7</div>
+                  <h2>Protection</h2>
+                  <p>Your home and your income, one at a time.</p>
+                </div>
+                <div class="head-quote"><span>Protect what you are building.</span></div>
+              </div>
+            </div>
+
+            <div class="guided-content" id="guidedProtection">
+              <section class="wp-card q" id="q-mortgage" data-help="If a mortgage would still need paying, it becomes part of what your plan has to cover. Enter the monthly payment and the balance left on the loan." data-title="Do you currently have a mortgage?">
+                <div class="protection-choice">
+                  <button type="button" data-mortgage-choice="yes"><strong>Yes</strong><span>I currently have a mortgage.</span></button>
+                  <button type="button" data-mortgage-choice="no" class="active"><strong>No</strong><span>I do not currently have a mortgage.</span></button>
+                </div>
+                <div id="mortgagePlanner" hidden>
+                  <div class="protection-fields">
+                    <div class="protection-field"><label>Your Monthly Mortgage Payment ($)</label><input id="protMortgageMonthly" type="number" min="0" value="2500"><small>Enter the amount you currently pay each month.</small></div>
+                    <div class="protection-field"><label>Remaining Mortgage Balance ($)</label><input id="protMortgageBalance" type="number" min="0" value="250000"><small>Enter the remaining balance on your mortgage.</small></div>
+                  </div>
+                  <div class="protection-result">
+                    <div><small>Your Monthly Mortgage</small><strong id="protMortgagePayment">$0</strong></div>
+                    <div><small>Remaining Home Loan</small><strong id="protMortgageNeed">$0</strong></div>
+                  </div>
+                </div>
+              </section>
+
+              <section class="wp-card q" id="q-income-protection" data-help="One question: if your paycheck stopped because of illness, how long could the household keep paying? We take your bills, subtract any income that would continue, multiply by the years you choose, and compare it to your emergency savings." data-help-eg="Example: $4,000/mo in bills, $18,000 saved, tested over 1 year." data-title="If your income stopped today, how long could the bills keep getting paid?">
+                <div class="year-choice">
+                  <button type="button" data-protection-years="1" class="active">1 Year</button>
+                  <button type="button" data-protection-years="2">2 Years</button>
+                  <button type="button" data-protection-years="3">3 Years</button>
+                  <button type="button" data-protection-years="4">4 Years</button>
+                  <button type="button" data-protection-years="5">5 Years</button>
+                </div>
+                <div class="protection-fields">
+                  <div class="protection-field"><label>Essential Monthly Bills — excluding mortgage ($)</label><input id="protBills" type="number" min="0" value="4000"></div>
+                  <div class="protection-field"><label>Monthly Income That Would Continue ($)</label><input id="protContinue" type="number" min="0" value="0"></div>
+                  <div class="protection-field"><label>Emergency Savings Available ($)</label><input id="protSavings" type="number" min="0" value="18000"></div>
+                </div>
+                <div class="income-question" id="protQuestionText">If your income stopped today, could your current plan cover 1 year of essential bills?</div>
+                <div class="protection-result">
+                  <div><small>Total Bills to Cover</small><strong id="protBillsNeed">$0</strong></div>
+                  <div><small>Estimated Income Protection Gap</small><strong id="protIncomeGap">$0</strong></div>
+                </div>
+              </section>
+
+              <section class="wp-card q coordinated-plan" id="q-coordinated" data-help="Your two objectives side by side. One properly designed life-insurance policy can sometimes address both — a death benefit for the family or the mortgage, and living-benefit riders that may allow early access after a qualifying illness." data-title="One policy may help address both needs" data-open="1">
+                <p class="protection-copy">One policy can often cover both objectives below.</p>
+                <div class="coordinated-grid">
+                  <div class="coordinated-item"><small>Home protection objective</small><strong id="combinedMortgage">$0</strong><span>Remaining mortgage balance.</span></div>
+                  <div class="coordinated-item"><small>Income interruption objective</small><strong id="combinedIncome">$0</strong><span>Estimated household gap for the period selected.</span></div>
+                </div>
+                <div class="coordinated-answer" id="combinedProtectionMessage">Your numbers will appear here as you complete the page.</div>
+                <div class="protection-note"><strong>Important:</strong> Living benefits are generally an acceleration of the policy's death benefit, not a separate pool of disability income. Eligibility requires a qualifying event and varies by carrier, policy, rider, and state. This illustration is educational and is not a policy recommendation.</div>
+              </section>
+            </div>
+
+            <div class="guided-nav">
+              <button type="button" data-prev><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 6l-6 6 6 6"/></svg> Back</button>
+              <button type="button" class="primary" data-next>Save &amp; Continue <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13"/><path d="M13 6l6 6-6 6"/></svg></button>
+            </div>
+          </section>
+
+          <!-- ================= STEP 4 ================= -->
+          <section class="guided-page" data-page="3">
+            <div class="guided-head">
+              <div class="guided-head-top">
+                <div class="guided-head-copy">
+                  <div class="guided-kicker">Step 4 of 7</div>
+                  <h2>Your Legacy</h2>
+                  <p>What your family receives, and what you intend.</p>
+                </div>
+                <div class="head-quote"><span>Decide what you leave behind.</span></div>
+              </div>
+            </div>
+
+            <div class="guided-content" id="guidedLegacy">
+              <section class="wp-card q" id="q-legacy-gate" data-help="Legacy means what your family actually receives if something happened to you. If it isn't a priority right now, skip it and come back later." data-title="Does leaving a legacy to your family matter to you?">
+                <div class="legacy-choice">
+                  <button type="button" data-legacy-choice="yes"><strong>Yes, it matters to me</strong><span>I want to decide what I leave and who receives it.</span></button>
+                  <button type="button" data-legacy-choice="no"><strong>Not a priority right now</strong><span>Skip the legacy estimate for now.</span></button>
+                </div>
+                <div class="legacy-no" id="legacyNoMessage"><strong>Legacy planning skipped.</strong><br>You can come back to this page anytime.</div>
+              </section>
+
+              <section class="wp-card q legacy-planner" id="legacyPlanner" data-help="Assets plus life insurance, minus liabilities, is roughly what your family would receive today. Compare that with what you'd like to leave, and the difference is your legacy gap." data-help-eg="Example: $700,000 assets, $300,000 owed, $100,000 of coverage." data-title="If something happened today, what would your family receive?">
+                <div class="legacy-grid">
+                  <div class="legacy-field"><label>Assets ($)</label><input id="legacyOwn" type="number" min="0" value="700000"><small>Home, investments, retirement accounts, cash value life insurance, and other assets you want included.</small></div>
+                  <div class="legacy-field"><label>Liabilities ($)</label><input id="legacyOwe" type="number" min="0" value="300000"><small>Mortgage, loans, credit cards, and other liabilities you want included.</small></div>
+                  <div class="legacy-field"><label>Life insurance you already have ($)</label><input id="legacyInsurance" type="number" min="0" value="100000"></div>
+                  <div class="legacy-field"><label>What would you like to leave your family? ($)</label><input id="legacyGoal" type="number" min="0" value="1000000"></div>
+                </div>
+                <div class="legacy-formula">Assets + Life Insurance − Liabilities</div>
+                <div class="legacy-summary">
+                  <div class="receive"><small>What Your Family Will Receive</small><strong id="legacyToday">$0</strong><span class="receive-sub">Based on what you entered today.</span></div>
+                  <div><small>Your Legacy Goal</small><strong id="legacyGoalOut">$0</strong></div>
+                  <div class="gap"><small>Potential Legacy Gap</small><strong id="legacyGap">$0</strong></div>
+                </div>
+                <div class="legacy-question" id="legacyQuestion">If something happened to you today, would the legacy you leave match the legacy you intended?</div>
+
+                <div class="legacy-education">
+                  <h3>3 tools that can help make your wishes clear</h3>
+                  <p>Tap each box to learn what it does. These tools can work differently depending on the asset, your state, and how your estate plan is set up.</p>
+                  <div class="legacy-tools">
+                    <button type="button" class="legacy-tool" data-legacy-info="will">
+                      <div class="legacy-icon">W</div>
+                      <strong>Will</strong>
+                      <span>States who should receive property that passes through your estate and can name a guardian for minor children.</span>
+                      <em>Tap to learn more →</em>
+                    </button>
+                    <button type="button" class="legacy-tool" data-legacy-info="trust">
+                      <div class="legacy-icon">T</div>
+                      <strong>Trust</strong>
+                      <span>Can provide more control over how and when certain assets are managed and distributed.</span>
+                      <em>Tap to learn more →</em>
+                    </button>
+                    <button type="button" class="legacy-tool" data-legacy-info="tod">
+                      <div class="legacy-icon">TOD</div>
+                      <strong>Transfer on Death</strong>
+                      <span>A TOD designation, beneficiary designation, or TOD deed may let certain assets pass directly to a named beneficiary.</span>
+                      <em>Tap to learn more →</em>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="legacy-note"><strong>Important:</strong> A will, trust, TOD arrangement, and beneficiary designation are not interchangeable. Which document controls can depend on the type of asset and how it is titled. This is educational only, not legal, tax, insurance, or estate-planning advice.</div>
+              </section>
+
+              <div class="legacy-modal" id="legacyInfoModal" aria-hidden="true">
+                <div class="legacy-modal-card" role="dialog" aria-modal="true" aria-labelledby="legacyModalTitle">
+                  <button type="button" class="legacy-modal-close" id="legacyModalClose" aria-label="Close">×</button>
+                  <h3 id="legacyModalTitle">Legacy Tool</h3>
+                  <div id="legacyModalBody"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="guided-nav">
+              <button type="button" data-prev><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 6l-6 6 6 6"/></svg> Back</button>
+              <button type="button" class="primary" data-next>Save &amp; Continue <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13"/><path d="M13 6l6 6-6 6"/></svg></button>
+            </div>
+          </section>
+
+          <!-- ================= STEP 5 ================= -->
+          <section class="guided-page" data-page="4">
+            <div class="guided-head">
+              <div class="guided-head-top">
+                <div class="guided-head-copy">
+                  <div class="guided-kicker">Step 5 of 7</div>
+                  <h2>Your Future</h2>
+                  <p data-name-line="{name}, here's where today's plan leads.">Your goal, your path, and the gap.</p>
+                </div>
+                <div class="head-quote"><span>See where today's plan leads.</span></div>
+              </div>
+            </div>
+
+            <div class="guided-content" id="guidedFuture">
+
+              <section class="wp-card chart-card">
+                <div class="card-head">
+                  <span class="card-icon spark">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18.5V13"/><path d="M9.5 18.5V8"/><path d="M15 18.5v-6"/><path d="M20.5 18.5V5"/></svg>
+                  </span>
+                  <div>
+                    <h2>Your money over time</h2>
+                    <div class="subtext">Every year between today and retirement, against the goal. Try a scenario.</div>
+                  </div>
+                </div>
+                <div class="chart-chips" id="chartChips"></div>
+                <div class="chart-wrap">
+                  <svg id="planChart" viewBox="0 0 760 330" role="img" aria-label="Projected balance from today to retirement"></svg>
+                </div>
+                <p class="chart-note" id="chartNote"></p>
+              </section>
+
+              <div class="wp-card results-top">
+                <div class="wp-section-number">Your Financial Future Snapshot</div>
+                <h2>Here is what your numbers are showing.</h2>
+
+                <div class="core-picture">
+                  <div class="core-number"><small>You May Need</small><strong id="goalNestEggOut">$0</strong></div>
+                  <div class="core-number"><small>You're On Track For</small><strong id="projectedBalanceOut">$0</strong></div>
+                  <div class="core-number gap"><small>Your Gap</small><strong id="snapshotGap">$0</strong></div>
+                </div>
+
+                <div class="ss-summary" id="ssSummaryBox">
+                  <div class="ss-summary-title">How Social Security Fits Into Your Retirement Income</div>
+                  <div class="ss-summary-grid">
+                    <div class="ss-summary-item"><small>Social Security</small><strong id="ssGrossOut">$0/mo</strong></div>
+                    <div class="ss-summary-item"><small>Provisional Income</small><strong id="ssProvisionalOut">$0/yr</strong></div>
+                    <div class="ss-summary-item"><small>Benefit Potentially Taxable</small><strong id="ssTaxableOut">$0/yr</strong></div>
+                    <div class="ss-summary-item"><small>Savings Need to Produce</small><strong id="portfolioIncomeNeedOut">$0/mo</strong></div>
+                  </div>
+                  <div class="ss-summary-note" id="ssSummaryNote"></div>
+                </div>
+
+                <div class="metric-grid" style="margin-top:14px;">
+                  <div class="metric tan"><small>Years to Retirement</small><strong id="yearsToRetireOut">0</strong></div>
+                  <div class="metric blue"><small>Saving Each Month</small><strong id="totalMonthlyOut">$0</strong></div>
+                </div>
+                <div class="subtext" id="inflationNote" style="margin-top:12px;"></div>
+              </div>
+
+              <section class="wp-card intel-panel">
+                <div class="card-head">
+                  <span class="card-icon spark">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l1.9 4.9 4.9 1.9-4.9 1.9L12 17.1l-1.9-4.9-4.9-1.9 4.9-1.9Z"/><path d="M18.5 15.5l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8Z"/></svg>
+                  </span>
+                  <div>
+                    <h2>What your numbers are telling us</h2>
+                    <div class="subtext">Read from the figures you entered, ranked by what moves your plan most.</div>
+                  </div>
+                </div>
+                <div class="intel-grid" id="intelBoard"></div>
+              </section>
+
+              <div class="wp-card">
+                <h2>Are you on track?</h2>
+                <div id="trackStatusBox" class="status-box good">
+                  <div class="headline" id="trackHeadline">Calculating...</div>
+                  <div class="subtext" id="trackDetail"></div>
+                </div>
+                <div class="bar"><div id="trackBar" class="bar-fill"></div></div>
+                <div class="subtext" id="trackPctLabel" style="margin-top:8px;font-size:12px;"></div>
+              </div>
+
+              <div class="wp-card">
+                <h2>What if you saved a little more?</h2>
+                <div class="subtext">Move the slider and watch your retirement gap change.</div>
+                <div class="slider-row">
+                  <input type="range" id="extraContribSlider" min="0" max="10000" step="100" value="0">
+                  <div class="slider-val" id="extraContribVal">$0/mo</div>
+                </div>
+                <div id="extraImpactText" class="status-box good" style="margin-top:14px;">
+                  <div class="headline" id="extraImpactHeadline">Move the slider to see the impact.</div>
+                  <div class="subtext" id="extraImpactDetail"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="guided-nav">
+              <button type="button" data-prev><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 6l-6 6 6 6"/></svg> Back</button>
+              <button type="button" class="primary" data-next>Save &amp; Continue <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13"/><path d="M13 6l6 6-6 6"/></svg></button>
+            </div>
+          </section>
+
+          <!-- ================= STEP 6 ================= -->
+          <section class="guided-page" data-page="5">
+            <div class="guided-head">
+              <div class="guided-head-top">
+                <div class="guided-head-copy">
+                  <div class="guided-kicker">Step 6 of 7</div>
+                  <h2>Your Risks</h2>
+                  <p>Look at one risk at a time.</p>
+                </div>
+                <div class="head-quote"><span>Know what could move the plan.</span></div>
+              </div>
+            </div>
+
+            <div class="guided-content" id="guidedRisks">
+
+              <section class="wp-card q" id="tax-section" data-help="The same dollar is taxed differently depending on where it sits. Tax Now is taxed as it grows, Tax Later is taxed when you withdraw, Tax-Free Later is taxed before it goes in. Tell us what you think rates will do and we show all three with your numbers." data-help-eg="Not sure? “About the same as today” is a fine answer." data-title="How is your retirement money taxed?">
+                <div class="subtext" id="taxBucketsIntro"></div>
+
+                <div class="simple-tax-question">
+                  <label for="taxFutureChoice">What do you think taxes may be like when you retire?</label>
+                  <select id="taxFutureChoice">
+                    <option value="same" selected>About the same as today</option>
+                    <option value="higher">Higher than today</option>
+                    <option value="lower">Lower than today</option>
+                    <option value="know">I know my estimated tax rates</option>
+                  </select>
+                  
+                </div>
+                <div class="metric-grid hidden-tax-inputs" id="taxAdvancedRates" style="margin-top:14px;">
+                  <div class="wp-field" style="margin-bottom:0;"><div class="wp-label">Tax Rate Today (%)</div><input id="curTaxRate" class="wp-input" type="number" value="22"></div>
+                  <div class="wp-field" style="margin-bottom:0;"><div class="wp-label">Estimated Rate in Retirement (%)</div><input id="futTaxRate" class="wp-input" type="number" value="22"></div>
+                </div>
+
+                <div class="tax-result-grid" id="taxResultGrid" style="margin-top:16px;"></div>
+
+                <div class="mc-callout gold" style="margin-top:16px;">
+                  <div class="callout-title" id="gapQuestionHeadline">When would you prefer to pay taxes on your retirement money?</div>
+                  <div class="tax-choice">
+                    <div class="tax-btn" data-gapchoice="now">
+                      <strong>Tax Now</strong>
+                      <span>Pay taxes today. Growth is taxed along the way.</span>
+                    </div>
+                    <div class="tax-btn" data-gapchoice="later">
+                      <strong>Tax Later</strong>
+                      <span>Defer taxes now. Pay them when you withdraw.</span>
+                    </div>
+                    <div class="tax-btn" data-gapchoice="never">
+                      <strong>Tax-Free Later</strong>
+                      <span>Pay tax before contributing; qualified access may be tax-free when rules are met.</span>
+                    </div>
+                  </div>
+                  <div id="gapQuestionAnswer" style="display:none;margin-top:14px;font-size:13px;line-height:1.55;color:#6b5a2e;"></div>
+                </div>
+
+                <div id="taxPictureBox" class="status-box good" style="margin-top:14px;">
+                  <div class="headline" id="taxPictureHeadline"></div>
+                  <div class="subtext" id="taxPictureDetail"></div>
+                </div>
+              </section>
+
+              <section class="chaos-opener q" id="q-chaos" data-help="Pick the one you want to understand. Each opens a small calculator using the numbers you already entered — your plan doesn't change." data-title="What would you like to understand better?">
+                <div class="chaos-choice-grid">
+                  <button type="button" class="chaos-choice-btn pink" data-chaos="market">
+                    <div class="chaos-choice-label">Market Changes</div>
+                    <div class="chaos-choice-num" id="chaosNumMarket">$0</div>
+                    <div class="chaos-choice-sub">See a 20% example</div>
+                  </button>
+                  <button type="button" class="chaos-choice-btn tan" data-chaos="taxes">
+                    <div class="chaos-choice-label">Taxes in Retirement</div>
+                    <div class="chaos-choice-num" id="chaosNumTaxes">0%</div>
+                    <div class="chaos-choice-sub">See your tax-later money</div>
+                  </button>
+                  <button type="button" class="chaos-choice-btn blue" data-chaos="disability">
+                    <div class="chaos-choice-label">Health or Income Loss</div>
+                    <div class="chaos-choice-num" id="chaosNumDisability">$0</div>
+                    <div class="chaos-choice-sub">See 1 year of income</div>
+                  </button>
+                  <button type="button" class="chaos-choice-btn rose" data-chaos="death">
+                    <div class="chaos-choice-label">Family Protection</div>
+                    <div class="chaos-choice-num" id="chaosNumDeath">$0</div>
+                    <div class="chaos-choice-sub">See 10 years of income</div>
+                  </button>
+                </div>
+
+                <div class="chaos-outcome" id="chaosOutcome">
+                  <div class="chaos-outcome-tag" id="chaosOutcomeTag">MARKET CRASH</div>
+                  <p id="chaosOutcomeBody"></p>
+                  <div class="chaos-outcome-cover" id="chaosOutcomeCover"></div>
+                  <a href="#" id="chaosOutcomeBtn" class="chaos-outcome-btn">See how this affects your numbers ↓</a>
+                </div>
+              </section>
+
+              <div class="wp-card mc-panel" id="recovery-section">
+                <div class="mini-calc-head">
+                  <button type="button" class="mc-close-btn" data-close-target="recovery-section">✕ Close</button>
+                  <h3>See the Impact of a Market Drop</h3>
+                  <p>Optional detail. Your picture works without it.</p>
+                </div>
+
+                <div class="metric-grid">
+                  <div class="wp-field" style="margin-bottom:0;">
+                    <div class="wp-label">Amount Invested ($)</div>
+                    <input id="mlAmount" class="wp-input" type="number" value="100000">
+                    <input type="range" id="mlAmountSlider" min="1000" max="1000000" step="1000" value="100000">
+                  </div>
+                  <div class="wp-field" style="margin-bottom:0;">
+                    <div class="wp-label">Percentage Lost (%)</div>
+                    <input id="mlPct" class="wp-input" type="number" value="30">
+                    <input type="range" id="mlPctSlider" min="1" max="90" value="30">
+                  </div>
+                </div>
+
+                <div class="quad-stat">
+                  <div class="qs-item pink"><div class="qs-lab">Starting Value</div><div class="qs-num" id="mlStarting">$0</div></div>
+                  <div class="qs-item pink"><div class="qs-lab">Dollars Lost</div><div class="qs-num" id="mlLost">$0</div></div>
+                  <div class="qs-item pink"><div class="qs-lab">Value After Loss</div><div class="qs-num" id="mlAfter">$0</div></div>
+                  <div class="qs-item pink"><div class="qs-lab">Gain to Break Even</div><div class="qs-num" id="mlGain">0%</div></div>
+                </div>
+
+                <div class="result-band">
+                  <div class="rb-lab" id="mlBandLab">You Lost 30%...</div>
+                  <div class="rb-num" id="mlBandNum">42.9% needed to get back to even</div>
+                  <div class="rb-sub">A major loss can erase years of progress and requires a much larger recovery just to break even.</div>
+                </div>
+
+                <div style="margin-top:12px;">
+                  <div class="subtext bar-legend"><span>Loss</span><span id="mlLossPctLab">30%</span></div>
+                  <div class="bar"><div id="mlLossBar" class="bar-fill" style="background:var(--red);"></div></div>
+                </div>
+                <div style="margin-top:10px;">
+                  <div class="subtext bar-legend"><span>Gain required to recover</span><span id="mlGainPctLab">42.9%</span></div>
+                  <div class="bar"><div id="mlGainBar" class="bar-fill"></div></div>
+                </div>
+
+                <div class="mc-callout gold" id="mlCallout"></div>
+
+                <div class="block-title">This Isn't Just Hypothetical</div>
+                <div class="subtext">The market has gone through several real downturns like this over roughly the last 30 years:</div>
+                <div class="crash-history">
+                  <div class="crash-row head"><div>Event</div><div>S&amp;P 500</div><div>Recovery</div></div>
+                  <div class="crash-row"><div class="crash-name">2000&ndash;2002 Dot-Com Crash</div><div class="crash-pct">&minus;49%</div><div class="crash-recovery">Took years to fully recover</div></div>
+                  <div class="crash-row"><div class="crash-name">2007&ndash;2009 Financial Crisis</div><div class="crash-pct">&minus;57%</div><div class="crash-recovery">About 4&ndash;6 years</div></div>
+                  <div class="crash-row"><div class="crash-name">2020 COVID Crash</div><div class="crash-pct">&minus;34%</div><div class="crash-recovery">About 5 months</div></div>
+                  <div class="crash-row"><div class="crash-name">2022 Bear Market</div><div class="crash-pct">&minus;25%</div><div class="crash-recovery">Roughly 2 years</div></div>
+                </div>
+                <div class="wp-report-note">
+                  Approximate S&amp;P 500 price declines, rounded for illustration. Past performance does not predict future results.
+                </div>
+
+                <div class="mc-callout gold" style="margin-top:18px;">
+                  <div class="callout-title">Knowing this, where would you rather have your money?</div>
+                  <div class="tax-choice">
+                    <div class="tax-btn" data-marketchoice="variable">
+                      <strong>Variable Market</strong>
+                      <span>Full market exposure. Unlimited upside, but you feel every drop like the ones above.</span>
+                    </div>
+                    <div class="tax-btn" data-marketchoice="fixed">
+                      <strong>Fixed Market</strong>
+                      <span>A guaranteed rate, no market risk, but growth is capped and usually modest.</span>
+                    </div>
+                    <div class="tax-btn" data-marketchoice="index">
+                      <strong>Index Market</strong>
+                      <span>Growth tied to an index up to a cap, typically with a floor that protects against loss.</span>
+                    </div>
+                  </div>
+                  <div id="marketQuestionAnswer" style="display:none;margin-top:14px;font-size:13px;line-height:1.55;color:#6b5a2e;"></div>
+                </div>
+
+                <div class="wp-report-note">
+                  Educational illustration only. This demonstrates the mathematics of percentage losses and recovery.
+                  It does not predict market returns or recommend a particular investment.
+                </div>
+              </div>
+
+              <div class="wp-card mc-panel" id="tax-timing-section">
+                <div class="mini-calc-head">
+                  <button type="button" class="mc-close-btn" data-close-target="tax-timing-section">✕ Close</button>
+                  <h3>When Do You Want to Pay Taxes?</h3>
+                  <p>See how the timing of taxes may affect your retirement money. No products, no account names, just three simple tax-timing strategies using your own assumptions.</p>
+                </div>
+
+                <div class="metric-grid">
+                  <div class="wp-field" style="margin-bottom:0;"><div class="wp-label">Money Available Today ($)</div><input id="ttAmount" class="wp-input" type="number" value="100000"></div>
+                  <div class="wp-field" style="margin-bottom:0;"><div class="wp-label">Current Age</div><input id="ttCurAge" class="wp-input" type="number" value="40"></div>
+                  <div class="wp-field" style="margin-bottom:0;"><div class="wp-label">Retirement Age</div><input id="ttRetAge" class="wp-input" type="number" value="67"></div>
+                  <div class="wp-field" style="margin-bottom:0;"><div class="wp-label">Tax Rate You Pay Today (%)</div><input id="ttRateNow" class="wp-input" type="number" value="22"></div>
+                  <div class="wp-field" style="margin-bottom:0;"><div class="wp-label">Expected Annual Growth (%)</div><input id="ttGrowth" class="wp-input" type="number" value="6"></div>
+                  <div class="wp-field" style="margin-bottom:0;"><div class="wp-label">Tax Rate You Expect in Retirement (%)</div><input id="ttRateRet" class="wp-input" type="number" value="25"></div>
+                </div>
+
+                <div class="mc-callout green" id="ttSameNote"></div>
+
+                <div class="block-title">Follow Your Money</div>
+                <div class="tax3-grid">
+                  <div class="tax3-card now">
+                    <h4>Tax Now</h4>
+                    <div class="tax3-tag">Taxes along the way</div>
+                    <div class="tax3-row"><span>Start today</span><strong id="ttNowStart">$0</strong></div>
+                    <div class="tax3-row"><span>Tax paid today</span><strong id="ttNowTax">$0</strong></div>
+                    <div class="tax3-row"><span>Starts growing</span><strong id="ttNowGrowing">$0</strong></div>
+                    <div class="tax3-final"><div class="tax3-final-lab">Estimated amount at retirement</div><div class="tax3-final-num" id="ttNowFinal">$0</div></div>
+                  </div>
+                  <div class="tax3-card later">
+                    <h4>Tax Later</h4>
+                    <div class="tax3-tag">Defer taxes until later</div>
+                    <div class="tax3-row"><span>Start today</span><strong id="ttLaterStart">$0</strong></div>
+                    <div class="tax3-row"><span>Value before retirement tax</span><strong id="ttLaterGross">$0</strong></div>
+                    <div class="tax3-row"><span>Estimated tax at retirement</span><strong id="ttLaterTax">$0</strong></div>
+                    <div class="tax3-final"><div class="tax3-final-lab">Estimated amount you keep</div><div class="tax3-final-num" id="ttLaterFinal">$0</div></div>
+                  </div>
+                  <div class="tax3-card free">
+                    <h4>Tax-Free Later</h4>
+                    <div class="tax3-tag">Pay tax first, qualified access later</div>
+                    <div class="tax3-row"><span>Start today</span><strong id="ttFreeStart">$0</strong></div>
+                    <div class="tax3-row"><span>Tax paid today</span><strong id="ttFreeTax">$0</strong></div>
+                    <div class="tax3-row"><span>Illustrated tax at qualified access</span><strong>$0*</strong></div>
+                    <div class="tax3-final"><div class="tax3-final-lab">Estimated amount you keep</div><div class="tax3-final-num" id="ttFreeFinal">$0</div></div>
+                  </div>
+                </div>
+
+                <div class="wp-report-note">
+                  Educational illustration only. Simplifies complex tax rules and does not represent a specific product or account.
+                  Consult a qualified tax professional before making decisions.
+                </div>
+              </div>
+
+              <div class="wp-card mc-panel" id="disability-section">
+                <div class="mini-calc-head">
+                  <button type="button" class="mc-close-btn" data-close-target="disability-section">✕ Close</button>
+                  <h3>If Your Paycheck Stopped Today...</h3>
+                  <p>...how long could your family keep paying the bills? Compare an emergency fund alone with an emergency fund plus an income-protection benefit.</p>
+                </div>
+
+                <div class="metric-grid">
+                  <div class="wp-field" style="margin-bottom:0;"><div class="wp-label">Essential Monthly Bills ($)</div><input id="pdBills" class="wp-input" type="number" value="6000"></div>
+                  <div class="wp-field" style="margin-bottom:0;"><div class="wp-label">Income That Would Still Continue ($)</div><input id="pdContinue" class="wp-input" type="number" value="0"></div>
+                  <div class="wp-field" style="margin-bottom:0;"><div class="wp-label">Emergency Savings ($)</div><input id="pdSavings" class="wp-input" type="number" value="18000"></div>
+                  <div class="wp-field" style="margin-bottom:0;"><div class="wp-label">Income-Protection Benefit Available ($)</div><input id="pdBenefit" class="wp-input" type="number" value="80000"></div>
+                </div>
+                <div class="wp-field" style="margin-top:14px;">
+                  <div class="wp-label">Months You Want Protected</div>
+                  <select id="pdGoal" class="wp-select">
+                    <option value="6">6 months</option>
+                    <option value="12" selected>12 months</option>
+                    <option value="18">18 months</option>
+                    <option value="24">24 months</option>
+                  </select>
+                </div>
+
+                <div class="mc-callout green" id="pdGapNote"></div>
+
+                <div class="two-col-compare">
+                  <div class="compare-panel red">
+                    <div class="cp-tag">Using Savings Alone</div>
+                    <div class="cp-title">Emergency Fund Only</div>
+                    <div class="cp-num" id="pdEfMonths">0 months</div>
+                    <div class="dot-row" id="pdEfDots"></div>
+                    <div class="subtext" id="pdEfNote"></div>
+                    <div class="cp-row"><span>To cover your goal with savings alone</span><strong id="pdEfNeed">$0</strong></div>
+                  </div>
+                  <div class="compare-panel green">
+                    <div class="cp-tag">Savings + Benefit</div>
+                    <div class="cp-title">Fund + Income Protection</div>
+                    <div class="cp-num" id="pdCombMonths">0 months</div>
+                    <div class="dot-row" id="pdCombDots"></div>
+                    <div class="subtext" id="pdCombNote"></div>
+                    <div class="cp-row"><span>Total resources available</span><strong id="pdCombTotal">$0</strong></div>
+                  </div>
+                </div>
+
+                <div class="block-title">What If You Don't Need the Whole Benefit Right Away?</div>
+                <div class="subtext" style="margin-bottom:10px;">See what a leftover amount could grow into if invested instead of spent.</div>
+                <div class="metric-grid">
+                  <div class="wp-field" style="margin-bottom:0;"><div class="wp-label">Amount Not Needed Right Now ($)</div><input id="pdLeftover" class="wp-input" type="number" value="30000"></div>
+                  <div class="wp-field" style="margin-bottom:0;"><div class="wp-label">Years Invested</div><input id="pdYears" class="wp-input" type="number" value="10"></div>
+                </div>
+                <div class="quad-stat two">
+                  <div class="qs-item tan"><div class="qs-lab">Illustrated at 6%</div><div class="qs-num" id="pd6pct">$0</div></div>
+                  <div class="qs-item tan"><div class="qs-lab">Illustrated at 8%</div><div class="qs-num" id="pd8pct">$0</div></div>
+                </div>
+
+                <div class="wp-report-note">
+                  Educational illustration only. Income-protection/living-benefit availability, qualifying conditions, and payout
+                  amounts vary by carrier and policy. Growth assumptions are hypothetical and not guaranteed.
+                </div>
+              </div>
+
+              <div class="wp-card mc-panel" id="death-section">
+                <div class="mini-calc-head">
+                  <button type="button" class="mc-close-btn" data-close-target="death-section">✕ Close</button>
+                  <h3>DIME Life Insurance Needs Calculator</h3>
+                  <p>Estimate a family's potential life insurance need using the DIME method: Debt, Income, Mortgage, and Education.</p>
+                </div>
+
+                <div class="metric-grid">
+                  <div class="wp-field" style="margin-bottom:0;"><div class="wp-label">D &mdash; Outstanding Debts ($)</div><input id="dimeDebt" class="wp-input" type="number" value="30000"></div>
+                  <div class="wp-field" style="margin-bottom:0;">
+                    <div class="wp-label">I &mdash; Annual Income to Replace ($)</div>
+                    <input id="dimeIncome" class="wp-input" type="number" value="75000">
+                  </div>
+                  <div class="wp-field" style="margin-bottom:0;"><div class="wp-label">M &mdash; Remaining Mortgage Balance ($)</div><input id="dimeMortgage" class="wp-input" type="number" value="250000"></div>
+                  <div class="wp-field" style="margin-bottom:0;"><div class="wp-label">E &mdash; Number of Children</div><input id="dimeKids" class="wp-input" type="number" value="2"></div>
+                </div>
+                <div class="metric-grid" style="margin-top:12px;">
+                  <div class="wp-field" style="margin-bottom:0;">
+                    <div class="wp-label">Years of Income Replacement</div>
+                    <input id="dimeYears" class="wp-input" type="number" value="10">
+                    <input type="range" id="dimeYearsSlider" min="1" max="30" value="10">
+                  </div>
+                  <div class="wp-field" style="margin-bottom:0;"><div class="wp-label">Estimated Education Need Per Child ($)</div><input id="dimeEduEach" class="wp-input" type="number" value="75000"></div>
+                </div>
+
+                <div class="quad-stat">
+                  <div class="qs-item pink"><div class="qs-lab">Debt</div><div class="qs-num" id="dimeDebtStat">$0</div></div>
+                  <div class="qs-item pink"><div class="qs-lab">Income</div><div class="qs-num" id="dimeIncomeStat">$0</div></div>
+                  <div class="qs-item pink"><div class="qs-lab">Mortgage</div><div class="qs-num" id="dimeMortgageStat">$0</div></div>
+                  <div class="qs-item pink"><div class="qs-lab">Education</div><div class="qs-num" id="dimeEduStat">$0</div></div>
+                </div>
+
+                <div class="result-band">
+                  <div class="rb-lab">Estimated DIME Need</div>
+                  <div class="rb-num" id="dimeNeedBand">$0</div>
+                  <div class="rb-sub">Debt + Income Replacement + Mortgage + Education</div>
+                </div>
+
+                <div class="block-title">Subtract Existing Resources</div>
+                <div class="metric-grid" style="margin-top:8px;">
+                  <div class="wp-field" style="margin-bottom:0;"><div class="wp-label">Existing Life Insurance Coverage ($)</div><input id="dimeExistingCov" class="wp-input" type="number" value="100000"></div>
+                  <div class="wp-field" style="margin-bottom:0;"><div class="wp-label">Available Savings / Liquid Assets ($)</div><input id="dimeSavingsInput" class="wp-input" type="number" value="25000"></div>
+                </div>
+
+                <div class="mc-callout gold gap-band">
+                  <div class="gap-band-lab">Estimated Additional Coverage Gap</div>
+                  <div class="gap-band-num" id="dimeGapBand">$0</div>
+                </div>
+
+                <div class="wp-report-note">
+                  Educational estimate only. The DIME method is a simplified needs-analysis framework and does not account for
+                  every household variable. Review actual insurance needs with a qualified professional.
+                </div>
+              </div>
+            </div>
+
+            <div class="guided-nav">
+              <button type="button" data-prev><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 6l-6 6 6 6"/></svg> Back</button>
+              <button type="button" class="primary" data-next>Save &amp; Continue <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13"/><path d="M13 6l6 6-6 6"/></svg></button>
+            </div>
+          </section>
+
+          <!-- ================= STEP 7 ================= -->
+          <section class="guided-page" data-page="6">
+            <div class="guided-head">
+              <div class="guided-head-top">
+                <div class="guided-head-copy">
+                  <div class="guided-kicker">Step 7 of 7</div>
+                  <h2>Your Options</h2>
+                  <p data-name-line="You've built the picture, {name}. What next?">Choose what you want to improve next.</p>
+                </div>
+                <div class="head-quote"><span>Choose your next step.</span></div>
+              </div>
+            </div>
+
+            <div class="guided-content" id="guidedOptions">
+
+              <section class="wp-card intel-panel">
+                <div class="card-head">
+                  <span class="card-icon spark">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l1.9 4.9 4.9 1.9-4.9 1.9L12 17.1l-1.9-4.9-4.9-1.9 4.9-1.9Z"/><path d="M18.5 15.5l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8Z"/></svg>
+                  </span>
+                  <div>
+                    <h2>Your priority actions</h2>
+                    <div class="subtext">The three things your own numbers argue for first.</div>
+                  </div>
+                </div>
+                <div class="intel-grid" id="intelActions"></div>
+              </section>
+
+              <div class="wp-card action-card" id="action-section">
+                <div class="wp-section-number">Your Next Step</div>
+                <h2>What would you like to improve?</h2>
+                <div class="action-hero" id="actionHero">
+                  <div class="action-kicker" id="actionKicker">WHAT MAY STILL BE MISSING</div>
+                  <div class="action-number" id="actionGap">$0</div>
+                  <div class="action-copy" id="actionGapCopy"></div>
+                </div>
+                <div class="action-stat" style="margin-bottom:14px;"><small>One Possible Way to Close the Gap</small><strong id="actionMonthly">+$0/mo</strong><span id="actionMonthlyExplain">This is an estimate of the additional monthly saving that could help move you toward your goal.</span></div>
+                <span id="actionMarket" style="display:none"></span><span id="actionTaxLater" style="display:none"></span>
+                <div class="decision-question">
+                  <div class="decision-eyebrow">CHOOSE WHAT MATTERS MOST TO YOU</div>
+                  <h3 id="decisionQuestion">What would you like to focus on next?</h3>
+                  <div class="decision-options">
+                    <button type="button" class="decision-btn" data-decision="grow">Build my retirement goal</button>
+                    <button type="button" class="decision-btn" data-decision="work">Improve how my money is positioned</button>
+                    <button type="button" class="decision-btn" data-decision="protect">Protect what I have built</button>
+                    <button type="button" class="decision-btn" data-decision="tax">Lower future tax exposure</button>
+                    <button type="button" class="decision-btn" data-decision="review">Review my full picture</button>
+                  </div>
+                  <div class="decision-response" id="decisionResponse"></div>
+                </div>
+              </div>
+
+              <div class="wp-card report-card">
+                <div class="card-head">
+                  <span class="card-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3.5h5.5L18 8v12.5H8Z"/><path d="M13.5 3.5V8H18"/><path d="M10.5 12.5h5M10.5 16h5"/></svg>
+                  </span>
+                  <div>
+                    <h2>Get a PDF of Your Retirement Path</h2>
+                    <div class="subtext">Every step you completed, in one document.</div>
+                  </div>
+                </div>
+                <div class="field-row">
+                  <div class="wp-field"><div class="wp-label">Full Name</div><input id="clientName2" class="wp-input" type="text" placeholder="Jane Smith"></div>
+                  <div class="wp-field"><div class="wp-label">Email</div><input id="clientEmail2" class="wp-input" type="email" placeholder="jane@example.com"></div>
+                  <div class="wp-field"><div class="wp-label">Phone Number</div><input id="clientPhone2" class="wp-input" type="tel" placeholder="(555) 123-4567"></div>
+                </div>
+                <button id="generateReportBtn2" class="wp-report-btn">Download PDF Report</button>
+                <div id="reportStatus2" class="wp-report-status"></div>
+                <div class="wp-report-note">Your name, email, and phone number are used only to personalize this PDF. Nothing is sent anywhere.</div>
+              </div>
+            </div>
+
+            <div class="guided-nav">
+              <button type="button" data-prev><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 6l-6 6 6 6"/></svg> Back</button>
+              <span></span>
+            </div>
+          </section>
+        </div>
+
+        <p class="disclaimer-banner">
+          Educational estimates only — not financial, tax, or legal advice. Full disclosures apply.
+        </p>
+      </div>
+
+      <!-- ============ SNAPSHOT RAIL ============ -->
+      <aside class="wd-rail" aria-label="Your snapshot">
+        <div class="rail-card snap-card">
+          <div class="card-head">
+            <span class="card-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19V11"/><path d="M12 19V5.5"/><path d="M19 19v-5.5"/></svg>
+            </span>
+            <div>
+              <h3 id="snapTitle">Your Snapshot</h3>
+              <p>See your progress as you build your plan.</p>
+            </div>
+          </div>
+
+          <div class="snap-body">
+            <div class="snap-ring">
+              <svg viewBox="0 0 120 120" aria-hidden="true">
+                <defs>
+                  <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#c19a4b"/>
+                    <stop offset="1" stop-color="#0e4736"/>
+                  </linearGradient>
+                </defs>
+                <circle class="ring-track" cx="60" cy="60" r="52"></circle>
+                <circle class="ring-value" id="snapRing" cx="60" cy="60" r="52"></circle>
+              </svg>
+              <div class="snap-ring-label">
+                <strong id="snapPct">14%</strong>
+                <small>Assessment<br>Complete</small>
+              </div>
+            </div>
+
+            <ul class="snap-stats">
+              <li>
+                <span class="stat-icon">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="7" rx="7" ry="3"/><path d="M5 7v4.5c0 1.7 3.1 3 7 3s7-1.3 7-3V7"/><path d="M5 11.5V16c0 1.7 3.1 3 7 3s7-1.3 7-3v-4.5"/></svg>
+                </span>
+                <div><strong id="snapSaved">$25,000</strong><small>Saved Today</small></div>
+              </li>
+              <li>
+                <span class="stat-icon">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="6" width="15" height="13.5" rx="2.5"/><path d="M4.5 10.5h15"/><path d="M9 4.5V7M15 4.5V7"/></svg>
+                </span>
+                <div><strong id="snapYears">33</strong><small>Years to Retirement</small></div>
+              </li>
+              <li>
+                <span class="stat-icon">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7.5"/><circle cx="12" cy="12" r="3.5"/></svg>
+                </span>
+                <div><strong id="snapTrack" class="is-good">On Track</strong><small id="snapTrackSub">You're taking the right steps</small></div>
+              </li>
+            </ul>
+          </div>
+
+          <p class="snap-insight" id="snapInsight"></p>
+        </div>
+
+        <div class="rail-card intel-card">
+          <div class="card-head">
+            <span class="card-icon spark">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l1.9 4.9 4.9 1.9-4.9 1.9L12 17.1l-1.9-4.9-4.9-1.9 4.9-1.9Z"/><path d="M18.5 15.5l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8Z"/></svg>
+            </span>
+            <div>
+              <h3>Smart Insights</h3>
+              <p id="intelCount">Reading your numbers…</p>
+            </div>
+          </div>
+          <ul class="intel-list" id="intelRail"></ul>
+          <button type="button" class="intel-ask" id="intelAsk">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.5a2.5 2.5 0 0 1-2.5 2.5H9l-4 3v-3H6.5A2.5 2.5 0 0 1 4 15.5v-7A2.5 2.5 0 0 1 6.5 6h11A2.5 2.5 0 0 1 20 8.5Z"/></svg>
+            Ask about my plan
+          </button>
+        </div>
+
+        <div class="rail-card promo-card">
+          <div class="promo-media">
+            <img src="photo-rail.webp" alt="" aria-hidden="true">
+            <div class="promo-copy">
+              <h4>See What<br>Your Money Can Do.</h4>
+              <span class="rule"></span>
+            </div>
+          </div>
+          <ul class="promo-points">
+            <li>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 5c0 7.2-3.6 11-9 11-2 0-3.5-.6-3.5-.6S6 9 12.5 7.5"/><path d="M5.5 19c.7-2.6 1.8-4.6 3.2-6.2"/></svg>
+              <div><b>Build</b><i>Wealth</i></div>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 5.5 6.2v5.1c0 4 2.7 7.6 6.5 9.2 3.8-1.6 6.5-5.2 6.5-9.2V6.2Z"/></svg>
+              <div><b>Protect</b><i>What Matters</i></div>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 18.5V13"/><path d="M10.5 18.5V9"/><path d="M16 18.5v-4"/><path d="M4.5 9.5 10 5l3.5 3L19.5 4"/></svg>
+              <div><b>Create</b><i>More Options</i></div>
+            </li>
+          </ul>
+        </div>
+
+        <p class="rail-note">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7"/></svg>
+          Everything you enter stays in your browser. Nothing is sent anywhere.
+        </p>
+      </aside>
+    </div>
+  </div>
+
+  <!-- app.js expects this container; the cards now live inside the steps above -->
+  <div class="wp-grid" aria-hidden="true"><div></div><div></div></div>
+
+  <button type="button" class="ask-fab" id="askFab" aria-expanded="false" aria-controls="askPanel">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l1.9 4.9 4.9 1.9-4.9 1.9L12 17.1l-1.9-4.9-4.9-1.9 4.9-1.9Z"/><path d="M18.5 15.5l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8Z"/></svg>
+    <span>Ask about my plan</span>
+  </button>
+
+  <section class="ask-panel" id="askPanel" aria-hidden="true" aria-label="Plan assistant">
+    <header class="ask-head">
+      <span class="ask-mark">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l1.9 4.9 4.9 1.9-4.9 1.9L12 17.1l-1.9-4.9-4.9-1.9 4.9-1.9Z"/></svg>
+      </span>
+      <div>
+        <strong>Plan Assistant</strong>
+        <small>Answers built from your own numbers</small>
+      </div>
+      <button type="button" class="ask-close" id="askClose" aria-label="Close">×</button>
+    </header>
+    <div class="ask-log" id="askLog"></div>
+    <div class="ask-chips" id="askChips"></div>
+    <form class="ask-form" id="askForm">
+      <input id="askInput" type="text" placeholder="Ask about your plan…" autocomplete="off">
+      <button type="submit" aria-label="Send">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13"/><path d="M13 6l6 6-6 6"/></svg>
+      </button>
+    </form>
+    <p class="ask-note">Nothing you type leaves this browser.</p>
+  </section>
+
+  <div class="wd-toast" id="wdToast" role="status" aria-live="polite"></div>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="auth.js?v=33"></script>
+<script src="agent.js?v=33"></script>
+<script src="app.js?v=33"></script>
+<script src="shell.js?v=33"></script>
+<script src="intelligence.js?v=33"></script>
+</body>
+</html>

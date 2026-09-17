@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0d4435">
+  <title>Mortgage Payoff Strategy — WEALTHDEMO</title>
+  <link rel="icon" href="wealthdemo-logo.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="tokens.css?v=33">
+  <link rel="stylesheet" href="site.css?v=33">
+  <link rel="stylesheet" href="tool.css?v=33">
+  <link rel="stylesheet" href="withdraw.css?v=33">
+  <link rel="stylesheet" href="accounts.css?v=33">
+  <link rel="stylesheet" href="explain.css?v=33">
+  <link rel="stylesheet" href="rule72.css?v=33">
+  <link rel="stylesheet" href="paycheck.css?v=33">
+  <link rel="stylesheet" href="rentbuy.css?v=33">
+  <link rel="stylesheet" href="mortgage.css?v=33">
+  <link rel="stylesheet" href="fold.css?v=33">
+</head>
+<body data-page="app">
+
+<header class="site-nav">
+  <div class="shell site-nav-inner">
+    <a class="brand-identity" href="home.html">
+      <img src="wealthdemo-logo.webp" alt="" aria-hidden="true">
+      <span class="brand-wordmark">
+        <strong>WEALTH<span>DEMO</span></strong>
+        <small>See What Your Money Can Do.</small>
+      </span>
+    </a>
+    <nav class="site-links">
+      <a href="home.html">Tools</a>
+      <a href="blueprint.html">Planning</a>
+      <a href="send.html">Assessments</a>
+      <a href="home.html#categories">Resources</a>
+      <a href="home.html#about">About</a>
+    </nav>
+    <div class="nav-search">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+      <input id="navSearch" type="search" placeholder="Search tools, topics, or goals…" autocomplete="off" aria-label="Search tools">
+      <kbd>⌘K</kbd>
+    </div>
+    <div class="site-actions">
+      <a class="premium-btn" href="#" data-billing>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5 7.5 12l4.5-5 4.5 5L20 8.5V17H4Z"/></svg>
+        Go Premium
+      </a>
+      <span class="nav-divider"></span>
+      <div class="account">
+        <button type="button" class="account-btn" id="accountBtn" aria-expanded="false">
+          <span class="avatar" id="accountInitials">SB</span>
+          <span class="hello">Hello, <b id="accountName">there</b></span>
+          <svg class="caret" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+        </button>
+        <div class="account-menu" id="accountMenu" hidden>
+          <span class="account-email" id="accountEmail">Signed in</span>
+          <a href="blueprint.html">Open Financial Blueprint</a>
+          <button type="button" data-logout>Log out</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="shell tool-wrap">
+
+  <div class="tool-topbar">
+    <a class="back-btn" href="home.html">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H6"/><path d="m11 6-6 6 6 6"/></svg>
+      Back to tools
+    </a>
+    <div class="topbar-right">
+      <button type="button" class="send-btn" id="sendBtn">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 3.5 10.5 13.5"/><path d="M20.5 3.5 14 20.5l-3.5-7-7-3.5Z"/></svg>
+        Send to client
+      </button>
+      <div class="more">
+        <button type="button" class="more-btn" id="moreBtn" aria-label="More options" aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="18" cy="12" r="1.3"/></svg>
+        </button>
+        <div class="more-menu" id="moreMenu" hidden>
+          <button type="button" id="printBtn">Print or save as PDF</button>
+          <button type="button" id="resetBtn">Reset to example figures</button>
+          <a href="rentbuy.html">Rent vs. Buy</a>
+          <a href="dime.html">How Much Life Insurance</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       the banner
+       ============================================================ -->
+  <section class="banner">
+    <div class="bn-q">
+      <span class="bn-eyebrow">Real Estate</span>
+      <h1>Mortgage Payoff Strategy</h1>
+      <p>A policy loan aimed at the mortgage, measured three ways — including the one test that shows what the loan itself is really contributing.</p>
+    </div>
+    <div class="bn-a">
+      <small id="bnLabel">&mdash;</small>
+      <b id="bnBig">&mdash;</b>
+      <em id="bnSub">&mdash;</em>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       the calculator
+       ============================================================ -->
+  <section class="calc">
+    <div class="calc-head">
+      <div class="calc-title">
+        <h2>Assumptions</h2>
+        <p>Change anything here and all three paths move with it.</p>
+      </div>
+      <div class="calc-tools">
+        <button type="button" class="rail-reset" id="resetBtn2">Reset</button>
+      </div>
+    </div>
+
+    <div class="calc-sides">
+      <section class="side" data-side="a">
+        <header>
+          <span class="side-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 10.5 12 5l7.5 5.5"/><path d="M6.5 9.8V19h11V9.8"/><path d="M10 19v-5h4v5"/></svg></span>
+          <span class="side-name"><b>The mortgage</b><em>Where it stands today</em></span>
+        </header>
+        <div class="side-grid">
+          <div class="field">
+            <label for="mBal">Current Mortgage Balance</label>
+            <div class="money-in"><i>$</i><input id="mBal" type="number" min="0" step="5000" value="300000" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="mRate">Mortgage Interest Rate</label>
+            <div class="pct-in"><input id="mRate" type="number" min="0" max="25" step="0.05" value="6.5" inputmode="decimal"><i>%</i></div>
+          </div>
+          <div class="field">
+            <label for="mTerm">Remaining Term</label>
+            <div class="pct-in"><input id="mTerm" type="number" min="1" max="40" step="1" value="25" inputmode="numeric"><i>yrs</i></div>
+          </div>
+          <div class="field">
+            <label for="mPmt">Current Monthly P&amp;I Payment</label>
+            <div class="money-in"><i>$</i><input id="mPmt" type="number" min="0" step="10" value="2026.21" inputmode="decimal"></div>
+            <small id="pmtNote">&mdash;</small>
+          </div>
+          <div class="field">
+            <label for="mExtra"><span data-term="principalfirst">Extra Mortgage Payment Each Month</span></label>
+            <div class="money-in"><i>$</i><input id="mExtra" type="number" min="0" step="50" value="0" inputmode="numeric"></div>
+          </div>
+        </div>
+        <p class="side-fact"><span>Interest left to pay</span><b id="factA">&mdash;</b></p>
+      </section>
+
+      <section class="side" data-side="b">
+        <header>
+          <span class="side-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2 20 7v5.4c0 4.4-3.3 8-8 8.4-4.7-.4-8-4-8-8.4V7Z"/><path d="M12 8.5v7"/><path d="M9.6 10.4a2.4 2.4 0 1 1 2.4 2.1 2.4 2.4 0 1 0 2.4 2.1"/></svg></span>
+          <span class="side-name"><b>The policy loan</b><em>Borrowed against cash value</em></span>
+        </header>
+        <div class="side-grid">
+          <div class="field">
+            <label for="pCash">Current Policy Cash Value</label>
+            <div class="money-in"><i>$</i><input id="pCash" type="number" min="0" step="5000" value="100000" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="pLoan"><span data-term="policyloan">Policy Loan Applied to Mortgage</span></label>
+            <div class="money-in"><i>$</i><input id="pLoan" type="number" min="0" step="5000" value="50000" inputmode="numeric"></div>
+            <small id="loanPctNote">&mdash;</small>
+          </div>
+          <div class="field">
+            <label for="pRate">Policy Loan Interest Rate</label>
+            <div class="pct-in"><input id="pRate" type="number" min="0" max="25" step="0.05" value="5.5" inputmode="decimal"><i>%</i></div>
+          </div>
+          <div class="field">
+            <label for="pRepay">Monthly Policy Loan Repayment</label>
+            <div class="money-in"><i>$</i><input id="pRepay" type="number" min="0" step="100" value="1000" inputmode="numeric"></div>
+            <small id="repayNote">&mdash;</small>
+          </div>
+        </div>
+
+        <details class="more">
+          <summary><span>What the borrowed cash value gives up</span><i></i></summary>
+          <div class="side-grid">
+            <div class="field">
+              <label for="pGrow"><span data-term="crediting">Crediting Rate on Cash Value</span></label>
+              <div class="pct-in"><input id="pGrow" type="number" min="0" max="20" step="0.1" value="0" inputmode="decimal"><i>%</i></div>
+              <small>Leave at zero to match a simple carrier illustration. Set it to see what the loaned money stops earning.</small>
+            </div>
+          </div>
+        </details>
+
+        <p class="side-fact"><span id="factBL">&mdash;</span><b id="factB">&mdash;</b></p>
+      </section>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       the answer
+       ============================================================ -->
+  <div class="results">
+
+    <div class="rb-heads mg-heads">
+      <div class="rb-head" data-side="a"><small>Traditional payoff</small><b id="hdA">&mdash;</b><em id="hdAS">&mdash;</em></div>
+      <div class="rb-head" data-side="b"><small>With the policy loan</small><b id="hdB">&mdash;</b><em id="hdBS">&mdash;</em></div>
+      <div class="rb-head" data-side="d"><small>Time taken off</small><b id="hdD">&mdash;</b><em id="hdDS">&mdash;</em></div>
+    </div>
+
+    <section class="runway mg-chart">
+      <div class="rw-head">
+        <div>
+          <h2>What's Left to Owe</h2>
+          <p id="chartLead">&mdash;</p>
+        </div>
+        <div class="rw-side">
+          <button type="button" class="mg-walk-btn" id="walkBtn" aria-pressed="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 11.2v5.3"/><path d="M12 7.7h.01"/></svg>
+            <span id="walkBtnLabel">Walk me through it</span>
+          </button>
+          <div class="rw-key">
+            <span><i class="k-trad"></i>Doing nothing</span>
+            <span><i class="k-extra"></i>Same money, paid straight on</span>
+            <span><i class="k-loan"></i>Policy-loan strategy</span>
+            <span><i class="k-pol"></i>The loan itself &mdash; lower panel</span>
+          </div>
+        </div>
+      </div>
+      <div id="chartWrap"></div>
+      <ol class="mg-walk" id="chartWalk"></ol>
+    </section>
+
+    <!-- the three paths -->
+    <div class="mg-paths" id="pathGrid"></div>
+
+    <!-- the fair test, always visible because it is the point -->
+    <section class="mg-fair" id="fairBox">
+      <span class="mg-fair-ico">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16"/><path d="M5 8h14"/><path d="m5 8-2.5 5.5a2.8 2.8 0 0 0 5 0Z"/><path d="m19 8-2.5 5.5a2.8 2.8 0 0 0 5 0Z"/></svg>
+      </span>
+      <div class="mg-fair-body">
+        <span class="eyebrow"><span data-term="fairtest">The fair test</span></span>
+        <h3 id="fairTitle">&mdash;</h3>
+        <p id="fairBody">&mdash;</p>
+      </div>
+      <div class="mg-fair-figs">
+        <div><small>Headline saving</small><b id="fairHeadline">&mdash;</b><em>against doing nothing</em></div>
+        <div class="is-alt"><small id="fairRealL">&mdash;</small><b id="fairReal">&mdash;</b><em id="fairRealNote">against the same money paid straight on</em></div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ---------- policy health ---------- -->
+  <section class="panel mg-health" data-fold="Policy health check" data-fold-note="How hard the loan is leaning on the cash value">
+    <div class="mg-health-body">
+      <div class="mg-gauge">
+        <div class="mg-gauge-track"><i id="gaugeFill"></i></div>
+        <div class="mg-gauge-scale"><span>0%</span><span>25%</span><span>50%</span><span>75%</span><span>100%</span></div>
+      </div>
+      <div class="mg-health-copy">
+        <b id="healthTitle">&mdash;</b>
+        <p id="healthBody">&mdash;</p>
+        <p class="mg-health-note"><span data-term="lapse">What happens if a loaned policy runs out of room</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- reading it ---------- -->
+  <section class="reads" data-fold="Reading the comparison" data-fold-note="What these numbers are actually telling you">
+    <div class="reads-head">
+      <span class="eyebrow">Reading the comparison</span>
+      <h2 id="readTitle">&mdash;</h2>
+    </div>
+    <div class="read-grid" id="readGrid"></div>
+  </section>
+
+  <!-- ---------- what people forget ---------- -->
+  <section class="later rb-forget" data-fold="What people often forget" data-fold-note="The parts a payoff illustration leaves out">
+    <div class="later-head">
+      <h2>What People Often Forget</h2>
+      <p>A payoff illustration compares two paths. These are the things sitting outside both of them.</p>
+    </div>
+    <div class="rb-forget-body">
+      <ul class="chips" id="forgetChips"></ul>
+      <p class="rb-key-q"><b>The key question.</b> <span id="keyQ">&mdash;</span></p>
+    </div>
+  </section>
+
+  <div class="say-it" data-fold="Say it like this" data-fold-note="One sentence you can read out loud">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 10.5h7"/><path d="M8.5 14h4"/><path d="M4.5 5.5h15v12h-9l-5 3.5v-3.5h-1Z"/></svg>
+    <div>
+      <span class="eyebrow light">Say it like this</span>
+      <p id="sayIt">&mdash;</p>
+    </div>
+  </div>
+
+  <footer class="fineprint" data-fold="The fine print" data-fold-note="What this illustration does and doesn't cover" data-fold-quiet="1">
+    <span class="d-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5"/><path d="M12 7.6h.01"/></svg></span>
+    <p>Educational illustration only, and not a guaranteed return assumption. Policy loan availability, loan rates, whether the rate is fixed or variable, how the loaned cash value is credited, policy charges and lapse risk all vary by carrier and contract. This does not model taxes, mortgage-interest deductibility, refinancing costs, or the death-benefit reduction a loan creates. Confirm the carrier's actual terms and run a full in-force illustration before using a real policy.</p>
+    <span class="d-sign"><i></i> A brighter financial tomorrow</span>
+  </footer>
+</div>
+
+<script src="auth.js?v=33"></script>
+<script src="agent.js?v=33"></script>
+<script src="site.js?v=33"></script>
+<script src="explain.js?v=33"></script>
+<script src="mortgage.js?v=33"></script>
+<script src="fold.js?v=33"></script>
+</body>
+</html>

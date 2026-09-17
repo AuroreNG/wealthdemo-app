@@ -1,0 +1,225 @@
+/* ============================================================
+   WEALTHDEMO — Retirement Account Match-Up
+
+   One account = one card = one place. Nothing about an account
+   appears anywhere else on the page.
+   ============================================================ */
+
+/* each account owns a colour, everywhere it appears */
+[data-tint="ice"]  { --acc: #2f6bb5; --acc-soft: #e7effa; --acc-line: #d2e0f3; }
+[data-tint="mint"] { --acc: #15825d; --acc-soft: #e4f3ea; --acc-line: #cfe8dc; }
+[data-tint="sage"] { --acc: #2f7a63; --acc-soft: #e6f2ee; --acc-line: #d1e6df; }
+[data-tint="sun"]  { --acc: #a07617; --acc-soft: #fbf2df; --acc-line: #efe1bd; }
+
+/* ============================================================
+   THE QUESTION — asked once, in a sentence
+   ============================================================ */
+.ask {
+  position: relative; overflow: hidden;
+  margin-top: 18px; padding: 22px 26px;
+  border-radius: 12px;
+  background:
+    radial-gradient(120% 160% at 10% 0%, rgba(255,255,255,.95) 0%, rgba(255,255,255,.68) 46%, rgba(255,255,255,.5) 100%),
+    linear-gradient(118deg, #e9f3ef 0%, #f3f8f6 48%, #eef3f7 100%);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, .82);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.95),
+    0 2px 8px rgba(6, 26, 20, .04),
+    0 26px 48px -38px rgba(6, 26, 20, .5);
+}
+.ask-line { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.ask-word {
+  font-family: var(--wd-font-display); font-size: clamp(18px, 2vw, 24px);
+  color: var(--wd-ink-soft); letter-spacing: -.01em;
+}
+.ask-field { position: relative; }
+.ask-field input, .ask-field select {
+  appearance: none;
+  padding: 9px 14px;
+  border: 1px solid rgba(6, 26, 20, .12);
+  border-radius: 9px;
+  background: rgba(255, 255, 255, .92);
+  font-family: var(--wd-font-display);
+  font-size: clamp(18px, 2vw, 24px); font-weight: 600; letter-spacing: -.02em;
+  color: var(--wd-emerald-800);
+  outline: none; width: 100%;
+  box-shadow: 0 1px 0 #fff inset, 0 6px 14px -12px rgba(6,26,20,.6);
+  transition: border-color .14s ease, box-shadow .14s ease;
+}
+.ask-field select { padding-right: 34px; cursor: pointer; }
+.ask-field:has(select)::after {
+  content: ''; position: absolute; right: 14px; top: 50%; width: 8px; height: 8px;
+  border-right: 2px solid var(--wd-emerald-600); border-bottom: 2px solid var(--wd-emerald-600);
+  transform: translateY(-70%) rotate(45deg); pointer-events: none;
+}
+.ask-field input:focus, .ask-field select:focus { border-color: #0b0f0d; box-shadow: 0 0 0 1px #0b0f0d; }
+.ask-field.money input { width: 150px; }
+.ask-field.short input { width: 82px; }
+
+.ask-more {
+  margin-left: auto; display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 14px; border: 1px solid rgba(6,26,20,.12); border-radius: 9px;
+  background: rgba(255,255,255,.7); cursor: pointer;
+  font-size: 13px; font-weight: 600; color: var(--wd-ink-soft);
+}
+.ask-more svg { width: 15px; height: 15px; transition: transform .18s ease; }
+.ask-more[aria-expanded="true"] svg { transform: rotate(180deg); }
+.ask-more:hover { border-color: #0b0f0d; }
+
+.ask-extra { margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(6,26,20,.09); display: grid; gap: 20px; }
+.ask-extra[hidden] { display: none; }
+.ax-label { display: block; margin-bottom: 10px; font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--wd-muted); }
+.ax-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; max-width: 520px; }
+.ax-fields.four { grid-template-columns: repeat(4, minmax(0, 1fr)); max-width: none; }
+
+/* ============================================================
+   THE ANSWER — one line, then the cards
+   ============================================================ */
+.ask-answer {
+  margin: 26px 0 0;
+  font-family: var(--wd-font-display);
+  font-size: clamp(24px, 3vw, 38px); font-weight: 600;
+  letter-spacing: -1.2px; line-height: 1.1; color: var(--wd-ink);
+  text-wrap: pretty;
+}
+.ask-answer .hot { color: var(--wd-negative); }
+.ask-answer .cool { color: var(--wd-emerald-700); }
+.ask-answer-sub { margin: 8px 0 20px; font-size: 16px; color: var(--wd-ink-soft); }
+.ask-answer-sub b { font-weight: 600; color: var(--wd-ink); }
+
+/* ============================================================
+   ONE CARD PER ACCOUNT
+   ============================================================ */
+.acct-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; align-items: start; }
+
+.acct {
+  display: flex; flex-direction: column;
+  padding: 20px 20px 18px;
+  background: #fff;
+  border: 1px solid var(--wd-line);
+  border-radius: 12px;
+  border-top: 3px solid var(--acc);
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.acct:hover { box-shadow: 0 18px 32px -28px rgba(6, 26, 20, .6); }
+.acct.is-best {
+  background: linear-gradient(170deg, var(--acc-soft) 0%, #fff 42%);
+  border-color: var(--acc-line); border-top-color: var(--acc);
+  box-shadow: 0 1px 0 #fff inset, 0 20px 36px -30px rgba(6, 26, 20, .5);
+}
+.acct.is-empty { opacity: .5; }
+
+.acct-head { display: flex; align-items: flex-start; gap: 10px; }
+.acct-dot { width: 10px; height: 10px; flex: none; margin-top: 6px; border-radius: 50%; background: var(--acc); }
+.acct-id { min-width: 0; }
+.acct-id b { display: block; font-size: 16px; font-weight: 600; letter-spacing: -.01em; color: var(--acc); }
+.acct-id small { display: block; margin-top: 1px; font-size: 11.5px; line-height: 1.4; color: var(--wd-muted); }
+
+.acct-money { margin: 18px 0 16px; }
+.acct-money > small { display: block; font-size: 10px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--wd-muted); }
+.acct-keep {
+  display: block; margin: 4px 0 4px;
+  font-family: var(--wd-font-display);
+  font-size: clamp(28px, 2.6vw, 34px); font-weight: 600; letter-spacing: -1px;
+  color: var(--wd-ink); line-height: 1;
+}
+.acct.is-best .acct-keep { color: var(--acc); }
+.acct-lost { display: block; font-size: 12.5px; color: var(--wd-negative); }
+.acct-lost em { font-style: normal; color: var(--wd-muted); }
+.acct-lost.is-clean { color: var(--wd-emerald-600); font-weight: 600; }
+
+.acct-rules { margin: 0; padding: 16px 0 0; border-top: 1px solid var(--wd-line-soft); display: grid; gap: 9px; }
+.acct-rules > div { display: flex; align-items: baseline; gap: 10px; }
+.acct-rules dt { flex: none; width: 88px; font-size: 11.5px; color: var(--wd-muted); }
+.acct-rules dd { margin: 0; flex: 1; font-size: 12.5px; line-height: 1.4; color: var(--wd-ink-soft); text-align: right; }
+.acct-rules > div:last-child { margin-top: 3px; padding-top: 9px; border-top: 1px dashed var(--wd-line-soft); }
+.acct-rules > div:last-child dd { font-weight: 600; color: var(--wd-ink); }
+
+.acct-foot { margin-top: auto; padding-top: 16px; display: grid; gap: 4px; }
+.acct-for { font-size: 12.5px; line-height: 1.45; color: var(--acc); font-weight: 600; }
+.acct-bal { font-size: 11.5px; color: var(--wd-muted); }
+
+.acct-caveat {
+  margin: 12px 0 0; padding: 10px 12px;
+  border-radius: 8px; background: var(--acc-soft);
+  font-size: 11.5px; line-height: 1.55; color: var(--wd-ink-soft);
+}
+
+/* ============================================================
+   RMD — its own question, folded away
+   ============================================================ */
+.rmd-fold {
+  margin-top: 18px; background: #fff;
+  border: 1px solid var(--wd-line); border-radius: 12px;
+}
+.rmd-fold summary {
+  display: flex; align-items: center; gap: 14px;
+  padding: 18px 20px; cursor: pointer; list-style: none;
+}
+.rmd-fold summary::-webkit-details-marker { display: none; }
+.rmd-fold summary:hover { background: var(--wd-ivory); border-radius: 12px; }
+.rf-ico {
+  width: 40px; height: 40px; flex: none; border-radius: 10px; display: grid; place-items: center;
+  background: #fbf2df; border: 1px solid #efe1bd; color: #a07617;
+}
+.rf-ico svg { width: 19px; height: 19px; }
+.rf-text { flex: 1; min-width: 0; }
+.rf-text b { display: block; font-family: var(--wd-font-display); font-size: 19px; color: var(--wd-ink); }
+.rf-text small { display: block; margin-top: 1px; font-size: 12.5px; color: var(--wd-muted); }
+.rf-caret { width: 18px; height: 18px; flex: none; color: var(--wd-muted); transition: transform .18s ease; }
+.rmd-fold[open] .rf-caret { transform: rotate(180deg); }
+.rmd-fold[open] summary { border-bottom: 1px solid var(--wd-line-soft); border-radius: 12px 12px 0 0; }
+
+.rf-body { padding: 20px; display: grid; gap: 18px; }
+.rf-note { margin: 0; font-size: 13px; line-height: 1.6; color: var(--wd-muted); max-width: 80ch; }
+.rf-growth { max-width: 260px; }
+
+.rmd-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.rmd-tile {
+  padding: 18px 20px; border-radius: 11px;
+  background: linear-gradient(120deg, #fbfdfc, #f7faf9); border: 1px solid var(--wd-line-soft);
+}
+.rmd-tile small { display: block; font-size: 10px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--wd-muted); }
+.rmd-tile b {
+  display: block; margin-top: 6px;
+  font-family: var(--wd-font-display); font-size: clamp(24px, 2.4vw, 30px);
+  font-weight: 600; letter-spacing: -.7px; color: var(--wd-ink);
+}
+.rmd-tile.is-cost { background: linear-gradient(120deg, #fef7f8, #fdf3f4); border-color: #f5dee1; }
+.rmd-tile.is-cost small, .rmd-tile.is-cost b { color: var(--wd-negative); }
+.rmd-tile.is-cost.is-clear { background: linear-gradient(120deg, #f4faf7, #f0f7f4); border-color: var(--wd-emerald-100); }
+.rmd-tile.is-cost.is-clear small, .rmd-tile.is-cost.is-clear b { color: var(--wd-emerald-800); }
+.note.good { padding: 14px 16px; border-radius: 10px; background: var(--wd-emerald-050); border: 1px solid var(--wd-emerald-100); }
+.note.good p { margin: 0; font-size: 13px; color: var(--wd-ink-soft); }
+#rmdFix[hidden] { display: none; }
+
+/* ============================================================
+   responsive
+   ============================================================ */
+@media (max-width: 1240px) {
+  .acct-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ax-fields.four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 860px) {
+  .rmd-row { grid-template-columns: 1fr; }
+  .ask-more { margin-left: 0; }
+}
+@media (max-width: 680px) {
+  .acct-grid { grid-template-columns: 1fr; }
+  .ax-fields, .ax-fields.four { grid-template-columns: 1fr; }
+  .ask { padding: 18px; }
+  .ask-word { font-size: 17px; }
+  .ask-field input, .ask-field select { font-size: 17px; padding: 8px 12px; }
+  .ask-field.money input { width: 122px; }
+  .ask-field.short input { width: 68px; }
+}
+
+@media print {
+  .ask { background: #fff; box-shadow: none; backdrop-filter: none; }
+  .ask-more, .tool-topbar { display: none; }
+  .acct-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .acct, .rmd-fold, .diagnosis { break-inside: avoid; }
+  .rmd-fold summary { display: none; }
+}

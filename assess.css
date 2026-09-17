@@ -1,0 +1,313 @@
+/* ============================================================
+   WEALTHDEMO — the client assessment
+
+   Seen by someone on a phone who did not choose to be here.
+   So: one thing at a time, few words, and every answer pays
+   something back immediately — the number under the field is
+   the reason they keep going.
+
+   Surfaces are light glass over a soft wash of the adviser's
+   colour. The colour appears three times per screen at most.
+   ============================================================ */
+
+:root {
+  --a-c: #0d7a5f;
+  --a-ink: #0b5e4a;
+  --a-wash: rgba(13, 122, 95, .08);
+
+  --as-paper: #f7f5f1;
+  --as-ink: #14201d;
+  --as-soft: #4e5c57;
+  --as-mute: #7f8c87;
+  --as-line: rgba(20, 32, 29, .1);
+  --as-glass: rgba(255, 255, 255, .72);
+  --as-serif: "Playfair Display", Georgia, serif;
+
+  --good: #0d7a5f;
+  --warn: #9a6a12;
+  --bad:  #b3283c;
+}
+
+body[data-page="assess"] {
+  margin: 0; min-height: 100dvh;
+  background: var(--as-paper);
+  color: var(--as-ink);
+  font: 400 16px/1.6 "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+body[data-page="assess"] * { box-sizing: border-box; }
+
+/* the wash — two soft pools of the adviser's colour, fixed behind everything */
+body[data-page="assess"]::before {
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(60vw 60vw at 12% -8%, var(--a-wash), transparent 65%),
+    radial-gradient(70vw 55vw at 105% 18%, rgba(154, 106, 18, .07), transparent 62%),
+    radial-gradient(80vw 60vw at 50% 112%, var(--a-wash), transparent 60%);
+}
+
+/* ============================================================
+   the frame
+   ============================================================ */
+.as-progress { display: none; }
+
+.as-wrap {
+  min-height: 100dvh;
+  display: flex; flex-direction: column;
+  padding: 0 20px calc(30px + env(safe-area-inset-bottom, 0px));
+}
+
+.as-top {
+  position: sticky; top: 0; z-index: 20;
+  display: flex; align-items: center; gap: 12px;
+  width: 100%; max-width: 660px; margin: 0 auto;
+  padding: 16px 0 14px; min-height: 64px;
+  background: linear-gradient(var(--as-paper) 62%, transparent);
+}
+.as-back {
+  display: grid; place-items: center; flex: none;
+  width: 38px; height: 38px; margin-left: -9px;
+  border: 0; border-radius: 50%; background: transparent;
+  color: var(--as-mute); cursor: pointer;
+  transition: background .15s ease, color .15s ease;
+}
+.as-back svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.as-back:hover { background: rgba(20,32,29,.06); color: var(--as-ink); }
+.as-back[hidden] { display: none; }
+
+.as-who { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.as-avatar {
+  display: grid; place-items: center; flex: none;
+  width: 33px; height: 33px; border-radius: 50%;
+  background: var(--a-c); color: #fff;
+  font-size: 12px; font-weight: 700;
+  box-shadow: 0 2px 8px -2px var(--a-wash);
+}
+.as-who b { display: block; font-size: 13px; font-weight: 600; line-height: 1.25; }
+.as-who small { display: block; font-size: 11px; color: var(--as-mute); line-height: 1.3; }
+
+/* ---------- dots instead of a count ---------- */
+.as-count { margin-left: auto; flex: none; display: flex; gap: 5px; align-items: center; }
+.as-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: rgba(20, 32, 29, .16);
+  transition: background .25s ease, transform .25s ease, width .25s ease;
+}
+.as-dot.is-done { background: var(--a-c); opacity: .45; }
+.as-dot.is-now { background: var(--a-c); width: 17px; border-radius: 3px; }
+
+/* ============================================================
+   the stage
+   ============================================================ */
+.as-stage {
+  flex: 1;
+  display: flex; flex-direction: column; justify-content: center;
+  width: 100%; max-width: 660px; margin: 0 auto;
+  padding: 0 0 24px;
+}
+.as-in > * { animation: asIn .3s cubic-bezier(.2, .8, .3, 1) both; }
+@keyframes asIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) { .as-in > * { animation: none; } }
+
+/* ============================================================
+   the question
+   ============================================================ */
+.as-eyebrow {
+  font-size: 10.5px; font-weight: 700; letter-spacing: .15em;
+  text-transform: uppercase; color: var(--a-ink); opacity: .7;
+  margin: 0 0 14px;
+}
+.as-q {
+  margin: 0 0 8px;
+  font-family: var(--as-serif);
+  font-size: clamp(28px, 6.6vw, 40px); font-weight: 500; line-height: 1.16;
+  letter-spacing: -.02em; color: var(--as-ink);
+  text-wrap: balance;
+}
+.as-hint {
+  margin: 0 0 24px; font-size: 14px; line-height: 1.5; color: var(--as-mute);
+  max-width: 40ch;
+}
+
+/* ---------- typed answers ---------- */
+.as-field { position: relative; }
+.as-field input {
+  width: 100%; display: block;
+  padding: 6px 0 14px; border: 0; border-bottom: 2px solid var(--as-line);
+  background: transparent; color: var(--as-ink);
+  font-family: inherit; font-size: clamp(34px, 8.4vw, 50px); font-weight: 500;
+  letter-spacing: -.03em; font-variant-numeric: tabular-nums;
+  border-radius: 0; -webkit-appearance: none; appearance: none;
+  transition: border-color .2s ease;
+}
+.as-field input:focus { outline: none; border-bottom-color: var(--a-c); }
+.as-field input::placeholder { color: rgba(127, 140, 135, .35); font-weight: 400; }
+.as-field.has-pre input { padding-left: .62em; }
+.as-pre, .as-post {
+  position: absolute; pointer-events: none; color: var(--as-mute);
+}
+.as-pre { left: 0; bottom: 16px; font-size: clamp(26px, 6.4vw, 38px); font-weight: 500; }
+.as-post { right: 0; bottom: 22px; font-size: 14.5px; font-weight: 500; }
+
+.as-field textarea {
+  width: 100%; display: block; min-height: 112px; resize: vertical;
+  padding: 15px 17px; border: 1px solid var(--as-line); border-radius: 14px;
+  background: var(--as-glass); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  color: var(--as-ink); font: inherit; font-size: 17px; line-height: 1.55;
+  transition: border-color .2s ease;
+}
+.as-field textarea:focus { outline: none; border-color: var(--a-c); }
+
+/* ---------- what the answer bought them ---------- */
+.as-react {
+  display: flex; align-items: center; gap: 13px;
+  margin-top: 16px; padding: 13px 16px; border-radius: 14px;
+  border: 1px solid var(--r-line, var(--as-line));
+  background: var(--as-glass);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  opacity: 0; transform: translateY(6px);
+  transition: opacity .22s ease, transform .22s ease, border-color .25s ease;
+}
+.as-react.is-on { opacity: 1; transform: none; }
+.as-react[data-tone="good"] { --r-c: var(--good); --r-line: rgba(13,122,95,.3); }
+.as-react[data-tone="warn"] { --r-c: var(--warn); --r-line: rgba(154,106,18,.32); }
+.as-react[data-tone="bad"]  { --r-c: var(--bad);  --r-line: rgba(179,40,60,.3); }
+.as-react b {
+  font-family: var(--as-serif); font-size: 26px; font-weight: 600; line-height: 1;
+  color: var(--r-c, var(--a-ink)); white-space: nowrap; font-variant-numeric: tabular-nums;
+}
+.as-react span { font-size: 13.5px; line-height: 1.35; color: var(--as-soft); }
+.as-react-meter {
+  /* a span is inline by default, which silently drops width and height */
+  display: block; width: 100%; height: 5px; border-radius: 3px; margin-top: 7px;
+  background: rgba(20, 32, 29, .09); overflow: hidden;
+}
+.as-react-meter[hidden] { display: none; }
+.as-react-meter i {
+  display: block; height: 100%; border-radius: 3px; width: 0;
+  background: var(--r-c, var(--a-c));
+  transition: width .4s cubic-bezier(.2, .8, .3, 1);
+}
+.as-react-body { display: block; min-width: 0; flex: 1; }
+.as-react-body > span:first-child { display: block; }
+
+/* ---------- choices ---------- */
+.as-opts { display: grid; gap: 9px; }
+.as-opt {
+  display: flex; align-items: center; gap: 14px; width: 100%; text-align: left;
+  padding: 15px 17px; border-radius: 15px;
+  border: 1px solid var(--as-line);
+  background: var(--as-glass);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  color: var(--as-ink); font: inherit; font-size: 16.5px; font-weight: 500;
+  cursor: pointer;
+  transition: border-color .16s ease, background .16s ease, transform .12s ease;
+}
+.as-opt:hover { border-color: var(--a-c); }
+.as-opt:active { transform: scale(.992); }
+.as-opt.is-on {
+  border-color: var(--a-c);
+  background: linear-gradient(var(--a-wash), var(--a-wash)), var(--as-glass);
+  box-shadow: 0 0 0 1px var(--a-c) inset;
+}
+.as-opt-ico {
+  display: grid; place-items: center; flex: none;
+  width: 40px; height: 40px; border-radius: 11px;
+  background: var(--a-wash); color: var(--a-ink);
+  transition: background .16s ease;
+}
+.as-opt-ico svg { width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.as-opt.is-on .as-opt-ico { background: var(--a-c); color: #fff; }
+.as-opt-txt { flex: 1; min-width: 0; }
+.as-opt small { display: block; font-size: 12.5px; font-weight: 400; color: var(--as-mute); margin-top: 1px; }
+
+/* ---------- moving on ---------- */
+.as-go {
+  display: flex; align-items: center; justify-content: center; gap: 9px;
+  width: 100%; margin-top: 22px; padding: 17px 20px;
+  border: 0; border-radius: 999px;
+  background: var(--a-c); color: #fff;
+  font: inherit; font-size: 16px; font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 10px 26px -14px var(--a-c);
+  transition: opacity .15s ease, transform .1s ease, filter .15s ease;
+}
+.as-go svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.as-go:hover { filter: brightness(1.07); }
+.as-go:active { transform: scale(.99); }
+.as-go:disabled { opacity: .28; cursor: default; filter: none; box-shadow: none; }
+
+.as-skip {
+  display: block; margin: 12px auto 0; padding: 8px 14px;
+  border: 0; background: transparent; color: var(--as-mute);
+  font: inherit; font-size: 13.5px; cursor: pointer; border-radius: 9px;
+}
+.as-skip:hover { color: var(--as-ink); background: rgba(20,32,29,.05); }
+.as-kbd { display: none; }
+
+/* ============================================================
+   the welcome
+   ============================================================ */
+.as-hello .as-q { font-size: clamp(32px, 8vw, 46px); margin-bottom: 10px; }
+.as-hello .as-lede {
+  margin: 0 0 26px; font-size: 16.5px; line-height: 1.55; color: var(--as-soft);
+  max-width: 34ch;
+}
+.as-card {
+  display: flex; align-items: center; gap: 14px;
+  padding: 15px 17px; margin: 0 0 20px;
+  border-radius: 16px; border: 1px solid var(--as-line);
+  background: var(--as-glass);
+  backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+}
+.as-card .as-avatar { width: 46px; height: 46px; font-size: 16px; }
+.as-card b { display: block; font-size: 15.5px; font-weight: 600; line-height: 1.3; }
+.as-card small { display: block; font-size: 12.5px; color: var(--as-mute); line-height: 1.4; }
+
+.as-meta { display: flex; flex-wrap: wrap; gap: 7px; margin: 0; }
+.as-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 13px; border-radius: 999px;
+  border: 1px solid var(--as-line); background: var(--as-glass);
+  color: var(--as-soft); font-size: 12.5px; font-weight: 600;
+}
+.as-chip svg { width: 13px; height: 13px; fill: none; stroke: var(--a-c); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.as-privacy {
+  margin: 18px 0 0; font-size: 12px; line-height: 1.55; color: var(--as-mute);
+  display: flex; gap: 8px; align-items: flex-start; max-width: 42ch;
+}
+.as-privacy svg { width: 14px; height: 14px; flex: none; margin-top: 2px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+
+/* ============================================================
+   thinking
+   ============================================================ */
+.as-think { text-align: center; }
+.as-think p { margin: 22px 0 0; font-size: 15px; color: var(--as-soft); min-height: 24px; }
+.as-pulse {
+  position: relative; width: 62px; height: 62px; margin: 0 auto;
+}
+.as-pulse i {
+  position: absolute; inset: 0; border-radius: 50%;
+  border: 2px solid var(--a-c); opacity: 0;
+  animation: asRipple 1.6s cubic-bezier(.2,.7,.3,1) infinite;
+}
+.as-pulse i:nth-child(2) { animation-delay: .5s; }
+.as-pulse i:nth-child(3) { animation-delay: 1s; }
+@keyframes asRipple {
+  0%   { transform: scale(.32); opacity: .85; }
+  100% { transform: scale(1);   opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .as-pulse i { animation-duration: 4s; } }
+
+/* ============================================================
+   narrow
+   ============================================================ */
+@media (max-width: 480px) {
+  .as-wrap { padding-left: 17px; padding-right: 17px; }
+  .as-opt { padding: 14px 14px; gap: 12px; }
+  .as-opt-ico { width: 36px; height: 36px; border-radius: 10px; }
+}

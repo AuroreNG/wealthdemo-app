@@ -1,0 +1,193 @@
+/* ============================================================
+   WEALTHDEMO — the prep sheet
+   Read standing up, ninety seconds before the meeting.
+   ============================================================ */
+
+.dk-empty {
+  margin: 0; padding: 18px 0; font-size: 13.5px; line-height: 1.6;
+  color: var(--wd-muted); max-width: 60ch;
+}
+
+/* ============================================================
+   something came back
+   ============================================================ */
+.dk-landed {
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 18px; align-items: center;
+  padding: 22px 26px; margin-bottom: 22px;
+  border-radius: 20px;
+  background: linear-gradient(130deg, rgba(13, 122, 95, .13), rgba(255, 255, 255, .72));
+  backdrop-filter: blur(22px) saturate(1.3); -webkit-backdrop-filter: blur(22px) saturate(1.3);
+  border: 1px solid rgba(255, 255, 255, .85);
+  box-shadow: 0 1px 2px rgba(6,26,20,.04), 0 22px 46px -34px rgba(6, 26, 20, .6);
+}
+.dk-landed[hidden] { display: none; }
+.dk-landed-ico {
+  display: grid; place-items: center; width: 46px; height: 46px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #0d4435, #0d7a5f);
+  box-shadow: 0 10px 20px -10px rgba(13, 68, 53, .9);
+}
+.dk-landed-ico svg { width: 22px; height: 22px; fill: none; stroke: #fff; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.dk-landed h2 {
+  margin: 5px 0 6px; font-family: var(--wd-serif, "Playfair Display", Georgia, serif);
+  font-size: 22px; font-weight: 600; color: var(--wd-ink); letter-spacing: -.012em;
+}
+.dk-landed p { margin: 0; font-size: 13.5px; line-height: 1.6; color: var(--wd-ink-soft); max-width: 62ch; }
+.dk-landed .sd-primary { background: #0d4435; color: #fff; }
+
+/* ============================================================
+   the roster
+   ============================================================ */
+.dk-roster { display: grid; gap: 8px; }
+.dk-row {
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 13px; align-items: center; width: 100%; text-align: left;
+  padding: 13px 16px; border-radius: 13px;
+  border: 1px solid rgba(6, 26, 20, .1);
+  background: rgba(255, 255, 255, .62);
+  font: inherit; cursor: pointer;
+  transition: border-color .15s ease, background .15s ease, transform .12s ease;
+}
+.dk-row:hover { border-color: rgba(13, 122, 95, .38); transform: translateY(-1px); }
+.dk-row.is-on { border-color: #0d7a5f; background: rgba(13, 122, 95, .05); box-shadow: inset 0 0 0 1px #0d7a5f; }
+.dk-ava {
+  display: grid; place-items: center; flex: none;
+  width: 38px; height: 38px; border-radius: 50%;
+  background: linear-gradient(135deg, #0d4435, #0d7a5f);
+  color: #fff; font-size: 12.5px; font-weight: 700;
+  box-shadow: 0 6px 14px -8px rgba(13, 68, 53, .9);
+}
+.dk-row-txt { min-width: 0; }
+.dk-row-txt b { display: block; font-size: 14.5px; font-weight: 600; color: var(--wd-ink); }
+.dk-row-txt small { display: block; font-size: 12px; color: var(--wd-muted); margin-top: 1px; }
+.dk-row-when { font-size: 12px; font-weight: 600; color: var(--wd-muted); white-space: nowrap; }
+
+/* ============================================================
+   the sheet
+   ============================================================ */
+.dk-head {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto;
+  gap: 20px; align-items: end; margin-bottom: 22px;
+  padding-bottom: 20px; border-bottom: 1px solid rgba(6, 26, 20, .1);
+}
+.dk-head h1 {
+  margin: 7px 0 6px; font-family: var(--wd-serif, "Playfair Display", Georgia, serif);
+  font-size: clamp(30px, 4.6vw, 42px); font-weight: 600; letter-spacing: -.022em;
+  color: var(--wd-ink); line-height: 1.05;
+}
+.dk-head p { margin: 0; font-size: 13.5px; color: var(--wd-muted); }
+.dk-head-right { text-align: right; white-space: nowrap; }
+.dk-head-right small {
+  display: block; font-size: 10px; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--wd-muted); margin-bottom: 4px;
+}
+.dk-head-right b { font-size: 15px; font-weight: 600; color: var(--wd-ink); }
+
+/* ---------- their words ---------- */
+.dk-quote {
+  position: relative; margin: 0 0 24px; padding: 26px 28px 24px 64px;
+  border-radius: 20px;
+  background: linear-gradient(130deg, rgba(246, 241, 228, .85), rgba(255, 255, 255, .7) 65%);
+  backdrop-filter: blur(20px) saturate(1.25); -webkit-backdrop-filter: blur(20px) saturate(1.25);
+  border: 1px solid rgba(255, 255, 255, .8);
+  box-shadow: 0 1px 2px rgba(6,26,20,.04), 0 20px 42px -34px rgba(6, 26, 20, .55);
+}
+.dk-quote[hidden] { display: none; }
+.dk-quote svg {
+  position: absolute; left: 22px; top: 24px; width: 26px; height: 26px;
+  fill: #9a6a12; opacity: .45;
+}
+.dk-quote p {
+  margin: 0 0 9px;
+  font-family: var(--wd-serif, "Playfair Display", Georgia, serif);
+  font-size: clamp(18px, 2.6vw, 23px); font-weight: 500; font-style: italic;
+  line-height: 1.45; color: #4a3207; max-width: 56ch;
+}
+.dk-quote cite { font-size: 12.5px; font-style: normal; color: var(--wd-muted); }
+
+/* ---------- the three numbers ---------- */
+.dk-three {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 14px; margin-bottom: 24px;
+}
+.dk-num {
+  position: relative; padding: 22px 22px 20px; border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, .85);
+  background: rgba(255, 255, 255, .7);
+  backdrop-filter: blur(18px) saturate(1.25); -webkit-backdrop-filter: blur(18px) saturate(1.25);
+  border-top: 3px solid var(--n-c);
+  box-shadow: 0 1px 2px rgba(6,26,20,.04), 0 18px 38px -32px rgba(6, 26, 20, .55);
+}
+.dk-num[data-tone="bad"]  { --n-c: #b3283c; --n-line: rgba(179,40,60,.2); }
+.dk-num[data-tone="warn"] { --n-c: #9a6a12; --n-line: rgba(154,106,18,.22); }
+.dk-num-n {
+  position: absolute; top: 16px; right: 18px;
+  font-size: 12px; font-weight: 700; color: var(--n-c); opacity: .4;
+}
+.dk-num b {
+  display: block;
+  font-family: var(--wd-serif, "Playfair Display", Georgia, serif);
+  font-size: clamp(26px, 3.4vw, 33px); font-weight: 600; line-height: 1;
+  letter-spacing: -.025em; color: var(--n-c); margin-bottom: 9px;
+  font-variant-numeric: tabular-nums;
+}
+.dk-num small {
+  display: block; font-size: 13.5px; line-height: 1.5; color: var(--wd-ink);
+  margin-bottom: 9px;
+}
+.dk-num em {
+  display: block; font-style: normal; font-size: 10px; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--wd-muted);
+}
+
+/* ---------- hesitation ---------- */
+.dk-hesitate { display: grid; gap: 9px; }
+.dk-hes {
+  padding: 14px 17px; border-radius: 13px;
+  background: rgba(154, 106, 18, .06); border: 1px solid rgba(154, 106, 18, .2);
+}
+.dk-hes b { display: block; font-size: 14px; font-weight: 600; color: var(--wd-ink); margin-bottom: 3px; }
+.dk-hes small { font-size: 12.5px; color: #7a520c; }
+
+/* ---------- the record ---------- */
+.dk-facts {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 20px 28px;
+}
+.dk-fact-group h4 {
+  margin: 0 0 9px; font-size: 10px; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--wd-muted);
+  padding-bottom: 7px; border-bottom: 1px solid rgba(6, 26, 20, .09);
+}
+.dk-fact {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto;
+  gap: 4px 12px; align-items: baseline; padding: 6px 0;
+}
+.dk-fact > span { font-size: 13px; color: var(--wd-ink-soft); }
+.dk-fact > b {
+  font-size: 14px; font-weight: 600; color: var(--wd-ink); white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.dk-fact > em {
+  grid-column: 1 / -1; font-style: normal; font-size: 10.5px; color: var(--wd-muted);
+}
+.dk-fact > em[data-src="assumed"] { color: #9a6a12; }
+.dk-fact > em[data-src="derived"] { color: #1d4f86; }
+
+/* ============================================================
+   narrower
+   ============================================================ */
+@media (max-width: 760px) {
+  .dk-landed { grid-template-columns: auto minmax(0, 1fr); }
+  .dk-landed .sd-primary { grid-column: 1 / -1; width: 100%; }
+  .dk-head { grid-template-columns: minmax(0, 1fr); align-items: start; }
+  .dk-head-right { text-align: left; }
+  .dk-quote { padding: 20px 20px 18px 20px; }
+  .dk-quote svg { position: static; display: block; margin-bottom: 8px; }
+}
+
+@media print {
+  .site-nav, .tool-topbar, .dk-landed, #rosterBox { display: none !important; }
+  .dk-num, .dk-quote, .dk-hes { break-inside: avoid; }
+  .dk-head { border-bottom: 2px solid #000; }
+}

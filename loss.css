@@ -1,0 +1,210 @@
+/* ============================================================
+   WEALTHDEMO — What a Loss Really Costs
+   (builds on rule72.css for .rates, .slider, .chips, .clock)
+   ============================================================ */
+
+.loss-rates .rate-vs { font-size: 10px; }
+.loss-rates .rate-side[data-side="debt"] header b { color: #8f2031; }
+
+/* the growth row gets a slider of its own */
+.timing .slider.slim {
+  flex: 1 1 200px; max-width: 320px;
+  --c: #2f4f45; --c-soft: rgba(47,79,69,.18);
+  margin: 0;
+}
+
+/* ============================================================
+   the fall and the climb
+   ============================================================ */
+.loss-panel { margin-bottom: 22px; }
+.loss-chart { width: 100%; height: auto; display: block; }
+
+.loss-chart .lc-base { stroke: rgba(6,26,20,.22); stroke-width: 1.4; }
+.loss-chart .lc-even { stroke: rgba(13,122,95,.45); stroke-width: 1.3; stroke-dasharray: 5 5; }
+.loss-chart .lc-even-lab {
+  font-size: 10.5px; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; fill: #0b5e4a; stroke: none;
+}
+
+.loss-chart .lc-start { fill: url(#lcGreen); }
+.loss-chart .lc-after { fill: url(#lcRed); }
+.loss-chart .lc-ghost {
+  fill: rgba(13,122,95,.09);
+  stroke: rgba(13,122,95,.45); stroke-width: 1.4; stroke-dasharray: 5 4;
+}
+
+.loss-chart .lc-fall-line  { stroke: #b3283c; stroke-width: 2.2; }
+.loss-chart .lc-fall-head  { fill: none; stroke: #b3283c; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.loss-chart .lc-climb-line { stroke: #9a6a12; stroke-width: 2.2; }
+.loss-chart .lc-climb-head { fill: none; stroke: #9a6a12; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.loss-chart .lc-tie { stroke: rgba(6,26,20,.2); stroke-width: 1; stroke-dasharray: 3 3; }
+
+.loss-chart .lc-big {
+  font-family: var(--wd-serif, "Playfair Display", Georgia, serif);
+  font-size: 22px; font-weight: 600; stroke: none;
+  paint-order: stroke; stroke: #fff; stroke-width: 5px; stroke-linejoin: round;
+}
+.loss-chart .lc-big.lc-fall  { fill: #8f2031; }
+.loss-chart .lc-big.lc-climb { fill: #7a520c; }
+.loss-chart .lc-small {
+  font-size: 11.5px; fill: var(--wd-muted);
+  paint-order: stroke; stroke: #fff; stroke-width: 4px; stroke-linejoin: round;
+}
+
+.loss-chart .lc-name {
+  font-size: 11px; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; fill: var(--wd-muted); stroke: none;
+}
+.loss-chart .lc-val {
+  font-family: var(--wd-serif, "Playfair Display", Georgia, serif);
+  font-size: 20px; font-weight: 600; fill: var(--wd-ink); stroke: none;
+}
+.loss-chart .lc-val.is-bad { fill: #8f2031; }
+
+/* ---------- the three cards ---------- */
+.loss-grid { margin-bottom: 22px; }
+.loss-grid .clock-big b { font-size: 38px; }
+.loss-grid .clock[data-tint="sun"] { --acc: #9a6a12; --acc-soft: rgba(154,106,18,.11); --acc-ink: #7a520c; }
+.loss-grid .clock-sub { margin-bottom: 16px; }
+.loss-grid .clock footer { margin-top: auto; }
+
+/* ============================================================
+   the trap
+   ============================================================ */
+.trap {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center; gap: 22px;
+  padding: 22px 26px; margin-bottom: 26px;
+  border-radius: 16px;
+  background: linear-gradient(120deg, #fdf1f2, #fefafa 62%);
+  border: 1px solid rgba(179, 40, 60, .22);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 14px 28px -24px rgba(6,26,20,.3);
+}
+.trap[hidden] { display: none; }
+.tr-ico {
+  display: grid; place-items: center;
+  width: 46px; height: 46px; border-radius: 12px;
+  background: rgba(179, 40, 60, .11);
+}
+.tr-ico svg { width: 23px; height: 23px; fill: none; stroke: #8f2031; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.tr-body .eyebrow { color: #b3283c; }
+.tr-body h3 {
+  margin: 5px 0 6px;
+  font-family: var(--wd-serif, "Playfair Display", Georgia, serif);
+  font-size: 24px; font-weight: 600; color: #6f1826; letter-spacing: -.01em;
+}
+.tr-body p { margin: 0; font-size: 13.5px; line-height: 1.6; color: var(--wd-ink-soft); }
+
+.tr-figs { display: flex; gap: 26px; }
+.tr-figs > div { text-align: right; }
+.tr-figs small {
+  display: block; font-size: 10px; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--wd-muted); margin-bottom: 4px;
+}
+.tr-figs b {
+  display: block;
+  font-family: var(--wd-serif, "Playfair Display", Georgia, serif);
+  font-size: 27px; font-weight: 600; color: var(--wd-ink); line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.tr-figs .is-bad small { color: #b3283c; }
+.tr-figs .is-bad b { color: #8f2031; }
+
+/* ============================================================
+   the ladder — fall against climb, side by side
+   ============================================================ */
+.ladder-panel { margin-bottom: 26px; }
+.key-pair { flex: none; display: flex; flex-direction: column; gap: 6px; padding-top: 2px; }
+.key-pair span { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--wd-ink-soft); white-space: nowrap; }
+.kp { width: 18px; height: 7px; border-radius: 3px; flex: none; }
+.kp.down { background: #b3283c; }
+.kp.up { background: #e0a53a; }
+
+.ladder-panel .ladder { margin: 14px 0 0; }
+.ladder-panel .lad-head,
+.ladder-panel .lad-row {
+  display: grid;
+  grid-template-columns: 62px minmax(0, 1fr) 92px 86px;
+  align-items: center; gap: 14px;
+}
+.ladder-panel .lad-head {
+  padding: 0 12px 8px;
+  font-size: 10px; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--wd-muted);
+  border-bottom: 1px solid var(--wd-line);
+}
+.ladder-panel .lad-head span:nth-child(3),
+.ladder-panel .lad-head span:nth-child(4) { text-align: right; }
+
+.ladder-panel .lad-row {
+  width: 100%; padding: 8px 12px;
+  border: 1px solid transparent; border-radius: 9px;
+  background: none; cursor: pointer; text-align: left;
+  font: inherit; color: inherit;
+  transition: background .12s ease, border-color .12s ease;
+}
+.ladder-panel .lad-row:hover { background: rgba(179,40,60,.045); border-color: rgba(179,40,60,.22); }
+.ladder-panel .lad-row.is-live {
+  background: rgba(179,40,60,.07);
+  border-color: rgba(179,40,60,.3);
+  box-shadow: inset 2px 0 0 #b3283c;
+}
+.ladder-panel .lad-rate {
+  font-size: 13.5px; font-weight: 700; color: #8f2031;
+  font-variant-numeric: tabular-nums;
+}
+
+/* two stacked bars: how far it fell, how far it has to climb */
+.lad-pair { display: flex; flex-direction: column; gap: 3px; }
+.lad-b { display: block; height: 8px; border-radius: 4px; min-width: 3px; }
+.lad-b.down { background: linear-gradient(90deg, #b3283c, #cf4257); }
+.lad-b.up   { background: linear-gradient(90deg, #c08a1e, #e0a53a); }
+.ladder-panel .lad-row.is-live .lad-b { box-shadow: 0 0 0 1px rgba(6,26,20,.12); }
+
+.ladder-panel .lad-n {
+  text-align: right; font-size: 13px; color: var(--wd-muted);
+  font-variant-numeric: tabular-nums;
+}
+.ladder-panel .lad-n.strong { color: #7a520c; font-weight: 700; font-size: 14px; }
+
+.limits-tail {
+  margin: 12px 0 0; font-size: 11.5px; line-height: 1.6; color: var(--wd-muted);
+}
+
+/* ---------- narrower ---------- */
+@media (max-width: 1080px) {
+  .trap { grid-template-columns: auto minmax(0, 1fr); gap: 16px 18px; }
+  .tr-figs { grid-column: 1 / -1; justify-content: flex-start; }
+  .tr-figs > div { text-align: left; }
+}
+@media (max-width: 860px) {
+  .loss-rates .rate-vs { margin: -19px auto; }
+}
+@media (max-width: 720px) {
+  .trap { padding: 18px 16px; }
+  .tr-body h3 { font-size: 20px; }
+  .tr-figs { gap: 18px; }
+  .tr-figs b { font-size: 22px; }
+  .loss-chart .lc-big { font-size: 17px; }
+  .loss-chart .lc-val { font-size: 15px; }
+  .loss-chart .lc-name { font-size: 9px; }
+  .loss-chart .lc-small { font-size: 9.5px; }
+  .ladder-panel .lad-head,
+  .ladder-panel .lad-row { grid-template-columns: 52px minmax(0, 1fr) 72px; gap: 8px; }
+  .ladder-panel .lad-head span:nth-child(4),
+  .ladder-panel .lad-row span:nth-child(4) { display: none; }
+  .key-pair { flex-direction: row; gap: 14px; }
+  .timing .slider.slim { flex-basis: 100%; max-width: none; }
+}
+
+@media print {
+  .trap { box-shadow: none; }
+}
+
+/* the site-wide `svg { stroke: currentColor }` would outline every bar */
+.loss-chart rect { stroke: none; }
+.loss-chart .lc-ghost { stroke: rgba(13,122,95,.5); stroke-width: 1.4; stroke-dasharray: 5 4; }
+.loss-chart text { stroke: none; }
+.loss-chart .lc-big { paint-order: stroke; stroke: #fff; stroke-width: 6px; stroke-linejoin: round; }
+.loss-chart .lc-small { paint-order: stroke; stroke: #fff; stroke-width: 4px; stroke-linejoin: round; }

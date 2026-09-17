@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0d4435">
+  <title>Retirement Account Match-Up — WEALTHDEMO</title>
+  <link rel="icon" href="wealthdemo-logo.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="tokens.css?v=33">
+  <link rel="stylesheet" href="site.css?v=33">
+  <link rel="stylesheet" href="tool.css?v=33">
+  <link rel="stylesheet" href="withdraw.css?v=33">
+  <link rel="stylesheet" href="accounts.css?v=33">
+  <link rel="stylesheet" href="explain.css?v=33">
+</head>
+<body data-page="app">
+
+<header class="site-nav">
+  <div class="shell site-nav-inner">
+    <a class="brand-identity" href="home.html">
+      <img src="wealthdemo-logo.webp" alt="" aria-hidden="true">
+      <span class="brand-wordmark">
+        <strong>WEALTH<span>DEMO</span></strong>
+        <small>See What Your Money Can Do.</small>
+      </span>
+    </a>
+    <nav class="site-links">
+      <a href="home.html">Tools</a>
+      <a href="blueprint.html">Planning</a>
+      <a href="send.html">Assessments</a>
+      <a href="home.html#categories">Resources</a>
+      <a href="home.html#about">About</a>
+    </nav>
+    <div class="nav-search">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+      <input id="navSearch" type="search" placeholder="Search tools, topics, or goals…" autocomplete="off" aria-label="Search tools">
+      <kbd>⌘K</kbd>
+    </div>
+    <div class="site-actions">
+      <a class="premium-btn" href="#" data-billing>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5 7.5 12l4.5-5 4.5 5L20 8.5V17H4Z"/></svg>
+        Go Premium
+      </a>
+      <span class="nav-divider"></span>
+      <div class="account">
+        <button type="button" class="account-btn" id="accountBtn" aria-expanded="false">
+          <span class="avatar" id="accountInitials">SB</span>
+          <span class="hello">Hello, <b id="accountName">there</b></span>
+          <svg class="caret" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+        </button>
+        <div class="account-menu" id="accountMenu" hidden>
+          <span class="account-email" id="accountEmail">Signed in</span>
+          <a href="blueprint.html">Open Financial Blueprint</a>
+          <button type="button" data-logout>Log out</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="shell tool-wrap">
+
+  <div class="tool-topbar">
+    <a class="back-btn" href="home.html">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H6"/><path d="m11 6-6 6 6 6"/></svg>
+      Back to tools
+    </a>
+    <div class="topbar-right">
+      <button type="button" class="send-btn" id="sendBtn">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 3.5 10.5 13.5"/><path d="M20.5 3.5 14 20.5l-3.5-7-7-3.5Z"/></svg>
+        Send to client
+      </button>
+      <div class="more">
+        <button type="button" class="more-btn" id="moreBtn" aria-label="More options" aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="18" cy="12" r="1.3"/></svg>
+        </button>
+        <div class="more-menu" id="moreMenu" hidden>
+          <button type="button" id="printBtn">Print or save as PDF</button>
+          <button type="button" id="resetBtn">Reset to example figures</button>
+          <a href="withdraw.html">Retirement Withdrawal Calculator</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ---------- hero ---------- -->
+  <section class="tool-hero">
+    <svg class="hero-lines" viewBox="0 0 900 220" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M420 230C540 170 620 120 900 96"/>
+      <path d="M440 240C580 180 660 132 900 126"/>
+      <path d="M470 250C620 196 700 160 900 158"/>
+      <path d="M500 262C660 212 740 190 900 192"/>
+    </svg>
+    <span class="hero-tile">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="7" height="13" rx="1.6"/><rect x="14" y="4" width="7" height="16" rx="1.6"/><path d="M3 11h7M14 8h7"/></svg>
+    </span>
+    <div class="hero-text">
+      <span class="hero-eyebrow">Tax &amp; Retirement</span>
+      <h1>Retirement Account Match-Up</h1>
+      <p>Take the same amount from four different accounts. See what actually reaches you.</p>
+    </div>
+    <div class="hero-aside">
+      <b>Same money.</b>
+      <b>Very different doors.</b>
+    </div>
+  </section>
+
+  <!-- ---------- the question, asked once ---------- -->
+  <section class="ask">
+    <div class="ask-line">
+      <span class="ask-word">If you withdraw</span>
+      <span class="ask-field money"><input id="aNeed" type="number" min="0" step="1000" value="50000" inputmode="numeric" aria-label="Withdrawal amount"></span>
+      <span class="ask-word">at age</span>
+      <span class="ask-field short"><input id="aAge" type="number" min="0" max="110" value="55" inputmode="numeric" aria-label="Your age"></span>
+      <span class="ask-word">in the</span>
+      <span class="ask-field"><select id="aRate" aria-label="Income tax rate">
+        <option value="10">10%</option><option value="12">12%</option>
+        <option value="22" selected>22%</option><option value="24">24%</option>
+        <option value="32">32%</option><option value="35">35%</option><option value="37">37%</option>
+      </select></span>
+      <span class="ask-word">bracket…</span>
+      <button type="button" class="ask-more" id="askMore" aria-expanded="false">
+        Assumptions
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+      </button>
+    </div>
+
+    <div class="ask-extra" id="askExtra" hidden>
+      <div class="ax-group">
+        <span class="ax-label">Non-qualified assumptions</span>
+        <div class="ax-fields">
+          <div class="f-body"><label for="aGain">Taxable gain (%)</label><div class="control"><input id="aGain" type="number" min="0" max="100" value="30" inputmode="numeric"></div></div>
+          <div class="f-body"><label for="aCapRate"><span data-term="capitalgain">Capital-gain rate</span></label><div class="control"><select id="aCapRate">
+            <option value="0">0%</option><option value="15" selected>15%</option><option value="20">20%</option>
+          </select></div></div>
+        </div>
+      </div>
+      <div class="ax-group">
+        <span class="ax-label">What's in each bucket</span>
+        <div class="ax-fields four">
+          <div class="f-body"><label for="aQual">401(k) / IRA ($)</label><div class="control"><input id="aQual" type="number" min="0" step="10000" value="500000" inputmode="numeric"></div></div>
+          <div class="f-body"><label for="aRoth">Roth ($)</label><div class="control"><input id="aRoth" type="number" min="0" step="10000" value="150000" inputmode="numeric"></div></div>
+          <div class="f-body"><label for="aNonQual">Non-qualified ($)</label><div class="control"><input id="aNonQual" type="number" min="0" step="10000" value="200000" inputmode="numeric"></div></div>
+          <div class="f-body"><label for="aIul">IUL cash value ($)</label><div class="control"><input id="aIul" type="number" min="0" step="10000" value="150000" inputmode="numeric"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- one card per account ---------- -->
+  <h2 class="ask-answer" id="ansHeadline">—</h2>
+  <p class="ask-answer-sub" id="ansSub">—</p>
+
+  <div class="acct-grid" id="acctGrid"></div>
+
+  <!-- ---------- the one insight ---------- -->
+  <section class="diagnosis">
+    <span class="dx-ico">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 18h5"/><path d="M10 21h4"/><path d="M8 13.5A5 5 0 1 1 16 13.5c-.9 1.1-1.4 2-1.5 3h-5c-.1-1-.6-1.9-1.5-3Z"/></svg>
+    </span>
+    <div class="dx-body">
+      <span class="eyebrow light">What's actually driving this</span>
+      <h3 id="dxTitle">—</h3>
+      <p id="dxBody">—</p>
+    </div>
+    <div class="dx-stats">
+      <div><small id="dxS1L">—</small><b class="dx-figure" id="dxS1">—</b><em id="dxS1U"></em></div>
+      <div><small id="dxS2L">—</small><b class="dx-figure" id="dxS2">—</b><em id="dxS2U"></em></div>
+    </div>
+  </section>
+
+  <!-- ---------- say it ---------- -->
+  <div class="say-it">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 10.5h7"/><path d="M8.5 14h4"/><path d="M4.5 5.5h15v12h-9l-5 3.5v-3.5h-1Z"/></svg>
+    <div>
+      <span class="eyebrow light">Say it like this</span>
+      <p id="sayIt">—</p>
+    </div>
+  </div>
+
+  <!-- ---------- RMD, its own question ---------- -->
+  <details class="rmd-fold">
+    <summary>
+      <span class="rf-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="6" width="15" height="13.5" rx="2.5"/><path d="M4.5 10.5h15"/><path d="M9 4.5V7M15 4.5V7"/></svg></span>
+      <span class="rf-text"><b data-term="rmd">Required minimum distributions</b><small id="rmdTeaser">—</small></span>
+      <svg class="rf-caret" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+    </summary>
+
+    <div class="rf-body">
+      <p class="rf-note" id="rmdNote">—</p>
+
+      <div class="ax-fields four">
+        <div class="f-body"><label for="aPrior">Prior year-end qualified ($)</label><div class="control"><input id="aPrior" type="number" min="0" step="10000" value="500000" inputmode="numeric"></div></div>
+        <div class="f-body"><label for="aFactor">Life-expectancy factor</label><div class="control"><input id="aFactor" type="number" min="1" step="0.1" value="26.5" inputmode="decimal"></div></div>
+        <div class="f-body"><label for="aTaken">RMD actually taken ($)</label><div class="control"><input id="aTaken" type="number" min="0" step="1000" value="10000" inputmode="numeric"></div></div>
+        <div class="f-body"><label for="aRmdAge">RMD start age</label><div class="control"><select id="aRmdAge">
+          <option value="72">72</option><option value="73" selected>73</option><option value="75">75</option>
+        </select></div></div>
+      </div>
+
+      <div class="rmd-row">
+        <div class="rmd-tile"><small>Estimated RMD</small><b id="rmdEst">—</b></div>
+        <div class="rmd-tile"><small>Amount missed</small><b id="rmdMissed">—</b></div>
+        <div class="rmd-tile is-cost" id="rmdExciseRow"><small data-term="excise">Possible 25% excise tax</small><b id="rmdExcise">—</b></div>
+      </div>
+
+      <div class="note good" id="rmdFix" hidden>
+        <p>If a missed RMD is corrected within the applicable correction window, the excise tax may be reduced from 25% to 10%.</p>
+      </div>
+
+      <div class="f-body rf-growth">
+        <label for="aGrowth">Growth until then (%)</label>
+        <div class="control"><input id="aGrowth" type="number" min="0" max="15" step="0.5" value="5" inputmode="decimal"></div>
+        <small>Used to project what the qualified balance becomes by then.</small>
+      </div>
+    </div>
+  </details>
+
+  <!-- ---------- limits ---------- -->
+  <footer class="limits">
+    <span class="d-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5"/><path d="M12 7.6h.01"/></svg></span>
+    <div class="limits-body">
+      <b>Educational illustration only</b>
+      <div class="limits-cols">
+        <div>
+          <span class="eyebrow good">Included</span>
+          <p>Income tax at the rate entered · the 10% additional tax before 59½ · capital-gain tax on the assumed gain portion · the RMD calculation and the 25% excise on a shortfall.</p>
+        </div>
+        <div>
+          <span class="eyebrow bad">Not included</span>
+          <p>Early-distribution exceptions · Roth ordering, basis and the five-year rule · plan-specific restrictions · state income tax · Medicare and IRMAA · beneficiary rules. IUL values, costs, crediting, loans, lapse risk and tax treatment depend on the specific contract. Consult a qualified tax or financial professional.</p>
+        </div>
+      </div>
+    </div>
+    <span class="d-sign"><i></i> A brighter financial tomorrow</span>
+  </footer>
+</div>
+
+<script src="auth.js?v=33"></script>
+<script src="agent.js?v=33"></script>
+<script src="site.js?v=33"></script>
+<script src="explain.js?v=33"></script>
+<script src="accounts.js?v=33"></script>
+</body>
+</html>

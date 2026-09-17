@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0d4435">
+  <title>Your Clients — WEALTHDEMO</title>
+  <link rel="icon" href="wealthdemo-logo.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="site.css">
+  <link rel="stylesheet" href="tool.css">
+  <link rel="stylesheet" href="rule72.css">
+  <link rel="stylesheet" href="paycheck.css">
+  <link rel="stylesheet" href="send.css">
+  <link rel="stylesheet" href="fold.css">
+  <link rel="stylesheet" href="desk.css">
+</head>
+<body data-page="app" class="sd-page">
+
+<header class="site-nav">
+  <div class="shell site-nav-inner">
+    <a class="brand-identity" href="home.html">
+      <img src="wealthdemo-logo.webp" alt="" aria-hidden="true">
+      <span class="brand-wordmark">
+        <strong>WEALTH<span>DEMO</span></strong>
+        <small>See What Your Money Can Do.</small>
+      </span>
+    </a>
+    <nav class="site-links">
+      <a href="home.html">Tools</a>
+      <a href="blueprint.html">Planning</a>
+      <a href="send.html" class="active">Assessments</a>
+      <a href="home.html#about">About</a>
+    </nav>
+    <div class="nav-search">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+      <input id="navSearch" type="search" placeholder="Search tools, topics, or goals…" autocomplete="off" aria-label="Search tools">
+      <kbd>⌘K</kbd>
+    </div>
+    <div class="site-actions">
+      <a class="premium-btn" href="#" data-billing>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5 7.5 12l4.5-5 4.5 5L20 8.5V17H4Z"/></svg>
+        Go Premium
+      </a>
+      <span class="nav-divider"></span>
+      <div class="account">
+        <button type="button" class="account-btn" id="accountBtn" aria-expanded="false">
+          <span class="avatar" id="accountInitials">SB</span>
+          <span class="hello">Hello, <b id="accountName">there</b></span>
+          <svg class="caret" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+        </button>
+        <div class="account-menu" id="accountMenu" hidden>
+          <span class="account-email" id="accountEmail">Signed in</span>
+          <a href="blueprint.html">Open Financial Blueprint</a>
+          <button type="button" data-logout>Log out</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="shell tool-wrap">
+
+  <div class="tool-topbar">
+    <a class="back-btn" href="send.html">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H6"/><path d="m11 6-6 6 6 6"/></svg>
+      Send a new one
+    </a>
+    <div class="topbar-right">
+      <button type="button" class="rail-reset" id="printBtn">Print the prep sheet</button>
+    </div>
+  </div>
+
+  <!-- ---------- a returned assessment just landed ---------- -->
+  <section class="dk-landed" id="landed" hidden>
+    <span class="dk-landed-ico">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 13 4.5 4.5L19 7"/></svg>
+    </span>
+    <div>
+      <span class="eyebrow">Just arrived</span>
+      <h2 id="landedTitle">An assessment came back</h2>
+      <p id="landedNote">&mdash;</p>
+    </div>
+    <button type="button" class="sd-primary" id="saveBtn">Save to my clients</button>
+  </section>
+
+  <!-- ---------- the roster ---------- -->
+  <section class="calc" id="rosterBox">
+    <div class="calc-head">
+      <div class="calc-title">
+        <h2>Your clients</h2>
+        <p id="rosterNote">Everyone whose assessment has come back.</p>
+      </div>
+    </div>
+    <div class="dk-roster" id="roster"></div>
+  </section>
+
+  <!-- ---------- the prep sheet ---------- -->
+  <div class="results" id="prep" hidden>
+
+    <section class="dk-head">
+      <div>
+        <span class="eyebrow">Before you sit down</span>
+        <h1 id="prepName">&mdash;</h1>
+        <p id="prepMeta">&mdash;</p>
+      </div>
+      <div class="dk-head-right" id="prepWhen"></div>
+    </section>
+
+    <!-- their own words, first, because it is what they actually want -->
+    <blockquote class="dk-quote" id="quoteBox" hidden>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 6.5c-3 1.4-4.5 3.8-4.5 7.2 0 2.4 1.3 3.8 3.2 3.8 1.7 0 2.9-1.2 2.9-2.8 0-1.6-1.1-2.7-2.6-2.7-.3 0-.6 0-.8.1.3-1.6 1.4-3 3-3.8Z"/><path d="M19.5 6.5c-3 1.4-4.5 3.8-4.5 7.2 0 2.4 1.3 3.8 3.2 3.8 1.7 0 2.9-1.2 2.9-2.8 0-1.6-1.1-2.7-2.6-2.7-.3 0-.6 0-.8.1.3-1.6 1.4-3 3-3.8Z"/></svg>
+      <p id="quoteText">&mdash;</p>
+      <cite id="quoteWho">&mdash;</cite>
+    </blockquote>
+
+    <!-- the three numbers to open with -->
+    <div class="dk-three" id="threeBox"></div>
+
+    <!-- what to do about it -->
+    <section class="mg-fair" id="leverBox" hidden>
+      <span class="mg-fair-ico">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 15.5 13 6.5"/><path d="M9.5 5.5h5v5"/><path d="M4 19.5h16"/></svg>
+      </span>
+      <div class="mg-fair-body">
+        <span class="eyebrow">The one move</span>
+        <h3 id="leverTitle">&mdash;</h3>
+        <p id="leverBody">&mdash;</p>
+      </div>
+    </section>
+
+    <!-- everything that raised, ranked -->
+    <section class="reads" data-fold="Everything that raised a flag" data-fold-note="Ranked, worst first — including the ones held back from the client" data-fold-open="1">
+      <div class="reads-head">
+        <span class="eyebrow">The full list</span>
+        <h2 id="allTitle">&mdash;</h2>
+      </div>
+      <div class="read-grid" id="allGrid"></div>
+    </section>
+
+    <!-- where they hesitated -->
+    <section class="reads" data-fold="Where they hesitated" data-fold-note="Slow answers, reworked answers, and what they skipped">
+      <div class="reads-head">
+        <span class="eyebrow">Worth probing</span>
+        <h2>The answers they were least sure about</h2>
+      </div>
+      <div class="dk-hesitate" id="hesBox"></div>
+    </section>
+
+    <!-- what to bring -->
+    <section class="later" data-fold="What to ask them to bring" data-fold-note="Derived from what raised">
+      <div class="later-head">
+        <h2>What to Ask Them to Bring</h2>
+        <p>Every document below is here because something in their answers needs it checked.</p>
+      </div>
+      <ul class="chips" id="docList"></ul>
+    </section>
+
+    <!-- what they told us, in full -->
+    <section class="reads" data-fold="Everything they told you" data-fold-note="Every figure, and where it came from" data-fold-quiet="1">
+      <div class="reads-head">
+        <span class="eyebrow">The record</span>
+        <h2>Everything they told you</h2>
+      </div>
+      <div class="dk-facts" id="factTable"></div>
+    </section>
+
+    <div class="say-it" data-fold="How to open" data-fold-note="One sentence to start with">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 10.5h7"/><path d="M8.5 14h4"/><path d="M4.5 5.5h15v12h-9l-5 3.5v-3.5h-1Z"/></svg>
+      <div>
+        <span class="eyebrow light">How to open</span>
+        <p id="openLine">&mdash;</p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="fineprint" data-fold="The fine print" data-fold-quiet="1">
+    <span class="d-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5"/><path d="M12 7.6h.01"/></svg></span>
+    <p>A prep sheet built from what the client told you, measured against standard planning conventions. It is a starting point for a conversation, not advice, not a recommendation, and not a substitute for a full fact-find. Client records live in this browser only — clearing site data removes them, and they do not follow you to another device.</p>
+    <span class="d-sign"><i></i> A brighter financial tomorrow</span>
+  </footer>
+</div>
+
+<script src="auth.js"></script>
+<script src="agent.js"></script>
+<script src="site.js"></script>
+<script src="client.js"></script>
+<script src="findings.js"></script>
+<script src="profile.js"></script>
+<script src="assess.js"></script>
+<script src="desk.js"></script>
+<script src="fold.js"></script>
+</body>
+</html>

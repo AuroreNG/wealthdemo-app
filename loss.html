@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0d4435">
+  <title>What a Loss Really Costs — WEALTHDEMO</title>
+  <link rel="icon" href="wealthdemo-logo.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="tokens.css?v=33">
+  <link rel="stylesheet" href="site.css?v=33">
+  <link rel="stylesheet" href="tool.css?v=33">
+  <link rel="stylesheet" href="withdraw.css?v=33">
+  <link rel="stylesheet" href="accounts.css?v=33">
+  <link rel="stylesheet" href="explain.css?v=33">
+  <link rel="stylesheet" href="rule72.css?v=33">
+  <link rel="stylesheet" href="loss.css?v=33">
+  <link rel="stylesheet" href="fold.css?v=33">
+</head>
+<body data-page="app">
+
+<header class="site-nav">
+  <div class="shell site-nav-inner">
+    <a class="brand-identity" href="home.html">
+      <img src="wealthdemo-logo.webp" alt="" aria-hidden="true">
+      <span class="brand-wordmark">
+        <strong>WEALTH<span>DEMO</span></strong>
+        <small>See What Your Money Can Do.</small>
+      </span>
+    </a>
+    <nav class="site-links">
+      <a href="home.html">Tools</a>
+      <a href="blueprint.html">Planning</a>
+      <a href="send.html">Assessments</a>
+      <a href="home.html#categories">Resources</a>
+      <a href="home.html#about">About</a>
+    </nav>
+    <div class="nav-search">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+      <input id="navSearch" type="search" placeholder="Search tools, topics, or goals…" autocomplete="off" aria-label="Search tools">
+      <kbd>⌘K</kbd>
+    </div>
+    <div class="site-actions">
+      <a class="premium-btn" href="#" data-billing>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5 7.5 12l4.5-5 4.5 5L20 8.5V17H4Z"/></svg>
+        Go Premium
+      </a>
+      <span class="nav-divider"></span>
+      <div class="account">
+        <button type="button" class="account-btn" id="accountBtn" aria-expanded="false">
+          <span class="avatar" id="accountInitials">SB</span>
+          <span class="hello">Hello, <b id="accountName">there</b></span>
+          <svg class="caret" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+        </button>
+        <div class="account-menu" id="accountMenu" hidden>
+          <span class="account-email" id="accountEmail">Signed in</span>
+          <a href="blueprint.html">Open Financial Blueprint</a>
+          <button type="button" data-logout>Log out</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="shell tool-wrap">
+
+  <div class="tool-topbar">
+    <a class="back-btn" href="home.html">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H6"/><path d="m11 6-6 6 6 6"/></svg>
+      Back to tools
+    </a>
+    <div class="topbar-right">
+      <button type="button" class="send-btn" id="sendBtn">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 3.5 10.5 13.5"/><path d="M20.5 3.5 14 20.5l-3.5-7-7-3.5Z"/></svg>
+        Send to client
+      </button>
+      <div class="more">
+        <button type="button" class="more-btn" id="moreBtn" aria-label="More options" aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="18" cy="12" r="1.3"/></svg>
+        </button>
+        <div class="more-menu" id="moreMenu" hidden>
+          <button type="button" id="printBtn">Print or save as PDF</button>
+          <button type="button" id="resetBtn">Reset to example figures</button>
+          <a href="rule72.html">Rule of 72</a>
+          <a href="waiting.html">Cost of Waiting</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ---------- hero ---------- -->
+  <section class="tool-hero">
+    <svg class="hero-lines" viewBox="0 0 900 220" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M420 230C540 170 620 120 900 96"/>
+      <path d="M440 240C580 180 660 132 900 126"/>
+      <path d="M470 250C620 196 700 160 900 158"/>
+      <path d="M500 262C660 212 740 190 900 192"/>
+    </svg>
+    <span class="hero-tile">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7.5 10 14l3.5-3.2L20 17"/><path d="M20 12v5h-5"/></svg>
+    </span>
+    <div class="hero-text">
+      <span class="hero-eyebrow">Money Fundamentals</span>
+      <h1>What a Loss Really Costs</h1>
+      <p>Falling 30% doesn't need 30% back. It needs 42.9%. Here's why.</p>
+    </div>
+    <div class="hero-aside">
+      <b>The fall is one number.</b>
+      <b>The climb back is a bigger one.</b>
+    </div>
+  </section>
+
+  <!-- ---------- the two sides ---------- -->
+  <section class="rates loss-rates">
+    <div class="rate-side" data-side="save">
+      <header>
+        <b>Your account</b>
+        <span class="tag good">BEFORE</span>
+      </header>
+      <div class="rate-row">
+        <label for="lAmt">You had</label>
+        <div class="money-in"><i>$</i><input id="lAmt" type="number" min="0" step="5000" value="100000" inputmode="numeric"></div>
+      </div>
+      <input class="slider" id="lAmtSlide" type="range" min="0" max="1000000" step="5000" value="100000" aria-label="Amount">
+      <div class="chips" role="group" aria-label="Quick amounts">
+        <button type="button" data-set="lAmt" data-val="50000">$50k</button>
+        <button type="button" data-set="lAmt" data-val="100000">$100k</button>
+        <button type="button" data-set="lAmt" data-val="250000">$250k</button>
+        <button type="button" data-set="lAmt" data-val="500000">$500k</button>
+        <button type="button" data-set="lAmt" data-val="1000000">$1M</button>
+      </div>
+    </div>
+
+    <span class="rate-vs">falls</span>
+
+    <div class="rate-side" data-side="debt">
+      <header>
+        <b>The fall</b>
+        <span class="tag bad">HURTS TWICE</span>
+      </header>
+      <div class="rate-row">
+        <label for="lLoss">It drops by</label>
+        <div class="pct-in"><input id="lLoss" type="number" min="0" max="95" step="0.5" value="30" inputmode="decimal"><i>%</i></div>
+      </div>
+      <input class="slider" id="lLossSlide" type="range" min="0" max="80" step="0.5" value="30" aria-label="Percentage lost">
+      <div class="chips" role="group" aria-label="Quick falls">
+        <button type="button" data-set="lLoss" data-val="10">10%</button>
+        <button type="button" data-set="lLoss" data-val="20">20%</button>
+        <button type="button" data-set="lLoss" data-val="30">30%</button>
+        <button type="button" data-set="lLoss" data-val="40">40%</button>
+        <button type="button" data-set="lLoss" data-val="50">50%</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- the smaller setting ---------- -->
+  <div class="timing">
+    <div class="t-item">
+      <label for="lGrow">Then it grows back at</label>
+      <div class="t-in"><input id="lGrow" type="number" min="0" max="20" step="0.5" value="7" inputmode="decimal"><i>% a year</i></div>
+    </div>
+    <input class="slider slim" id="lGrowSlide" type="range" min="0" max="15" step="0.5" value="7" aria-label="Growth rate">
+    <button type="button" class="t-reset" id="resetBtn2">Reset</button>
+  </div>
+
+  <!-- ---------- the answer ---------- -->
+  <h2 class="ask-answer" id="ansHeadline">&mdash;</h2>
+  <p class="ask-answer-sub" id="ansSub">&mdash;</p>
+
+  <!-- ---------- the picture ---------- -->
+  <section class="panel loss-panel">
+    <div class="panel-head">
+      <span class="panel-ico" data-tint="blush"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7.5 10 14l3.5-3.2L20 17"/><path d="M20 12v5h-5"/></svg></span>
+      <div><h2><span data-term="asymmetry">The Fall and the Climb</span></h2><p id="chartSub">&mdash;</p></div>
+    </div>
+    <div id="chartWrap"></div>
+  </section>
+
+  <div class="clock-grid loss-grid" id="cardGrid"></div>
+
+  <!-- ---------- the trap ---------- -->
+  <section class="trap" id="trap">
+    <span class="tr-ico">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8.5v5"/><path d="M12 16.6h.01"/><path d="M10.3 4.2 2.9 17.4A1.9 1.9 0 0 0 4.6 20.3h14.8a1.9 1.9 0 0 0 1.7-2.9L13.7 4.2a1.9 1.9 0 0 0-3.4 0Z"/></svg>
+    </span>
+    <div class="tr-body">
+      <span class="eyebrow">The part everyone gets wrong</span>
+      <h3 id="trapTitle">&mdash;</h3>
+      <p id="trapBody">&mdash;</p>
+    </div>
+    <div class="tr-figs">
+      <div><small>You'd be at</small><b id="trapA">&mdash;</b></div>
+      <div class="is-bad"><small>Still short by</small><b id="trapB">&mdash;</b></div>
+    </div>
+  </section>
+
+  <!-- ---------- what this means ---------- -->
+  <section class="diagnosis">
+    <span class="dx-ico">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 18h5"/><path d="M10 21h4"/><path d="M8 13.5A5 5 0 1 1 16 13.5c-.9 1.1-1.4 2-1.5 3h-5c-.1-1-.6-1.9-1.5-3Z"/></svg>
+    </span>
+    <div class="dx-body">
+      <span class="eyebrow light">What this means</span>
+      <h3 id="dxTitle">&mdash;</h3>
+      <p id="dxBody">&mdash;</p>
+    </div>
+    <div class="dx-stats">
+      <div><small id="dxS1L">&mdash;</small><b class="dx-figure" id="dxS1">&mdash;</b><em id="dxS1U"></em></div>
+      <div><small id="dxS2L">&mdash;</small><b class="dx-figure" id="dxS2">&mdash;</b><em id="dxS2U"></em></div>
+    </div>
+  </section>
+
+  <!-- ---------- the ladder ---------- -->
+  <section class="panel ladder-panel" data-fold="The full recovery ladder" data-fold-note="Every size of fall, and the climb back">
+    <div class="panel-head">
+      <span class="panel-ico" data-tint="sun"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18h5"/><path d="M4 12h9"/><path d="M4 6h16"/></svg></span>
+      <div><h2>How Fast It Gets Worse</h2><p>The deeper the fall, the further ahead of it the climb runs. Tap a row to load it.</p></div>
+      <span class="key-pair">
+        <span><i class="kp down"></i> the fall</span>
+        <span><i class="kp up"></i> the climb back</span>
+      </span>
+    </div>
+    <div class="ladder" id="ladder"></div>
+  </section>
+
+  <!-- ---------- say it ---------- -->
+  <div class="say-it" data-fold="Say it like this" data-fold-note="One sentence you can read out loud">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 10.5h7"/><path d="M8.5 14h4"/><path d="M4.5 5.5h15v12h-9l-5 3.5v-3.5h-1Z"/></svg>
+    <div>
+      <span class="eyebrow light">Say it like this</span>
+      <p id="sayIt">&mdash;</p>
+    </div>
+  </div>
+
+  <!-- ---------- limits ---------- -->
+  <footer class="limits is-tight" data-fold="The fine print" data-fold-note="What's counted and what isn't" data-fold-quiet="1">
+    <span class="d-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5"/><path d="M12 7.6h.01"/></svg></span>
+    <div class="limits-body">
+      <b>Educational illustration only</b>
+      <div class="chip-cols">
+        <div>
+          <span class="eyebrow good">Counted</span>
+          <ul class="chips good">
+            <li>The fall in dollars and percent</li><li>The gain needed to get back</li><li>Years to climb back at a steady rate</li>
+          </ul>
+        </div>
+        <div>
+          <span class="eyebrow bad">Not counted</span>
+          <ul class="chips bad">
+            <li>Tax</li><li>Fees</li><li>Rising prices</li><li>Money paid in or taken out</li><li>What markets will actually do</li>
+          </ul>
+        </div>
+      </div>
+      <p class="limits-tail">This does not predict returns and does not recommend any particular investment or insurance product.</p>
+    </div>
+    <span class="d-sign"><i></i> A brighter financial tomorrow</span>
+  </footer>
+</div>
+
+<script src="auth.js?v=33"></script>
+<script src="agent.js?v=33"></script>
+<script src="site.js?v=33"></script>
+<script src="explain.js?v=33"></script>
+<script src="loss.js?v=33"></script>
+<script src="fold.js?v=33"></script>
+</body>
+</html>

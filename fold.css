@@ -1,0 +1,127 @@
+/* ============================================================
+   WEALTHDEMO — the fold
+   A section that stays out of the way until it's asked for.
+   ============================================================ */
+
+.fold {
+  margin-top: 12px;
+  border-radius: 14px;
+  background: #fff;
+  border: 1px solid var(--wd-line);
+  overflow: hidden;
+  transition: border-color .14s ease, box-shadow .14s ease;
+}
+.fold.is-stacked { margin-top: 8px; }
+.fold:hover { border-color: rgba(6, 26, 20, .22); }
+.fold[open] {
+  border-color: rgba(6, 26, 20, .16);
+  box-shadow: 0 0 0 1px rgba(6,26,20,.03), 0 18px 34px -30px rgba(6, 26, 20, .5);
+}
+
+/* ---------- the handle ---------- */
+.fold-head {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 18px; padding: 16px 20px;
+  cursor: pointer; list-style: none;
+  transition: background .13s ease;
+}
+.fold-head::-webkit-details-marker { display: none; }
+.fold-head:hover { background: rgba(6, 26, 20, .025); }
+.fold-head:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--wd-emerald-600, #0d7a5f);
+}
+
+.fold-copy { min-width: 0; }
+.fold-copy b {
+  display: block;
+  font-family: var(--wd-serif, "Playfair Display", Georgia, serif);
+  font-size: 18px; font-weight: 600; color: var(--wd-ink); letter-spacing: -.01em;
+}
+.fold-copy small {
+  display: block; margin-top: 3px;
+  font-size: 12.5px; line-height: 1.5; color: var(--wd-muted);
+}
+
+.fold-more {
+  flex: none; display: inline-flex; align-items: center; gap: 7px;
+  padding: 6px 10px 6px 12px; border-radius: 20px;
+  background: rgba(6, 26, 20, .05);
+  font-size: 11px; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--wd-muted);
+  transition: background .13s ease, color .13s ease;
+}
+.fold-head:hover .fold-more { background: rgba(6, 26, 20, .08); color: var(--wd-ink); }
+.fold-more i { font-style: normal; }
+.fold-caret {
+  width: 15px; height: 15px; flex: none;
+  fill: none; stroke: currentColor; stroke-width: 2.2;
+  stroke-linecap: round; stroke-linejoin: round;
+  transition: transform .18s ease;
+}
+.fold[open] .fold-caret { transform: rotate(180deg); }
+.fold[open] .fold-more { background: var(--wd-emerald-050, #eef5f2); color: var(--wd-emerald-800, #0b5e4a); }
+
+/* ---------- the contents ---------- */
+.fold-body { padding: 0 20px 20px; }
+.fold[open] .fold-body { animation: foldIn .22s ease; }
+@keyframes foldIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* the section inside has already been styled by its own tool, so strip
+   the outer chrome it no longer needs and let the fold provide it */
+.fold-body > .panel,
+.fold-body > .reads,
+.fold-body > .later,
+.fold-body > .say-it,
+.fold-body > .limits,
+.fold-body > .fineprint,
+.fold-body > .ladder-panel,
+.fold-body > .moves-panel {
+  margin: 0;
+  border: none;
+  border-radius: 12px;
+  box-shadow: none;
+}
+.fold-body > .panel:hover { box-shadow: none; border: none; }
+.fold-body > .rb-cols,
+.fold-body > .dime-share,
+.fold-body > .per-dollar { margin: 0; }
+.fold-body > .reads { padding: 20px 22px; }
+.fold-body > .later { padding: 20px 22px; }
+.fold-body > .fineprint { padding: 0; background: none; }
+.fold-body > .limits { margin-top: 0; }
+
+/* a fold holding only fine print can be quieter still */
+.fold.is-quiet { background: rgba(255,255,255,.55); }
+.fold.is-quiet .fold-copy b { font-family: inherit; font-size: 14px; font-weight: 600; }
+
+@media (max-width: 720px) {
+  .fold-head { padding: 14px 16px; gap: 12px; }
+  .fold-copy b { font-size: 16px; }
+  .fold-copy small { font-size: 11.5px; }
+  .fold-more { padding: 5px 8px 5px 10px; font-size: 10px; }
+  .fold-more i { display: none; }
+  .fold-body { padding: 0 16px 16px; }
+  .fold-body > .reads, .fold-body > .later { padding: 16px; }
+}
+
+@media print {
+  .fold { border: none; box-shadow: none; margin-top: 18px; break-inside: avoid; }
+  .fold-head { padding: 0 0 8px; }
+  .fold-more { display: none; }
+  .fold-body { padding: 0; }
+  .fold-body > .reads { background: #f3f6f4; }
+}
+
+/* the fold handle already names the section, so the panel inside
+   should not say it again */
+.fold-body .reads-head .eyebrow,
+.fold-body .say-it .eyebrow,
+.fold-body > .later > .later-head > h2 { display: none; }
+.fold-body .reads-head { margin-bottom: 14px; }
+.fold-body .reads-head h2 { margin-top: 0; }
+.fold-body .say-it p { margin-top: 0; }
+.fold-body > .later > .later-head > p { margin-top: 0; }

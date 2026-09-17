@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0d4435">
+  <title>If Your Paycheck Stopped Today — WEALTHDEMO</title>
+  <link rel="icon" href="wealthdemo-logo.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="tokens.css?v=33">
+  <link rel="stylesheet" href="site.css?v=33">
+  <link rel="stylesheet" href="tool.css?v=33">
+  <link rel="stylesheet" href="withdraw.css?v=33">
+  <link rel="stylesheet" href="accounts.css?v=33">
+  <link rel="stylesheet" href="explain.css?v=33">
+  <link rel="stylesheet" href="rule72.css?v=33">
+  <link rel="stylesheet" href="paycheck.css?v=33">
+  <link rel="stylesheet" href="fold.css?v=33">
+</head>
+<body data-page="app">
+
+<header class="site-nav">
+  <div class="shell site-nav-inner">
+    <a class="brand-identity" href="home.html">
+      <img src="wealthdemo-logo.webp" alt="" aria-hidden="true">
+      <span class="brand-wordmark">
+        <strong>WEALTH<span>DEMO</span></strong>
+        <small>See What Your Money Can Do.</small>
+      </span>
+    </a>
+    <nav class="site-links">
+      <a href="home.html">Tools</a>
+      <a href="blueprint.html">Planning</a>
+      <a href="send.html">Assessments</a>
+      <a href="home.html#categories">Resources</a>
+      <a href="home.html#about">About</a>
+    </nav>
+    <div class="nav-search">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+      <input id="navSearch" type="search" placeholder="Search tools, topics, or goals…" autocomplete="off" aria-label="Search tools">
+      <kbd>⌘K</kbd>
+    </div>
+    <div class="site-actions">
+      <a class="premium-btn" href="#" data-billing>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5 7.5 12l4.5-5 4.5 5L20 8.5V17H4Z"/></svg>
+        Go Premium
+      </a>
+      <span class="nav-divider"></span>
+      <div class="account">
+        <button type="button" class="account-btn" id="accountBtn" aria-expanded="false">
+          <span class="avatar" id="accountInitials">SB</span>
+          <span class="hello">Hello, <b id="accountName">there</b></span>
+          <svg class="caret" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+        </button>
+        <div class="account-menu" id="accountMenu" hidden>
+          <span class="account-email" id="accountEmail">Signed in</span>
+          <a href="blueprint.html">Open Financial Blueprint</a>
+          <button type="button" data-logout>Log out</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="shell tool-wrap">
+
+  <div class="tool-topbar">
+    <a class="back-btn" href="home.html">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H6"/><path d="m11 6-6 6 6 6"/></svg>
+      Back to tools
+    </a>
+    <div class="topbar-right">
+      <button type="button" class="send-btn" id="sendBtn">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 3.5 10.5 13.5"/><path d="M20.5 3.5 14 20.5l-3.5-7-7-3.5Z"/></svg>
+        Send to client
+      </button>
+      <div class="more">
+        <button type="button" class="more-btn" id="moreBtn" aria-label="More options" aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="18" cy="12" r="1.3"/></svg>
+        </button>
+        <div class="more-menu" id="moreMenu" hidden>
+          <button type="button" id="printBtn">Print or save as PDF</button>
+          <button type="button" id="resetBtn">Reset to example figures</button>
+          <a href="dime.html">How Much Life Insurance</a>
+          <a href="legacy.html">What Would You Leave Behind</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       the banner — question on the left, answer on the right
+       ============================================================ -->
+  <section class="banner">
+    <div class="bn-q">
+      <span class="bn-eyebrow">Protection</span>
+      <h1>If Your Paycheck Stopped Today&hellip;</h1>
+      <p>&hellip;how long could your family keep paying the bills? Compare an emergency fund alone with an emergency fund plus an income-protection benefit.</p>
+    </div>
+    <div class="bn-a">
+      <small id="bnLabel">&mdash;</small>
+      <b id="bnBig">&mdash;</b>
+      <em id="bnSub">&mdash;</em>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       the working area
+       ============================================================ -->
+  <!-- ============================================================
+       the calculator
+       ============================================================ -->
+  <section class="calc">
+      <div class="calc-head">
+        <h2>Illustration inputs</h2>
+        <button type="button" class="rail-reset" id="resetBtn2">Reset</button>
+      </div>
+
+    <div class="calc-sides">
+      <section class="side" data-side="a">
+        <header>
+          <span class="side-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20.5V8.2l7-4.7 7 4.7v12.3Z"/><path d="M9.5 20.5v-5.8h5v5.8"/></svg></span>
+          <span class="side-name"><b>The obligation</b><em>What still has to be paid</em></span>
+        </header>
+        <div class="side-grid">
+          <div class="field">
+            <label for="pBills"><span data-term="essentialbills">Essential Monthly Bills</span></label>
+            <div class="money-in"><i>$</i><input id="pBills" type="number" min="0" step="250" value="6000" inputmode="numeric"></div>
+            <small>Housing, food, utilities, insurance, transportation.</small>
+          </div>
+          <div class="field">
+            <label for="pCont"><span data-term="continuing">Income That Would Still Continue</span></label>
+            <div class="money-in"><i>$</i><input id="pCont" type="number" min="0" step="250" value="0" inputmode="numeric"></div>
+            <small>A spouse's income, rental income, a pension.</small>
+          </div>
+        </div>
+        <p class="side-fact" id="gapStrip">&mdash;</p>
+      </section>
+
+      <section class="side" data-side="b">
+        <header>
+          <span class="side-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2 20 7v5.4c0 4.4-3.3 8-8 8.4-4.7-.4-8-4-8-8.4V7Z"/><path d="m9 12 2.2 2.2L15.5 10"/></svg></span>
+          <span class="side-name"><b>What would cover it</b><em>Reserves, and the policy behind them</em></span>
+        </header>
+        <div class="side-grid">
+          <div class="field">
+            <label for="pSav"><span data-term="emergencyfund">Emergency Savings</span></label>
+            <div class="money-in"><i>$</i><input id="pSav" type="number" min="0" step="1000" value="18000" inputmode="numeric"></div>
+            <small>Liquid funds you could access this week, without penalty.</small>
+          </div>
+          <div class="field">
+            <label for="pBen"><span data-term="livingbenefit">Income-Protection Benefit Available</span></label>
+            <div class="money-in"><i>$</i><input id="pBen" type="number" min="0" step="5000" value="80000" inputmode="numeric"></div>
+            <small>A hypothetical <span data-term="qualifying">living-benefit payout after a qualifying event</span>.</small>
+          </div>
+          <div class="field">
+            <label for="pWait"><span data-term="elimination">Elimination Period</span></label>
+            <select id="pWait">
+              <option value="0" selected>None</option>
+              <option value="1">30 days</option>
+              <option value="2">60 days</option>
+              <option value="3">90 days</option>
+              <option value="6">180 days</option>
+              <option value="12">365 days</option>
+            </select>
+            <small>Nothing is payable during this window.</small>
+          </div>
+          <div class="field">
+            <label for="pGoal"><span data-term="monthsgoal">Months You Want Protected</span></label>
+            <select id="pGoal">
+              <option value="3">3 months</option>
+              <option value="6">6 months</option>
+              <option value="9">9 months</option>
+              <option value="12" selected>12 months</option>
+              <option value="18">18 months</option>
+              <option value="24">24 months</option>
+            </select>
+          </div>
+        </div>
+        <p class="side-fact"><span id="resFactL">&mdash;</span><b id="resFact">&mdash;</b></p>
+      </section>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       the answer
+       ============================================================ -->
+  <div class="results">
+
+    <section class="runway">
+      <div class="rw-head">
+        <div>
+          <h2>The Coverage Runway</h2>
+          <p>Both lanes run on the same timeline, so the extra length of the lower one is what the benefit is worth.</p>
+        </div>
+        <div class="rw-key">
+          <span><i class="k-cont"></i>Continuing income</span>
+          <span><i class="k-sav"></i>Emergency fund</span>
+          <span><i class="k-ben"></i>Benefit</span>
+          <span><i class="k-none"></i>Uncovered</span>
+        </div>
+      </div>
+      <div id="rwWrap"></div>
+    </section>
+
+    <!-- ---------- the two answers ---------- -->
+    <div class="versus">
+      <article class="vs" data-kind="alone">
+        <header>
+          <b>Emergency Fund Only</b>
+          <span class="vs-tag">USING SAVINGS ALONE</span>
+        </header>
+        <strong class="vs-big" id="aloneBig">&mdash;</strong>
+        <p class="vs-say" id="aloneSay">&mdash;</p>
+        <footer><span id="aloneFootL">&mdash;</span><b id="aloneFoot">&mdash;</b></footer>
+      </article>
+
+      <span class="vs-delta" id="vsDelta">&mdash;</span>
+
+      <article class="vs" data-kind="both">
+        <header>
+          <b>Fund + Income Protection</b>
+          <span class="vs-tag">SAVINGS + BENEFIT</span>
+        </header>
+        <strong class="vs-big" id="bothBig">&mdash;</strong>
+        <p class="vs-say" id="bothSay">&mdash;</p>
+        <footer><span id="bothFootL">&mdash;</span><b id="bothFoot">&mdash;</b></footer>
+      </article>
+    </div>
+
+    <!-- ---------- what the numbers say ---------- -->
+    
+
+  </div>
+
+  <section class="reads" data-fold="Reading the illustration" data-fold-note="What these figures mean in practice">
+        <div class="reads-head">
+          <span class="eyebrow">Reading the illustration</span>
+          <h2 id="readTitle">&mdash;</h2>
+        </div>
+        <div class="read-grid" id="readGrid"></div>
+      </section>
+
+  <!-- ============================================================
+       the leftover
+       ============================================================ -->
+  <section class="later" data-fold="If the benefit isn't all needed at once" data-fold-note="What a leftover amount could grow into">
+    <div class="later-head">
+      <h2>What If You Don't Need the Whole Benefit Right Away?</h2>
+      <p>See what a leftover amount could grow into if invested instead of spent.</p>
+    </div>
+    <div class="later-in">
+      <div class="field">
+        <label for="pSpare">Amount Not Needed Right Now</label>
+        <div class="money-in"><i>$</i><input id="pSpare" type="number" min="0" step="5000" value="30000" inputmode="numeric"></div>
+      </div>
+      <div class="field">
+        <label for="pYears">Years Invested</label>
+        <select id="pYears">
+          <option value="5">5 years</option>
+          <option value="10" selected>10 years</option>
+          <option value="15">15 years</option>
+          <option value="20">20 years</option>
+          <option value="25">25 years</option>
+          <option value="30">30 years</option>
+        </select>
+      </div>
+    </div>
+    <div class="later-out">
+      <div><small><span data-term="illustrated">ILLUSTRATED AT 6%</span></small><b id="spA">&mdash;</b><em id="spAG">&mdash;</em></div>
+      <div class="is-alt"><small>ILLUSTRATED AT 8%</small><b id="spB">&mdash;</b><em id="spBG">&mdash;</em></div>
+      <p class="later-note" id="spNote">&mdash;</p>
+    </div>
+  </section>
+
+  <!-- ---------- say it ---------- -->
+  <div class="say-it" data-fold="Say it like this" data-fold-note="One sentence you can read out loud">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 10.5h7"/><path d="M8.5 14h4"/><path d="M4.5 5.5h15v12h-9l-5 3.5v-3.5h-1Z"/></svg>
+    <div>
+      <span class="eyebrow light">Say it like this</span>
+      <p id="sayIt">&mdash;</p>
+    </div>
+  </div>
+
+  <footer class="fineprint" data-fold="The fine print" data-fold-note="What this illustration does and doesn't cover" data-fold-quiet="1">
+    <span class="d-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5"/><path d="M12 7.6h.01"/></svg></span>
+    <p>Educational illustration only. Income-protection and living-benefit availability, qualifying conditions, elimination periods and payout amounts vary by carrier and policy, and are subject to underwriting. Growth assumptions are hypothetical and not guaranteed. This does not include taxes, fees, or account-specific rules. Consult a licensed insurance or financial professional for actual terms.</p>
+    <span class="d-sign"><i></i> A brighter financial tomorrow</span>
+  </footer>
+</div>
+
+<script src="auth.js?v=33"></script>
+<script src="agent.js?v=33"></script>
+<script src="site.js?v=33"></script>
+<script src="explain.js?v=33"></script>
+<script src="paycheck.js?v=33"></script>
+<script src="fold.js?v=33"></script>
+</body>
+</html>

@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0d4435">
+  <title>Life Insurance Need — WEALTHDEMO</title>
+  <link rel="icon" href="wealthdemo-logo.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="site.css">
+  <link rel="stylesheet" href="tool.css">
+  <link rel="stylesheet" href="withdraw.css">
+  <link rel="stylesheet" href="accounts.css">
+  <link rel="stylesheet" href="explain.css">
+  <link rel="stylesheet" href="rule72.css">
+  <link rel="stylesheet" href="dime.css">
+  <link rel="stylesheet" href="fold.css">
+</head>
+<body data-page="app">
+
+<header class="site-nav">
+  <div class="shell site-nav-inner">
+    <a class="brand-identity" href="home.html">
+      <img src="wealthdemo-logo.webp" alt="" aria-hidden="true">
+      <span class="brand-wordmark">
+        <strong>WEALTH<span>DEMO</span></strong>
+        <small>See What Your Money Can Do.</small>
+      </span>
+    </a>
+    <nav class="site-links">
+      <a href="home.html">Tools</a>
+      <a href="blueprint.html">Planning</a>
+      <a href="send.html">Assessments</a>
+      <a href="home.html#categories">Resources</a>
+      <a href="home.html#about">About</a>
+    </nav>
+    <div class="nav-search">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+      <input id="navSearch" type="search" placeholder="Search tools, topics, or goals…" autocomplete="off" aria-label="Search tools">
+      <kbd>⌘K</kbd>
+    </div>
+    <div class="site-actions">
+      <a class="premium-btn" href="#" data-billing>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5 7.5 12l4.5-5 4.5 5L20 8.5V17H4Z"/></svg>
+        Go Premium
+      </a>
+      <span class="nav-divider"></span>
+      <div class="account">
+        <button type="button" class="account-btn" id="accountBtn" aria-expanded="false">
+          <span class="avatar" id="accountInitials">SB</span>
+          <span class="hello">Hello, <b id="accountName">there</b></span>
+          <svg class="caret" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+        </button>
+        <div class="account-menu" id="accountMenu" hidden>
+          <span class="account-email" id="accountEmail">Signed in</span>
+          <a href="blueprint.html">Open Financial Blueprint</a>
+          <button type="button" data-logout>Log out</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="shell tool-wrap">
+
+  <div class="tool-topbar">
+    <a class="back-btn" href="home.html">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H6"/><path d="m11 6-6 6 6 6"/></svg>
+      Back to tools
+    </a>
+    <div class="topbar-right">
+      <button type="button" class="send-btn" id="sendBtn">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 3.5 10.5 13.5"/><path d="M20.5 3.5 14 20.5l-3.5-7-7-3.5Z"/></svg>
+        Send to client
+      </button>
+      <div class="more">
+        <button type="button" class="more-btn" id="moreBtn" aria-label="More options" aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="18" cy="12" r="1.3"/></svg>
+        </button>
+        <div class="more-menu" id="moreMenu" hidden>
+          <button type="button" id="printBtn">Print or save as PDF</button>
+          <button type="button" id="resetBtn">Reset to example figures</button>
+          <a href="loss.html">What a Loss Really Costs</a>
+          <a href="waiting.html">Cost of Waiting</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ---------- hero ---------- -->
+  <section class="tool-hero">
+    <svg class="hero-lines" viewBox="0 0 900 220" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M420 230C540 170 620 120 900 96"/>
+      <path d="M440 240C580 180 660 132 900 126"/>
+      <path d="M470 250C620 196 700 160 900 158"/>
+      <path d="M500 262C660 212 740 190 900 192"/>
+    </svg>
+    <span class="hero-tile">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 5.5 6.2v5.1c0 4 2.7 7.6 6.5 9.2 3.8-1.6 6.5-5.2 6.5-9.2V6.2Z"/><path d="m9.2 12.2 2 2 3.6-3.8"/></svg>
+    </span>
+    <div class="hero-text">
+      <span class="hero-eyebrow">Protection</span>
+      <h1>How Much Life Insurance</h1>
+      <p>Four things your family would still have to pay for. Add them up, take off what you already have.</p>
+    </div>
+    <div class="hero-aside">
+      <b>Not a guess.</b>
+      <b>Your four numbers, added up.</b>
+    </div>
+  </section>
+
+  <!-- ---------- the four boxes ---------- -->
+  <section class="dime-inputs">
+    <div class="di-col" data-tint="blush">
+      <span class="di-letter">D</span>
+      <div class="di-head"><b>Debts</b><small>What would have to be cleared straight away</small></div>
+      <div class="rate-row">
+        <label for="dDebt">Cards, loans, car</label>
+        <div class="money-in"><i>$</i><input id="dDebt" type="number" min="0" step="1000" value="30000" inputmode="numeric"></div>
+      </div>
+      <div class="rate-row">
+        <label for="dFinal">Funeral and final costs</label>
+        <div class="money-in"><i>$</i><input id="dFinal" type="number" min="0" step="1000" value="15000" inputmode="numeric"></div>
+      </div>
+      <p class="di-note">Leave the mortgage out here &mdash; it has its own box.</p>
+    </div>
+
+    <div class="di-col" data-tint="mint">
+      <span class="di-letter">I</span>
+      <div class="di-head"><b>Income</b><small>The wages that would stop arriving</small></div>
+      <div class="rate-row">
+        <label for="dIncome">A year, after tax</label>
+        <div class="money-in"><i>$</i><input id="dIncome" type="number" min="0" step="1000" value="75000" inputmode="numeric"></div>
+      </div>
+      <div class="rate-row">
+        <label for="dYears">Replace it for</label>
+        <div class="pct-in"><input id="dYears" type="number" min="0" max="40" step="1" value="10" inputmode="numeric"><i>yrs</i></div>
+      </div>
+      <input class="slider" id="dYearsSlide" type="range" min="0" max="30" step="1" value="10" aria-label="Years of income">
+      <p class="di-note">Until the youngest leaves home is a common choice.</p>
+    </div>
+
+    <div class="di-col" data-tint="ice">
+      <span class="di-letter">M</span>
+      <div class="di-head"><b>Mortgage</b><small>What's left on the house</small></div>
+      <div class="rate-row">
+        <label for="dMort">Balance owing</label>
+        <div class="money-in"><i>$</i><input id="dMort" type="number" min="0" step="5000" value="250000" inputmode="numeric"></div>
+      </div>
+      <p class="di-note">Clearing it outright is the usual aim. Covering the payments for a few years costs less and buys the same breathing room.</p>
+    </div>
+
+    <div class="di-col" data-tint="sun">
+      <span class="di-letter">E</span>
+      <div class="di-head"><b>Education</b><small>Getting the children through school</small></div>
+      <div class="rate-row">
+        <label for="dKids">Children</label>
+        <div class="pct-in"><input id="dKids" type="number" min="0" max="12" step="1" value="2" inputmode="numeric"></div>
+      </div>
+      <input class="slider" id="dKidsSlide" type="range" min="0" max="8" step="1" value="2" aria-label="Number of children">
+      <div class="rate-row">
+        <label for="dPerKid">Each</label>
+        <div class="money-in"><i>$</i><input id="dPerKid" type="number" min="0" step="5000" value="75000" inputmode="numeric"></div>
+      </div>
+      <p class="di-note">In today's prices.</p>
+    </div>
+  </section>
+
+  <!-- ---------- what you already have ---------- -->
+  <div class="timing have-row">
+    <span class="have-lead">Take off what you already have</span>
+    <div class="t-item">
+      <label for="dHaveIns">Life cover in force</label>
+      <div class="t-in"><i class="pre">$</i><input id="dHaveIns" type="number" min="0" step="10000" value="100000" inputmode="numeric"></div>
+    </div>
+    <div class="t-item">
+      <label for="dHaveSav">Savings they could use</label>
+      <div class="t-in"><i class="pre">$</i><input id="dHaveSav" type="number" min="0" step="5000" value="25000" inputmode="numeric"></div>
+    </div>
+    <button type="button" class="t-reset" id="resetBtn2">Reset</button>
+  </div>
+
+  <!-- ---------- the answer ---------- -->
+  <h2 class="ask-answer" id="ansHeadline">&mdash;</h2>
+  <p class="ask-answer-sub" id="ansSub">&mdash;</p>
+
+  <!-- ---------- the waterfall ---------- -->
+  <section class="panel wf-panel">
+    <div class="panel-head">
+      <span class="panel-ico" data-tint="mint"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19V11"/><path d="M12 19V5.5"/><path d="M19 19v-5.5"/></svg></span>
+      <div><h2>How It Adds Up</h2><p>Four things to pay for, then what you already have comes off the end.</p></div>
+    </div>
+    <div id="chartWrap"></div>
+  </section>
+
+  <div class="clock-grid dime-grid" id="cardGrid"></div>
+
+  <!-- ---------- the four cards showing each share ---------- -->
+  <section class="panel share-panel" data-fold="Where the number comes from" data-fold-note="The four parts, and what each one is for">
+    <div class="panel-head">
+      <span class="panel-ico" data-tint="sun"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18h5"/><path d="M4 12h9"/><path d="M4 6h16"/></svg></span>
+      <div><h2>What's Driving It</h2><p>Which of the four is doing most of the work.</p></div>
+    </div>
+    <div class="dime-share" id="dimeGrid"></div>
+  </section>
+
+  <!-- ---------- the honest check ---------- -->
+  <section class="realcheck" id="realcheck" data-fold="The honest check on DIME" data-fold-note="What the rule of thumb leaves out">
+    <span class="rc-ico">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.8"/><path d="m16 16 4.5 4.5"/><path d="M8.6 11h4.8"/></svg>
+    </span>
+    <div class="rc-body">
+      <span class="eyebrow"><span data-term="dimecheck">The honest check</span></span>
+      <h3 id="rcTitle">&mdash;</h3>
+      <p id="rcBody">&mdash;</p>
+    </div>
+    <div class="rc-figs">
+      <div><small>DIME says</small><b id="rcA">&mdash;</b></div>
+      <div class="is-alt"><small>Invested, it needs</small><b id="rcB">&mdash;</b></div>
+      <div><small>Gap on that basis</small><b id="rcC">&mdash;</b></div>
+      <div class="is-quiet"><small>The lump would last</small><b id="rcLasts">&mdash;</b><em id="rcLastsNote"></em></div>
+    </div>
+    <div class="rc-dials">
+      <div class="t-item">
+        <label for="dRet">If it's invested at</label>
+        <div class="t-in"><input id="dRet" type="number" min="0" max="15" step="0.5" value="5" inputmode="decimal"><i>%</i></div>
+      </div>
+      <input class="slider slim" id="dRetSlide" type="range" min="0" max="12" step="0.5" value="5" aria-label="Return">
+      <div class="t-item">
+        <label for="dInfl">Prices rising</label>
+        <div class="t-in"><input id="dInfl" type="number" min="0" max="12" step="0.5" value="3" inputmode="decimal"><i>%</i></div>
+      </div>
+      <input class="slider slim" id="dInflSlide" type="range" min="0" max="10" step="0.5" value="3" aria-label="Inflation">
+      <div class="t-item">
+        <label for="dPrem">If you've been quoted</label>
+        <div class="t-in"><i class="pre">$</i><input id="dPrem" type="number" min="0" step="5" value="0" inputmode="numeric"><i>/mo</i></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- what this means ---------- -->
+  <section class="diagnosis">
+    <span class="dx-ico">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 18h5"/><path d="M10 21h4"/><path d="M8 13.5A5 5 0 1 1 16 13.5c-.9 1.1-1.4 2-1.5 3h-5c-.1-1-.6-1.9-1.5-3Z"/></svg>
+    </span>
+    <div class="dx-body">
+      <span class="eyebrow light">What this means</span>
+      <h3 id="dxTitle">&mdash;</h3>
+      <p id="dxBody">&mdash;</p>
+    </div>
+    <div class="dx-stats">
+      <div><small id="dxS1L">&mdash;</small><b class="dx-figure" id="dxS1">&mdash;</b><em id="dxS1U"></em></div>
+      <div><small id="dxS2L">&mdash;</small><b class="dx-figure" id="dxS2">&mdash;</b><em id="dxS2U"></em></div>
+    </div>
+  </section>
+
+  <!-- ---------- say it ---------- -->
+  <div class="say-it" data-fold="Say it like this" data-fold-note="One sentence you can read out loud">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 10.5h7"/><path d="M8.5 14h4"/><path d="M4.5 5.5h15v12h-9l-5 3.5v-3.5h-1Z"/></svg>
+    <div>
+      <span class="eyebrow light">Say it like this</span>
+      <p id="sayIt">&mdash;</p>
+    </div>
+  </div>
+
+  <!-- ---------- limits ---------- -->
+  <footer class="limits is-tight" data-fold="The fine print" data-fold-note="What's counted and what isn't" data-fold-quiet="1">
+    <span class="d-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5"/><path d="M12 7.6h.01"/></svg></span>
+    <div class="limits-body">
+      <b>Educational estimate only &mdash; not a quote</b>
+      <div class="chip-cols">
+        <div>
+          <span class="eyebrow good">Counted</span>
+          <ul class="chips good">
+            <li>Debts and final costs</li><li>Income for the years chosen</li><li>The mortgage</li><li>School per child</li><li>Cover and savings you already have</li>
+          </ul>
+        </div>
+        <div>
+          <span class="eyebrow bad">Not counted</span>
+          <ul class="chips bad">
+            <li>Survivor benefits</li><li>A partner's earnings</li><li>Tax</li><li>Group cover that ends with the job</li><li>Childcare</li><li>Health costs</li>
+          </ul>
+        </div>
+      </div>
+      <p class="limits-tail">This is not an offer of insurance and not a quote. What a policy costs, and whether it can be issued at all, depends on underwriting. Speak to a qualified professional.</p>
+    </div>
+    <span class="d-sign"><i></i> A brighter financial tomorrow</span>
+  </footer>
+</div>
+
+<script src="auth.js"></script>
+<script src="agent.js"></script>
+<script src="site.js"></script>
+<script src="explain.js"></script>
+<script src="dime.js"></script>
+<script src="fold.js"></script>
+</body>
+</html>

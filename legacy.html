@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0d4435">
+  <title>What Would You Leave Behind? — WEALTHDEMO</title>
+  <link rel="icon" href="wealthdemo-logo.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="tokens.css?v=33">
+  <link rel="stylesheet" href="site.css?v=33">
+  <link rel="stylesheet" href="tool.css?v=33">
+  <link rel="stylesheet" href="withdraw.css?v=33">
+  <link rel="stylesheet" href="accounts.css?v=33">
+  <link rel="stylesheet" href="explain.css?v=33">
+  <link rel="stylesheet" href="rule72.css?v=33">
+  <link rel="stylesheet" href="legacy.css?v=33">
+  <link rel="stylesheet" href="fold.css?v=33">
+</head>
+<body data-page="app">
+
+<header class="site-nav">
+  <div class="shell site-nav-inner">
+    <a class="brand-identity" href="home.html">
+      <img src="wealthdemo-logo.webp" alt="" aria-hidden="true">
+      <span class="brand-wordmark">
+        <strong>WEALTH<span>DEMO</span></strong>
+        <small>See What Your Money Can Do.</small>
+      </span>
+    </a>
+    <nav class="site-links">
+      <a href="home.html">Tools</a>
+      <a href="blueprint.html">Planning</a>
+      <a href="send.html">Assessments</a>
+      <a href="home.html#categories">Resources</a>
+      <a href="home.html#about">About</a>
+    </nav>
+    <div class="nav-search">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+      <input id="navSearch" type="search" placeholder="Search tools, topics, or goals…" autocomplete="off" aria-label="Search tools">
+      <kbd>⌘K</kbd>
+    </div>
+    <div class="site-actions">
+      <a class="premium-btn" href="#" data-billing>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5 7.5 12l4.5-5 4.5 5L20 8.5V17H4Z"/></svg>
+        Go Premium
+      </a>
+      <span class="nav-divider"></span>
+      <div class="account">
+        <button type="button" class="account-btn" id="accountBtn" aria-expanded="false">
+          <span class="avatar" id="accountInitials">SB</span>
+          <span class="hello">Hello, <b id="accountName">there</b></span>
+          <svg class="caret" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+        </button>
+        <div class="account-menu" id="accountMenu" hidden>
+          <span class="account-email" id="accountEmail">Signed in</span>
+          <a href="blueprint.html">Open Financial Blueprint</a>
+          <button type="button" data-logout>Log out</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="shell tool-wrap">
+
+  <div class="tool-topbar">
+    <a class="back-btn" href="home.html">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H6"/><path d="m11 6-6 6 6 6"/></svg>
+      Back to tools
+    </a>
+    <div class="topbar-right">
+      <button type="button" class="send-btn" id="sendBtn">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 3.5 10.5 13.5"/><path d="M20.5 3.5 14 20.5l-3.5-7-7-3.5Z"/></svg>
+        Send to client
+      </button>
+      <div class="more">
+        <button type="button" class="more-btn" id="moreBtn" aria-label="More options" aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="18" cy="12" r="1.3"/></svg>
+        </button>
+        <div class="more-menu" id="moreMenu" hidden>
+          <button type="button" id="printBtn">Print or save as PDF</button>
+          <button type="button" id="resetBtn">Reset to example figures</button>
+          <a href="dime.html">How Much Life Insurance</a>
+          <a href="accounts.html">Retirement Account Match-Up</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ---------- hero ---------- -->
+  <section class="tool-hero">
+    <svg class="hero-lines" viewBox="0 0 900 220" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M420 230C540 170 620 120 900 96"/>
+      <path d="M440 240C580 180 660 132 900 126"/>
+      <path d="M470 250C620 196 700 160 900 158"/>
+      <path d="M500 262C660 212 740 190 900 192"/>
+    </svg>
+    <span class="hero-tile">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-6.5-3.9-6.5-8.6A3.7 3.7 0 0 1 12 8.6a3.7 3.7 0 0 1 6.5 2.8C18.5 16.1 12 20 12 20Z"/></svg>
+    </span>
+    <div class="hero-text">
+      <span class="hero-eyebrow">Protection</span>
+      <h1>What Would You Leave Behind?</h1>
+      <p>An estate doesn't hand over whole. See what would really reach them.</p>
+    </div>
+    <div class="hero-aside">
+      <b>What it says on the statement.</b>
+      <b>What lands in their account.</b>
+    </div>
+  </section>
+
+  <!-- ---------- the two sides ---------- -->
+  <section class="rates lg-rates">
+    <div class="rate-side" data-side="save">
+      <header>
+        <b>What you own</b>
+        <span class="tag good">ON PAPER</span>
+      </header>
+      <div class="rate-row">
+        <label for="gHome"><i class="sw lg-home"></i>Home equity</label>
+        <div class="money-in"><i>$</i><input id="gHome" type="number" min="0" step="10000" value="250000" inputmode="numeric"></div>
+      </div>
+      <div class="rate-row">
+        <label for="gRetire"><i class="sw lg-retire"></i><span data-term="inherited">401(k) / IRA</span></label>
+        <div class="money-in"><i>$</i><input id="gRetire" type="number" min="0" step="10000" value="400000" inputmode="numeric"></div>
+      </div>
+      <div class="rate-row">
+        <label for="gSave"><i class="sw lg-save"></i>Savings &amp; investments</label>
+        <div class="money-in"><i>$</i><input id="gSave" type="number" min="0" step="5000" value="150000" inputmode="numeric"></div>
+      </div>
+      <div class="rate-row">
+        <label for="gOther"><i class="sw lg-other"></i>Other property or business</label>
+        <div class="money-in"><i>$</i><input id="gOther" type="number" min="0" step="10000" value="0" inputmode="numeric"></div>
+      </div>
+      <div class="rate-row">
+        <label for="gLife"><i class="sw lg-life"></i>Life insurance</label>
+        <div class="money-in"><i>$</i><input id="gLife" type="number" min="0" step="10000" value="100000" inputmode="numeric"></div>
+      </div>
+    </div>
+
+    <span class="rate-vs">less</span>
+
+    <div class="rate-side" data-side="debt">
+      <header>
+        <b>What comes off</b>
+        <span class="tag bad">BEFORE THEY SEE IT</span>
+      </header>
+      <div class="rate-row">
+        <label for="gDebt">Debts, including the mortgage</label>
+        <div class="money-in"><i>$</i><input id="gDebt" type="number" min="0" step="10000" value="300000" inputmode="numeric"></div>
+      </div>
+      <div class="rate-row">
+        <label for="gFinal">Funeral and final costs</label>
+        <div class="money-in"><i>$</i><input id="gFinal" type="number" min="0" step="1000" value="15000" inputmode="numeric"></div>
+      </div>
+      <div class="rate-row">
+        <label for="gTax">Heirs' income-tax rate</label>
+        <div class="pct-in"><input id="gTax" type="number" min="0" max="50" step="1" value="24" inputmode="numeric"><i>%</i></div>
+      </div>
+      <input class="slider" id="gTaxSlide" type="range" min="0" max="40" step="1" value="24" aria-label="Heirs tax rate">
+      <div class="rate-row">
+        <label for="gCost"><span data-term="settling">Cost of settling</span></label>
+        <div class="pct-in"><input id="gCost" type="number" min="0" max="15" step="0.5" value="3" inputmode="decimal"><i>%</i></div>
+      </div>
+      <input class="slider" id="gCostSlide" type="range" min="0" max="10" step="0.5" value="3" aria-label="Settlement cost">
+      <p class="lg-note">Tax applies to the 401(k) / IRA only. Life insurance to a named person usually skips the settling process entirely.</p>
+    </div>
+  </section>
+
+  <!-- ---------- the goal ---------- -->
+  <div class="timing goal-row">
+    <div class="t-item">
+      <label for="gGoal">You'd like to leave them</label>
+      <div class="t-in"><i class="pre">$</i><input id="gGoal" type="number" min="0" step="50000" value="1000000" inputmode="numeric"></div>
+    </div>
+    <input class="slider slim" id="gGoalSlide" type="range" min="0" max="3000000" step="50000" value="1000000" aria-label="Legacy goal">
+    <button type="button" class="t-reset" id="resetBtn2">Reset</button>
+  </div>
+
+  <!-- ---------- the answer ---------- -->
+  <h2 class="ask-answer" id="ansHeadline">&mdash;</h2>
+  <p class="ask-answer-sub" id="ansSub">&mdash;</p>
+
+  <!-- ---------- the picture ---------- -->
+  <section class="panel lg-panel">
+    <div class="panel-head">
+      <span class="panel-ico" data-tint="mint"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19V11"/><path d="M12 19V5.5"/><path d="M19 19v-5.5"/></svg></span>
+      <div><h2>On Paper, and After</h2><p>Everything on the left, everything that comes off, and what's actually left.</p></div>
+    </div>
+    <div id="chartWrap"></div>
+    <ul class="cut-list" id="cutList"></ul>
+  </section>
+
+  <div class="clock-grid lg-grid" id="cardGrid"></div>
+
+  <!-- ---------- what a dollar of each is worth ---------- -->
+  <section class="panel pd-panel" data-fold="What each asset is really worth" data-fold-note="Statement value against what actually arrives">
+    <div class="panel-head">
+      <span class="panel-ico" data-tint="sun"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 7.5v9"/><path d="M14.3 9.8a2.4 2.4 0 0 0-4.6.8c0 2.4 4.6 1.2 4.6 3.6a2.4 2.4 0 0 1-4.6.8"/></svg></span>
+      <div><h2>What Each One Is Really Worth</h2><p>What the statement says, and what actually reaches them.</p></div>
+    </div>
+    <div class="per-dollar" id="perDollar"></div>
+  </section>
+
+  <!-- ---------- closing the gap ---------- -->
+  <section class="closer" id="closer" data-fold="Closing the gap" data-fold-note="Why the route the money takes matters">
+    <span class="cl-ico">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 5.5 6.2v5.1c0 4 2.7 7.6 6.5 9.2 3.8-1.6 6.5-5.2 6.5-9.2V6.2Z"/><path d="m9.2 12.2 2 2 3.6-3.8"/></svg>
+    </span>
+    <div class="cl-body">
+      <span class="eyebrow">Closing the gap</span>
+      <h3>Not every dollar travels the same way.</h3>
+      <p id="clBody">&mdash;</p>
+    </div>
+    <div class="cl-figs">
+      <div><small>Through life insurance</small><b id="clA">&mdash;</b><em>arrives whole</em></div>
+      <div class="is-alt"><small>Through the retirement account</small><b id="clB">&mdash;</b><em>to deliver the same</em></div>
+    </div>
+  </section>
+
+  <!-- ---------- what this means ---------- -->
+  <section class="diagnosis">
+    <span class="dx-ico">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 18h5"/><path d="M10 21h4"/><path d="M8 13.5A5 5 0 1 1 16 13.5c-.9 1.1-1.4 2-1.5 3h-5c-.1-1-.6-1.9-1.5-3Z"/></svg>
+    </span>
+    <div class="dx-body">
+      <span class="eyebrow light">What this means</span>
+      <h3 id="dxTitle">&mdash;</h3>
+      <p id="dxBody">&mdash;</p>
+    </div>
+    <div class="dx-stats">
+      <div><small id="dxS1L">&mdash;</small><b class="dx-figure" id="dxS1">&mdash;</b><em id="dxS1U"></em></div>
+      <div><small id="dxS2L">&mdash;</small><b class="dx-figure" id="dxS2">&mdash;</b><em id="dxS2U"></em></div>
+    </div>
+  </section>
+
+  <!-- ---------- say it ---------- -->
+  <div class="say-it" data-fold="Say it like this" data-fold-note="One sentence you can read out loud">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 10.5h7"/><path d="M8.5 14h4"/><path d="M4.5 5.5h15v12h-9l-5 3.5v-3.5h-1Z"/></svg>
+    <div>
+      <span class="eyebrow light">Say it like this</span>
+      <p id="sayIt">&mdash;</p>
+    </div>
+  </div>
+
+  <!-- ---------- limits ---------- -->
+  <footer class="limits is-tight" data-fold="The fine print" data-fold-note="What's counted and what isn't" data-fold-quiet="1">
+    <span class="d-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5"/><path d="M12 7.6h.01"/></svg></span>
+    <div class="limits-body">
+      <b>Educational illustration only &mdash; not legal or tax advice</b>
+      <div class="chip-cols">
+        <div>
+          <span class="eyebrow good">Counted</span>
+          <ul class="chips good">
+            <li>Debts and final costs</li><li>Income tax on an inherited retirement account</li><li>The cost of settling</li><li>Which assets are cash and which must be sold</li>
+          </ul>
+        </div>
+        <div>
+          <span class="eyebrow bad">Not counted</span>
+          <ul class="chips bad">
+            <li>Federal or state estate tax</li><li>Trusts</li><li>Jointly held property</li><li>Business valuation</li><li>Capital-gains treatment on sale</li><li>Growth between now and then</li>
+          </ul>
+        </div>
+      </div>
+      <p class="limits-tail">Settlement costs vary widely by state and by how assets are held. How an inherited retirement account is taxed depends on the account, the beneficiary and the timing. Speak to a qualified attorney and tax professional before acting on any of this.</p>
+    </div>
+    <span class="d-sign"><i></i> A brighter financial tomorrow</span>
+  </footer>
+</div>
+
+<script src="auth.js?v=33"></script>
+<script src="agent.js?v=33"></script>
+<script src="site.js?v=33"></script>
+<script src="explain.js?v=33"></script>
+<script src="legacy.js?v=33"></script>
+<script src="fold.js?v=33"></script>
+</body>
+</html>

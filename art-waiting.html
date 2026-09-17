@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0d4435">
+  <title>Cost of Waiting — WEALTHDEMO</title>
+  <link rel="icon" href="wealthdemo-logo.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="site.css">
+  <link rel="stylesheet" href="tool.css">
+  <link rel="stylesheet" href="withdraw.css">
+  <link rel="stylesheet" href="accounts.css">
+  <link rel="stylesheet" href="explain.css">
+  <link rel="stylesheet" href="rule72.css">
+  <link rel="stylesheet" href="waiting.css">
+  <link rel="stylesheet" href="fold.css">
+</head>
+<body data-page="app">
+
+<header class="site-nav">
+  <div class="shell site-nav-inner">
+    <a class="brand-identity" href="home.html">
+      <img src="wealthdemo-logo.webp" alt="" aria-hidden="true">
+      <span class="brand-wordmark">
+        <strong>WEALTH<span>DEMO</span></strong>
+        <small>See What Your Money Can Do.</small>
+      </span>
+    </a>
+    <nav class="site-links">
+      <a href="home.html">Tools</a>
+      <a href="blueprint.html">Planning</a>
+      <a href="send.html">Assessments</a>
+      <a href="home.html#categories">Resources</a>
+      <a href="home.html#about">About</a>
+    </nav>
+    <div class="nav-search">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+      <input id="navSearch" type="search" placeholder="Search tools, topics, or goals…" autocomplete="off" aria-label="Search tools">
+      <kbd>⌘K</kbd>
+    </div>
+    <div class="site-actions">
+      <a class="premium-btn" href="#" data-billing>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5 7.5 12l4.5-5 4.5 5L20 8.5V17H4Z"/></svg>
+        Go Premium
+      </a>
+      <span class="nav-divider"></span>
+      <div class="account">
+        <button type="button" class="account-btn" id="accountBtn" aria-expanded="false">
+          <span class="avatar" id="accountInitials">SB</span>
+          <span class="hello">Hello, <b id="accountName">there</b></span>
+          <svg class="caret" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+        </button>
+        <div class="account-menu" id="accountMenu" hidden>
+          <span class="account-email" id="accountEmail">Signed in</span>
+          <a href="blueprint.html">Open Financial Blueprint</a>
+          <button type="button" data-logout>Log out</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="shell tool-wrap">
+
+  <div class="tool-topbar">
+    <a class="back-btn" href="home.html">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H6"/><path d="m11 6-6 6 6 6"/></svg>
+      Back to tools
+    </a>
+    <div class="topbar-right">
+      <button type="button" class="send-btn" id="sendBtn">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 3.5 10.5 13.5"/><path d="M20.5 3.5 14 20.5l-3.5-7-7-3.5Z"/></svg>
+        Send to client
+      </button>
+      <div class="more">
+        <button type="button" class="more-btn" id="moreBtn" aria-label="More options" aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="18" cy="12" r="1.3"/></svg>
+        </button>
+        <div class="more-menu" id="moreMenu" hidden>
+          <button type="button" id="printBtn">Print or save as PDF</button>
+          <button type="button" id="resetBtn">Reset to example figures</button>
+          <a href="rule72.html">Rule of 72</a>
+          <a href="withdraw.html">Retirement Withdrawal Calculator</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ---------- hero ---------- -->
+  <section class="tool-hero">
+    <svg class="hero-lines" viewBox="0 0 900 220" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M420 230C540 170 620 120 900 96"/>
+      <path d="M440 240C580 180 660 132 900 126"/>
+      <path d="M470 250C620 196 700 160 900 158"/>
+      <path d="M500 262C660 212 740 190 900 192"/>
+    </svg>
+    <span class="hero-tile">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12.5" r="7.8"/><path d="M12 8.5v4.2l2.8 1.7"/><path d="M9 3.2h6"/></svg>
+    </span>
+    <div class="hero-text">
+      <span class="hero-eyebrow">Money Fundamentals</span>
+      <h1>Cost of Waiting</h1>
+      <p>Same money, started later. See what the delay takes off the end.</p>
+    </div>
+    <div class="hero-aside">
+      <b>You can add more money.</b>
+      <b>You can't add more years.</b>
+    </div>
+  </section>
+
+  <!-- ---------- what you'd put in ---------- -->
+  <section class="rates wait-rates">
+    <div class="rate-side" data-side="save">
+      <header>
+        <b>You</b>
+        <span class="tag good">RIGHT NOW</span>
+      </header>
+      <div class="rate-row">
+        <label for="wAge">Your age today</label>
+        <div class="pct-in"><input id="wAge" type="number" min="16" max="79" step="1" value="35" inputmode="numeric"><i>yrs</i></div>
+      </div>
+      <input class="slider" id="wAgeSlide" type="range" min="18" max="70" step="1" value="35" aria-label="Your age">
+      <div class="rate-row">
+        <label for="wRet">You'd like to stop working at</label>
+        <div class="pct-in"><input id="wRet" type="number" min="40" max="85" step="1" value="65" inputmode="numeric"><i>yrs</i></div>
+      </div>
+      <input class="slider" id="wRetSlide" type="range" min="45" max="80" step="1" value="65" aria-label="Retirement age">
+    </div>
+
+    <span class="rate-vs">and</span>
+
+    <div class="rate-side" data-side="plan">
+      <header>
+        <b>What you'd put in</b>
+        <span class="tag plan" id="planTag">SAME TOTAL</span>
+      </header>
+
+      <div class="mode-switch" role="group" aria-label="How to compare">
+        <button type="button" data-mode="total" class="on">The same total either way</button>
+        <button type="button" data-mode="monthly">The same amount each month</button>
+      </div>
+
+      <div class="rate-row">
+        <label for="wAmt" id="amtLabel">Total you'd put in</label>
+        <div class="money-in"><i>$</i><input id="wAmt" type="number" min="0" step="1000" value="90000" inputmode="numeric"></div>
+      </div>
+      <p class="mode-note" id="modeNote">&mdash;</p>
+
+      <div class="rate-row">
+        <label for="wRate">Growing each year by</label>
+        <div class="pct-in"><input id="wRate" type="number" min="0" max="20" step="0.1" value="7" inputmode="decimal"><i>%</i></div>
+      </div>
+      <input class="slider" id="wRateSlide" type="range" min="0" max="15" step="0.1" value="7" aria-label="Return rate">
+      <div class="chips" role="group" aria-label="Quick rates">
+        <button type="button" data-set="wRate" data-val="4">4%</button>
+        <button type="button" data-set="wRate" data-val="5">5%</button>
+        <button type="button" data-set="wRate" data-val="6">6%</button>
+        <button type="button" data-set="wRate" data-val="7">7%</button>
+        <button type="button" data-set="wRate" data-val="8">8%</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- drag the delay ---------- -->
+  <section class="delay">
+    <div class="delay-head">
+      <label for="delaySlide">If you put it off for</label>
+      <b id="delayYears">10 years</b>
+      <span class="delay-age" id="delayAge">starting at 45 instead</span>
+    </div>
+    <div class="scrub-rail">
+      <input id="delaySlide" class="slider wide" type="range" min="0" max="20" step="1" value="10" aria-label="Years of delay">
+    </div>
+    <div class="delay-ticks" id="delayTicks"></div>
+  </section>
+
+  <!-- ---------- the answer ---------- -->
+  <h2 class="ask-answer" id="ansHeadline">&mdash;</h2>
+  <p class="ask-answer-sub" id="ansSub">&mdash;</p>
+
+  <div class="clock-grid wait-grid" id="cardGrid"></div>
+
+  <!-- ---------- the catch-up ---------- -->
+  <section class="catchup" id="catchup">
+    <span class="cu-ico">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17.5 9.5 12l3.5 3.2L20 7"/><path d="M15 7h5v5"/></svg>
+    </span>
+    <div class="cu-body">
+      <span class="eyebrow">To still finish in the same place</span>
+      <h3 id="cuTitle">&mdash;</h3>
+      <p id="cuBody">&mdash;</p>
+    </div>
+    <div class="cu-figs">
+      <div><small>Each month</small><b id="cuMonthly">&mdash;</b><em id="cuMonthlyWas">&mdash;</em></div>
+      <div><small>Of your own money</small><b id="cuTotal">&mdash;</b><em id="cuTotalWas">&mdash;</em></div>
+    </div>
+  </section>
+
+  <!-- ---------- the two paths ---------- -->
+  <section class="panel race-panel">
+    <div class="panel-head">
+      <span class="panel-ico" data-tint="ice"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 16.5 10 10l3.5 3L20 6"/><path d="M15 6h5v5"/></svg></span>
+      <div><h2><span data-term="timevalue">The Two Paths</span></h2><p id="raceSub">&mdash;</p></div>
+      <div class="chart-key">
+        <span><i class="k-inv"></i> Start now</span>
+        <span><i class="k-late"></i> Start later</span>
+      </div>
+    </div>
+    <div id="raceWrap"></div>
+  </section>
+
+  <!-- ---------- what this means ---------- -->
+  <section class="diagnosis">
+    <span class="dx-ico">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 18h5"/><path d="M10 21h4"/><path d="M8 13.5A5 5 0 1 1 16 13.5c-.9 1.1-1.4 2-1.5 3h-5c-.1-1-.6-1.9-1.5-3Z"/></svg>
+    </span>
+    <div class="dx-body">
+      <span class="eyebrow light">What this means</span>
+      <h3 id="dxTitle">&mdash;</h3>
+      <p id="dxBody">&mdash;</p>
+    </div>
+    <div class="dx-stats">
+      <div><small id="dxS1L">&mdash;</small><b class="dx-figure" id="dxS1">&mdash;</b><em id="dxS1U"></em></div>
+      <div><small id="dxS2L">&mdash;</small><b class="dx-figure" id="dxS2">&mdash;</b><em id="dxS2U"></em></div>
+    </div>
+  </section>
+
+  <!-- ---------- ways out ---------- -->
+  <section class="panel moves-panel" data-fold="What would close the gap" data-fold-note="Ranked, with the number attached to each">
+    <div class="panel-head">
+      <span class="panel-ico" data-tint="sun"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18h5"/><path d="M4 12h9"/><path d="M4 6h16"/></svg></span>
+      <div><h2>Ways Back From It</h2><p>Every option worked out on these same figures, best first.</p></div>
+      <span class="lever-need" id="moveBudget">&mdash;</span>
+    </div>
+    <div class="move-list" id="moveList"></div>
+    <p class="move-foot" id="moveFoot">&mdash;</p>
+  </section>
+
+  <!-- ---------- say it ---------- -->
+  <div class="say-it" data-fold="Say it like this" data-fold-note="One sentence you can read out loud">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 10.5h7"/><path d="M8.5 14h4"/><path d="M4.5 5.5h15v12h-9l-5 3.5v-3.5h-1Z"/></svg>
+    <div>
+      <span class="eyebrow light">Say it like this</span>
+      <p id="sayIt">&mdash;</p>
+    </div>
+  </div>
+
+  <!-- ---------- year by year ---------- -->
+  <details class="rmd-fold">
+    <summary>
+      <span class="rf-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="6" width="15" height="13.5" rx="2.5"/><path d="M4.5 10.5h15"/><path d="M9 4.5V7M15 4.5V7"/></svg></span>
+      <span class="rf-text"><b>What each year of putting it off costs</b><small id="yearTeaser">&mdash;</small></span>
+      <svg class="rf-caret" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+    </summary>
+    <div class="rf-body">
+      <p class="rf-note" id="yearNote">&mdash;</p>
+      <div class="yearly" id="yearly"></div>
+    </div>
+  </details>
+
+  <!-- ---------- limits ---------- -->
+  <footer class="limits is-tight" data-fold="The fine print" data-fold-note="What's counted and what isn't" data-fold-quiet="1">
+    <span class="d-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5"/><path d="M12 7.6h.01"/></svg></span>
+    <div class="limits-body">
+      <b>Educational illustration only</b>
+      <div class="chip-cols">
+        <div>
+          <span class="eyebrow good">Counted</span>
+          <ul class="chips good">
+            <li>Monthly paying in</li><li>Growth every month</li><li>The catch-up amount</li><li>Retiring later</li>
+          </ul>
+        </div>
+        <div>
+          <span class="eyebrow bad">Not counted</span>
+          <ul class="chips bad">
+            <li>Tax</li><li>Fees</li><li>Rising prices</li><li>Employer matching</li><li>Pay rises</li><li>Good and bad years</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <span class="d-sign"><i></i> A brighter financial tomorrow</span>
+  </footer>
+</div>
+
+<script src="auth.js"></script>
+<script src="agent.js"></script>
+<script src="site.js"></script>
+<script src="explain.js"></script>
+<script src="waiting.js"></script>
+<script src="fold.js"></script>
+</body>
+</html>
