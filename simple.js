@@ -244,6 +244,9 @@
     const body = panel.querySelector(".gd-body");
     const open = {};
     body.querySelectorAll(".gd-q[data-open='1']").forEach(function (q) { open[q.getAttribute("data-k")] = true; });
+    /* the panel re-renders on every keystroke, so what the reader chose to
+       open has to survive that or it slams shut under their hands */
+    body.querySelectorAll(".gd-more [data-on='1']").forEach(function (b) { open[b.getAttribute("data-more")] = true; });
 
     let html = "";
 
@@ -262,11 +265,17 @@
       }).join("") + "</section>";
     }
 
-    /* what the page is actually saying, once something has read it */
+    /* Once a question has been asked, the answer is the thing. Everything
+       else — what stands out, the walkthrough, the common questions — goes
+       behind one quiet row, because a wall of other content under an answer
+       is how a panel stops being read at all. */
+    const asked = THREAD.length > 0;
+
     let found = [];
     try { found = (window.WD_FINDINGS ? window.WD_FINDINGS(SLUG) : []) || []; } catch (e) { found = []; }
     if (found.length) {
-      html += '<section class="gd-found"><span>What stands out</span>' +
+      html += '<section class="gd-found"' + (asked && !open.found ? ' hidden' : '') +
+        '><span>What stands out</span>' +
         found.map(function (f) {
           return '<article data-level="' + esc(f.level || "watch") + '">' +
             "<b>" + esc(f.t) + "</b><p>" + esc(f.b) + "</p></article>";
@@ -281,9 +290,10 @@
 
     if (lead || steps.length) {
       /* the walkthrough is still here; it just stops being the first thing */
-      const open = found.length ? "" : ' data-open="1"';
-      html += '<section class="gd-how"' + open + '><button type="button">How this works' + ICON.down + "</button>" +
-        '<div' + (found.length ? " hidden" : "") + ">" +
+      const openHow = (found.length || asked) ? "" : ' data-open="1"';
+      html += '<section class="gd-how"' + openHow + (asked && !open.how ? ' hidden' : '') +
+        '><button type="button">How this works' + ICON.down + "</button>" +
+        '<div' + ((found.length || asked) ? " hidden" : "") + ">" +
         (lead ? '<p class="gd-lead">' + lead + "</p>" : "") +
         (steps.length ? '<ul class="gd-steps">' + steps.join("") + "</ul>" : "") +
         "</div></section>";
@@ -296,10 +306,26 @@
              '<button type="button">' + esc(q.q) + ICON.down + "</button>" +
              "<div" + (open["q" + i] ? "" : ' hidden') + ">" + a + "</div></div>";
     }).filter(Boolean);
-    if (qs.length) html += '<div class="gd-ask"><span>Questions people ask</span>' + qs.join("") + "</div>";
+    if (qs.length) html += '<div class="gd-ask"' + (asked && !open.qs ? ' hidden' : '') +
+      '><span>Questions people ask</span>' + qs.join("") + "</div>";
 
-    html += '<p class="gd-foot">Every figure here is read straight off this page, so it moves when you change ' +
-            'a number. It is an illustration, not a quote, a policy or tax advice.</p>';
+    /* the one row that puts it all back, only once there is an answer above */
+    if (asked && (found.length || lead || steps.length || qs.length)) {
+      const chip = function (k, label, on) {
+        return '<button type="button" data-more="' + k + '"' + (on ? ' data-on="1"' : '') + '>' + label + "</button>";
+      };
+      html = html.replace('<section class="gd-found"',
+        '<div class="gd-more">' +
+        (found.length ? chip("found", "What stands out", !!open.found) : "") +
+        ((lead || steps.length) ? chip("how", "How this works", !!open.how) : "") +
+        (qs.length ? chip("qs", "Common questions", !!open.qs) : "") +
+        "</div><section class=\"gd-found\"");
+    }
+
+    html += '<p class="gd-foot">' + (asked
+      ? "Figures read off this page. An illustration, not advice."
+      : "Every figure here is read straight off this page, so it moves when you change " +
+        "a number. It is an illustration, not a quote, a policy or tax advice.") + "</p>";
 
     body.innerHTML = html;
     body.querySelectorAll("[data-try]").forEach(function (b) {
@@ -309,6 +335,19 @@
         panel.querySelector(".gd-askbox").dispatchEvent(new Event("submit", { cancelable: true }));
       });
     });
+    body.querySelectorAll(".gd-more button").forEach(function (b) {
+      b.addEventListener("click", function () {
+        const k = b.getAttribute("data-more");
+        const on = b.getAttribute("data-on") === "1";
+        const sel = k === "found" ? ".gd-found" : k === "how" ? ".gd-how" : ".gd-ask";
+        const sec = body.querySelector(sel);
+        if (!sec) return;
+        b.setAttribute("data-on", on ? "0" : "1");
+        sec.hidden = on;
+        if (!on) sec.scrollIntoView({ block: "nearest", behavior: "smooth" });
+      });
+    });
+
     const how = body.querySelector(".gd-how");
     if (how) {
       how.firstElementChild.addEventListener("click", function () {
@@ -331,6 +370,7 @@
     if (!panel) return;
     if (on) render();
     panel.setAttribute("data-show", on ? "1" : "0");
+    document.documentElement.classList.toggle("gd-open-panel", !!on);
     veil.setAttribute("data-show", on ? "1" : "0");
     veil.hidden = !on;
     panel.setAttribute("aria-hidden", on ? "false" : "true");
@@ -401,6 +441,18 @@
 
       const AI = window.WD_AI;
       if (!AI || !AI.available()) {
+        /* a client is not being sold short here — everything the page can
+           work out, it already answered above. This is only the handful of
+           questions that need a person, and saying so is more use than a
+           shrug. */
+        let client = false;
+        try { client = localStorage.getItem("wealthdemo.role") !== "agent"; } catch (e) {}
+        if (a && a.stuck && client) {
+          a.title = "That one is worth asking your adviser";
+          a.body = "I answer from the numbers on this page \u2014 I can change any of them and " +
+                   "show you what happens, explain anything it uses, or say what stands out. " +
+                   "Anything beyond that is a conversation, not a calculation.";
+        }
         place(a || { q: q, title: "I can't answer that one",
                      body: "Try asking what happens if one of the numbers changes.", tag: "" });
         return;
