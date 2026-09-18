@@ -16,14 +16,14 @@ window.WD = window.WD || {};
   const KEY = "wealthdemo.role";
   const CLIENT_KEY = "wealthdemo.client.name";
 
-  function role() {
-    try { return localStorage.getItem(KEY) === "agent" ? "agent" : "client"; } catch (err) { return "client"; }
-  }
+  /* There is only one mode now. Everything that used to ask "which view is
+     this?" still asks; it just always gets the same answer. */
+  function role() { return "agent"; }
 
   function setRole(next) {
-    try { localStorage.setItem(KEY, next === "agent" ? "agent" : "client"); } catch (err) {}
+    try { localStorage.setItem(KEY, "agent"); } catch (err) {}
     apply();
-    document.dispatchEvent(new CustomEvent("wd:role", { detail: { role: role() } }));
+    document.dispatchEvent(new CustomEvent("wd:role", { detail: { role: "agent" } }));
   }
 
   function clientName() {
@@ -56,55 +56,21 @@ window.WD = window.WD || {};
     }
   }
 
-  /* ---------- the switch itself ---------- */
-  function mountToggle() {
-    const menu = document.getElementById("accountMenu");
-    if (!menu || menu.querySelector(".role-switch")) return;
+  /* ---------- no switch ----------
 
-    const wrap = document.createElement("div");
-    wrap.className = "role-switch";
-    wrap.innerHTML =
-      '<span class="role-label">Mode</span>' +
-      '<div class="role-seg" role="group" aria-label="View mode">' +
-        '<button type="button" data-role-set="client">Client</button>' +
-        '<button type="button" data-role-set="agent">Agent</button>' +
-      '</div>';
-    menu.insertBefore(wrap, menu.firstChild.nextSibling);
+     There used to be a Client / Agent toggle in the account menu and a
+     standing bar across the bottom of every page announcing which one you
+     were in. Both are gone. This is an adviser's tool: it is always agent
+     mode, so nothing has to be announced, nothing has to be remembered
+     before a meeting, and two of the noisiest elements on the page stop
+     existing. What a client sees is the assessment link, which was always
+     a separate thing.
 
-    wrap.addEventListener("click", function (e) {
-      const b = e.target.closest("[data-role-set]");
-      if (!b) return;
-      setRole(b.getAttribute("data-role-set"));
-      paintToggle();
-    });
-    paintToggle();
-  }
-
-  function paintToggle() {
-    document.querySelectorAll("[data-role-set]").forEach(function (b) {
-      b.classList.toggle("on", b.getAttribute("data-role-set") === role());
-    });
-    const flag = document.getElementById("agentFlag");
-    if (flag) flag.hidden = role() !== "agent";
-  }
-
-  /* a standing marker so nobody presents to a client with internals showing */
-  function mountFlag() {
-    if (document.getElementById("agentFlag")) return;
-    const el = document.createElement("div");
-    el.className = "agent-flag";
-    el.id = "agentFlag";
-    el.hidden = role() !== "agent";
-    el.innerHTML =
-      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 5.5 6.2v5.1c0 4 2.7 7.6 6.5 9.2 3.8-1.6 6.5-5.2 6.5-9.2V6.2Z"/></svg>' +
-      '<span>Agent mode — internal notes visible</span>' +
-      '<button type="button" data-role-set="client">Switch to client view</button>';
-    el.addEventListener("click", function (e) {
-      const b = e.target.closest("[data-role-set]");
-      if (b) { setRole("client"); paintToggle(); }
-    });
-    document.body.appendChild(el);
-  }
+     setRole and the role() reader stay, because other files ask what mode
+     this is. They are simply never told anything but "agent" now. */
+  function mountToggle() {}
+  function paintToggle() {}
+  function mountFlag() {}
 
   WD.role = role;
   WD.setRole = setRole;
