@@ -169,35 +169,49 @@
     });
   }
 
-  /* --- does the project answer, and does the key open it? --- */
-  function checkProject(url, key) {
-    return fetch(url + "/rest/v1/", { headers: { apikey: key } }).then(function (r) {
-      if (r.status === 401 || r.status === 403) {
-        return { ok: false, why: "The project answered, but rejected that key. Check you copied the anon public key, not another one." };
-      }
-      if (!r.ok && r.status !== 404) {
-        return { ok: false, why: "The project answered with HTTP " + r.status + "." };
-      }
-      return { ok: true, why: "" };
-    }).catch(function () {
-      return { ok: false, why: "That address did not answer. Check it is the Project URL and ends .supabase.co" };
-    });
+  /* --- the address, the key and the tables, in one real request ---
+
+     This used to ask /rest/v1/ with only an apikey header and call a 401
+     "the key is wrong". It is not: Supabase's gateway wants Authorization
+     as well, so a perfectly good key was being blamed. One request that
+     actually reads a table answers all three questions at once, and
+     whatever the server says is passed straight through rather than
+     translated into a guess. */
+  function readMessage(text) {
+    try {
+      var j = JSON.parse(text);
+      return j.message || j.msg || j.error_description || j.error || j.hint || "";
+    } catch (e) { return (text || "").slice(0, 160); }
   }
 
-  /* --- did schema.sql get run? --- */
-  function checkTables(url, key) {
+  function checkProject(url, key) {
     return fetch(url + "/rest/v1/profiles?select=id&limit=1", {
       headers: { apikey: key, Authorization: "Bearer " + key }
     }).then(function (r) {
-      if (r.ok) return { ok: true, why: "Connected, and the tables are there." };
       return r.text().then(function (t) {
-        if (/does not exist|schema cache|relation/i.test(t)) {
-          return { ok: false, why: "Connected, but the tables are missing. Run schema.sql in the SQL editor." };
+        var msg = readMessage(t);
+
+        if (r.ok) return { ok: true, tables: true, why: "Connected, and the tables are there." };
+
+        if (r.status === 401 || r.status === 403) {
+          return { ok: false, tables: false,
+            why: "The project answered, but would not accept that key" +
+                 (msg ? " — it said: “" + msg + "”" : "") +
+                 ". Make sure it is the anon public or publishable key, copied whole." };
         }
-        return { ok: false, why: "Connected, but reading the tables failed: HTTP " + r.status };
+
+        /* the project is fine; it just has nothing in it yet */
+        if (/does not exist|schema cache|Could not find the table|relation/i.test(t)) {
+          return { ok: true, tables: false,
+            why: "Connected, but the tables are missing. Run schema.sql in the SQL editor." };
+        }
+
+        return { ok: false, tables: false,
+          why: "The project answered with HTTP " + r.status + (msg ? " — “" + msg + "”" : "") + "." };
       });
-    }).catch(function () {
-      return { ok: false, why: "Could not reach the tables." };
+    }).catch(function (e) {
+      return { ok: false, tables: false,
+        why: "That address did not answer. Check it is the Project URL and ends .supabase.co" };
     });
   }
 
@@ -217,7 +231,8 @@
            turned away for being signed out proves both are in place */
         if (b.error === "not_signed_in") return { ok: true, why: "Deployed, and the Anthropic key is set." };
         if (r.ok) return { ok: true, why: "Deployed, keyed, and the model replied." };
-        return { ok: false, how: "other", why: b.say || ("The function answered with HTTP " + r.status) };
+        return { ok: false, how: "other",
+          why: (b.say || b.error || readMessage(t) || "") + " (HTTP " + r.status + ")" };
       });
     }).catch(function () {
       return { ok: false, how: "deploy", why: "Could not reach the function." };
@@ -234,16 +249,14 @@
         finish({ project: false });
         return;
       }
-      box.innerHTML = row("wait", "Checking the tables…", "Looking for what schema.sql creates.");
-      checkTables(url, key).then(function (two) {
-        var html = row(two.ok ? "1" : "0", two.ok ? "Project and tables" : "Tables", two.why);
-        box.innerHTML = html + row("wait", "Trying the assistant…", "Calling the edge function.");
-        checkFunction(url, key).then(function (three) {
-          html += row(three.ok ? "1" : "0",
-            three.ok ? "Assistant" : "Assistant not ready yet", three.why);
-          box.innerHTML = html;
-          finish({ project: true, tables: two.ok, fn: three.ok, how: three.how });
-        });
+      var html = row(one.tables ? "1" : "0",
+        one.tables ? "Project and tables" : "Tables", one.why);
+      box.innerHTML = html + row("wait", "Trying the assistant…", "Calling the edge function.");
+      checkFunction(url, key).then(function (three) {
+        html += row(three.ok ? "1" : "0",
+          three.ok ? "Assistant" : "Assistant not ready yet", three.why);
+        box.innerHTML = html;
+        finish({ project: true, tables: one.tables, fn: three.ok, how: three.how });
       });
     });
   }
