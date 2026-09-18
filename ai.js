@@ -39,10 +39,24 @@
     try { return new URLSearchParams(location.search).get("a") || ""; } catch (e) { return ""; }
   }
 
+  /* Adviser only, deliberately.
+
+     A client gets every answer the page can work out for itself — a
+     definition, a what-if, a solve, what stands out — and those are
+     instant and free. What they do not get is the model, for two
+     reasons: it is the adviser's account and the adviser's credit being
+     spent, and the adviser is the one who should be interpreting a
+     client's retirement out loud. */
+  function agentMode() {
+    try { return localStorage.getItem("wealthdemo.role") === "agent"; }
+    catch (e) { return false; }
+  }
+
   function available() {
     const c = cloud();
     if (!c) return false;
-    return c.auth.signedIn() || !!linkToken();
+    if (!agentMode()) return false;
+    return c.auth.signedIn();
   }
 
   /* ============================================================
