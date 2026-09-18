@@ -9,12 +9,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="tokens.css?v=51">
-  <link rel="stylesheet" href="site.css?v=51">
-  <link rel="stylesheet" href="tool.css?v=51">
-  <link rel="stylesheet" href="studio.css?v=51">
-  <script src="config.js?v=51"></script>
-  <script src="cloud.js?v=51"></script>
+  <link rel="stylesheet" href="tokens.css?v=52">
+  <link rel="stylesheet" href="site.css?v=52">
+  <link rel="stylesheet" href="tool.css?v=52">
+  <link rel="stylesheet" href="studio.css?v=52">
+  <script src="config.js?v=52"></script>
+  <script src="cloud.js?v=52"></script>
 </head>
 <body data-page="app" class="st-page">
 
@@ -63,6 +63,37 @@
       <b id="stStateB">Working on this device</b>
       <small id="stStateS">Nothing leaves this browser yet.</small>
     </div>
+  </section>
+
+  <!-- shown only until the project is connected -->
+  <section class="panel st-setup" id="stSetup" hidden>
+    <div class="panel-head">
+      <span class="panel-ico" data-tint="ice"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7.5c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3Z"/><path d="M4 7.5v9c0 1.7 3.6 3 8 3s8-1.3 8-3v-9"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></span>
+      <div><h2>Connect your project</h2><p>Paste the two values from Supabase and try them here first. They stay in this browser until you are happy, then go into <b>config.js</b> for everyone.</p></div>
+    </div>
+
+    <div class="st-fields">
+      <div class="f2">
+        <div class="f-body">
+          <label for="cfUrl">Project URL</label>
+          <div class="control"><input id="cfUrl" type="url" placeholder="https://abcdefgh.supabase.co" spellcheck="false"></div>
+          <small>Supabase → Project Settings → API → Project URL</small>
+        </div>
+        <div class="f-body">
+          <label for="cfKey">Anon public key</label>
+          <div class="control"><input id="cfKey" type="text" placeholder="eyJhbGciOi…" spellcheck="false"></div>
+          <small>The same page, under Project API keys. This one is meant to be public.</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="st-save">
+      <button type="button" class="st-primary" id="cfGo">Connect and test</button>
+      <button type="button" class="st-ghost" id="cfClear" hidden>Disconnect</button>
+      <span class="st-said" id="cfSaid"></span>
+    </div>
+
+    <ul class="st-checks" id="cfChecks"></ul>
   </section>
 
   <nav class="st-tabs" role="tablist">
@@ -273,10 +304,10 @@
 
 </div>
 
-<script src="auth.js?v=51"></script>
-<script src="agent.js?v=51"></script>
-<script src="site.js?v=51"></script>
-<script src="profile.js?v=51"></script>
-<script src="studio.js?v=51"></script>
+<script src="auth.js?v=52"></script>
+<script src="agent.js?v=52"></script>
+<script src="site.js?v=52"></script>
+<script src="profile.js?v=52"></script>
+<script src="studio.js?v=52"></script>
 </body>
 </html>

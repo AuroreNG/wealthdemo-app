@@ -1,0 +1,127 @@
+/* ============================================================
+   WEALTHDEMO — how to use this
+   A spotlight is a hole in a very large shadow: one element,
+   no overlay maths, and the page underneath stays readable.
+   ============================================================ */
+
+.tr-spot {
+  position: fixed;
+  z-index: 90;
+  border-radius: 14px;
+  box-shadow: 0 0 0 9999px rgba(5, 32, 26, .58);
+  border: 2px solid var(--wd-emerald-300);
+  opacity: 0;
+  pointer-events: auto;
+  cursor: pointer;
+  transition: top .28s cubic-bezier(.22,.8,.3,1), left .28s cubic-bezier(.22,.8,.3,1),
+              width .28s cubic-bezier(.22,.8,.3,1), height .28s cubic-bezier(.22,.8,.3,1),
+              opacity .2s ease;
+}
+.tr-spot[data-show="1"] { opacity: 1; }
+
+.tr-card {
+  position: fixed;
+  z-index: 91;
+  width: min(340px, calc(100vw - 24px));
+  padding: 16px 17px 14px;
+  border-radius: var(--wd-radius);
+  border: 1px solid rgba(255, 255, 255, .9);
+  background:
+    radial-gradient(120% 140% at 10% 0%, rgba(255,255,255,.99), rgba(255,255,255,.94) 60%),
+    linear-gradient(140deg, #f2f8f6, #fbfdfc);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.95), 0 26px 50px -24px rgba(5, 32, 26, .8);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity .2s ease, transform .2s ease, top .28s ease, left .28s ease;
+}
+.tr-card[data-show="1"] { opacity: 1; transform: none; }
+
+.tr-step {
+  display: block;
+  margin-bottom: 7px;
+  font: 600 10.5px/1 var(--wd-font-body);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--wd-muted);
+}
+.tr-card .tr-t {
+  display: block;
+  margin-bottom: 5px;
+  font: 600 17px/1.25 var(--wd-font-display);
+  color: var(--wd-ink);
+}
+.tr-card .tr-b {
+  margin: 0 0 14px;
+  font: 400 13.8px/1.6 var(--wd-font-body);
+  color: var(--wd-ink-soft);
+}
+.tr-acts { display: flex; align-items: center; gap: 10px; }
+.tr-acts button {
+  appearance: none;
+  cursor: pointer;
+  font: 600 13px/1 var(--wd-font-body);
+  border-radius: 999px;
+  padding: 10px 18px;
+  border: 1px solid var(--wd-line);
+  background: #fff;
+  color: var(--wd-muted);
+}
+.tr-acts .tr-next {
+  margin-left: auto;
+  border: 0;
+  color: #fff;
+  background: linear-gradient(140deg, var(--wd-emerald-700), var(--wd-emerald-900));
+  box-shadow: 0 12px 22px -14px rgba(7, 26, 20, .9);
+}
+.tr-acts .tr-skip:hover { color: var(--wd-ink); }
+
+@media (prefers-reduced-motion: reduce) {
+  .tr-spot, .tr-card { transition: none; }
+}
+@media print { .tr-spot, .tr-card { display: none !important; } }
+
+/* the way in, on every tool, where it can be seen */
+.tr-replay {
+  appearance: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--wd-line);
+  background: rgba(255, 255, 255, .82);
+  backdrop-filter: blur(14px) saturate(150%);
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
+  box-shadow: var(--wd-shadow-sm);
+  font: 600 13.5px/1 var(--wd-font-body);
+  color: var(--wd-ink-soft);
+  white-space: nowrap;
+  transition: color .16s ease, border-color .16s ease, transform .16s ease;
+}
+.tr-replay:hover {
+  color: var(--wd-ink);
+  border-color: var(--wd-emerald-300);
+  transform: translateY(-1px);
+}
+.tr-replay svg {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+@media (max-width: 620px) {
+  .tr-replay span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .tr-replay { padding: 10px; }
+}
+@media print { .tr-replay { display: none !important; } }
+
+/* send.css reaches for every direct child of body to give that page its own
+   stacking context, which was quietly turning these overlays into page
+   furniture. They are not: they keep their own positioning regardless. */
+body > .tr-spot { position: fixed !important; z-index: 90; }
+body > .tr-card { position: fixed !important; z-index: 91; }

@@ -284,3 +284,30 @@
 .st-auth { display: grid; gap: 12px; }
 .st-auth .f-body { display: grid; gap: 5px; }
 .st-auth p { margin: 0; color: var(--ink-2, #46564f); font-size: 14px; }
+
+/* ---------- setup checks ----------
+   Three lines that each say what was actually tried and what came back.
+   "Something went wrong" is not a diagnosis; "the project answered but
+   rejected that key" tells you which box to look at. */
+.st-setup { margin-bottom: 18px; }
+.st-checks { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 8px; }
+.st-checks li {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  gap: 11px;
+  align-items: start;
+  padding: 11px 14px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, .6);
+}
+.st-checks b { display: block; font-size: 14px; }
+.st-checks small { display: block; color: var(--ink-3, #5c6b66); font-size: 13px; line-height: 1.45; }
+.st-checks i {
+  width: 18px; height: 18px; border-radius: 50%;
+  display: grid; place-items: center;
+  font-style: normal; font-size: 11px; font-weight: 800; color: #fff;
+  margin-top: 2px;
+}
+.st-checks li[data-ok="1"] i { background: #2f8f68; }
+.st-checks li[data-ok="0"] i { background: #b4562d; }
+.st-checks li[data-ok="wait"] i { background: #b9a24a; }

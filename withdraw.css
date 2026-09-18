@@ -259,3 +259,6 @@
    shape in the chart — these opt back out */
 .wd-chart rect, .wd-chart polygon, .wd-chart text { stroke: none; }
 .wd-chart circle { stroke-width: 2.5; }
+
+/* the questions moved above the answer, so the chart has the row to itself */
+.wd-layout:has(> :only-child) { grid-template-columns: 1fr; }

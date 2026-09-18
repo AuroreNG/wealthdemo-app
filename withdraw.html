@@ -9,11 +9,23 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="tokens.css?v=33">
-  <link rel="stylesheet" href="site.css?v=33">
-  <link rel="stylesheet" href="tool.css?v=33">
-  <link rel="stylesheet" href="withdraw.css?v=33">
-  <link rel="stylesheet" href="explain.css?v=33">
+  <link rel="stylesheet" href="tokens.css?v=52">
+  <link rel="stylesheet" href="site.css?v=52">
+  <link rel="stylesheet" href="tool.css?v=52">
+  <link rel="stylesheet" href="withdraw.css?v=52">
+  <link rel="stylesheet" href="explain.css?v=52">
+  <link rel="stylesheet" href="simple.css?v=52">
+  <link rel="stylesheet" href="chartsay.css?v=52">
+  <link rel="stylesheet" href="tour.css?v=52">
+  <script src="config.js?v=52"></script>
+  <script src="cloud.js?v=52"></script>
+  <script src="guide.js?v=52"></script>
+  <script src="insight.js?v=52"></script>
+  <script src="ask.js?v=52"></script>
+  <script src="ai.js?v=52"></script>
+  <script src="simple.js?v=52"></script>
+  <script src="chartsay.js?v=52"></script>
+  <script src="tour.js?v=52"></script>
 </head>
 <body data-page="app">
 
@@ -28,8 +40,8 @@
     </a>
     <nav class="site-links">
       <a href="home.html">Tools</a>
-      <a href="blueprint.html">Planning</a>
       <a href="send.html">Assessments</a>
+      <a href="studio.html">Studio</a>
       <a href="home.html#categories">Resources</a>
       <a href="home.html#about">About</a>
     </nav>
@@ -107,72 +119,8 @@
     </div>
   </section>
 
-  <!-- ---------- the answer ---------- -->
-  <section class="answer">
-    <div class="ans-top">
-      <div class="ans-copy">
-        <span class="eyebrow">The answer</span>
-        <h2 id="ansHeadline">—</h2>
-        <p id="ansSub">—</p>
-      </div>
-      <div class="ans-side" id="shortBox">
-        <span class="eyebrow bad">Shortfall</span>
-        <div class="ans-figure bad" id="shortAmt">—</div>
-        <p id="shortNote">—</p>
-      </div>
-      <div class="ans-side good" id="surplusBox" hidden>
-        <span class="eyebrow good">Left over</span>
-        <div class="ans-figure good" id="surplusAmt">—</div>
-        <p id="surplusNote">—</p>
-      </div>
-    </div>
-
-    <div class="timeline">
-      <div class="tl-track">
-        <i class="tl-solid" id="tlSolid"></i>
-        <i class="tl-band" id="tlBand"></i>
-        <i class="tl-gone" id="tlGone"></i>
-      </div>
-      <div class="tl-dots">
-        <span class="tl-dot start"></span>
-        <span class="tl-dot lo" id="dotLo"></span>
-        <span class="tl-dot hi" id="dotHi"></span>
-        <span class="tl-dot end"></span>
-      </div>
-      <div class="tl-labels">
-        <div class="tl-lab start"><b id="lblStart">—</b><small>Retires</small></div>
-        <div class="tl-lab float" id="lblLoWrap"><b id="lblLo">—</b><small>If the start is poor</small></div>
-        <div class="tl-lab float" id="lblHiWrap"><b id="lblHi">—</b><small>If it starts strong</small></div>
-        <div class="tl-lab end"><b id="lblEnd">—</b><small>Planned to</small></div>
-      </div>
-    </div>
-
-    <div class="ans-figures">
-      <div><small>Saved at retirement</small><b id="figNest">—</b></div>
-      <div><small>The income you want</small><b id="figWant">—</b></div>
-      <div class="hero-figure"><small id="figSupportLabel">What it supports</small><b id="figSupport">—</b></div>
-    </div>
-  </section>
-
-  <!-- ---------- diagnosis ---------- -->
-  <section class="diagnosis">
-    <span class="dx-ico">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 18h5"/><path d="M10 21h4"/><path d="M8 13.5A5 5 0 1 1 16 13.5c-.9 1.1-1.4 2-1.5 3h-5c-.1-1-.6-1.9-1.5-3Z"/></svg>
-    </span>
-    <div class="dx-body">
-      <span class="eyebrow light">What's actually driving this</span>
-      <h3 id="dxTitle">—</h3>
-      <p id="dxBody">—</p>
-    </div>
-    <div class="dx-stats">
-      <div><small id="dxS1L">—</small><b class="dx-figure" id="dxS1">—</b><em>a year</em></div>
-      <div><small id="dxS2L">—</small><b class="dx-figure" id="dxS2">—</b><em>a year</em></div>
-    </div>
-  </section>
-
-  <!-- ---------- inputs + chart ---------- -->
-  <div class="wd-layout">
-    <section class="panel">
+  <!-- ---------- the questions, before the answer they produce ---------- -->
+  <section class="panel wd-ask">
       <div class="panel-head">
         <span class="panel-ico" data-tint="mint"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19V11"/><path d="M12 19V5.5"/><path d="M19 19v-5.5"/></svg></span>
         <div><h2>Your Numbers</h2><p>Change anything — everything above moves with it.</p></div>
@@ -248,13 +196,79 @@
       </div>
     </section>
 
+  <!-- ---------- the answer ---------- -->
+  <section class="answer">
+    <div class="ans-top">
+      <div class="ans-copy">
+        <span class="eyebrow">The answer</span>
+        <h2 id="ansHeadline">—</h2>
+        <p id="ansSub">—</p>
+      </div>
+      <div class="ans-side" id="shortBox">
+        <span class="eyebrow bad">Shortfall</span>
+        <div class="ans-figure bad" id="shortAmt">—</div>
+        <p id="shortNote">—</p>
+      </div>
+      <div class="ans-side good" id="surplusBox" hidden>
+        <span class="eyebrow good">Surplus</span>
+        <div class="ans-figure good" id="surplusAmt">—</div>
+        <p id="surplusNote">—</p>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-track">
+        <i class="tl-solid" id="tlSolid"></i>
+        <i class="tl-band" id="tlBand"></i>
+        <i class="tl-gone" id="tlGone"></i>
+      </div>
+      <div class="tl-dots">
+        <span class="tl-dot start"></span>
+        <span class="tl-dot lo" id="dotLo"></span>
+        <span class="tl-dot hi" id="dotHi"></span>
+        <span class="tl-dot end"></span>
+      </div>
+      <div class="tl-labels">
+        <div class="tl-lab start"><b id="lblStart">—</b><small>Retirement</small></div>
+        <div class="tl-lab float" id="lblLoWrap"><b id="lblLo">—</b><small>If early returns are poor</small></div>
+        <div class="tl-lab float" id="lblHiWrap"><b id="lblHi">—</b><small>If early returns are strong</small></div>
+        <div class="tl-lab end"><b id="lblEnd">—</b><small>Plan runs to</small></div>
+      </div>
+    </div>
+
+    <div class="ans-figures">
+      <div><small>Balance at retirement</small><b id="figNest">—</b></div>
+      <div><small>Target income</small><b id="figWant">—</b></div>
+      <div class="hero-figure"><small id="figSupportLabel">What it supports</small><b id="figSupport">—</b></div>
+    </div>
+  </section>
+
+  <!-- ---------- diagnosis ---------- -->
+  <section class="diagnosis">
+    <span class="dx-ico">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 18h5"/><path d="M10 21h4"/><path d="M8 13.5A5 5 0 1 1 16 13.5c-.9 1.1-1.4 2-1.5 3h-5c-.1-1-.6-1.9-1.5-3Z"/></svg>
+    </span>
+    <div class="dx-body">
+      <span class="eyebrow light">What's actually driving this</span>
+      <h3 id="dxTitle">—</h3>
+      <p id="dxBody">—</p>
+    </div>
+    <div class="dx-stats">
+      <div><small id="dxS1L">—</small><b class="dx-figure" id="dxS1">—</b><em>a year</em></div>
+      <div><small id="dxS2L">—</small><b class="dx-figure" id="dxS2">—</b><em>a year</em></div>
+    </div>
+  </section>
+
+  <!-- ---------- inputs + chart ---------- -->
+  <div class="wd-layout">
+    
     <section class="panel">
       <div class="panel-head">
         <span class="panel-ico" data-tint="ice"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 16.5 10 10l3.5 3L20 6"/><path d="M15 6h5v5"/></svg></span>
-        <div><h2><span data-term="sequence">Two Futures, One Average</span></h2><p>Both lines return the same average. Only the order is different.</p></div>
+        <div><h2><span data-term="sequence">Sequence of Returns</span></h2><p>Both solid lines earn the same average return and draw the same income &mdash; only the order of the good and bad years differs. The dashed line is the <span data-term="safewithdrawal">safe withdrawal rate</span>.</p></div>
         <div class="chart-key">
-          <span><i class="k-line"></i> Steady</span>
-          <span><i class="k-bad"></i> Poor first decade</span>
+          <span><i class="k-line"></i> Level return</span>
+          <span><i class="k-bad"></i> Poor returns early</span>
           <span><i class="k-safe"></i> <b id="chartSafeLabel">Safe rate</b></span>
         </div>
       </div>
@@ -266,7 +280,7 @@
   <section class="panel levers-panel">
     <div class="panel-head">
       <span class="panel-ico" data-tint="sun"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18h5"/><path d="M4 12h9"/><path d="M4 6h16"/></svg></span>
-      <div><h2>What Buys the Most Years</h2><p>Every option re-run on these figures, ranked by the years it actually returns.</p></div>
+      <div><h2>Ways to Extend the Income</h2><p>Every option re-run on these figures, ranked by the years it actually returns.</p></div>
       <span class="lever-need" id="leverNeed">—</span>
     </div>
 
@@ -312,10 +326,10 @@
   </footer>
 </div>
 
-<script src="auth.js?v=33"></script>
-<script src="agent.js?v=33"></script>
-<script src="site.js?v=33"></script>
-<script src="explain.js?v=33"></script>
-<script src="withdraw.js?v=33"></script>
+<script src="auth.js?v=52"></script>
+<script src="agent.js?v=52"></script>
+<script src="site.js?v=52"></script>
+<script src="explain.js?v=52"></script>
+<script src="withdraw.js?v=52"></script>
 </body>
 </html>

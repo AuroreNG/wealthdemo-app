@@ -1,0 +1,236 @@
+/* ============================================================
+   WEALTHDEMO — Tax Impact on Your Investments
+   (builds on paycheck.css for .banner, .calc, .results, .runway,
+    .panel; taxes.css supplies the a/b/c tint palette)
+   ============================================================ */
+
+.ti-rates { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+
+/* ============================================================
+   add your investments
+   ============================================================ */
+.ti-add { display: grid; gap: 16px; }
+.ti-add .eyebrow { color: var(--wd-muted); }
+
+.ti-cols {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 14px; align-items: stretch;
+}
+.ti-col {
+  display: flex; flex-direction: column; gap: 12px;
+  padding: 18px 18px 16px; border-radius: 16px;
+  border: 1px solid var(--v-line);
+  background: linear-gradient(180deg, var(--v-wash), #fff 55%);
+  box-shadow: inset 0 2px 0 var(--v-c);
+}
+.ti-col > header { display: grid; gap: 4px; }
+.ti-col > header b {
+  font-family: var(--wd-serif, "Playfair Display", Georgia, serif);
+  font-size: 17.5px; font-weight: 600; letter-spacing: -.01em; color: var(--v-ink);
+}
+.ti-col > header em { font-style: normal; font-size: 12px; line-height: 1.55; color: var(--wd-muted); }
+
+.ti-rows { display: grid; gap: 12px; }
+.ti-row {
+  position: relative;
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px;
+  padding: 14px 14px 12px; border-radius: 12px;
+  background: rgba(255, 255, 255, .78);
+  border: 1px solid var(--v-line);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+}
+.ti-row .ti-f-inv { grid-column: 1 / -1; padding-right: 30px; }
+.ti-row label {
+  font-size: 10px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--wd-muted); min-height: 0;
+}
+.ti-row .money-in input, .ti-row .pct-in input { font-size: 14.5px; }
+
+.ti-sel {
+  width: 100%; padding: 10px 30px 10px 12px;
+  border: 1px solid rgba(6, 26, 20, .14); border-radius: 9px;
+  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236b7a74' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='m7 10 5 5 5-5'/%3E%3C/svg%3E") no-repeat right 10px center / 16px;
+  -webkit-appearance: none; appearance: none;
+  font-size: 13.5px; font-weight: 600; color: var(--wd-ink); cursor: pointer;
+}
+.ti-sel:focus-visible { outline: 2px solid var(--v-c); outline-offset: 1px; }
+
+.ti-x {
+  position: absolute; top: 11px; right: 10px;
+  width: 24px; height: 24px; padding: 4px;
+  border: 1px solid rgba(6, 26, 20, .12); border-radius: 7px;
+  background: #fff; color: var(--wd-muted); cursor: pointer;
+}
+.ti-x:hover:not([disabled]) { color: #b3283c; border-color: rgba(179, 40, 60, .35); }
+.ti-x[disabled] { opacity: .3; cursor: default; }
+
+.ti-proj {
+  grid-column: 1 / -1; margin: 2px 0 0;
+  font-size: 12px; font-weight: 600; color: var(--v-ink);
+}
+.ti-proj b { font-weight: 700; font-variant-numeric: tabular-nums; }
+
+.ti-add-btn {
+  margin-top: auto; padding: 11px 14px;
+  border: 1px dashed var(--v-line); border-radius: 11px;
+  background: rgba(255, 255, 255, .5);
+  font-size: 12.5px; font-weight: 700; color: var(--v-ink); cursor: pointer;
+  transition: background .15s ease, border-color .15s ease;
+}
+.ti-add-btn:hover { background: #fff; border-style: solid; }
+
+/* ============================================================
+   the mix
+   ============================================================ */
+.ti-block { display: grid; gap: 14px; }
+.ti-block .eyebrow { color: var(--wd-muted); }
+
+.ti-mix { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+.ti-mixcard {
+  padding: 18px 20px 16px; border-radius: 16px;
+  border: 1px solid var(--v-line);
+  background: linear-gradient(180deg, var(--v-wash), #fff 60%);
+  box-shadow: inset 0 2px 0 var(--v-c), 0 14px 30px -28px rgba(6, 26, 20, .55);
+}
+.ti-mixcard > header { display: grid; gap: 2px; margin-bottom: 8px; }
+.ti-mixcard > header b { font-size: 14px; font-weight: 700; color: var(--v-ink); }
+.ti-mixcard > header small {
+  font-size: 10px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--wd-muted);
+}
+.ti-mixcard > strong {
+  display: block;
+  font-family: var(--wd-serif, "Playfair Display", Georgia, serif);
+  font-size: clamp(30px, 3.6vw, 38px); font-weight: 600; line-height: 1;
+  letter-spacing: -.024em; color: var(--v-ink); font-variant-numeric: tabular-nums;
+}
+.ti-amt {
+  margin: 6px 0 12px; font-size: 14px; font-weight: 600; color: var(--wd-ink);
+  font-variant-numeric: tabular-nums;
+}
+.ti-meter { height: 8px; border-radius: 4px; background: rgba(6, 26, 20, .07); overflow: hidden; }
+.ti-meter > u {
+  display: block; height: 100%; width: 0; border-radius: 4px;
+  background: linear-gradient(90deg, var(--v-c), color-mix(in srgb, var(--v-c) 70%, #fff));
+  transition: width .4s cubic-bezier(.22, .8, .3, 1);
+}
+.ti-projrow {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+  margin: 12px 0 0; padding-top: 11px; border-top: 1px dotted var(--v-line);
+  font-size: 12.5px; color: var(--wd-muted);
+}
+.ti-projrow b { font-size: 14px; font-weight: 600; color: var(--wd-ink); font-variant-numeric: tabular-nums; }
+
+/* ============================================================
+   the stacked bars
+   ============================================================ */
+.ti-chart .rw-key i.k-a { background: #9a6a12; }
+.ti-chart .rw-key i.k-b { background: #2d5b9a; }
+.ti-chart .rw-key i.k-c { background: #0d7a5f; }
+
+.ti-stacks { display: grid; gap: 14px; }
+.ti-stackrow { display: grid; grid-template-columns: 78px minmax(0, 1fr) auto; gap: 14px; align-items: center; }
+.ti-stackrow > span {
+  font-size: 10px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--wd-muted);
+}
+.ti-stackrow > b { font-size: 13.5px; font-weight: 600; color: var(--wd-ink); font-variant-numeric: tabular-nums; }
+
+.ti-stack {
+  display: flex; height: 30px; border-radius: 8px; overflow: hidden;
+  background: rgba(6, 26, 20, .06);
+}
+.ti-stack > u {
+  display: grid; place-items: center;
+  height: 100%; text-decoration: none;
+  font-size: 11px; font-weight: 700; color: #fff; letter-spacing: .02em;
+  transition: width .45s cubic-bezier(.22, .8, .3, 1);
+  box-shadow: inset -1px 0 0 rgba(255, 255, 255, .55);
+}
+.ti-stack > u[data-tint="a"] { background: #9a6a12; }
+.ti-stack > u[data-tint="b"] { background: #2d5b9a; }
+.ti-stack > u[data-tint="c"] { background: #0d7a5f; }
+.ti-stack > u[data-tint="x"] { background: rgba(6, 26, 20, .06); }
+.ti-stack > u:last-child { box-shadow: none; }
+
+.ti-sum {
+  margin: 0; padding: 15px 20px; border-radius: 13px;
+  background: rgba(13, 122, 95, .06); border: 1px solid rgba(13, 122, 95, .18);
+  font-size: 14.5px; line-height: 1.7; color: var(--wd-ink-soft);
+}
+.ti-sum b { color: var(--wd-ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* ============================================================
+   how do you feel about it
+   ============================================================ */
+.ti-ask { display: grid; gap: 18px; }
+.ti-ask .eyebrow { color: var(--wd-muted); }
+.ti-asks { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; align-items: start; }
+.ti-askbox {
+  display: grid; gap: 4px; align-content: start;
+  padding: 18px 20px 20px; border-radius: 15px;
+  border: 1px solid rgba(6, 26, 20, .1);
+  background: linear-gradient(180deg, rgba(6, 26, 20, .022), #fff 55%);
+}
+.ti-askbox h3 {
+  margin: 0;
+  font-family: var(--wd-serif, "Playfair Display", Georgia, serif);
+  font-size: 17px; font-weight: 600; letter-spacing: -.01em; color: var(--wd-ink);
+}
+.ti-askbox > p { margin: 0 0 12px; font-size: 12.5px; color: var(--wd-muted); }
+
+.ti-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.ti-btns.ti-three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.ti-choice {
+  padding: 13px 12px; border-radius: 11px;
+  border: 1px solid rgba(6, 26, 20, .12); background: #fff;
+  font-size: 13px; font-weight: 600; color: var(--wd-ink-soft); cursor: pointer;
+  transition: border-color .15s ease, background .15s ease, color .15s ease, transform .15s ease;
+}
+.ti-choice:hover { border-color: var(--v-line, rgba(6, 26, 20, .28)); transform: translateY(-1px); }
+.ti-choice:focus-visible { outline: 2px solid var(--v-c, #0d7a5f); outline-offset: 2px; }
+.ti-choice.is-on {
+  border-color: var(--v-line, rgba(13, 122, 95, .3));
+  background: var(--v-wash, rgba(13, 122, 95, .08));
+  color: var(--v-ink, #0b5e4a);
+  box-shadow: inset 0 2px 0 var(--v-c, #0d7a5f);
+}
+
+.ti-notefield { margin-top: 14px; }
+.ti-notefield textarea {
+  width: 100%; padding: 11px 13px; resize: vertical;
+  border: 1px solid rgba(6, 26, 20, .14); border-radius: 10px;
+  background: #fff; font-family: inherit; font-size: 14px; line-height: 1.55; color: var(--wd-ink);
+}
+.ti-notefield textarea:focus-visible { outline: 2px solid rgba(13, 122, 95, .45); outline-offset: 1px; }
+
+.ti-out {
+  margin: 0; padding: 16px 20px; border-radius: 13px;
+  background: rgba(154, 106, 18, .07); border: 1px solid rgba(154, 106, 18, .22);
+  font-size: 14.5px; line-height: 1.7; color: #6b4a08;
+}
+.ti-out.is-set {
+  background: rgba(6, 26, 20, .035); border-color: rgba(6, 26, 20, .1); color: var(--wd-ink-soft);
+}
+.ti-out b { color: var(--wd-ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+.ti-note { display: inline-block; margin-top: 8px; font-style: italic; color: var(--wd-muted); }
+
+/* ============================================================
+   narrower
+   ============================================================ */
+@media (max-width: 760px) {
+  .ti-stackrow { grid-template-columns: minmax(0, 1fr) auto; gap: 5px 12px; }
+  .ti-stackrow > span { grid-column: 1; }
+  .ti-stackrow > b { grid-column: 2; grid-row: 1; }
+  .ti-stack { grid-column: 1 / -1; }
+  .ti-btns.ti-three { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 420px) {
+  .ti-btns, .ti-btns.ti-three { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media print {
+  .ti-add-btn, .ti-x { display: none; }
+  .ti-col, .ti-mixcard, .ti-askbox { box-shadow: none; }
+  .ti-choice:not(.is-on) { display: none; }
+}
