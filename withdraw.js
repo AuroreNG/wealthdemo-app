@@ -210,7 +210,7 @@
         title: "The rate is the problem, not the timing.",
         body: "Even once Social Security is running, " + usd(Math.max(0, (p.want - p.ss) * 12)) +
               " a year still has to come out of " + usd(p.nest) + " — " + (rateAfter * 100).toFixed(1) +
-              "% a year, rising with inflation. No retirement date fixes a draw that size; the spending or the pot has to move.",
+              "% a year, rising with inflation. No retirement date fixes a draw that size; the spending or the balance has to move.",
         s1: (rate0 * 100).toFixed(1) + "%", s1l: "First-year draw", s1t: "bad",
         s2: (rateAfter * 100).toFixed(1) + "%", s2l: "Draw from " + p.ssAge, s2t: "bad"
       };
@@ -235,7 +235,7 @@
         title: "The rate is the problem, not the timing.",
         body: "Even with Social Security running, " + usd((p.want - p.ss) * 12) +
               " a year still has to come out of " + usd(p.nest) + " — " + (rateAfter * 100).toFixed(1) +
-              "% a year, rising with inflation. No retirement date fixes a draw that size; the spending or the pot has to move.",
+              "% a year, rising with inflation. No retirement date fixes a draw that size; the spending or the balance has to move.",
         s1: (rate0 * 100).toFixed(1) + "%", s1l: "First-year draw", s1t: "bad",
         s2: (rateAfter * 100).toFixed(1) + "%", s2l: "Draw from " + p.ssAge, s2t: "bad"
       };
@@ -295,7 +295,7 @@
       return X(pt[0]).toFixed(1) + "," + Y(pt[1]).toFixed(1);
     }).join(" ");
 
-    return '<svg viewBox="0 0 ' + CW + ' ' + CH + '" class="wd-chart" role="img" aria-label="Balance by age">' +
+    return '<svg viewBox="0 0 ' + CW + ' ' + CH + '" class="wd-chart" data-cs-ref="c-safe" data-cs-why="Both solid lines earn the same average return and draw the same income \u2014 only the order of the good and bad years differs." role="img" aria-label="Balance by age">' +
       '<g class="c-grid">' + grid + '</g>' +
       '<g class="c-axis">' + labels + '</g>' +
       bridge +
@@ -336,12 +336,12 @@
       $("ansSub").innerHTML = "Even the poor-first-decade run reaches " + p.end + ". At " + usd(p.want) +
         " a month there is room here — the next question is tax and risk, not longevity.";
     } else if (spread >= 1) {
-      $("ansHeadline").innerHTML = "The money runs out somewhere between <span class=\"hot\">" +
-        Math.floor(lo) + " and " + Math.floor(hi) + "</span>.";
-      $("ansSub").innerHTML = "Not a single date — it depends on the <b>order</b> the returns arrive in. " +
-        "Every run here averages the same " + (p.growth * 100).toFixed(1) + "%: a steady one lands at " +
-        Math.floor(base) + ", a poor first decade at " + Math.floor(lo) + ", a strong one at " + Math.floor(hi) +
-        " — identical averages, " + Math.round(spread) + " years apart.";
+      /* one age to hold on to, then the honest spread underneath */
+      $("ansHeadline").innerHTML = "The money lasts to about <span class=\"hot\">age " +
+        Math.floor(base) + "</span>.";
+      $("ansSub").innerHTML = "Somewhere between <b>" + Math.floor(lo) + "</b> and <b>" + Math.floor(hi) +
+        "</b>, depending on the order the returns arrive in. Same average return either way — poor returns in the first decade " +
+        "cost " + Math.round(spread) + " years.";
     } else {
       $("ansHeadline").innerHTML = "The money runs out at <span class=\"hot\">age " + Math.floor(base) + "</span>.";
       $("ansSub").innerHTML = "The order of returns barely moves it at this spending level — every run lands within a year.";
@@ -355,7 +355,7 @@
       $("shortNote").textContent = usd(need) + " would have been needed at " + p.ret + ". You have " + usd(p.nest) + ".";
     } else {
       $("surplusAmt").textContent = usd(straight.left || 0);
-      $("surplusNote").textContent = "Projected to be left at " + p.end + " on a steady " + (p.growth * 100).toFixed(1) + "%.";
+      $("surplusNote").textContent = "Projected to be left at " + p.end + " at a level " + (p.growth * 100).toFixed(1) + "% return.";
     }
 
     /* ---- timeline ---- */
@@ -383,7 +383,7 @@
     $("figNest").textContent = usd(p.nest);
     $("figWant").innerHTML = usd(p.want) + "<small>/mo</small>";
     $("figSupport").innerHTML = usd(safeM) + "<small>/mo</small>";
-    $("figSupportLabel").textContent = "What it supports to " + p.end;
+    $("figSupportLabel").textContent = "Sustainable income to " + p.end;
 
     /* ---- diagnosis ---- */
     const dx = diagnose(p, base);
@@ -394,7 +394,7 @@
 
     /* ---- chart ---- */
     $("chartWrap").innerHTML = chart(p, straight.hist, bad.hist, safeRun.hist);
-    $("chartSafeLabel").textContent = "At " + usd(safeM) + "/mo";
+    $("chartSafeLabel").textContent = "Safe rate \u2014 " + usd(safeM) + "/mo";
 
     /* ---- levers ---- */
     const ls = levers(p, base);

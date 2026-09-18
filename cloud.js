@@ -25,10 +25,29 @@
 (function () {
   "use strict";
 
-  const CFG = window.WD_CONFIG || {};
+  /* config.js is the real home for these, because it is what everyone who
+     opens the site gets. But editing a file and pushing it to GitHub before
+     you can find out whether the values even work is a slow way to make a
+     typo, so the Studio can also put them in this browser only. A value set
+     here wins, and it never reaches anyone else. */
+  function local() {
+    try { return JSON.parse(localStorage.getItem("wealthdemo.config") || "null") || {}; }
+    catch (e) { return {}; }
+  }
+
+  const FILE = window.WD_CONFIG || {};
+  const HERE = local();
+  const CFG = {
+    supabaseUrl: FILE.supabaseUrl || HERE.supabaseUrl || "",
+    supabaseAnonKey: FILE.supabaseAnonKey || HERE.supabaseAnonKey || "",
+    askFunction: FILE.askFunction || HERE.askFunction || "ask"
+  };
+  window.WD_CONFIG = CFG;
+
   const URL_BASE = (CFG.supabaseUrl || "").replace(/\/+$/, "");
   const ANON = CFG.supabaseAnonKey || "";
   const READY = !!(URL_BASE && ANON);
+  const FROM_BROWSER = READY && !FILE.supabaseUrl;
 
   const SESSION_KEY = "wealthdemo.sb.session";
 
@@ -247,12 +266,70 @@
     });
   }
 
+  /* does the project answer at all, and does the key open the door?
+     Asked without signing in, so it separates "wrong values" from
+     "right values, no account yet" — which look identical otherwise. */
+  async function check() {
+    if (!READY) return { ok: false, why: "No project URL or key yet." };
+    let r;
+    try {
+      r = await fetch(URL_BASE + "/rest/v1/", { headers: { apikey: ANON } });
+    } catch (e) {
+      return { ok: false, why: "That URL did not answer. Check it is the Project URL, not the dashboard address." };
+    }
+    if (r.status === 401 || r.status === 403) {
+      return { ok: false, why: "The project answered, but rejected that key. Check you copied the anon public key." };
+    }
+    if (!r.ok && r.status !== 404) {
+      return { ok: false, why: "The project answered with HTTP " + r.status + "." };
+    }
+    /* the tables only exist once schema.sql has been run */
+    const t = await call("/rest/v1/profiles?select=id&limit=1", { headers: headers() });
+    if (t.error && /does not exist|schema cache/i.test(t.error.message || "")) {
+      return { ok: false, why: "Connected, but the tables are missing. Run schema.sql in the SQL editor." };
+    }
+    return { ok: true, why: "Connected, and the tables are there." };
+  }
+
+  /* what the assistant end of it says, without needing a question */
+  async function checkAI() {
+    if (!READY) return { ok: false, why: "No project connected." };
+    const r = await fn(CFG.askFunction, { messages: [{ role: "user", content: "ping" }], context: "", mode: "client" });
+    if (!r.error) return { ok: true, why: "The function answered. The key is set and the model replied." };
+    const b = r.error.body || {};
+    const code = b.error || "";
+    if (r.error.status === 404) return { ok: false, why: "No function called \u201c" + CFG.askFunction + "\u201d is deployed yet." };
+    if (code === "not_configured") return { ok: false, why: "The function is deployed, but ANTHROPIC_API_KEY is not set on it." };
+    if (code === "not_signed_in") {
+      /* the function checks its key BEFORE it checks the caller, so getting
+         this far proves both the deploy and the secret. It is a pass. */
+      return { ok: true, why: "Deployed, and the Anthropic key is set. Sign in to start using it." };
+    }
+    if (code === "cap_reached") return { ok: false, why: "Working, but today's cap is reached on this account." };
+    return { ok: false, why: b.say || r.error.message || "The function answered with an error." };
+  }
+
+  function remember(url, key) {
+    try {
+      localStorage.setItem("wealthdemo.config",
+        JSON.stringify({ supabaseUrl: (url || "").trim().replace(/\/+$/, ""), supabaseAnonKey: (key || "").trim() }));
+    } catch (e) {}
+  }
+  function forget() {
+    try { localStorage.removeItem("wealthdemo.config"); } catch (e) {}
+  }
+
   window.WD_CLOUD = {
     ready: READY,
+    fromBrowser: FROM_BROWSER,
     auth: auth,
     from: table,
     rpc: rpc,
-    fn: fn
+    fn: fn,
+    check: check,
+    checkAI: checkAI,
+    remember: remember,
+    forget: forget
   };
 
   if (READY) auth.catchRedirect();

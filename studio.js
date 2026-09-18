@@ -482,10 +482,88 @@
   }
 
   /* ============================================================
+     connecting a project
+
+     Three separate questions, answered separately, because they fail
+     for completely different reasons and a single "it didn't work"
+     sends people to the wrong box.
+     ============================================================ */
+  function checkRow(ok, title, detail) {
+    return '<li data-ok="' + esc(ok) + '"><i>' +
+      (ok === "1" ? "\u2713" : ok === "0" ? "!" : "\u00b7") + "</i>" +
+      "<span><b>" + esc(title) + "</b><small>" + esc(detail) + "</small></span></li>";
+  }
+
+  async function runChecks() {
+    const box = $("cfChecks");
+    if (!C) { box.innerHTML = checkRow("0", "No project", "Nothing to test yet."); return; }
+
+    box.innerHTML = checkRow("wait", "Reaching the project\u2026", "Asking whether the URL answers and the key opens it.");
+    const one = await C.check();
+    let html = checkRow(one.ok ? "1" : "0",
+      one.ok ? "Project and tables" : "Project or tables", one.why);
+    box.innerHTML = html + checkRow("wait", "Trying the assistant\u2026", "Calling the edge function.");
+
+    const two = await C.checkAI();
+    html += checkRow(two.ok ? "1" : "0",
+      two.ok ? "Assistant" : "Assistant not ready yet", two.why);
+
+    const u = C.auth.user();
+    html += checkRow(u ? "1" : "wait",
+      u ? "Signed in" : "Not signed in yet",
+      u ? ("As " + (u.email || "")) : "Create an account under Assistant once the two above are green.");
+
+    box.innerHTML = html;
+  }
+
+  function paintSetup() {
+    const card = $("stSetup");
+    if (!card) return;
+    /* once it is in config.js this card has nothing left to offer */
+    const fromFile = C && !C.fromBrowser;
+    card.hidden = !!fromFile;
+    if (fromFile) return;
+
+    if (C) {
+      const cfg = window.WD_CONFIG || {};
+      $("cfUrl").value = cfg.supabaseUrl || "";
+      $("cfKey").value = cfg.supabaseAnonKey || "";
+      $("cfClear").hidden = false;
+      runChecks();
+    }
+  }
+
+  const setupCard = $("stSetup");
+  if (setupCard) {
+    $("cfGo").addEventListener("click", function () {
+      const url = ($("cfUrl").value || "").trim();
+      const key = ($("cfKey").value || "").trim();
+      /* usually .supabase.co, but a project can sit behind a custom domain,
+         so this only insists on a bare https host and says what it expected */
+      if (!/^https?:\/\/[^\s/]+\.[^\s/]+\/?$/i.test(url)) {
+        said("cfSaid", "That does not look like a Project URL \u2014 it usually ends .supabase.co", true);
+        return;
+      }
+      if (key.length < 40) { said("cfSaid", "That key looks too short.", true); return; }
+      (window.WD_CLOUD || {}).remember
+        ? window.WD_CLOUD.remember(url, key)
+        : localStorage.setItem("wealthdemo.config", JSON.stringify({ supabaseUrl: url, supabaseAnonKey: key }));
+      said("cfSaid", "Saved in this browser. Reloading\u2026");
+      setTimeout(function () { location.reload(); }, 500);
+    });
+    $("cfClear").addEventListener("click", function () {
+      if (window.WD_CLOUD && window.WD_CLOUD.forget) window.WD_CLOUD.forget();
+      try { localStorage.removeItem("wealthdemo.sb.session"); } catch (e) {}
+      location.reload();
+    });
+  }
+
+  /* ============================================================
      go
      ============================================================ */
   fillTools();
   paintState();
+  paintSetup();
   loadBranding();
   const start = (location.hash || "").replace("#", "");
   tab(["clients", "branding", "access", "assistant"].indexOf(start) >= 0 ? start : "clients");

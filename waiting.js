@@ -610,7 +610,7 @@
     }
     lines.push("WHAT THIS MEANS", "  " + $("dxTitle").textContent, "  " + $("dxBody").textContent, "",
       $("sayIt").textContent, "",
-      "Educational illustration only. Assumes a steady return and level monthly paying-in, with no tax, fees, rising prices, employer matching or pay rises. Real returns arrive in an order and that order matters. Speak to a qualified tax or financial professional.");
+      "Educational illustration only. Assumes a level return and level monthly paying-in, with no tax, fees, rising prices, employer matching or pay rises. Real returns arrive in an order and that order matters. Speak to a qualified tax or financial professional.");
 
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(lines.join("\n")).then(function () {

@@ -28,13 +28,38 @@ credit.
 That gives you six tables — advisers, branding, assessments, answers, access grants and
 AI usage — with row-level security on every one of them. An adviser can only ever read
 their own rows. A client who opens an assessment link has no account at all and reaches
-only two functions that take the link token and nothing else.
+only two functions that take the link token and nothing else. It needs no extensions, so
+there is nothing to enable first.
 
-## 3 · Put the two public values in the site
+**This file has been run against a real Postgres 16 and every rule in it tested** — one
+adviser reaching for another's rows, a client with only the link, a non-admin trying to
+grant access. If you ever change it, `supabase/harness.sql` and `supabase/verify.sql` let
+you prove it again on a throwaway database before it touches the live project. The steps
+are in the comment at the top of `verify.sql`.
+
+## 3 · Connect the site — try it before you commit anything
 
 1. In Supabase: **Project Settings → API**.
-2. Copy **Project URL** and the **anon public** key.
-3. Open `config.js` in this folder and paste them in:
+2. Copy the **Project URL** and the **anon public** key.
+3. Open **`studio.html`** on your site. A **Connect your project** card is waiting at the
+   top. Paste both in and press **Connect and test**.
+
+It then tells you, as three separate lines, exactly where things stand:
+
+> ✓ **Project and tables** — Connected, and the tables are there.
+> ✓ **Assistant** — Deployed, and the Anthropic key is set. Sign in to start using it.
+> · **Not signed in yet** — Create an account under Assistant once the two above are green.
+
+Each line says what was actually tried. If the URL is wrong you get *"that URL did not
+answer"*; if the key is wrong, *"the project answered, but rejected that key"*; if you
+skipped step 2, *"connected, but the tables are missing"*. You are never left guessing
+which box to look at.
+
+**Nothing is published at this stage.** Those two values live in your browser only, so
+you can get them right without pushing anything to GitHub.
+
+Once all three lines are green, make it real for everyone: open `config.js` and paste the
+same two values in.
 
 ```js
 window.WD_CONFIG = {
@@ -45,13 +70,22 @@ window.WD_CONFIG = {
 };
 ```
 
-Both of these are meant to be public. They identify the project; they do not grant
-anything. The policies you just installed are what decide who sees what.
+Commit that, and the Connect card disappears — the file has taken over. Both values are
+meant to be public. They identify the project; they do not grant anything. The policies
+from step 2 are what decide who sees what.
 
 ## 4 · Deploy the function that holds the key
 
-On your own machine, with [the Supabase CLI](https://supabase.com/docs/guides/cli)
-installed:
+**The short way, no terminal.** In Supabase:
+
+1. **Edge Functions** → **Create a function** (or *Deploy a new function → via editor*).
+2. Name it exactly **`ask`**.
+3. Delete the sample code, then paste the whole of
+   `supabase/functions/ask/index.ts` from this folder. Deploy.
+4. **Edge Functions → Secrets** → add `ANTHROPIC_API_KEY` with your `sk-ant-…` value.
+
+**The other way,** if you'd rather use a terminal — with
+[the Supabase CLI](https://supabase.com/docs/guides/cli):
 
 ```bash
 supabase login
@@ -60,8 +94,11 @@ supabase functions deploy ask
 supabase secrets set ANTHROPIC_API_KEY=sk-ant-...
 ```
 
-That is the only time your Anthropic key is typed anywhere. It now lives as a secret on
-Supabase and is never sent to a browser.
+Either way, that is the only time your Anthropic key is typed anywhere. It lives as a
+secret on Supabase and is never sent to a browser.
+
+Go back to the Studio and press **Connect and test** again. The Assistant line should
+turn green.
 
 **If `deploy` complains about the model name**, or the assistant later says something
 about a model, set the model explicitly — Anthropic retires old ids:
@@ -91,7 +128,8 @@ call the function.
 2. Back in Supabase **SQL Editor**, run one line:
 
 ```sql
-update public.profiles set role = 'admin' where email = 'support@bizzallone.com';
+update public.profiles set role = 'admin'
+ where lower(email) = lower('support@bizzallone.com');
 ```
 
 3. Reload the Studio. The **Access** tab now shows every account and lets you grant or
