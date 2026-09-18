@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Connect your project — WEALTHDEMO</title>
+<style>
+  /* Everything this page needs is in this file. No other file has to be
+     updated, nothing is loaded from anywhere, and it cannot fall out of
+     step with a half-replaced folder. */
+  :root {
+    --green: #0d4435;
+    --gold: #c9a227;
+    --ink: #17231f;
+    --ink2: #46564f;
+    --ink3: #5c6b66;
+    --good: #2f8f68;
+    --bad: #b4562d;
+    --wait: #b9a24a;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    padding: 40px 20px 80px;
+    font: 16px/1.55 "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: var(--ink);
+    background: #f4f6f4;
+  }
+  body::before {
+    content: "";
+    position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    background:
+      radial-gradient(52rem 40rem at 12% -6%, rgba(13,68,53,.16), transparent 62%),
+      radial-gradient(44rem 34rem at 92% 4%, rgba(201,162,39,.13), transparent 60%),
+      radial-gradient(56rem 44rem at 50% 108%, rgba(60,110,140,.13), transparent 64%);
+  }
+  .wrap { max-width: 660px; margin: 0 auto; }
+  h1 {
+    font-family: Georgia, "Playfair Display", serif;
+    font-size: clamp(27px, 5vw, 36px);
+    line-height: 1.1;
+    margin: 0 0 8px;
+  }
+  .lede { color: var(--ink2); margin: 0 0 26px; }
+  .card {
+    border-radius: 18px;
+    padding: 24px;
+    margin-bottom: 16px;
+    background:
+      radial-gradient(120% 140% at 0% 0%, rgba(255,255,255,.9), rgba(255,255,255,.62)),
+      linear-gradient(180deg, rgba(13,68,53,.05), rgba(13,68,53,.02));
+    backdrop-filter: blur(22px) saturate(160%);
+    -webkit-backdrop-filter: blur(22px) saturate(160%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 18px 40px -26px rgba(9,38,30,.55);
+    border-top: 2px solid var(--green);
+  }
+  label { display: block; font-weight: 600; font-size: 14px; margin: 16px 0 6px; }
+  label:first-child { margin-top: 0; }
+  input {
+    width: 100%;
+    border: 0;
+    border-radius: 12px;
+    padding: 12px 14px;
+    font: inherit;
+    font-size: 15px;
+    background: rgba(255,255,255,.86);
+    box-shadow: inset 0 0 0 1px rgba(13,68,53,.14);
+  }
+  input:focus { outline: 2px solid rgba(13,68,53,.4); outline-offset: 1px; }
+  .hint { font-size: 13px; color: var(--ink3); margin: 6px 0 0; }
+  .row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 22px; }
+  button {
+    border: 0; border-radius: 999px;
+    padding: 12px 22px;
+    font: inherit; font-weight: 600;
+    cursor: pointer;
+  }
+  .go { background: var(--gold); color: #2a2205; }
+  .ghost { background: rgba(13,68,53,.08); color: var(--green); }
+  button:disabled { opacity: .5; cursor: default; }
+  .said { font-size: 14px; font-weight: 600; color: var(--bad); }
+
+  ul.checks { list-style: none; margin: 22px 0 0; padding: 0; display: grid; gap: 9px; }
+  ul.checks li {
+    display: grid;
+    grid-template-columns: 21px minmax(0,1fr);
+    gap: 12px;
+    align-items: start;
+    padding: 13px 15px;
+    border-radius: 13px;
+    background: rgba(255,255,255,.62);
+  }
+  ul.checks i {
+    width: 19px; height: 19px; border-radius: 50%;
+    display: grid; place-items: center;
+    font-style: normal; font-size: 12px; font-weight: 800; color: #fff;
+    margin-top: 1px; background: var(--wait);
+  }
+  li[data-ok="1"] i { background: var(--good); }
+  li[data-ok="0"] i { background: var(--bad); }
+  ul.checks b { display: block; font-size: 15px; }
+  ul.checks small { display: block; color: var(--ink3); font-size: 13.5px; line-height: 1.45; }
+
+  .next { margin-top: 16px; }
+  .next h2 { font-size: 17px; margin: 0 0 8px; }
+  .next ol { margin: 0; padding-left: 20px; color: var(--ink2); font-size: 15px; }
+  .next li { margin-bottom: 7px; }
+  code {
+    background: rgba(13,68,53,.07);
+    padding: 1px 6px; border-radius: 5px;
+    font-size: 13.5px;
+  }
+  .done { border-top-color: var(--good); }
+  a { color: var(--green); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Connect your project</h1>
+  <p class="lede">Two values from Supabase. They stay in this browser, so you can get them
+  right before anything is published.</p>
+
+  <div class="card" id="form">
+    <label for="url">Project URL</label>
+    <input id="url" type="url" placeholder="https://abcdefgh.supabase.co" spellcheck="false" autocomplete="off">
+    <p class="hint">Supabase → <b>Project Settings → API → Project URL</b></p>
+
+    <label for="key">Anon public key</label>
+    <input id="key" type="text" placeholder="eyJhbGciOi…" spellcheck="false" autocomplete="off">
+    <p class="hint">Same page, under <b>Project API keys</b>. This one is meant to be public —
+    it is safe in a web page.</p>
+
+    <div class="row">
+      <button class="go" id="go">Connect and test</button>
+      <button class="ghost" id="clear" hidden>Disconnect</button>
+      <span class="said" id="said"></span>
+    </div>
+
+    <ul class="checks" id="checks"></ul>
+  </div>
+
+  <div class="card next" id="next" hidden></div>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var KEY = "wealthdemo.config";
+  var $ = function (id) { return document.getElementById(id); };
+
+  function saved() {
+    try { return JSON.parse(localStorage.getItem(KEY) || "null") || {}; }
+    catch (e) { return {}; }
+  }
+
+  function row(state, title, detail) {
+    var mark = state === "1" ? "✓" : state === "0" ? "!" : "·";
+    return '<li data-ok="' + state + '"><i>' + mark + "</i><span><b>" +
+      esc(title) + "</b><small>" + esc(detail) + "</small></span></li>";
+  }
+
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  /* --- the address, the key and the tables, in one real request ---
+
+     This used to ask /rest/v1/ with only an apikey header and call a 401
+     "the key is wrong". It is not: Supabase's gateway wants Authorization
+     as well, so a perfectly good key was being blamed. One request that
+     actually reads a table answers all three questions at once, and
+     whatever the server says is passed straight through rather than
+     translated into a guess. */
+  function readMessage(text) {
+    try {
+      var j = JSON.parse(text);
+      return j.message || j.msg || j.error_description || j.error || j.hint || "";
+    } catch (e) { return (text || "").slice(0, 160); }
+  }
+
+  function checkProject(url, key) {
+    return fetch(url + "/rest/v1/profiles?select=id&limit=1", {
+      headers: { apikey: key, Authorization: "Bearer " + key }
+    }).then(function (r) {
+      return r.text().then(function (t) {
+        var msg = readMessage(t);
+
+        if (r.ok) return { ok: true, tables: true, why: "Connected, and the tables are there." };
+
+        if (r.status === 401 || r.status === 403) {
+          return { ok: false, tables: false,
+            why: "The project answered, but would not accept that key" +
+                 (msg ? " — it said: “" + msg + "”" : "") +
+                 ". Make sure it is the anon public or publishable key, copied whole." };
+        }
+
+        /* the project is fine; it just has nothing in it yet */
+        if (/does not exist|schema cache|Could not find the table|relation/i.test(t)) {
+          return { ok: true, tables: false,
+            why: "Connected, but the tables are missing. Run schema.sql in the SQL editor." };
+        }
+
+        return { ok: false, tables: false,
+          why: "The project answered with HTTP " + r.status + (msg ? " — “" + msg + "”" : "") + "." };
+      });
+    }).catch(function (e) {
+      return { ok: false, tables: false,
+        why: "That address did not answer. Check it is the Project URL and ends .supabase.co" };
+    });
+  }
+
+  /* --- is the edge function deployed, with the key set? --- */
+  function checkFunction(url, key) {
+    return fetch(url + "/functions/v1/ask", {
+      method: "POST",
+      headers: { apikey: key, Authorization: "Bearer " + key, "Content-Type": "application/json" },
+      body: JSON.stringify({ messages: [{ role: "user", content: "ping" }], context: "", mode: "client" })
+    }).then(function (r) {
+      return r.text().then(function (t) {
+        var b = {};
+        try { b = JSON.parse(t); } catch (e) {}
+        if (r.status === 404) return { ok: false, how: "deploy", why: "No function called “ask” is deployed yet. That is step 4." };
+        if (b.error === "not_configured") return { ok: false, how: "secret", why: "The function is deployed — it just has no ANTHROPIC_API_KEY on it yet." };
+        /* it checks its own key before it checks the caller, so getting
+           turned away for being signed out proves both are in place */
+        if (b.error === "not_signed_in") return { ok: true, why: "Deployed, and the Anthropic key is set." };
+        if (r.ok) return { ok: true, why: "Deployed, keyed, and the model replied." };
+        return { ok: false, how: "other",
+          why: (b.say || b.error || readMessage(t) || "") + " (HTTP " + r.status + ")" };
+      });
+    }).catch(function () {
+      return { ok: false, how: "deploy", why: "Could not reach the function." };
+    });
+  }
+
+  function run(url, key) {
+    var box = $("checks");
+    box.innerHTML = row("wait", "Reaching the project…", "Checking the address and the key.");
+
+    checkProject(url, key).then(function (one) {
+      if (!one.ok) {
+        box.innerHTML = row("0", "Project", one.why);
+        finish({ project: false });
+        return;
+      }
+      var html = row(one.tables ? "1" : "0",
+        one.tables ? "Project and tables" : "Tables", one.why);
+      box.innerHTML = html + row("wait", "Trying the assistant…", "Calling the edge function.");
+      checkFunction(url, key).then(function (three) {
+        html += row(three.ok ? "1" : "0",
+          three.ok ? "Assistant" : "Assistant not ready yet", three.why);
+        box.innerHTML = html;
+        finish({ project: true, tables: one.tables, fn: three.ok, how: three.how });
+      });
+    });
+  }
+
+  /* Only ever advise on what was actually tested. If the project itself did
+     not answer, nothing below it ran, so telling someone to go and run
+     schema.sql would be a guess dressed up as a diagnosis. */
+  function finish(s) {
+    var n = $("next");
+    var done = s.project && s.tables && s.fn;
+    n.hidden = false;
+    $("form").className = "card" + (done ? " done" : "");
+
+    var steps = [];
+
+    if (!s.project) {
+      steps.push("Fix the two boxes above first — nothing below could be checked until the project answers.");
+      steps.push("In Supabase: <b>Project Settings → API</b>. The <b>Project URL</b> ends <code>.supabase.co</code>, " +
+                 "and the key you want is the one labelled <b>anon</b> <b>public</b>.");
+    } else {
+      if (!s.tables) {
+        steps.push("In Supabase open <b>SQL Editor → New query</b>, paste all of <code>supabase/schema.sql</code>, press Run.");
+      }
+      if (!s.fn && s.how === "secret") {
+        /* the function is already there; only the secret is missing */
+        steps.push("In Supabase open <b>Edge Functions → Secrets</b> and add <code>ANTHROPIC_API_KEY</code> " +
+                   "with your <code>sk-ant-…</code> value. The function itself is already deployed.");
+      } else if (!s.fn) {
+        steps.push("In Supabase open <b>Edge Functions → Create a function</b>, name it exactly <code>ask</code>, " +
+                   "delete the sample and paste all of <code>supabase/functions/ask/index.ts</code>. Deploy it.");
+        steps.push("Then <b>Edge Functions → Secrets</b>, add <code>ANTHROPIC_API_KEY</code> with your <code>sk-ant-…</code> value.");
+      }
+      if (!done) steps.push("Come back here and press <b>Connect and test</b> again.");
+    }
+
+    if (done) {
+      steps.push("Open <code>studio.html</code> → <b>Assistant</b> tab → <b>Create account</b>.");
+      steps.push("In Supabase <b>SQL Editor</b>, run:<br><code>update public.profiles set role = 'admin' where lower(email) = lower('your@email.com');</code>");
+      steps.push("When you are happy, paste the same two values into <code>config.js</code> and commit it, so everyone gets them.");
+    }
+
+    n.innerHTML = "<h2>" + (done ? "You're connected. Next:" : "What to do next") +
+      "</h2><ol><li>" + steps.join("</li><li>") + "</li></ol>";
+  }
+
+  /* --- wiring --- */
+  var was = saved();
+  if (was.supabaseUrl) {
+    $("url").value = was.supabaseUrl;
+    $("key").value = was.supabaseAnonKey || "";
+    $("clear").hidden = false;
+    run(was.supabaseUrl, was.supabaseAnonKey);
+  }
+
+  $("go").addEventListener("click", function () {
+    var url = ($("url").value || "").trim().replace(/\/+$/, "");
+    var key = ($("key").value || "").trim();
+    $("said").textContent = "";
+
+    if (!/^https?:\/\/[^\s\/]+\.[^\s\/]+$/i.test(url)) {
+      $("said").textContent = "That does not look like a Project URL — it usually ends .supabase.co";
+      return;
+    }
+    if (key.length < 40) {
+      $("said").textContent = "That key looks too short — it should be a long string starting eyJ";
+      return;
+    }
+    try { localStorage.setItem(KEY, JSON.stringify({ supabaseUrl: url, supabaseAnonKey: key })); }
+    catch (e) { $("said").textContent = "This browser will not let the page remember anything."; return; }
+    $("clear").hidden = false;
+    run(url, key);
+  });
+
+  $("clear").addEventListener("click", function () {
+    try { localStorage.removeItem(KEY); localStorage.removeItem("wealthdemo.sb.session"); } catch (e) {}
+    location.reload();
+  });
+})();
+</script>
+</body>
+</html>
