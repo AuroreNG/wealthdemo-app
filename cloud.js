@@ -269,26 +269,35 @@
   /* does the project answer at all, and does the key open the door?
      Asked without signing in, so it separates "wrong values" from
      "right values, no account yet" — which look identical otherwise. */
+  /* One real request answers all three questions — is the address right,
+     does the key open it, and has schema.sql been run.
+
+     This used to probe /rest/v1/ with the apikey header alone and read a
+     401 as "wrong key". It is not: Supabase's gateway wants Authorization
+     as well, so a perfectly good key came back rejected. Whatever the
+     server says is passed through rather than turned into a guess. */
   async function check() {
     if (!READY) return { ok: false, why: "No project URL or key yet." };
-    let r;
-    try {
-      r = await fetch(URL_BASE + "/rest/v1/", { headers: { apikey: ANON } });
-    } catch (e) {
+
+    const t = await call("/rest/v1/profiles?select=id&limit=1", { headers: headers() });
+
+    if (!t.error) return { ok: true, why: "Connected, and the tables are there." };
+
+    const e = t.error;
+    const said = e.message || "";
+
+    if (e.message === "offline") {
       return { ok: false, why: "That URL did not answer. Check it is the Project URL, not the dashboard address." };
     }
-    if (r.status === 401 || r.status === 403) {
-      return { ok: false, why: "The project answered, but rejected that key. Check you copied the anon public key." };
+    if (e.status === 401 || e.status === 403) {
+      return { ok: false, why: "The project answered, but would not accept that key" +
+        (said ? " — it said: “" + said + "”" : "") + ". Check it is the anon public or publishable key." };
     }
-    if (!r.ok && r.status !== 404) {
-      return { ok: false, why: "The project answered with HTTP " + r.status + "." };
-    }
-    /* the tables only exist once schema.sql has been run */
-    const t = await call("/rest/v1/profiles?select=id&limit=1", { headers: headers() });
-    if (t.error && /does not exist|schema cache/i.test(t.error.message || "")) {
+    if (/does not exist|schema cache|Could not find the table|relation/i.test(said)) {
       return { ok: false, why: "Connected, but the tables are missing. Run schema.sql in the SQL editor." };
     }
-    return { ok: true, why: "Connected, and the tables are there." };
+    return { ok: false, why: "The project answered with HTTP " + (e.status || "?") +
+      (said ? " — “" + said + "”" : "") + "." };
   }
 
   /* what the assistant end of it says, without needing a question */
