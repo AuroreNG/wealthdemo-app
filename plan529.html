@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0d4435">
+  <title>529 Plan Growth Estimator — WEALTHDEMO</title>
+  <link rel="icon" href="wealthdemo-logo.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="tokens.css?v=51">
+  <link rel="stylesheet" href="site.css?v=51">
+  <link rel="stylesheet" href="tool.css?v=51">
+  <link rel="stylesheet" href="explain.css?v=51">
+  <link rel="stylesheet" href="rule72.css?v=51">
+  <link rel="stylesheet" href="paycheck.css?v=51">
+  <link rel="stylesheet" href="rentbuy.css?v=51">
+  <link rel="stylesheet" href="taximpact.css?v=51">
+  <link rel="stylesheet" href="plan529.css?v=51">
+  <link rel="stylesheet" href="fold.css?v=51">
+  <link rel="stylesheet" href="simple.css?v=51">
+  <link rel="stylesheet" href="chartsay.css?v=51">
+  <link rel="stylesheet" href="tour.css?v=51">
+  <script src="config.js?v=51"></script>
+  <script src="cloud.js?v=51"></script>
+  <script src="guide.js?v=51"></script>
+  <script src="insight.js?v=51"></script>
+  <script src="ask.js?v=51"></script>
+  <script src="ai.js?v=51"></script>
+  <script src="simple.js?v=51"></script>
+  <script src="chartsay.js?v=51"></script>
+  <script src="tour.js?v=51"></script>
+</head>
+<body data-page="app">
+
+<header class="site-nav">
+  <div class="shell site-nav-inner">
+    <a class="brand-identity" href="home.html">
+      <img src="wealthdemo-logo.webp" alt="" aria-hidden="true">
+      <span class="brand-wordmark">
+        <strong>WEALTH<span>DEMO</span></strong>
+        <small>See What Your Money Can Do.</small>
+      </span>
+    </a>
+    <nav class="site-links">
+      <a href="home.html">Tools</a>
+      <a href="send.html">Assessments</a>
+      <a href="studio.html">Studio</a>
+      <a href="home.html#about">About</a>
+    </nav>
+    <div class="nav-search">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+      <input id="navSearch" type="search" placeholder="Search tools, topics, or goals…" autocomplete="off" aria-label="Search tools">
+      <kbd>⌘K</kbd>
+    </div>
+    <div class="site-actions">
+      <a class="premium-btn" href="#" data-billing>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5 7.5 12l4.5-5 4.5 5L20 8.5V17H4Z"/></svg>
+        Go Premium
+      </a>
+      <span class="nav-divider"></span>
+      <div class="account">
+        <button type="button" class="account-btn" id="accountBtn" aria-expanded="false">
+          <span class="avatar" id="accountInitials">SB</span>
+          <span class="hello">Hello, <b id="accountName">there</b></span>
+          <svg class="caret" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+        </button>
+        <div class="account-menu" id="accountMenu" hidden>
+          <span class="account-email" id="accountEmail">Signed in</span>
+          <a href="blueprint.html">Open Financial Blueprint</a>
+          <button type="button" data-logout>Log out</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="shell tool-wrap pl-page">
+
+  <div class="tool-topbar">
+    <a class="back-btn" href="home.html">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H6"/><path d="m11 6-6 6 6 6"/></svg>
+      Back to tools
+    </a>
+    <div class="topbar-right">
+      <button type="button" class="send-btn" id="sendBtn">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 3.5 10.5 13.5"/><path d="M20.5 3.5 14 20.5l-3.5-7-7-3.5Z"/></svg>
+        Send to client
+      </button>
+      <div class="more">
+        <button type="button" class="more-btn" id="moreBtn" aria-label="More options" aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="18" cy="12" r="1.3"/></svg>
+        </button>
+        <div class="more-menu" id="moreMenu" hidden>
+          <button type="button" id="printBtn">Print or save as PDF</button>
+          <button type="button" id="resetBtn">Reset to example figures</button>
+          <a href="college.html">Family College Funding</a>
+          <a href="future.html">Build Their Future</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="banner">
+    <div class="bn-q">
+      <span class="bn-eyebrow">College &amp; life setup</span>
+      <h1>529 Plan Growth Estimator</h1>
+      <p>Project a 529 balance from today's contribution &mdash; and see, in dollars, what the tax treatment is actually worth against an ordinary taxable account.</p>
+    </div>
+    <div class="bn-a">
+      <small id="bnLabel">&mdash;</small>
+      <b id="bnBig">&mdash;</b>
+      <em id="bnSub">&mdash;</em>
+    </div>
+  </section>
+
+  <!-- 1 -->
+  <section class="calc">
+    <div class="calc-head">
+      <div class="calc-title">
+        <h2><i class="pl-step">1</i>The Plan</h2>
+        <p>Who it's for, what goes in, and what you assume it earns.</p>
+      </div>
+      <div class="calc-tools"><button type="button" class="rail-reset" id="resetBtn2">Reset</button></div>
+    </div>
+
+    <div class="calc-sides">
+      <section class="side" data-side="a">
+        <header>
+          <span class="side-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.5 21 9l-9 4.5L3 9Z"/><path d="M7 11v4.5c0 1.4 2.2 2.5 5 2.5s5-1.1 5-2.5V11"/></svg></span>
+          <span class="side-name"><b>What goes in</b><em>The child, and the money</em></span>
+        </header>
+        <div class="side-grid">
+          <div class="field"><label for="pAge">Child's Age Today</label>
+            <div class="pct-in"><input id="pAge" type="number" min="0" max="25" step="1" value="5" inputmode="numeric"><i>yrs</i></div></div>
+          <div class="field"><label for="pStart">Money Needed At Age</label>
+            <div class="pct-in"><input id="pStart" type="number" min="1" max="40" step="1" value="18" inputmode="numeric"><i>yrs</i></div></div>
+          <div class="field"><label for="pLump">Starting With ($)</label>
+            <div class="money-in"><i>$</i><input id="pLump" type="number" min="0" step="500" value="5000" inputmode="numeric"></div></div>
+          <div class="field"><label for="pMonthly">Adding Each Month ($)</label>
+            <div class="money-in"><i>$</i><input id="pMonthly" type="number" min="0" step="25" value="300" inputmode="numeric"></div></div>
+          <div class="field pl-wide"><label for="pRet">Assumed Annual Return (%)</label>
+            <div class="pct-in"><input id="pRet" type="number" min="-10" max="20" step="0.25" value="6" inputmode="decimal"><i>%</i></div>
+            <small>Hypothetical. A 529 is investment-based and can lose value.</small></div>
+        </div>
+      </section>
+
+      <section class="side" data-side="b">
+        <header>
+          <span class="side-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 17.5 17.5 6.5"/><circle cx="8.3" cy="8.3" r="2.2"/><circle cx="15.7" cy="15.7" r="2.2"/></svg></span>
+          <span class="side-name"><b>What it's measured against</b><em>The tax comparison and the bill</em></span>
+        </header>
+        <div class="side-grid">
+          <div class="field"><label for="pGains"><span data-term="taxdrag">Tax Rate on Investment Gains (%)</span></label>
+            <div class="pct-in"><input id="pGains" type="number" min="0" max="60" step="0.5" value="15" inputmode="decimal"><i>%</i></div>
+            <small>Used only for the taxable-account comparison.</small></div>
+          <div class="field"><label for="pState">Your State's 529 Deduction Rate (%)</label>
+            <div class="pct-in"><input id="pState" type="number" min="0" max="15" step="0.25" value="5" inputmode="decimal"><i>%</i></div></div>
+          <div class="field"><label for="pCap">Deduction Cap Per Year ($)</label>
+            <div class="money-in"><i>$</i><input id="pCap" type="number" min="0" step="500" value="10000" inputmode="numeric"></div>
+            <small>Use 0 if your state has no cap.</small></div>
+          <div class="field"><label for="pCost">A Year of College Today ($)</label>
+            <div class="money-in"><i>$</i><input id="pCost" type="number" min="0" step="1000" value="30000" inputmode="numeric"></div></div>
+          <div class="field"><label for="pInfl"><span data-term="costrise">College-Cost Inflation (%)</span></label>
+            <div class="pct-in"><input id="pInfl" type="number" min="0" max="15" step="0.25" value="5" inputmode="decimal"><i>%</i></div></div>
+          <div class="field"><label for="pYears">Years of College</label>
+            <div class="pct-in"><input id="pYears" type="number" min="1" max="10" step="1" value="4" inputmode="numeric"><i>yrs</i></div></div>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <div class="results">
+    <div class="pl-stats">
+      <div class="pl-stat"><small>Total contributed</small><b id="statPut">&mdash;</b></div>
+      <div class="pl-stat"><small>Growth</small><b id="statGrow">&mdash;</b></div>
+      <div class="pl-stat" data-lead="1"><small>In the plan</small><b id="statPlan">&mdash;</b></div>
+      <div class="pl-stat"><small>Covers</small><b id="statCovers">&mdash;</b><em id="statCoversNote">&mdash;</em></div>
+    </div>
+
+    <section class="runway pl-chart">
+      <div class="rw-head">
+        <div><h2>The 529, And The Same Money Taxed</h2><p id="chartLead">&mdash;</p></div>
+        <div class="rw-key">
+          <span><i class="k-plan"></i>Inside a 529</span>
+          <span><i class="k-tax"></i>Taxable account</span>
+        </div>
+      </div>
+      <div id="chartWrap"></div>
+    </section>
+  </div>
+
+  <!-- 3 -->
+  <section class="panel pl-edge">
+    <div class="pl-head">
+      <h2><i class="pl-step" data-done="1">2</i>What The Tax Treatment Is Worth</h2>
+      <p>The reason to use the account rather than an ordinary one, in dollars.</p>
+    </div>
+    <div class="pl-edge-grid">
+      <article class="pl-edge-card" data-tint="a">
+        <small>The difference at the finish</small>
+        <strong id="edgeBig">&mdash;</strong>
+        <ul class="rb-lines">
+          <li><span>Same money, taxable account</span><b id="edgeTaxed">&mdash;</b></li>
+          <li><span>Inside the 529</span><b id="edgePlan">&mdash;</b></li>
+        </ul>
+        <p class="pl-rate" id="edgeRate">&mdash;</p>
+      </article>
+      <article class="pl-edge-card" data-tint="b">
+        <small>State deduction, over the whole period</small>
+        <strong id="dedBig">&mdash;</strong>
+        <p class="pl-ded" id="dedLead">&mdash;</p>
+      </article>
+    </div>
+    <p class="pl-edge-lead" id="edgeLead">&mdash;</p>
+  </section>
+
+  <!-- 4 -->
+  <section class="panel pl-ladder" data-fold="What Different Monthly Amounts Reach" data-fold-note="Tap a rung to load it above">
+    <p class="pl-ladder-lead" id="ladderLead">&mdash;</p>
+    <div class="pl-rungs" id="ladderRows"></div>
+  </section>
+
+  <footer class="fineprint" data-fold="The fine print" data-fold-quiet="1">
+    <span class="d-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5"/><path d="M12 7.6h.01"/></svg></span>
+    <p>Educational estimate only. Returns are hypothetical and not guaranteed; a 529 is investment-based and can lose value. Qualified distributions for eligible education expenses are generally federal income-tax-free; nonqualified distributions can make the earnings portion taxable and may trigger a separate 10% additional federal tax unless an exception applies. State tax treatment, deductions and credits differ by state and often apply only to that state's own plan &mdash; several states offer none at all. The taxable comparison applies the entered rate to the growth each year as a simplified annual drag; it is not a tax-return calculation and real brokerage tax depends on turnover, holding periods and the type of gain. Contribution limits, gift-tax rules and financial-aid treatment are not modelled. Confirm with a qualified tax and financial professional.</p>
+    <span class="d-sign"><i></i> A brighter financial tomorrow</span>
+  </footer>
+</div>
+
+<script src="auth.js?v=51"></script>
+<script src="agent.js?v=51"></script>
+<script src="site.js?v=51"></script>
+<script src="explain.js?v=51"></script>
+<script src="plan529.js?v=51"></script>
+<script src="fold.js?v=51"></script>
+</body>
+</html>

@@ -80,18 +80,25 @@ window.WD = window.WD || {};
       topic: "Cash", kind: "fact",
       needs: ["savings", "essentials"],
       test: function (v) {
+        /* "exposed" says this and more, so do not say it twice */
+        if (v.income > 0 && v.hasDI !== true && !(v.disability > 0)) return null;
         const months = v.essentials > 0 ? v.savings / v.essentials : Infinity;
         if (months >= CONV.bufferMonths) return null;
         const target = v.essentials * CONV.bufferMonths;
         const short = target - v.savings;
         return {
           severity: months < CONV.thinBuffer ? 92 : 74,
+          means: "One boiler, one car repair, or one late paycheck and you are borrowing to eat.",
           lead: "of essential bills is all your savings would cover",
           headline: mo(months),
           title: "Your savings would cover " + mo(months) + " of essential bills",
           detail: usd(v.savings) + " against " + usd(v.essentials) +
             " a month of essentials. Three months is the usual floor, which would be " +
             usd(target) + ".",
+          scale: { at: months, max: 6, unit: "months of bills",
+                   marks: [{ at: 1, label: "1 month" },
+                           { at: 3, label: "the usual floor" },
+                           { at: 6, label: "comfortable" }] },
           fix: { label: "Top the cash buffer up to three months",
                  amount: short, kind: "oneOff" }
         };
@@ -111,6 +118,7 @@ window.WD = window.WD || {};
         const gapMonths = waitMonths - months;
         return {
           severity: 96,
+          means: "Rent, food and the car still have to be paid during that stretch, out of nothing.",
           lead: "with nothing coming in, before your cover starts",
           headline: mo(gapMonths) + " uncovered",
           title: "Your savings run out before your disability benefit starts",
@@ -135,6 +143,7 @@ window.WD = window.WD || {};
         const months = v.savings > 0 && v.essentials > 0 ? v.savings / v.essentials : 0;
         return {
           severity: months < CONV.bufferMonths ? 88 : 70,
+          means: "Everything else on this page is paid for by you turning up to work. There is no spare.",
           lead: "replaces your paycheck if you cannot work",
           headline: "Nothing",
           title: "Nothing replaces your paycheck if you cannot work",
@@ -147,6 +156,38 @@ window.WD = window.WD || {};
     },
 
     {
+      /* the starkest case in the whole table, and it had no rule of its own:
+         no cover at all, and not enough cash to bridge the gap on your own */
+      id: "exposed",
+      topic: "Income protection", topics: ["Income protection", "Cash"], kind: "fact",
+      needs: ["income", "essentials", "savings"],
+      test: function (v) {
+        if (v.hasDI === true || v.disability > 0) return null;
+        if (v.income <= 0 || v.essentials <= 0) return null;
+        const months = v.savings / v.essentials;
+        if (months >= CONV.bufferMonths) return null;
+        return {
+          severity: 99,
+          means: "After that, the bills keep arriving and nothing is arriving to meet them.",
+          lead: "is how long you could go without a paycheck",
+          headline: mo(months),
+          title: mo(months) + " is how long you could go without a paycheck",
+          detail: usd(v.savings) + " of savings against " + usd(v.essentials) +
+            " a month of essentials, and nothing that would pay you if you could not work. " +
+            "Most income protection waits 90 days before it pays anything — you would need " +
+            mo(3) + " of cash just to reach the point where a policy would start.",
+          why: "savings ÷ essential bills, with no cover recorded behind it",
+          scale: { at: months, max: 6, unit: "months of bills",
+                   marks: [{ at: 1, label: "1 month" },
+                           { at: 3, label: "a 90-day wait" },
+                           { at: 6, label: "comfortable" }] },
+          fix: { label: "Build the buffer to three months",
+                 amount: v.essentials * CONV.bufferMonths - v.savings, kind: "oneOff" }
+        };
+      }
+    },
+
+    {
       id: "diUnknown",
       topic: "Income protection", kind: "fact", dive: "protection",
       needs: ["hasDI", "essentials"],
@@ -154,6 +195,7 @@ window.WD = window.WD || {};
         if (v.hasDI !== true || v.disability > 0) return null;
         return {
           severity: 58,
+          means: "A policy you have not read is a policy you are guessing about.",
           lead: "to find out whether your cover is actually enough",
           headline: "Worth 60 seconds",
           title: "You have cover — we just don't know yet whether it is enough",
@@ -173,6 +215,7 @@ window.WD = window.WD || {};
         const short = v.essentials - v.disability;
         return {
           severity: 78,
+          means: "Cover that pays less than the bills still leaves you drawing down savings every month.",
           lead: "is what your cover leaves uncovered, every month it pays",
           headline: usd(short) + "/mo short",
           title: "Your disability benefit does not cover your essential bills",
@@ -201,6 +244,7 @@ window.WD = window.WD || {};
         if (gap <= 0) return null;
         return {
           severity: have <= 0 ? 90 : Math.min(86, 50 + Math.round(gap / need * 40)),
+          means: "If the worst happened, the people who depend on you would have to change how they live.",
           lead: "short of what your own numbers ask for",
           headline: usd(gap),
           title: "You are " + usd(gap) + " short of what your own numbers ask for",
@@ -222,6 +266,7 @@ window.WD = window.WD || {};
         if (!v.employerCov || v.dependents <= 0) return null;
         return {
           severity: 64,
+          means: "Change jobs, lose the job, or get ill enough to leave it, and the cover leaves with it.",
           lead: "\u2014 your cover ends when the job does",
           headline: "Tied to the job",
           title: "Your cover is through work, so it ends when the job does",
@@ -243,6 +288,7 @@ window.WD = window.WD || {};
         if (v.mortgagePmt >= monthlyInterest) return null;
         return {
           severity: 98,
+          means: "You are paying every month and owing more than you did last month.",
           lead: "\u2014 the payment does not cover its own interest",
           headline: "Balance rising",
           title: "Your mortgage payment does not cover its own interest",
@@ -265,6 +311,7 @@ window.WD = window.WD || {};
         if (share < 0.35) return null;
         return {
           severity: share > 0.45 ? 72 : 56,
+          means: "Saving, investing and cover all have to come out of what the roof leaves behind.",
           lead: "of your income goes on keeping a roof over it",
           headline: Math.round(share * 100) + "% of income",
           title: "Housing is taking " + Math.round(share * 100) + "% of your income",
@@ -284,7 +331,7 @@ window.WD = window.WD || {};
         const years = v.retireAge - v.age;
         if (years <= 0 || v.spending <= 0) return null;
         const target = v.spending * 12 * CONV.retireMultiple;
-        /* what today's pot becomes on its own, at a plain 5% real */
+        /* what today's savings become on their own, at a plain 5% real */
         const grown = v.retirement * Math.pow(1.05, years);
         if (grown >= target) return null;
         const gap = target - grown;
@@ -293,13 +340,14 @@ window.WD = window.WD || {};
         const perMonth = gap * im / (Math.pow(1 + im, nm) - 1);
         return {
           severity: Math.min(80, 40 + Math.round(gap / target * 40)),
-          lead: "between today\u2019s pot and the retirement you described",
+          means: "On today\u2019s pace the choice is working longer, spending less, or saving more.",
+          lead: "between today\u2019s savings and the retirement you described",
           headline: usd(gap) + " short",
           title: "Retiring at " + v.retireAge + " needs about " + usd(target) + " on these numbers",
           detail: "Spending " + usd(v.spending) + " a month for good would take roughly " + usd(target) +
             " on the usual 25× convention. " + usd(v.retirement) + " today, left alone for " + years +
             " years, gets to about " + usd(grown) + ".",
-          why: "25 × annual spending, against today's pot grown at 5% a year",
+          why: "25 × annual spending, against today's savings grown at 5% a year",
           fix: { label: "Add to retirement each month", amount: perMonth, kind: "monthly" }
         };
       }
@@ -318,6 +366,7 @@ window.WD = window.WD || {};
         const years = Math.max(1, 18 - v.youngest);
         return {
           severity: 48,
+          means: "The bill arrives on a fixed date whether the money is there or not.",
           lead: "to find before the first tuition bill",
           headline: usd(gap),
           title: usd(gap) + " to find before the first tuition bill",
@@ -343,6 +392,7 @@ window.WD = window.WD || {};
         if (out < net * 0.9) return null;
         return {
           severity: out >= net ? 84 : 58,
+          means: "There is nothing to redirect. Every fix on this page has to come from somewhere.",
           lead: "between what comes in and what goes out",
           headline: out >= net ? "Nothing spare" : "Very little spare",
           title: out >= net
@@ -370,6 +420,7 @@ window.WD = window.WD || {};
         if (share < 0.7) return null;
         return {
           severity: 60,
+          means: "One illness, one redundancy, and the household income roughly halves overnight.",
           lead: "of the household rests on one person staying well",
           headline: Math.round(share * 100) + "% from one job",
           title: Math.round(share * 100) + "% of the household income comes from one person",
@@ -389,6 +440,7 @@ window.WD = window.WD || {};
         if (v.cashValue <= 0 || v.mortgageBal <= 0) return null;
         return {
           severity: 55,
+          means: "Worth an hour with the real figures before anyone signs anything.",
           lead: "\u2014 the policy-loan story needs a fair test",
           headline: "Worth testing",
           title: "There is cash value and a mortgage — the loan strategy is worth running properly",
@@ -410,6 +462,7 @@ window.WD = window.WD || {};
         if (v.savings <= buffer * 1.2) return null;
         return {
           severity: 50,
+          means: "Every month both sit still, the debt wins by the difference between the two rates.",
           lead: "\u2014 cash sitting still while debt charges interest",
           headline: "Both at once",
           title: "Cash is sitting still while " + usd(v.otherDebt) + " of debt is charging interest",
@@ -444,6 +497,7 @@ window.WD = window.WD || {};
       out.kind = rule.kind;
       if (rule.tool && !out.tool) out.tool = rule.tool;
       if (rule.dive && !out.dive) out.dive = rule.dive;
+      if (rule.topics) out.topics = rule.topics;
       raised.push(out);
     });
 
@@ -488,6 +542,18 @@ window.WD = window.WD || {};
     costed.sort(function (a, b) { return b._weight - a._weight; });
 
     const best = costed[0];
+    const v = res.facts || {};
+    /* "$6,670 once" to someone holding $740 is a wall, not a next step.
+       Where the lump is far beyond reach, offer the monthly path as well. */
+    let over = null;
+    if (best.fix.kind === "oneOff") {
+      const net = (v.income || 0) * 0.75 / 12;
+      const spare = net - (v.spending || 0) - (v.otherDebtPmt || 0);
+      if (spare > 25 && best.fix.amount > spare * 3) {
+        const per = Math.max(25, Math.round(spare * 0.5 / 5) * 5);
+        over = { per: per, months: Math.ceil(best.fix.amount / per) };
+      }
+    }
     return {
       finding: best,
       label: best.fix.label,
@@ -496,6 +562,8 @@ window.WD = window.WD || {};
       say: best.fix.kind === "monthly"
         ? usd(best.fix.amount) + " a month"
         : usd(best.fix.amount) + " once",
+      over: over,
+      overSay: over ? usd(over.per) + " a month for " + mo(over.months) : null,
       because: best.title
     };
   }
@@ -507,6 +575,7 @@ window.WD = window.WD || {};
     runway:      "Recent statements for the accounts holding the emergency fund",
     elimGap:     "The disability policy schedule — benefit, elimination period, own-occupation wording",
     noDI:        "Any group disability cover through work, and its definition of disability",
+    exposed:     "Any sick-pay entitlement from the employer, in writing",
     diUnknown:   "The disability policy schedule — benefit amount and elimination period",
     diThin:      "The disability policy schedule and any offset clauses",
     coverGap:    "Every life policy in force, with face amounts and beneficiaries",

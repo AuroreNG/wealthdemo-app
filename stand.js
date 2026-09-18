@@ -25,20 +25,56 @@ window.WD = window.WD || {};
   const TOPICS = [
     { id: "Cash",              label: "Cash buffer",       needs: ["savings", "essentials"] },
     { id: "Income protection", label: "If you can't work", needs: ["income"] },
-    { id: "Life cover",        label: "Life cover",        needs: ["income", "dependents"] },
-    { id: "The mortgage",      label: "The mortgage",      needs: ["mortgageBal"] },
-    { id: "Retirement",        label: "Retirement",        needs: ["retirement", "spending"] },
-    { id: "Education",         label: "Education",         needs: ["collegeKids"] },
-    { id: "Debt",              label: "Other debt",        needs: ["otherDebt"] },
-    { id: "Policy loans",      label: "Policy cash value", needs: ["cashValue"] }
+    { id: "Life cover",        label: "Life cover",        needs: ["income"],
+      /* nobody depending on the income means this is not a gap, it is simply
+         not a question — a green tick here would be reassurance about a
+         check that never ran */
+      applies: function (v) {
+        if (v.dependents === undefined && v.partner === undefined) return undefined;
+        return (v.dependents || 0) > 0 || v.partner === true;
+      },
+      na: "No one depends on you" },
+    { id: "The mortgage",      label: "The mortgage",      needs: ["mortgageBal"],
+      applies: function (v) {
+        if (v.housing === undefined && v.mortgageBal === undefined) return undefined;
+        return (v.mortgageBal || 0) > 0;
+      },
+      na: function (v) { return v.housing === "rent" ? "You rent" : "Owned outright"; } },
+    { id: "Retirement",        label: "Retirement",        needs: ["retirement", "spending"],
+      dive: "retirement" },
+    { id: "Education",         label: "Education",         needs: ["collegeKids"],
+      applies: function (v) {
+        if (v.dependents === undefined) return undefined;
+        return (v.collegeKids || 0) > 0;
+      },
+      na: "No children to fund" },
+    { id: "Debt",              label: "Other debt",        needs: ["otherDebt"],
+      applies: function (v) { return v.otherDebt === undefined ? undefined : v.otherDebt > 0; },
+      na: "Nothing owed", dive: "debt" },
+    { id: "Policy loans",      label: "Policy cash value", needs: ["cashValue"],
+      applies: function (v) { return v.cashValue === undefined ? undefined : v.cashValue > 0; },
+      na: "No policy value" }
   ];
 
   function statusFor(topic, res, v) {
+    /* applies() may answer true, false, or undefined for "we never asked" —
+       and the difference between "doesn't apply" and "don't know" is exactly
+       what makes the grid honest */
+    if (topic.applies) {
+      const a = topic.applies(v);
+      if (a === false) {
+        return { tone: "na",
+                 word: (typeof topic.na === "function" ? topic.na(v) : topic.na) || "Doesn't apply" };
+      }
+      if (a === undefined) return { tone: "none", word: "Not asked" };
+    }
     const ready = topic.needs.every(function (k) {
       return v[k] !== undefined && v[k] !== null && v[k] !== "";
     });
     if (!ready) return { tone: "none", word: "Not asked" };
-    const hits = res.raised.filter(function (f) { return f.topic === topic.id; });
+    const hits = res.raised.filter(function (f) {
+      return f.topic === topic.id || (f.topics && f.topics.indexOf(topic.id) >= 0);
+    });
     if (!hits.length) return { tone: "ok", word: "Looks fine" };
     /* anything that raised at all is worth a look — a topic that produced a
        finding must never read as "looks fine" just because it scored low */
@@ -52,8 +88,16 @@ window.WD = window.WD || {};
     bad:  '<path d="M12 7.5v5.5"/><path d="M12 16.4h.01"/><circle cx="12" cy="12" r="8.5"/>',
     warn: '<path d="M12 7.5v5.5"/><path d="M12 16.4h.01"/><circle cx="12" cy="12" r="8.5"/>',
     ok:   '<circle cx="12" cy="12" r="8.5"/><path d="m8.5 12 2.5 2.5 4.5-5"/>',
-    none: '<circle cx="12" cy="12" r="8.5"/><path d="M9.5 9.8a2.5 2.5 0 1 1 2.5 2.6v1.2"/><path d="M12 16.6h.01"/>'
+    none: '<circle cx="12" cy="12" r="8.5"/><path d="M9.5 9.8a2.5 2.5 0 1 1 2.5 2.6v1.2"/><path d="M12 16.6h.01"/>',
+    na:   '<circle cx="12" cy="12" r="8.5"/><path d="M8.5 12h7"/>'
   };
+
+  /* the adviser decides what may be offered; the grid must respect it too */
+  function allowDive(opts, id) {
+    const allow = opts.invite && opts.invite.dives;
+    if (allow && allow.indexOf(id) < 0) return false;
+    return !!(opts.onDive && window.WD.assess);
+  }
 
   function render(opts) {
     const C = window.WD.client, F = window.WD.findings;
@@ -61,7 +105,7 @@ window.WD = window.WD || {};
     const res = F.run(v);
     const client = F.forClient(res);
     const shown = F.top(client.raised, 3);
-    const lever = F.lever({ raised: client.raised });
+    const lever = F.lever({ raised: client.raised, facts: v });
     const agent = opts.invite ? opts.invite.agent : { name: "your adviser" };
     const first = (v.name || "").trim().split(/\s+/)[0];
 
@@ -79,6 +123,8 @@ window.WD = window.WD || {};
         ? '<p class="st-hero" data-tone="' + (lead.severity >= 80 ? "bad" : "warn") + '">' +
             '<b>' + esc(lead.headline) + '</b></p>' +
           '<h1 class="st-big">' + esc(lead.lead || lead.title) + '.</h1>' +
+          (lead.means ? '<p class="st-means">' + esc(lead.means) + '</p>' : "") +
+          scaleBar(lead.scale) +
           '<details class="st-open"><summary>How we worked that out</summary><p>' +
             esc(lead.detail) + (lead.why ? " (" + esc(lead.why) + ")" : "") + '</p></details>'
         : '<p class="st-hero" data-tone="good"><b>All clear</b></p>' +
@@ -89,7 +135,13 @@ window.WD = window.WD || {};
     html += '<section class="st-grid">';
     TOPICS.forEach(function (t) {
       const s = statusFor(t, res, v);
-      const dive = s.f && s.f.dive;
+      /* a grey tile that a 60-second dive would fill in is an invitation,
+         not dead space */
+      if (s.tone === "none" && t.dive && allowDive(opts, t.dive)) {
+        s.word = "60 seconds to check";
+        s.offer = t.dive;
+      }
+      const dive = (s.f && s.f.dive) || s.offer;
       const tag = dive ? "button" : "article";
       html += '<' + tag + ' class="st-cell' + (dive ? " is-tap" : "") + '" data-tone="' + s.tone + '"' +
         (dive ? ' type="button" data-dive="' + esc(dive) + '"' : "") + '>' +
@@ -99,11 +151,14 @@ window.WD = window.WD || {};
       '</' + tag + '>';
     });
     html += '</section>';
+    /* counting "passes" that include checks which never applied is the same
+       false comfort the green ticks were giving — count what was raised */
     const ran = res.passed.length + res.raised.length;
-    html += '<p class="st-note">' + ran + (ran === 1 ? " check ran" : " checks ran") +
-      ' on your answers. ' + res.passed.length + ' passed' +
-      (client.raised.length ? ', ' + client.raised.length + ' raised something worth reading' : '') +
-      '.</p>';
+    html += '<p class="st-note">' +
+      (client.raised.length
+        ? client.raised.length + " of the " + ran + " things we could check on your answers need attention."
+        : "All " + ran + " of the things we could check on your answers came back clear.") +
+      '</p>';
 
     /* ---------- the lever ---------- */
     if (lever) {
@@ -112,7 +167,8 @@ window.WD = window.WD || {};
           '<path d="M4 15.5 13 6.5"/><path d="M9.5 5.5h5v5"/><path d="M4 19.5h16"/></svg></span>' +
         '<div>' +
           '<p class="as-eyebrow">Do one thing</p>' +
-          '<h2>' + esc(lever.say) + '</h2>' +
+          '<h2>' + esc(lever.say) +
+            (lever.overSay ? '<span class="st-or">or ' + esc(lever.overSay) + '</span>' : "") + '</h2>' +
           '<p>' + esc(lever.label) + '. Biggest change for the least money.</p>' +
         '</div>' +
       '</section>';
@@ -128,6 +184,8 @@ window.WD = window.WD || {};
         html += '<article class="st-find" data-tone="' + (f.severity >= 80 ? "bad" : "warn") + '">' +
           '<strong>' + esc(f.headline) + '</strong>' +
           '<b>' + esc(f.lead || f.title) + '</b>' +
+          (f.means ? '<p class="st-means">' + esc(f.means) + '</p>' : "") +
+          scaleBar(f.scale) +
           '<details class="st-open"><summary>Why</summary><p>' + esc(f.detail) +
             (f.why ? " (" + esc(f.why) + ")" : "") + '</p></details>' +
         '</article>';
@@ -238,6 +296,26 @@ window.WD = window.WD || {};
     if (pr) pr.addEventListener("click", function () { window.print(); });
 
     return { res: res, client: client, lever: lever };
+  }
+
+  /* a number on its own means nothing. This puts it on a line with the
+     places that matter, so "9 days" lands next to "a 90-day wait". */
+  function scaleBar(sc) {
+    if (!sc || !isFinite(sc.at) || !(sc.max > 0)) return "";
+    const pct = function (x) { return Math.max(0, Math.min(1, x / sc.max)) * 100; };
+    const marks = sc.marks || [];
+    return '<div class="st-scale">' +
+      '<div class="st-scale-track"><i style="width:' + pct(sc.at).toFixed(1) + '%"></i>' +
+        marks.map(function (m) {
+          return m.at <= sc.max ? '<u style="left:' + pct(m.at).toFixed(1) + '%"></u>' : "";
+        }).join("") +
+      '</div>' +
+      '<div class="st-scale-marks">' +
+        marks.map(function (m) {
+          return m.at <= sc.max
+            ? '<span style="left:' + pct(m.at).toFixed(1) + '%">' + esc(m.label) + '</span>' : "";
+        }).join("") +
+      '</div></div>';
   }
 
   function heldTopics(res) {

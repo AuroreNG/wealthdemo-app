@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0d4435">
+  <title>Build Their Future — WEALTHDEMO</title>
+  <link rel="icon" href="wealthdemo-logo.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="tokens.css?v=51">
+  <link rel="stylesheet" href="site.css?v=51">
+  <link rel="stylesheet" href="tool.css?v=51">
+  <link rel="stylesheet" href="explain.css?v=51">
+  <link rel="stylesheet" href="rule72.css?v=51">
+  <link rel="stylesheet" href="paycheck.css?v=51">
+  <link rel="stylesheet" href="rentbuy.css?v=51">
+  <link rel="stylesheet" href="taximpact.css?v=51">
+  <link rel="stylesheet" href="future.css?v=51">
+  <link rel="stylesheet" href="fold.css?v=51">
+  <link rel="stylesheet" href="simple.css?v=51">
+  <link rel="stylesheet" href="chartsay.css?v=51">
+  <link rel="stylesheet" href="tour.css?v=51">
+  <script src="config.js?v=51"></script>
+  <script src="cloud.js?v=51"></script>
+  <script src="guide.js?v=51"></script>
+  <script src="insight.js?v=51"></script>
+  <script src="ask.js?v=51"></script>
+  <script src="ai.js?v=51"></script>
+  <script src="simple.js?v=51"></script>
+  <script src="chartsay.js?v=51"></script>
+  <script src="tour.js?v=51"></script>
+</head>
+<body data-page="app">
+
+<header class="site-nav">
+  <div class="shell site-nav-inner">
+    <a class="brand-identity" href="home.html">
+      <img src="wealthdemo-logo.webp" alt="" aria-hidden="true">
+      <span class="brand-wordmark">
+        <strong>WEALTH<span>DEMO</span></strong>
+        <small>See What Your Money Can Do.</small>
+      </span>
+    </a>
+    <nav class="site-links">
+      <a href="home.html">Tools</a>
+      <a href="send.html">Assessments</a>
+      <a href="studio.html">Studio</a>
+      <a href="home.html#about">About</a>
+    </nav>
+    <div class="nav-search">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+      <input id="navSearch" type="search" placeholder="Search tools, topics, or goals…" autocomplete="off" aria-label="Search tools">
+      <kbd>⌘K</kbd>
+    </div>
+    <div class="site-actions">
+      <a class="premium-btn" href="#" data-billing>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5 7.5 12l4.5-5 4.5 5L20 8.5V17H4Z"/></svg>
+        Go Premium
+      </a>
+      <span class="nav-divider"></span>
+      <div class="account">
+        <button type="button" class="account-btn" id="accountBtn" aria-expanded="false">
+          <span class="avatar" id="accountInitials">SB</span>
+          <span class="hello">Hello, <b id="accountName">there</b></span>
+          <svg class="caret" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+        </button>
+        <div class="account-menu" id="accountMenu" hidden>
+          <span class="account-email" id="accountEmail">Signed in</span>
+          <a href="blueprint.html">Open Financial Blueprint</a>
+          <button type="button" data-logout>Log out</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="shell tool-wrap ft-page">
+
+  <div class="tool-topbar">
+    <a class="back-btn" href="home.html">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H6"/><path d="m11 6-6 6 6 6"/></svg>
+      Back to tools
+    </a>
+    <div class="topbar-right">
+      <button type="button" class="send-btn" id="sendBtn">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 3.5 10.5 13.5"/><path d="M20.5 3.5 14 20.5l-3.5-7-7-3.5Z"/></svg>
+        Send to client
+      </button>
+      <div class="more">
+        <button type="button" class="more-btn" id="moreBtn" aria-label="More options" aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="18" cy="12" r="1.3"/></svg>
+        </button>
+        <div class="more-menu" id="moreMenu" hidden>
+          <button type="button" id="printBtn">Print or save as PDF</button>
+          <button type="button" id="resetBtn">Reset to example figures</button>
+          <a href="college.html">Family College Funding</a>
+          <a href="accounts.html">Account Types</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="banner">
+    <div class="bn-q">
+      <span class="bn-eyebrow">College &amp; life setup</span>
+      <h1>Build Their Future</h1>
+      <p>Compare three ways to prepare financially for a child: a high-yield savings account, a 529 education plan, and a permanent life-insurance strategy. The goal isn't to declare a winner &mdash; it's to see what job you want the money to do.</p>
+    </div>
+    <div class="bn-a">
+      <small id="bnLabel">&mdash;</small>
+      <b id="bnBig">&mdash;</b>
+      <em id="bnSub">&mdash;</em>
+    </div>
+  </section>
+
+  <!-- 1 -->
+  <section class="calc">
+    <div class="calc-head">
+      <div class="calc-title">
+        <h2><i class="ft-step">1</i>Start With The Same Family Goal</h2>
+        <p>The same money goes into all three, so the only difference is what each one does with it.</p>
+      </div>
+      <div class="calc-tools"><button type="button" class="rail-reset" id="resetBtn2">Reset</button></div>
+    </div>
+    <div class="side-grid ft-goal">
+      <div class="field"><label for="fAge">Child's Current Age</label>
+        <div class="pct-in"><input id="fAge" type="number" min="0" max="25" step="1" value="2" inputmode="numeric"><i>yrs</i></div></div>
+      <div class="field"><label for="fLump">Amount Available Today ($)</label>
+        <div class="money-in"><i>$</i><input id="fLump" type="number" min="0" step="500" value="10000" inputmode="numeric"></div></div>
+      <div class="field"><label for="fMonthly">Monthly Contribution ($)</label>
+        <div class="money-in"><i>$</i><input id="fMonthly" type="number" min="0" step="25" value="500" inputmode="numeric"></div></div>
+      <div class="field"><label for="fUntil">Contribute Until Age</label>
+        <div class="pct-in"><input id="fUntil" type="number" min="1" max="65" step="1" value="18" inputmode="numeric"><i>yrs</i></div></div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="panel ft-assump">
+    <div class="ft-head">
+      <h2><i class="ft-step">2</i>Set The Assumptions</h2>
+      <p>One column each. The life-insurance column is not projected &mdash; it is typed in from a carrier illustration.</p>
+    </div>
+    <div class="ft-cols">
+      <section class="ft-col" data-tint="a">
+        <header><b>High-Yield Savings</b><em>Flexible bank savings; interest is generally taxable as it's earned.</em></header>
+        <div class="ft-col-grid">
+          <div class="field"><label for="fApy">Current APY (%)</label>
+            <div class="pct-in"><input id="fApy" type="number" min="0" max="20" step="0.05" value="4" inputmode="decimal"><i>%</i></div></div>
+          <div class="field"><label for="fTax">Est. Tax Rate on Interest (%)</label>
+            <div class="pct-in"><input id="fTax" type="number" min="0" max="60" step="0.5" value="22" inputmode="decimal"><i>%</i></div></div>
+        </div>
+        <p class="ft-note">Illustration reduces the stated yield by the entered tax rate as a simplified annual drag.</p>
+      </section>
+
+      <section class="ft-col" data-tint="b">
+        <header><b>529 Education Plan</b><em>Designed for education. Qualified distributions are generally federal tax-free.</em></header>
+        <div class="ft-col-grid">
+          <div class="field"><label for="fReturn">Hypothetical Annual Return (%)</label>
+            <div class="pct-in"><input id="fReturn" type="number" min="-10" max="20" step="0.25" value="6" inputmode="decimal"><i>%</i></div></div>
+          <div class="field ft-wide"><label for="fUse">At Age 18, Assume Money Used For</label>
+            <select id="fUse" class="ti-sel"></select></div>
+        </div>
+        <p class="ft-note">For nonqualified use, the earnings portion may face regular income tax plus a separate 10% additional federal tax, unless an exception applies.</p>
+      </section>
+
+      <section class="ft-col" data-tint="c">
+        <header><b>Million Dollar Baby</b><em>Permanent life insurance focused on protection and potential long-term cash-value access.</em></header>
+        <div class="ft-illus-q">
+          <span>Have a carrier illustration?</span>
+          <div><button type="button" data-v="yes" aria-pressed="true">Yes &mdash; enter it</button><button type="button" data-v="no" aria-pressed="false">Not yet</button></div>
+        </div>
+        <div id="illusBox">
+          <div class="ft-illus-grid">
+            <div class="field"><label for="cv18">Cash Value &mdash; Age 18 ($)</label><div class="money-in"><i>$</i><input id="cv18" type="number" min="0" step="1000" value="100000" inputmode="numeric"></div></div>
+            <div class="field"><label for="db18">Death Benefit &mdash; Age 18 ($)</label><div class="money-in"><i>$</i><input id="db18" type="number" min="0" step="1000" value="1000000" inputmode="numeric"></div></div>
+            <div class="field"><label for="cv25">Cash Value &mdash; Age 25 ($)</label><div class="money-in"><i>$</i><input id="cv25" type="number" min="0" step="1000" value="175000" inputmode="numeric"></div></div>
+            <div class="field"><label for="db25">Death Benefit &mdash; Age 25 ($)</label><div class="money-in"><i>$</i><input id="db25" type="number" min="0" step="1000" value="1000000" inputmode="numeric"></div></div>
+            <div class="field"><label for="cv40">Cash Value &mdash; Age 40 ($)</label><div class="money-in"><i>$</i><input id="cv40" type="number" min="0" step="1000" value="425000" inputmode="numeric"></div></div>
+            <div class="field"><label for="db40">Death Benefit &mdash; Age 40 ($)</label><div class="money-in"><i>$</i><input id="db40" type="number" min="0" step="1000" value="1000000" inputmode="numeric"></div></div>
+            <div class="field"><label for="cv65">Cash Value &mdash; Age 65 ($)</label><div class="money-in"><i>$</i><input id="cv65" type="number" min="0" step="1000" value="1000000" inputmode="numeric"></div></div>
+            <div class="field"><label for="db65">Death Benefit &mdash; Age 65 ($)</label><div class="money-in"><i>$</i><input id="db65" type="number" min="0" step="1000" value="1000000" inputmode="numeric"></div></div>
+          </div>
+          <p class="ft-note ft-important"><b>Important:</b> enter values exactly as shown in the carrier illustration. Illustrated non-guaranteed values are not guarantees of future performance.</p>
+        </div>
+        <p class="ft-note" id="noIllus" hidden>Nothing is projected for this column. Ask the carrier for an illustration and copy the four cash-value and death-benefit figures in &mdash; a made-up number here would be the least honest thing on the page.</p>
+      </section>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <div class="results">
+    <section class="ft-res-box">
+      <div class="ft-head">
+        <h2><i class="ft-step" data-done="1">3</i>At Age 18 &mdash; What Could Be Available?</h2>
+        <p>Nothing to fill in here. This is what the boxes above come to.</p>
+      </div>
+      <div class="ft-res">
+        <article class="ft-card" data-tint="a">
+          <header><b>High-Yield Savings</b></header>
+          <strong id="bankBig">&mdash;</strong>
+          <small id="bankRate">&mdash;</small>
+          <ul class="rb-lines">
+            <li><span>Total contributed</span><b id="bankPut">&mdash;</b></li>
+            <li><span>Estimated growth</span><b id="bankGrow">&mdash;</b></li>
+            <li><span>Access</span><b>Flexible</b></li>
+          </ul>
+        </article>
+        <article class="ft-card" data-tint="b">
+          <header><b>529 Education Plan</b></header>
+          <strong id="planBig">&mdash;</strong>
+          <small id="planLead">&mdash;</small>
+          <ul class="rb-lines">
+            <li><span>Total contributed</span><b id="planPut">&mdash;</b></li>
+            <li><span>Projected earnings</span><b id="planEarn">&mdash;</b></li>
+            <li><span>Estimated federal tax impact</span><b id="planHit">&mdash;</b></li>
+            <li><span>Amount available after tax impact</span><b id="planNet">&mdash;</b></li>
+          </ul>
+        </article>
+        <article class="ft-card" data-tint="c">
+          <header><b>Million Dollar Baby</b><span class="ft-tag">Carrier illustration</span></header>
+          <strong id="mdbBig">&mdash;</strong>
+          <small id="mdbLead">&mdash;</small>
+          <ul class="rb-lines">
+            <li><span>Planned family funding</span><b id="mdbPut">&mdash;</b></li>
+            <li><span>Age 18 death benefit</span><b id="mdbDb18">&mdash;</b></li>
+            <li><span>Age 25 cash value</span><b id="mdbCv25">&mdash;</b></li>
+            <li><span>Age 40 cash value</span><b id="mdbCv40">&mdash;</b></li>
+            <li><span>Age 65 cash value</span><b id="mdbCv65">&mdash;</b></li>
+            <li><span>Age 65 death benefit</span><b id="mdbDb65">&mdash;</b></li>
+          </ul>
+          <span hidden id="mdbCv18">&mdash;</span><span hidden id="mdbDb25">&mdash;</span>
+          <span hidden id="mdbDb40">&mdash;</span>
+        </article>
+      </div>
+
+      <p class="ft-warn"><span class="ft-warn-h">These are not three versions of the same product.</span>
+        A bank account emphasises liquidity and deposit safety; a 529 is an education-focused tax-advantaged account; permanent life insurance provides a death benefit and may build cash value. Comparing only the largest number can be misleading.</p>
+    </section>
+
+    <section class="runway ft-chart">
+      <div class="rw-head">
+        <div><h2>The Same Money, Three Jobs</h2><p id="chartLead">&mdash;</p></div>
+        <div class="rw-key" id="chartKey"></div>
+      </div>
+      <div id="chartWrap"></div>
+    </section>
+  </div>
+
+  <!-- 4 -->
+  <section class="panel ft-block">
+    <div class="ft-head">
+      <h2><i class="ft-step">4</i>What If Life Changes?</h2>
+      <p>Select a situation to see how the purpose of each strategy changes the conversation.</p>
+    </div>
+    <div class="ft-scen ft-btns">
+      <button type="button" data-v="college" aria-pressed="true">Goes to College</button>
+      <button type="button" data-v="nocollege" aria-pressed="false">No College</button>
+      <button type="button" data-v="scholarship" aria-pressed="false">Gets a Scholarship</button>
+      <button type="button" data-v="home" aria-pressed="false">Buys a Home</button>
+      <button type="button" data-v="business" aria-pressed="false">Starts a Business</button>
+      <button type="button" data-v="longterm" aria-pressed="false">Keeps It Long-Term</button>
+    </div>
+    <div class="ft-scen-rows" id="scenRows"></div>
+  </section>
+
+  <!-- 5 -->
+  <section class="panel ft-block">
+    <div class="ft-head">
+      <h2><i class="ft-step">5</i>What Matters Most To You?</h2>
+      <p>Choose the goal that best describes what you want this money to accomplish.</p>
+    </div>
+    <div class="ft-pri ft-btns">
+      <button type="button" data-v="safety" aria-pressed="false">Safety</button>
+      <button type="button" data-v="education" aria-pressed="false">Education</button>
+      <button type="button" data-v="flexibility" aria-pressed="false">Flexibility</button>
+      <button type="button" data-v="growth" aria-pressed="false">Growth Potential</button>
+      <button type="button" data-v="protection" aria-pressed="false">Protection</button>
+      <button type="button" data-v="legacy" aria-pressed="false">Legacy</button>
+    </div>
+    <p class="ft-prinote" id="priNote">Select a priority above to see which features deserve the most attention.</p>
+    <div class="ft-pri-rows" id="priRows"></div>
+  </section>
+
+  <!-- 6 -->
+  <section class="panel ft-block" data-fold="Long-Term Perspective" data-fold-note="Bank and 529 values are projections; life-insurance values come from the illustration">
+    <div class="ft-long-head">
+      <span>Child's age</span><b>High-yield savings*</b><b>529*</b><b>Life insurance cash value</b>
+    </div>
+    <div class="ft-long-rows" id="longRows"></div>
+    <p class="ft-note ft-important">*Bank and 529 projections assume no withdrawals and hold the entered rates constant, which is not guaranteed. A 529 is investment-based and can lose value. Bank APYs can change. Life-insurance values should be copied from an in-force or sales illustration.</p>
+  </section>
+
+  <footer class="fineprint" data-fold="The fine print" data-fold-quiet="1">
+    <span class="d-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5"/><path d="M12 7.6h.01"/></svg></span>
+    <p>Educational illustration only. This does not provide tax, legal, investment, or insurance advice and does not determine suitability. High-yield savings interest is generally taxable; eligible deposits may be FDIC insured only within applicable limits. 529 qualified distributions are generally federal tax-free; nonqualified distributions can cause the earnings portion to be included in income and may trigger a separate 10% additional federal tax unless an exception applies. State tax treatment can differ. Certain eligible 529-to-Roth IRA rollovers may be available subject to federal requirements. Permanent life insurance cash value access through withdrawals or loans is subject to policy terms; loans and withdrawals reduce cash value and death benefit and may cause tax consequences if a policy lapses with a gain. Policy benefits and guarantees depend on the issuing insurer and contract.</p>
+    <span class="d-sign"><i></i> A brighter financial tomorrow</span>
+  </footer>
+</div>
+
+<script src="auth.js?v=51"></script>
+<script src="agent.js?v=51"></script>
+<script src="site.js?v=51"></script>
+<script src="explain.js?v=51"></script>
+<script src="future.js?v=51"></script>
+<script src="fold.js?v=51"></script>
+</body>
+</html>

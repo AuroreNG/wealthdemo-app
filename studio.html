@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0d4435">
+  <title>Adviser Studio — WEALTHDEMO</title>
+  <link rel="icon" href="wealthdemo-logo.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="tokens.css?v=51">
+  <link rel="stylesheet" href="site.css?v=51">
+  <link rel="stylesheet" href="tool.css?v=51">
+  <link rel="stylesheet" href="studio.css?v=51">
+  <script src="config.js?v=51"></script>
+  <script src="cloud.js?v=51"></script>
+</head>
+<body data-page="app" class="st-page">
+
+<header class="site-nav">
+  <div class="shell site-nav-inner">
+    <a class="brand-identity" href="home.html">
+      <img src="wealthdemo-logo.webp" alt="" aria-hidden="true">
+      <span class="brand-wordmark">
+        <strong>WEALTH<span>DEMO</span></strong>
+        <small>See What Your Money Can Do.</small>
+      </span>
+    </a>
+    <nav class="site-links">
+      <a href="home.html">Tools</a>
+      <a href="send.html">Assessments</a>
+      <a href="studio.html" aria-current="page">Studio</a>
+      <a href="home.html#about">About</a>
+    </nav>
+    <div class="site-actions">
+      <div class="account">
+        <button type="button" class="account-btn" id="accountBtn" aria-expanded="false">
+          <span class="avatar" id="accountInitials">SB</span>
+          <span class="hello">Hello, <b id="accountName">there</b></span>
+          <svg class="caret" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+        </button>
+        <div class="account-menu" id="accountMenu" hidden>
+          <span class="account-email" id="accountEmail">Signed in</span>
+          <a href="blueprint.html">Open Financial Blueprint</a>
+          <button type="button" data-logout>Log out</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="shell tool-wrap st-wrap">
+
+  <section class="st-head">
+    <div>
+      <span class="hero-eyebrow">Your practice</span>
+      <h1>Adviser Studio</h1>
+      <p>Everything that is yours rather than a client's: who you are on a report, who has been sent what, who has access, and what the assistant is costing.</p>
+    </div>
+    <div class="st-state" id="stState">
+      <span class="st-dot" data-on="0"></span>
+      <b id="stStateB">Working on this device</b>
+      <small id="stStateS">Nothing leaves this browser yet.</small>
+    </div>
+  </section>
+
+  <nav class="st-tabs" role="tablist">
+    <button type="button" role="tab" data-tab="clients" aria-selected="true">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5"/><path d="M16 6.2a3 3 0 0 1 0 5.6"/><path d="M17.5 14c2 .6 3.2 2.3 3.5 5"/></svg>
+      Clients
+    </button>
+    <button type="button" role="tab" data-tab="branding" aria-selected="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 5.5 6.2v5.1c0 4 2.7 7.6 6.5 9.2 3.8-1.6 6.5-5.2 6.5-9.2V6.2Z"/></svg>
+      Branding
+    </button>
+    <button type="button" role="tab" data-tab="access" aria-selected="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7"/></svg>
+      Access
+    </button>
+    <button type="button" role="tab" data-tab="assistant" aria-selected="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 5.5h15v12h-9l-5 3.5v-3.5h-1Z"/><path d="M8.5 10.5h7"/><path d="M8.5 14h4"/></svg>
+      Assistant
+    </button>
+  </nav>
+
+  <!-- ================= CLIENTS ================= -->
+  <section class="st-pane" data-pane="clients">
+    <div class="panel">
+      <div class="panel-head">
+        <span class="panel-ico" data-tint="mint"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 3.5 10.5 13.5"/><path d="M20.5 3.5 14 20.5l-3.5-7-7-3.5Z"/></svg></span>
+        <div><h2>Assessments</h2><p>A short set of calculators, filled in before you meet. You walk in already knowing the numbers they care about.</p></div>
+        <a class="st-cta" href="send.html">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5.5v13"/><path d="M5.5 12h13"/></svg>
+          New assessment
+        </a>
+      </div>
+
+      <div class="st-filters" id="stFilters">
+        <button type="button" data-filter="all" aria-pressed="true">All</button>
+        <button type="button" data-filter="returned" aria-pressed="false">Answered</button>
+        <button type="button" data-filter="opened" aria-pressed="false">Opened</button>
+        <button type="button" data-filter="sent" aria-pressed="false">Not opened</button>
+      </div>
+
+      <div class="st-list" id="stClients"></div>
+      <p class="st-empty" id="stClientsEmpty">Nothing sent yet. Send one before your next meeting and their answers arrive here.</p>
+    </div>
+  </section>
+
+  <!-- ================= BRANDING ================= -->
+  <section class="st-pane" data-pane="branding" hidden>
+    <div class="st-two">
+      <div class="panel">
+        <div class="panel-head">
+          <span class="panel-ico" data-tint="sun"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 5.5 6.2v5.1c0 4 2.7 7.6 6.5 9.2 3.8-1.6 6.5-5.2 6.5-9.2V6.2Z"/></svg></span>
+          <div><h2>What clients see</h2><p>This sits at the top of every report you send, and travels with the link.</p></div>
+        </div>
+
+        <div class="st-fields">
+          <div class="f2">
+            <div class="f-body">
+              <label for="bName">Your name</label>
+              <div class="control"><input id="bName" type="text" placeholder="Bizzall Enterprise" autocomplete="name"></div>
+            </div>
+            <div class="f-body">
+              <label for="bFirm">Firm</label>
+              <div class="control"><input id="bFirm" type="text" placeholder="Reyes Financial Group"></div>
+            </div>
+          </div>
+
+          <div class="f2">
+            <div class="f-body">
+              <label for="bPhone">Phone</label>
+              <div class="control"><input id="bPhone" type="tel" placeholder="817 917 1221" autocomplete="tel"></div>
+            </div>
+            <div class="f-body">
+              <label for="bEmail">Email clients should use</label>
+              <div class="control"><input id="bEmail" type="email" placeholder="support@bizzallone.com" autocomplete="email"></div>
+            </div>
+          </div>
+
+          <div class="f2">
+            <div class="f-body">
+              <label for="bBook">Booking link</label>
+              <div class="control"><input id="bBook" type="url" placeholder="https://calendly.com/…"></div>
+              <small>Where "book a time" on a report takes them.</small>
+            </div>
+            <div class="f-body">
+              <label for="bLic">Licence number</label>
+              <div class="control"><input id="bLic" type="text" placeholder="Optional"></div>
+              <small>Shown in the footer where your state requires it.</small>
+            </div>
+          </div>
+
+          <div class="f-body">
+            <label for="bFooter">Compliance footer</label>
+            <div class="control"><textarea id="bFooter" rows="4" placeholder="Your firm or carrier almost certainly has required wording. Paste it once and it appears on everything."></textarea></div>
+            <small><button type="button" class="st-link" id="bFooterStd">Use the standard educational wording</button></small>
+          </div>
+
+          <div class="f2">
+            <div class="f-body">
+              <label for="bLogo">Logo</label>
+              <div class="control st-file">
+                <input id="bLogo" type="file" accept="image/png,image/jpeg,image/webp">
+                <button type="button" id="bLogoClear" hidden>Remove</button>
+              </div>
+              <small>Resized to fit before it is stored. A wide logo reads best.</small>
+            </div>
+            <div class="f-body">
+              <label for="bColour">Accent colour</label>
+              <div class="control st-colour">
+                <input id="bColour" type="color" value="#0d4435">
+                <span id="bColourHex">#0d4435</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="st-save">
+          <button type="button" class="st-primary" id="bSave">Save branding</button>
+          <span class="st-said" id="bSaid"></span>
+        </div>
+      </div>
+
+      <aside class="panel st-preview-panel">
+        <div class="panel-head">
+          <span class="panel-ico" data-tint="ice"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4.5" width="16" height="15" rx="2.5"/><path d="M4 9h16"/></svg></span>
+          <div><h2>How it lands</h2><p>The top of a report, as your client opens it.</p></div>
+        </div>
+        <div class="st-preview" id="bPreview"></div>
+        <p class="st-fine" id="bPreviewFoot"></p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ================= ACCESS ================= -->
+  <section class="st-pane" data-pane="access" hidden>
+    <div class="panel">
+      <div class="panel-head">
+        <span class="panel-ico" data-tint="rose"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7"/></svg></span>
+        <div><h2>Who can use this</h2><p>Grant or take back access by email — for comped accounts, manual sales and support fixes.</p></div>
+      </div>
+
+      <div class="st-grant" id="stGrant">
+        <div class="f-body">
+          <label for="gEmail">Email</label>
+          <div class="control"><input id="gEmail" type="email" placeholder="client@example.com"></div>
+        </div>
+        <div class="f-body">
+          <label for="gKind">What they get</label>
+          <div class="control"><select id="gKind">
+            <option value="full">Every tool</option>
+            <option value="tool">One tool only</option>
+          </select></div>
+        </div>
+        <div class="f-body" id="gToolWrap" hidden>
+          <label for="gTool">Which tool</label>
+          <div class="control"><select id="gTool"></select></div>
+        </div>
+        <div class="f-body">
+          <label for="gDays">For how long</label>
+          <div class="control"><select id="gDays">
+            <option value="7">7 days</option>
+            <option value="30" selected>30 days</option>
+            <option value="90">90 days</option>
+            <option value="365">A year</option>
+            <option value="0">No end date</option>
+          </select></div>
+        </div>
+        <button type="button" class="st-primary" id="gApply">Grant</button>
+        <button type="button" class="st-ghost" id="gRevoke">Revoke</button>
+      </div>
+      <span class="st-said" id="gSaid"></span>
+
+      <div class="st-table-wrap">
+        <table class="st-table" id="gTable">
+          <thead><tr><th>Email</th><th>Role</th><th>Every tool</th><th>Single tools</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="st-empty" id="gEmpty">Sign in as an admin to see and change who has access.</p>
+    </div>
+  </section>
+
+  <!-- ================= ASSISTANT ================= -->
+  <section class="st-pane" data-pane="assistant" hidden>
+    <div class="st-two">
+      <div class="panel">
+        <div class="panel-head">
+          <span class="panel-ico" data-tint="sage"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 5.5h15v12h-9l-5 3.5v-3.5h-1Z"/><path d="M8.5 10.5h7"/><path d="M8.5 14h4"/></svg></span>
+          <div><h2>The assistant</h2><p>What it is allowed to do, and what it has cost.</p></div>
+        </div>
+
+        <ul class="st-facts" id="stAI"></ul>
+
+        <div class="st-note">
+          <b>Why most questions cost nothing</b>
+          <p>Every tool answers what it can on its own — definitions, what-ifs, solving for a figure, what stands out. Those are measured off the calculator in front of you and never leave the page. Only a question the page cannot place is sent on, and even then the model is not allowed to produce a figure of its own: it asks the calculator to run the numbers and quotes what comes back.</p>
+        </div>
+      </div>
+
+      <aside class="panel">
+        <div class="panel-head">
+          <span class="panel-ico" data-tint="ice"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 5.5 6.2v5.1c0 4 2.7 7.6 6.5 9.2 3.8-1.6 6.5-5.2 6.5-9.2V6.2Z"/></svg></span>
+          <div><h2>Your account</h2><p>Signing in is what connects this browser to your own data.</p></div>
+        </div>
+        <div class="st-auth" id="stAuth"></div>
+      </aside>
+    </div>
+  </section>
+
+</div>
+
+<script src="auth.js?v=51"></script>
+<script src="agent.js?v=51"></script>
+<script src="site.js?v=51"></script>
+<script src="profile.js?v=51"></script>
+<script src="studio.js?v=51"></script>
+</body>
+</html>

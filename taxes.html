@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0d4435">
+  <title>When Do You Want to Pay Taxes? — WEALTHDEMO</title>
+  <link rel="icon" href="wealthdemo-logo.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="tokens.css?v=51">
+  <link rel="stylesheet" href="site.css?v=51">
+  <link rel="stylesheet" href="tool.css?v=51">
+  <link rel="stylesheet" href="explain.css?v=51">
+  <link rel="stylesheet" href="rule72.css?v=51">
+  <link rel="stylesheet" href="paycheck.css?v=51">
+  <link rel="stylesheet" href="rentbuy.css?v=51">
+  <link rel="stylesheet" href="taxes.css?v=51">
+  <link rel="stylesheet" href="fold.css?v=51">
+  <link rel="stylesheet" href="simple.css?v=51">
+  <link rel="stylesheet" href="chartsay.css?v=51">
+  <link rel="stylesheet" href="tour.css?v=51">
+  <script src="config.js?v=51"></script>
+  <script src="cloud.js?v=51"></script>
+  <script src="guide.js?v=51"></script>
+  <script src="insight.js?v=51"></script>
+  <script src="ask.js?v=51"></script>
+  <script src="ai.js?v=51"></script>
+  <script src="simple.js?v=51"></script>
+  <script src="chartsay.js?v=51"></script>
+  <script src="tour.js?v=51"></script>
+</head>
+<body data-page="app">
+
+<header class="site-nav">
+  <div class="shell site-nav-inner">
+    <a class="brand-identity" href="home.html">
+      <img src="wealthdemo-logo.webp" alt="" aria-hidden="true">
+      <span class="brand-wordmark">
+        <strong>WEALTH<span>DEMO</span></strong>
+        <small>See What Your Money Can Do.</small>
+      </span>
+    </a>
+    <nav class="site-links">
+      <a href="home.html">Tools</a>
+      <a href="send.html">Assessments</a>
+      <a href="studio.html">Studio</a>
+      <a href="home.html#about">About</a>
+    </nav>
+    <div class="nav-search">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+      <input id="navSearch" type="search" placeholder="Search tools, topics, or goals…" autocomplete="off" aria-label="Search tools">
+      <kbd>⌘K</kbd>
+    </div>
+    <div class="site-actions">
+      <a class="premium-btn" href="#" data-billing>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5 7.5 12l4.5-5 4.5 5L20 8.5V17H4Z"/></svg>
+        Go Premium
+      </a>
+      <span class="nav-divider"></span>
+      <div class="account">
+        <button type="button" class="account-btn" id="accountBtn" aria-expanded="false">
+          <span class="avatar" id="accountInitials">SB</span>
+          <span class="hello">Hello, <b id="accountName">there</b></span>
+          <svg class="caret" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+        </button>
+        <div class="account-menu" id="accountMenu" hidden>
+          <span class="account-email" id="accountEmail">Signed in</span>
+          <a href="blueprint.html">Open Financial Blueprint</a>
+          <button type="button" data-logout>Log out</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="shell tool-wrap">
+
+  <div class="tool-topbar">
+    <a class="back-btn" href="home.html">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H6"/><path d="m11 6-6 6 6 6"/></svg>
+      Back to tools
+    </a>
+    <div class="topbar-right">
+      <button type="button" class="send-btn" id="sendBtn">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 3.5 10.5 13.5"/><path d="M20.5 3.5 14 20.5l-3.5-7-7-3.5Z"/></svg>
+        Send to client
+      </button>
+      <div class="more">
+        <button type="button" class="more-btn" id="moreBtn" aria-label="More options" aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="18" cy="12" r="1.3"/></svg>
+        </button>
+        <div class="more-menu" id="moreMenu" hidden>
+          <button type="button" id="printBtn">Print or save as PDF</button>
+          <button type="button" id="resetBtn">Reset to example figures</button>
+          <a href="withdraw.html">Retirement Withdrawals</a>
+          <a href="accounts.html">Account Types</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       the banner
+       ============================================================ -->
+  <section class="banner">
+    <div class="bn-q">
+      <span class="bn-eyebrow">Taxes</span>
+      <h1>When Do You Want to Pay Taxes?</h1>
+      <p>See how the timing of taxes may affect your retirement money. No products, no account names &mdash; just three simple tax-timing strategies using your own assumptions.</p>
+    </div>
+    <div class="bn-a">
+      <small id="bnLabel">&mdash;</small>
+      <b id="bnBig">&mdash;</b>
+      <em id="bnSub">&mdash;</em>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       the assumptions
+       ============================================================ -->
+  <section class="calc">
+    <div class="calc-head">
+      <div class="calc-title">
+        <h2>Your Assumptions</h2>
+        <p>Change anything here and all three strategies move with it.</p>
+      </div>
+      <div class="calc-tools">
+        <button type="button" class="rail-reset" id="resetBtn2">Reset</button>
+      </div>
+    </div>
+
+    <div class="calc-sides">
+      <section class="side" data-side="a">
+        <header>
+          <span class="side-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v9"/><path d="M14.5 10a2.5 2.5 0 0 0-5 .3c0 2.4 5 1.3 5 3.6a2.5 2.5 0 0 1-5 .3"/></svg></span>
+          <span class="side-name"><b>The money</b><em>What you have and how long it has</em></span>
+        </header>
+        <div class="side-grid">
+          <div class="field">
+            <label for="tMoney">Money Available Today ($)</label>
+            <div class="money-in"><i>$</i><input id="tMoney" type="number" min="0" step="1000" value="100000" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="tAge">Current Age</label>
+            <div class="pct-in"><input id="tAge" type="number" min="0" max="100" step="1" value="40" inputmode="numeric"><i>yrs</i></div>
+          </div>
+          <div class="field">
+            <label for="tRet">Retirement Age</label>
+            <div class="pct-in"><input id="tRet" type="number" min="0" max="110" step="1" value="67" inputmode="numeric"><i>yrs</i></div>
+          </div>
+        </div>
+        <p class="side-fact"><span>Years to grow</span><b id="factYears">&mdash;</b></p>
+      </section>
+
+      <section class="side" data-side="b">
+        <header>
+          <span class="side-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 17.5 17.5 6.5"/><circle cx="8.3" cy="8.3" r="2.2"/><circle cx="15.7" cy="15.7" r="2.2"/></svg></span>
+          <span class="side-name"><b>The rates</b><em>What you assume about tax and growth</em></span>
+        </header>
+        <div class="side-grid">
+          <div class="field">
+            <label for="tNow"><span data-term="taxbracket">Tax Rate You Pay Today (%)</span></label>
+            <div class="pct-in"><input id="tNow" type="number" min="0" max="60" step="0.5" value="22" inputmode="decimal"><i>%</i></div>
+          </div>
+          <div class="field">
+            <label for="tGrow">Expected Annual Growth (%)</label>
+            <div class="pct-in"><input id="tGrow" type="number" min="-20" max="30" step="0.25" value="6" inputmode="decimal"><i>%</i></div>
+            <small>Hypothetical assumption, not guaranteed.</small>
+          </div>
+          <div class="field">
+            <label for="tLater">Tax Rate You Expect in Retirement (%)</label>
+            <div class="pct-in"><input id="tLater" type="number" min="0" max="60" step="0.5" value="25" inputmode="decimal"><i>%</i></div>
+          </div>
+        </div>
+        <p class="side-fact"><span data-term="taxdrag">Growth after tax drag</span><b id="factDrag">&mdash;</b></p>
+      </section>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       follow your money
+       ============================================================ -->
+  <div class="results">
+
+    <p class="tx-strip" id="tStrip">&mdash;</p>
+
+    <section class="tx-block">
+      <span class="eyebrow">Follow your money</span>
+      <div class="tx-cards">
+
+        <article class="tx-card" data-tint="a">
+          <header>
+            <b>Tax Now</b>
+            <span class="tx-badge">Taxes along the way</span>
+          </header>
+          <p>Taxes are paid before the money is invested, and growth is illustrated as reduced along the way.</p>
+          <ul class="rb-lines">
+            <li><span>Start today</span><b id="nowStart">&mdash;</b></li>
+            <li><span>Tax paid today</span><b id="nowTax">&mdash;</b></li>
+            <li><span>Starts growing</span><b id="nowSeed">&mdash;</b></li>
+          </ul>
+          <footer><small>Estimated amount at retirement</small><b id="nowEnd">&mdash;</b></footer>
+        </article>
+
+        <article class="tx-card" data-tint="b">
+          <header>
+            <b>Tax Later</b>
+            <span class="tx-badge">Defer taxes until later</span>
+          </header>
+          <p>Taxes are postponed today so the full amount can grow, then taxed at your estimated retirement rate.</p>
+          <ul class="rb-lines">
+            <li><span>Start today</span><b id="laterStart">&mdash;</b></li>
+            <li><span>Value before retirement tax</span><b id="laterPre">&mdash;</b></li>
+            <li><span>Estimated tax at retirement</span><b id="laterTax">&mdash;</b></li>
+          </ul>
+          <footer><small>Estimated amount you keep</small><b id="laterEnd">&mdash;</b></footer>
+        </article>
+
+        <article class="tx-card" data-tint="c">
+          <header>
+            <b>Potentially Tax-Free</b>
+            <span class="tx-badge">Pay tax first &middot; <span data-term="qualified">qualified access</span> later</span>
+          </header>
+          <p>Taxes are paid before funding; this illustration assumes the requirements for tax-free access later are satisfied.</p>
+          <ul class="rb-lines">
+            <li><span>Start today</span><b id="freeStart">&mdash;</b></li>
+            <li><span>Tax paid today</span><b id="freeTax">&mdash;</b></li>
+            <li><span>Illustrated tax at qualified access</span><b id="freeZero">$0*</b></li>
+          </ul>
+          <footer><small>Estimated amount you keep</small><b id="freeEnd">&mdash;</b></footer>
+        </article>
+
+      </div>
+
+      <div class="tx-bars">
+        <div class="tx-bar" data-tint="a"><span>Tax Now</span><i><u id="bar_now"></u></i><b id="barv_now">&mdash;</b></div>
+        <div class="tx-bar" data-tint="b"><span>Tax Later</span><i><u id="bar_later"></u></i><b id="barv_later">&mdash;</b></div>
+        <div class="tx-bar" data-tint="c"><span>Potentially Tax-Free</span><i><u id="bar_free"></u></i><b id="barv_free">&mdash;</b></div>
+      </div>
+    </section>
+
+    <section class="runway tx-chart">
+      <div class="rw-head">
+        <div>
+          <h2>The Same Money, Three Timings</h2>
+          <p id="chartLead">&mdash;</p>
+        </div>
+        <div class="rw-key">
+          <span><i class="k-now"></i>Tax Now</span>
+          <span><i class="k-later"></i>Tax Later</span>
+          <span><i class="k-free"></i>Tax-Free</span>
+        </div>
+      </div>
+      <div id="chartWrap"></div>
+    </section>
+  </div>
+
+  <!-- ============================================================
+       the client's own read
+       ============================================================ -->
+  <section class="panel tx-pickbox">
+    <div class="tx-pick-head">
+      <h2>Based on what you see, which tax strategy makes the most sense to you?</h2>
+      <p>Select the strategy you personally prefer. This isn't a product or account recommendation.</p>
+    </div>
+
+    <div class="tx-picks">
+      <button type="button" class="tx-pick" data-way="now" data-tint="a" aria-pressed="false">
+        <b>Tax Now</b><em>Pay taxes before and along the way.</em>
+      </button>
+      <button type="button" class="tx-pick" data-way="later" data-tint="b" aria-pressed="false">
+        <b>Tax Later</b><em>Postpone taxes and pay them later.</em>
+      </button>
+      <button type="button" class="tx-pick" data-way="free" data-tint="c" aria-pressed="false">
+        <b>Potentially Tax-Free</b><em>Pay tax first, qualified access later.</em>
+      </button>
+    </div>
+
+    <div class="side-grid tx-pick-in">
+      <div class="field">
+        <label for="tPortPct">% of Current Portfolio in That Strategy</label>
+        <div class="pct-in"><input id="tPortPct" type="number" min="0" max="100" step="1" value="0" inputmode="numeric"><i>%</i></div>
+      </div>
+      <div class="field">
+        <label for="tPort">Total Retirement Portfolio Value ($)</label>
+        <div class="money-in"><i>$</i><input id="tPort" type="number" min="0" step="10000" value="500000" inputmode="numeric"></div>
+      </div>
+    </div>
+
+    <p class="tx-pick-out" id="pickOut">Choose a strategy above to complete your assessment.</p>
+  </section>
+
+  <footer class="fineprint" data-fold="The fine print" data-fold-quiet="1">
+    <span class="d-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5"/><path d="M12 7.6h.01"/></svg></span>
+    <p>Educational illustration only. The three labels describe simplified tax-timing concepts and do not represent specific products or accounts. Actual taxation depends on the account, asset, transaction, tax basis, type of earnings, distribution rules, applicable law, and individual circumstances. &ldquo;Tax Now&rdquo; uses a simplified annual tax drag and is not a tax-return calculation. &ldquo;Potentially Tax-Free&rdquo; treatment is not automatic or guaranteed and requires satisfying the rules of the strategy ultimately used. Growth assumptions are hypothetical. Consult qualified tax, legal, and financial professionals.</p>
+    <span class="d-sign"><i></i> A brighter financial tomorrow</span>
+  </footer>
+</div>
+
+<script src="auth.js?v=51"></script>
+<script src="agent.js?v=51"></script>
+<script src="site.js?v=51"></script>
+<script src="explain.js?v=51"></script>
+<script src="taxes.js?v=51"></script>
+<script src="fold.js?v=51"></script>
+</body>
+</html>

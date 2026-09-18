@@ -1,0 +1,222 @@
+/* ============================================================
+   WEALTHDEMO — 529 Plan Growth Estimator
+   (builds on paycheck.css for .banner, .calc, .side, .results,
+    .runway, .panel; taximpact.css for .ti-sel)
+   ============================================================ */
+
+/* ---------- the wash ---------- */
+.pl-page::before {
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(60vw 56vw at 6% -10%, rgba(13, 122, 95, .10), transparent 62%),
+    radial-gradient(64vw 50vw at 106% 10%, rgba(154, 106, 18, .09), transparent 60%),
+    radial-gradient(72vw 54vw at 50% 110%, rgba(13, 122, 95, .06), transparent 60%);
+}
+
+/* every big surface is the same frosted material */
+.pl-page .calc,
+.pl-page .panel,
+.pl-page .runway,
+.pl-page .fineprint {
+  background:
+    radial-gradient(130% 150% at 8% 0%, rgba(255,255,255,.96) 0%, rgba(255,255,255,.78) 48%, rgba(255,255,255,.62) 100%),
+    linear-gradient(118deg, #eef5f2 0%, #f6f9f8 50%, #eff3f8 100%);
+  backdrop-filter: blur(22px) saturate(160%);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, .82);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .95),
+    0 2px 8px rgba(6, 26, 20, .03),
+    0 28px 52px -42px rgba(6, 26, 20, .5);
+}
+.pl-page .side {
+  background: rgba(255, 255, 255, .58);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, .8);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .9), 0 10px 26px -24px rgba(6, 26, 20, .55);
+}
+.pl-page .side-fact {
+  background: rgba(255, 255, 255, .62);
+  border: 1px solid rgba(255, 255, 255, .82);
+}
+/* an input has to look like something you can type in: solid white against the
+   frost, a border you can actually see, and a focus ring you cannot miss */
+.pl-page .money-in, .pl-page .pct-in, .pl-page .ti-sel, .pl-page .pl-text {
+  background-color: #fff;
+  border: 1px solid rgba(6, 26, 20, .17);
+  box-shadow: inset 0 1px 2px rgba(6, 26, 20, .05);
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.pl-page .money-in:hover, .pl-page .pct-in:hover, .pl-page .pl-text:hover {
+  border-color: rgba(6, 26, 20, .3);
+}
+.pl-page .money-in:focus-within, .pl-page .pct-in:focus-within, .pl-page .pl-text:focus {
+  border-color: #0d7a5f;
+  box-shadow: 0 0 0 3px rgba(13, 122, 95, .16), inset 0 1px 2px rgba(6, 26, 20, .04);
+  outline: none;
+}
+
+.calc-sides .side-grid > .field > label { min-height: 40px; align-items: flex-start; }
+.side-grid .pl-wide { grid-column: 1 / -1; }
+
+/* ============================================================
+   steps and headings
+   ============================================================ */
+.pl-step {
+  display: inline-grid; place-items: center; flex: none;
+  width: 25px; height: 25px; margin-right: 11px; border-radius: 50%;
+  background: #0d4435; color: #eaf4f0;
+  font-family: var(--wd-font-body); font-style: normal;
+  font-size: 12.5px; font-weight: 700; letter-spacing: 0; vertical-align: 3px;
+}
+.pl-step[data-done] { background: rgba(6, 26, 20, .12); color: var(--wd-ink-soft); }
+.pl-head { margin-bottom: 18px; }
+.pl-head h2 {
+  display: flex; align-items: center; margin: 0 0 5px;
+  font-family: var(--wd-serif, "Playfair Display", Georgia, serif);
+  font-size: clamp(19px, 2.2vw, 22px); font-weight: 600; letter-spacing: -.014em; color: var(--wd-ink);
+}
+.pl-head p { margin: 0 0 0 36px; font-size: 13px; color: var(--wd-muted); }
+.pl-page .calc-title h2 { display: flex; align-items: center; }
+.pl-page .calc-title p { margin-left: 36px; }
+
+[data-tint="a"] { --v-c: #0d7a5f; --v-ink: #0b5e4a; --v-wash: rgba(13, 122, 95, .07); --v-line: rgba(13, 122, 95, .22); }
+[data-tint="b"] { --v-c: #9a6a12; --v-ink: #7a520c; --v-wash: rgba(154, 106, 18, .08); --v-line: rgba(154, 106, 18, .24); }
+
+/* ============================================================
+   the four figures
+   ============================================================ */
+.pl-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; }
+.pl-stat {
+  position: relative; overflow: hidden;
+  padding: 18px 20px 16px; border-radius: 16px;
+  background:
+    radial-gradient(130% 150% at 8% 0%, rgba(255,255,255,.96) 0%, rgba(255,255,255,.78) 48%, rgba(255,255,255,.62) 100%),
+    linear-gradient(118deg, #f1f4f3 0%, #f7f9f8 52%, #f0f3f6 100%);
+  backdrop-filter: blur(18px) saturate(155%); -webkit-backdrop-filter: blur(18px) saturate(155%);
+  border: 1px solid rgba(255, 255, 255, .8);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.95), 0 22px 44px -40px rgba(6, 26, 20, .5);
+}
+.pl-stat::before {
+  content: ""; position: absolute; inset: 0 0 auto; height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(6, 26, 20, .16), transparent);
+}
+.pl-stat small {
+  display: block; font-size: 10px; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--wd-muted); margin-bottom: 8px;
+}
+.pl-stat b {
+  display: block;
+  font-family: var(--wd-serif, "Playfair Display", Georgia, serif);
+  font-size: clamp(25px, 3.1vw, 31px); font-weight: 600; line-height: 1;
+  letter-spacing: -.022em; color: var(--wd-ink); font-variant-numeric: tabular-nums;
+}
+.pl-stat em { display: block; margin-top: 7px; font-style: normal; font-size: 11.5px; font-weight: 600; color: var(--wd-muted); }
+.pl-stat[data-lead] {
+  background:
+    radial-gradient(130% 150% at 8% 0%, rgba(255,255,255,.95) 0%, rgba(255,255,255,.72) 46%, rgba(255,255,255,.54) 100%),
+    linear-gradient(118deg, #e9f1ed 0%, #f3f8f6 52%, #ebf2f0 100%);
+}
+.pl-stat[data-lead] b { color: #0b5e4a; }
+.pl-stat[data-lead]::before { background: linear-gradient(90deg, transparent, #0d7a5f, transparent); height: 2.5px; }
+
+/* ============================================================
+   the picture
+   ============================================================ */
+.pl-chart .rw-key i.k-plan { background: #0d7a5f; }
+.pl-chart .rw-key i.k-tax  { background: #9a6a12; }
+
+.pl-svg { width: 100%; height: auto; display: block; }
+.pl-svg text, .pl-svg path.pl-band { stroke: none; }
+.pl-grid { stroke: rgba(6, 26, 20, .06); stroke-width: 1; }
+.pl-band { fill: rgba(13, 122, 95, .13); }
+.pl-line { fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.pl-l-plan { stroke: #0d7a5f; }
+.pl-l-tax  { stroke: #9a6a12; stroke-dasharray: 5 4; }
+.pl-gap { stroke: #0b5e4a; stroke-width: 1.6; }
+.pl-svg text.pl-gap-lab {
+  fill: #0b5e4a; font-size: 10.5px; font-weight: 700; font-variant-numeric: tabular-nums;
+  paint-order: stroke fill; stroke: #fff; stroke-width: 3.2px; stroke-linejoin: round;
+}
+.pl-dot { stroke: #fff; stroke-width: 1.5; }
+.pl-d-plan { fill: #0d7a5f; }
+.pl-d-tax  { fill: #9a6a12; }
+.pl-svg text.pl-end { font-size: 11px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.pl-e-plan { fill: #0b5e4a; }
+.pl-e-tax  { fill: #7a520c; }
+
+/* ============================================================
+   what the tax treatment is worth
+   ============================================================ */
+.pl-edge { display: grid; gap: 16px; }
+.pl-edge-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; align-items: start; }
+.pl-edge-card {
+  padding: 20px 22px 18px; border-radius: 16px;
+  border: 1px solid var(--v-line);
+  background: linear-gradient(180deg, var(--v-wash), rgba(255,255,255,.8) 55%);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  box-shadow: inset 0 2px 0 var(--v-c), 0 18px 38px -36px rgba(6, 26, 20, .55);
+}
+.pl-edge-card > small {
+  display: block; font-size: 10px; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--wd-muted); margin-bottom: 9px;
+}
+.pl-edge-card > strong {
+  display: block;
+  font-family: var(--wd-serif, "Playfair Display", Georgia, serif);
+  font-size: clamp(30px, 3.8vw, 38px); font-weight: 600; line-height: 1;
+  letter-spacing: -.024em; color: var(--v-ink); font-variant-numeric: tabular-nums;
+}
+.pl-edge-card .rb-lines { margin: 16px 0 0; }
+.pl-rate, .pl-ded { margin: 12px 0 0; font-size: 11.5px; line-height: 1.6; color: var(--wd-muted); }
+.pl-edge-lead {
+  margin: 0; padding: 16px 20px; border-radius: 13px;
+  background: rgba(13, 122, 95, .06); border: 1px solid rgba(13, 122, 95, .18);
+  font-size: 14.5px; line-height: 1.75; color: var(--wd-ink-soft);
+}
+.pl-edge-lead b { color: var(--wd-ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* ============================================================
+   the ladder
+   ============================================================ */
+.pl-ladder-lead { margin: 0 0 16px; font-size: 13.5px; color: var(--wd-muted); }
+.pl-rungs { display: grid; gap: 6px; }
+.pl-rung {
+  display: grid; grid-template-columns: 140px minmax(0, 1fr) 118px 104px;
+  gap: 14px; align-items: center; cursor: pointer;
+  padding: 10px 12px; border-radius: 10px; border: 1px solid transparent;
+  transition: background .14s ease;
+}
+.pl-rung:hover { background: rgba(255, 255, 255, .55); }
+.pl-rung > span { font-size: 13px; font-weight: 600; color: var(--wd-ink-soft); }
+.pl-rung > i {
+  display: block; height: 12px; border-radius: 6px; overflow: hidden;
+  background: rgba(255, 255, 255, .55); border: 1px solid rgba(255, 255, 255, .8);
+  box-shadow: inset 0 1px 3px rgba(6, 26, 20, .06);
+}
+.pl-rung > i > u {
+  display: block; height: 100%; border-radius: 6px;
+  background: linear-gradient(90deg, #0d7a5f, #7fbda9);
+  transition: width .4s cubic-bezier(.22, .8, .3, 1);
+}
+.pl-rung > em { font-style: normal; font-size: 11.5px; font-weight: 600; color: var(--wd-muted); text-align: right; }
+.pl-rung > b { font-size: 14px; font-weight: 600; color: var(--wd-ink); text-align: right; font-variant-numeric: tabular-nums; }
+.pl-rung.is-me {
+  background: rgba(255, 255, 255, .72); border-color: rgba(255, 255, 255, .92);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 4px 12px -10px rgba(6, 26, 20, .7);
+}
+.pl-rung.is-me > span { color: var(--wd-ink); font-weight: 700; }
+
+/* ============================================================
+   narrower
+   ============================================================ */
+@media (max-width: 760px) {
+  .pl-head p, .pl-page .calc-title p { margin-left: 0; }
+  .pl-rung { grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; }
+  .pl-rung > span { grid-column: 1; grid-row: 1; }
+  .pl-rung > b { grid-column: 2; grid-row: 1; }
+  .pl-rung > em { grid-column: 2; grid-row: 2; }
+  .pl-rung > i { grid-column: 1; grid-row: 2; align-self: center; }
+}
+
+@media print { .pl-stat, .pl-edge-card { box-shadow: none; } }

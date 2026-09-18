@@ -1,0 +1,95 @@
+/* ============================================================
+   WEALTHDEMO — the chart's own readout
+   ============================================================ */
+
+.cs-hit { fill: transparent; stroke: none; cursor: crosshair; }
+
+.cs-layer { opacity: 0; transition: opacity .12s ease; pointer-events: none; }
+.cs-layer[data-on="1"] { opacity: 1; }
+.cs-rule { stroke: rgba(7, 26, 20, .32); stroke-width: 1; stroke-dasharray: 3 4; }
+.cs-dot { fill: #fff; stroke-width: 2.5; }
+
+.cs-tip {
+  position: absolute;
+  z-index: 8;
+  min-width: 194px;
+  max-width: 280px;
+  padding: 11px 13px 12px;
+  border-radius: var(--wd-radius-sm);
+  border: 1px solid rgba(255, 255, 255, .9);
+  background:
+    radial-gradient(120% 140% at 10% 0%, rgba(255,255,255,.99), rgba(255,255,255,.93) 60%),
+    linear-gradient(140deg, #f2f8f6, #fbfdfc);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.95), 0 18px 34px -20px rgba(6, 26, 20, .6);
+  pointer-events: none;
+}
+
+.cs-when {
+  display: block;
+  margin-bottom: 8px;
+  font: 600 10.5px/1 var(--wd-font-body);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--wd-muted);
+}
+
+.cs-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 0;
+  font: 500 13px/1.3 var(--wd-font-body);
+  color: var(--wd-muted);
+}
+.cs-row i { flex: none; width: 9px; height: 9px; border-radius: 50%; }
+.cs-row em { font-style: normal; min-width: 0; }
+.cs-row b {
+  margin-left: auto;
+  font: 600 14px/1 var(--wd-font-display);
+  color: var(--wd-ink);
+  font-variant-numeric: tabular-nums;
+}
+.cs-row[data-near="1"] { color: var(--wd-ink); font-weight: 600; }
+.cs-row[data-near="1"] b { color: var(--wd-emerald-800); }
+
+.cs-says {
+  display: block;
+  margin-top: 9px;
+  padding-top: 8px;
+  border-top: 1px solid var(--wd-line-soft);
+  font: 400 12.5px/1.5 var(--wd-font-body);
+  color: var(--wd-ink-soft);
+}
+
+/* said once, to whoever has not met the chart before */
+.cs-nudge {
+  position: absolute;
+  right: 10px;
+  top: 8px;
+  z-index: 7;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(223, 238, 232, .85);
+  border: 1px solid rgba(124, 194, 169, .5);
+  font: 600 11px/1 var(--wd-font-body);
+  color: var(--wd-emerald-800);
+  pointer-events: none;
+}
+
+@media (hover: none) {
+  .cs-nudge { font-size: 10.5px; }
+}
+@media print { .cs-tip, .cs-nudge, .cs-layer { display: none !important; } }
+
+/* a bar you can ask about */
+.cs-bar { cursor: pointer; }
+.cs-bar:hover { filter: brightness(1.06) saturate(1.1); }
+
+/* labels are drawn over the bars; they must not swallow the pointer */
+svg[data-cs] text { pointer-events: none; }
+
+/* a series that has already run out */
+.cs-row[data-gone="1"] { opacity: .72; }
+.cs-row[data-gone="1"] b { font-style: italic; font-weight: 500; color: var(--wd-muted); }

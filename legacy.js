@@ -180,7 +180,7 @@
       arrow(0) + arrow(1) +
       cap(0, "On paper", usd(w.gross)) +
       cap(1, "Comes off", "−" + usd(w.takenOff), "is-bad") +
-      cap(2, "Reaches them", usd(w.net), "is-good") +
+      cap(2, "Net to heirs", usd(w.net), "is-good") +
       '<line class="lg-base" x1="' + g.PL + '" y1="' + base + '" x2="' + (CW - g.PR) + '" y2="' + base + '"/>' +
       '</svg>';
   }
@@ -191,7 +191,7 @@
       return {
         title: "Nothing entered yet.",
         body: "Put in what you own on the left and what comes off on the right, and the picture builds as you go.",
-        s1: "—", s1l: "Reaches them", s1t: "warn",
+        s1: "—", s1l: "Net to heirs", s1t: "warn",
         s2: "—", s2l: "Short of your goal", s2t: "warn"
       };
     }
@@ -230,7 +230,7 @@
       title: "You're there, with room to spare.",
       body: usd(w.net) + " reaches the family against the " + usd(p.goal) +
             " you wanted — " + usd(w.net - p.goal) + " more. Worth checking the beneficiaries are current and the will says what you think it says.",
-      s1: usd(w.net), s1l: "Reaches them", s1t: "good",
+      s1: usd(w.net), s1l: "Net to heirs", s1t: "good",
       s2: usd(w.net - p.goal), s2l: "Above your goal", s2t: "good"
     };
   }

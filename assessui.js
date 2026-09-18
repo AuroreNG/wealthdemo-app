@@ -467,6 +467,9 @@
     clearProgress();
     C.derive();
     C.stamp("returned");
+    /* anything that wants to act on a finished assessment listens for this.
+       share.js uses it to send the answers back to the adviser's own row. */
+    document.dispatchEvent(new CustomEvent("wd:returned"));
     if (window.WD.stand) {
       window.WD.stand.render({
         mount: stage, top: paintTop, invite: invite,

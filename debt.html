@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0d4435">
+  <title>Debt Payoff &amp; Interest — WEALTHDEMO</title>
+  <link rel="icon" href="wealthdemo-logo.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="tokens.css?v=51">
+  <link rel="stylesheet" href="site.css?v=51">
+  <link rel="stylesheet" href="tool.css?v=51">
+  <link rel="stylesheet" href="explain.css?v=51">
+  <link rel="stylesheet" href="rule72.css?v=51">
+  <link rel="stylesheet" href="paycheck.css?v=51">
+  <link rel="stylesheet" href="rentbuy.css?v=51">
+  <link rel="stylesheet" href="debt.css?v=51">
+  <link rel="stylesheet" href="fold.css?v=51">
+  <link rel="stylesheet" href="simple.css?v=51">
+  <link rel="stylesheet" href="chartsay.css?v=51">
+  <link rel="stylesheet" href="tour.css?v=51">
+  <script src="config.js?v=51"></script>
+  <script src="cloud.js?v=51"></script>
+  <script src="guide.js?v=51"></script>
+  <script src="insight.js?v=51"></script>
+  <script src="ask.js?v=51"></script>
+  <script src="ai.js?v=51"></script>
+  <script src="simple.js?v=51"></script>
+  <script src="chartsay.js?v=51"></script>
+  <script src="tour.js?v=51"></script>
+</head>
+<body data-page="app">
+
+<header class="site-nav">
+  <div class="shell site-nav-inner">
+    <a class="brand-identity" href="home.html">
+      <img src="wealthdemo-logo.webp" alt="" aria-hidden="true">
+      <span class="brand-wordmark">
+        <strong>WEALTH<span>DEMO</span></strong>
+        <small>See What Your Money Can Do.</small>
+      </span>
+    </a>
+    <nav class="site-links">
+      <a href="home.html">Tools</a>
+      <a href="send.html">Assessments</a>
+      <a href="studio.html">Studio</a>
+      <a href="home.html#about">About</a>
+    </nav>
+    <div class="nav-search">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+      <input id="navSearch" type="search" placeholder="Search tools, topics, or goals…" autocomplete="off" aria-label="Search tools">
+      <kbd>⌘K</kbd>
+    </div>
+    <div class="site-actions">
+      <a class="premium-btn" href="#" data-billing>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5 7.5 12l4.5-5 4.5 5L20 8.5V17H4Z"/></svg>
+        Go Premium
+      </a>
+      <span class="nav-divider"></span>
+      <div class="account">
+        <button type="button" class="account-btn" id="accountBtn" aria-expanded="false">
+          <span class="avatar" id="accountInitials">SB</span>
+          <span class="hello">Hello, <b id="accountName">there</b></span>
+          <svg class="caret" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+        </button>
+        <div class="account-menu" id="accountMenu" hidden>
+          <span class="account-email" id="accountEmail">Signed in</span>
+          <a href="blueprint.html">Open Financial Blueprint</a>
+          <button type="button" data-logout>Log out</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="shell tool-wrap">
+
+  <div class="tool-topbar">
+    <a class="back-btn" href="home.html">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H6"/><path d="m11 6-6 6 6 6"/></svg>
+      Back to tools
+    </a>
+    <div class="topbar-right">
+      <button type="button" class="send-btn" id="sendBtn">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 3.5 10.5 13.5"/><path d="M20.5 3.5 14 20.5l-3.5-7-7-3.5Z"/></svg>
+        Send to client
+      </button>
+      <div class="more">
+        <button type="button" class="more-btn" id="moreBtn" aria-label="More options" aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="18" cy="12" r="1.3"/></svg>
+        </button>
+        <div class="more-menu" id="moreMenu" hidden>
+          <button type="button" id="printBtn">Print or save as PDF</button>
+          <button type="button" id="resetBtn">Reset to example figures</button>
+          <a href="mortgage.html">Mortgage Payoff Strategy</a>
+          <a href="rule72.html">Rule of 72</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       the banner
+       ============================================================ -->
+  <section class="banner">
+    <div class="bn-q">
+      <span class="bn-eyebrow">Debt</span>
+      <h1>Debt Payoff &amp; Interest Calculator</h1>
+      <p>Understand the cost of debt, test faster payoff strategies, and compare a consolidation loan.</p>
+    </div>
+    <div class="bn-a">
+      <small id="bnLabel">&mdash;</small>
+      <b id="bnBig">&mdash;</b>
+      <em id="bnSub">&mdash;</em>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       the calculator
+       ============================================================ -->
+  <section class="calc">
+    <div class="calc-head">
+      <div class="calc-title">
+        <h2>Credit Card Payoff</h2>
+        <p>Change anything here and the whole schedule moves with it.</p>
+      </div>
+      <div class="calc-tools">
+        <button type="button" class="rail-reset" id="resetBtn2">Reset</button>
+      </div>
+    </div>
+
+    <div class="calc-sides">
+      <section class="side" data-side="a">
+        <header>
+          <span class="side-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2.5"/><path d="M3 10h18"/><path d="M6.5 14.5h3"/></svg></span>
+          <span class="side-name"><b>The card</b><em>Where it stands today</em></span>
+        </header>
+        <div class="side-grid">
+          <div class="field">
+            <label for="dBal">Current Balance</label>
+            <div class="money-in"><i>$</i><input id="dBal" type="number" min="0" step="100" value="10000" inputmode="numeric"></div>
+            <small id="balNote"></small>
+          </div>
+          <div class="field">
+            <label for="dApr"><span data-term="apr">Annual Interest Rate &mdash; APR</span></label>
+            <div class="pct-in"><input id="dApr" type="number" min="0" max="60" step="0.1" value="22.9" inputmode="decimal"><i>%</i></div>
+            <small id="aprNote"></small>
+          </div>
+          <div class="field">
+            <label for="dPmt">Current Monthly Payment</label>
+            <div class="money-in"><i>$</i><input id="dPmt" type="number" min="0" step="10" value="350" inputmode="numeric"></div>
+          </div>
+        </div>
+        <p class="side-fact"><span>Interest in month one</span><b id="aprFact">&mdash;</b></p>
+      </section>
+
+      <section class="side" data-side="b">
+        <header>
+          <span class="side-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5.5"/><path d="m6.5 11 5.5-5.5 5.5 5.5"/></svg></span>
+          <span class="side-name"><b>Paying it faster</b><em>Extra paid each month</em></span>
+        </header>
+        <div class="side-grid">
+          <div class="field">
+            <label for="dExtra"><span data-term="extrapayment">Extra Monthly Payment</span></label>
+            <div class="money-in"><i>$</i><input id="dExtra" type="number" min="0" step="25" value="0" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="dOnce">One-Time Extra Payment</label>
+            <div class="money-in"><i>$</i><input id="dOnce" type="number" min="0" step="100" value="0" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="dBuy">Est. New Purchases Each Month</label>
+            <div class="money-in"><i>$</i><input id="dBuy" type="number" min="0" step="25" value="0" inputmode="numeric"></div>
+            <small id="buyNote">Use $0 to model no additional charges.</small>
+          </div>
+        </div>
+        <p class="side-fact"><span>Paying each month</span><b id="payFact">&mdash;</b></p>
+      </section>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       the answer
+       ============================================================ -->
+  <div class="results">
+
+    <div class="dt-stats">
+      <div class="dt-stat"><small>Months to payoff</small><b id="statMonths">&mdash;</b></div>
+      <div class="dt-stat"><small>Total interest</small><b id="statInterest">&mdash;</b></div>
+      <div class="dt-stat"><small>Total paid</small><b id="statPaid">&mdash;</b></div>
+      <div class="dt-stat"><small><span data-term="firstpmt">1st pmt interest</span></small><b id="statFirst">&mdash;</b></div>
+    </div>
+
+    <section class="runway dt-chart">
+      <div class="rw-head">
+        <div>
+          <h2>Where Each Payment Goes</h2>
+          <p id="chartLead">&mdash;</p>
+        </div>
+        <div class="rw-key">
+          <span><i class="k-int"></i>Interest</span>
+          <span><i class="k-prin"></i>Off the balance</span>
+        </div>
+      </div>
+      <div id="chartWrap"></div>
+    </section>
+
+    <section class="dt-more">
+      <div class="dt-more-head">
+        <span class="eyebrow">What if you paid more?</span>
+        <div class="dt-more-in">
+          <input id="moreSlide" class="slider" type="range" min="0" max="1000" step="25" value="0">
+          <div class="money-in"><i>$</i><input id="moreNum" type="number" min="0" max="1000" step="25" value="0" inputmode="numeric"></div>
+        </div>
+      </div>
+      <p class="dt-more-out" id="moreOut">Move the slider to see how an extra payment changes your payoff.</p>
+    </section>
+  </div>
+
+  <!-- ---------- consolidation ---------- -->
+  <section class="panel dt-cons" id="cBox" data-fold="Consolidation Comparison" data-fold-note="A loan against staying on the card">
+    <div class="dt-cons-body">
+      <div class="side-grid dt-cons-in">
+        <div class="field">
+          <label for="cAmt">Amount to Consolidate</label>
+          <div class="money-in"><i>$</i><input id="cAmt" type="number" min="0" step="500" value="10000" inputmode="numeric"></div>
+        </div>
+        <div class="field">
+          <label for="cRate">Loan Interest Rate</label>
+          <div class="pct-in"><input id="cRate" type="number" min="0" max="40" step="0.1" value="12.9" inputmode="decimal"><i>%</i></div>
+        </div>
+        <div class="field">
+          <label for="cTerm">Loan Term</label>
+          <div class="pct-in"><input id="cTerm" type="number" min="1" max="120" step="1" value="60" inputmode="numeric"><i>mo</i></div>
+        </div>
+        <div class="field">
+          <label for="cFee"><span data-term="origination">Origination Fee</span></label>
+          <div class="pct-in"><input id="cFee" type="number" min="0" max="10" step="0.5" value="3" inputmode="decimal"><i>%</i></div>
+        </div>
+      </div>
+
+      <div class="dt-cons-out">
+        <div class="dt-vs">
+          <article class="dt-col" data-tint="a">
+            <header><b>Stay on the card</b></header>
+            <ul class="rb-lines">
+              <li><span>Total paid</span><b id="cCardTotal">&mdash;</b></li>
+              <li><span>Cost of borrowing</span><b id="cCardCost">&mdash;</b></li>
+            </ul>
+          </article>
+          <article class="dt-col" data-tint="b">
+            <header><b>Consolidation loan</b></header>
+            <ul class="rb-lines">
+              <li><span>Monthly payment</span><b id="cPay">&mdash;</b></li>
+              <li><span>Total paid</span><b id="cTotal">&mdash;</b></li>
+              <li><span>Cost of borrowing</span><b id="cCost">&mdash;</b></li>
+              <li><span>Amount financed</span><b id="cFin">&mdash;</b></li>
+            </ul>
+          </article>
+        </div>
+        <p class="dt-verdict" id="cVerdict">&mdash;</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- the schedule ---------- -->
+  <section class="panel dt-sched" data-fold="Payoff Schedule" data-fold-note="Every payment, month by month">
+    <p class="dt-sched-note" id="schedNote">&mdash;</p>
+    <div class="dt-table-wrap">
+      <table class="dt-table">
+        <thead><tr><th>Month</th><th>Payment</th><th>Interest</th><th>Principal</th><th>Balance</th></tr></thead>
+        <tbody id="schedBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer class="fineprint" data-fold="The fine print" data-fold-quiet="1">
+    <span class="d-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5"/><path d="M12 7.6h.01"/></svg></span>
+    <p>Educational planning tool only. Results are estimates based on the values entered. Actual card issuers may use daily periodic rates, different compounding methods, fees, minimum-payment rules, transaction timing, or promotional rates that change actual results. A consolidation loan may lower interest but can also include fees or other costs. Review the actual account and loan terms before deciding.</p>
+    <span class="d-sign"><i></i> A brighter financial tomorrow</span>
+  </footer>
+</div>
+
+<script src="auth.js?v=51"></script>
+<script src="agent.js?v=51"></script>
+<script src="site.js?v=51"></script>
+<script src="explain.js?v=51"></script>
+<script src="debt.js?v=51"></script>
+<script src="fold.js?v=51"></script>
+</body>
+</html>

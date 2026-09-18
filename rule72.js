@@ -264,7 +264,7 @@
     const hasDebt = p.debt > 0;
     const cut = (x !== null && x > 0 && x <= p.N) ? x : (hasDebt && debtAt(0) >= invAt(0) ? 0 : p.N);
 
-    return '<svg viewBox="0 0 ' + CW + ' ' + CH + '" class="wd-chart r7-chart" role="img" aria-label="Savings balance against debt balance over time">' +
+    return '<svg viewBox="0 0 ' + CW + ' ' + CH + '" class="wd-chart r7-chart" data-cs-say="gap" role="img" aria-label="Savings balance against debt balance over time">' +
       '<g class="c-grid">' + grid + '</g>' +
       (hasDebt && cut > 0 ? band(0, cut, "c-band-good") : "") +
       (hasDebt && cut < p.N ? band(cut, p.N, "c-band-bad") : "") +
@@ -656,7 +656,7 @@
       lines.push("");
     }
     lines.push($("sayIt").textContent, "",
-      "Educational illustration only. 72 ÷ rate is a shortcut, exactly right at 7.85%. Tax on growth, fees, changing or promotional rates, minimum payments, late fees and penalty rates are not included, and a steady return is assumed. Speak to a qualified tax or financial professional.");
+      "Educational illustration only. 72 ÷ rate is a shortcut, exactly right at 7.85%. Tax on growth, fees, changing or promotional rates, minimum payments, late fees and penalty rates are not included, and a level return is assumed. Speak to a qualified tax or financial professional.");
 
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(lines.filter(function (l) { return l !== ""; }).join("\n")).then(function () {

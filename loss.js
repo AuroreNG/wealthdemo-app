@@ -135,12 +135,12 @@
       bar(1, w.after, "lc-after") +
       '<rect class="lc-ghost" x="' + (cx(2) - barW / 2).toFixed(1) + '" y="' + Y(backTo).toFixed(1) +
         '" width="' + barW.toFixed(1) + '" height="' + H(backTo).toFixed(1) + '" rx="6"/>' +
-      bar(2, w.after, "lc-after") +
+      bar(2, w.after, "lc-base") +
       arrow(0, p.amt, w.after, "lc-fall", "−" + pct(p.loss), usd(w.lost) + " gone") +
       arrow(1, w.after, backTo, "lc-climb", climbLabel, "the same " + usd(w.lost) + " back") +
       label(0, "Before", usd(p.amt)) +
       label(1, "After the fall", usd(w.after), "is-bad") +
-      label(2, "Back to even", usd(p.amt)) +
+      label(2, "Back to break-even", usd(p.amt)) +
       '</svg>';
   }
 

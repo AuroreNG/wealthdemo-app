@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0d4435">
+  <title>State Tax Comparison — WEALTHDEMO</title>
+  <link rel="icon" href="wealthdemo-logo.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="tokens.css?v=51">
+  <link rel="stylesheet" href="site.css?v=51">
+  <link rel="stylesheet" href="tool.css?v=51">
+  <link rel="stylesheet" href="explain.css?v=51">
+  <link rel="stylesheet" href="rule72.css?v=51">
+  <link rel="stylesheet" href="paycheck.css?v=51">
+  <link rel="stylesheet" href="rentbuy.css?v=51">
+  <link rel="stylesheet" href="taximpact.css?v=51">
+  <link rel="stylesheet" href="states.css?v=51">
+  <link rel="stylesheet" href="fold.css?v=51">
+  <link rel="stylesheet" href="simple.css?v=51">
+  <link rel="stylesheet" href="chartsay.css?v=51">
+  <link rel="stylesheet" href="tour.css?v=51">
+  <script src="config.js?v=51"></script>
+  <script src="cloud.js?v=51"></script>
+  <script src="guide.js?v=51"></script>
+  <script src="insight.js?v=51"></script>
+  <script src="ask.js?v=51"></script>
+  <script src="ai.js?v=51"></script>
+  <script src="simple.js?v=51"></script>
+  <script src="chartsay.js?v=51"></script>
+  <script src="tour.js?v=51"></script>
+</head>
+<body data-page="app">
+
+<header class="site-nav">
+  <div class="shell site-nav-inner">
+    <a class="brand-identity" href="home.html">
+      <img src="wealthdemo-logo.webp" alt="" aria-hidden="true">
+      <span class="brand-wordmark">
+        <strong>WEALTH<span>DEMO</span></strong>
+        <small>See What Your Money Can Do.</small>
+      </span>
+    </a>
+    <nav class="site-links">
+      <a href="home.html">Tools</a>
+      <a href="send.html">Assessments</a>
+      <a href="studio.html">Studio</a>
+      <a href="home.html#about">About</a>
+    </nav>
+    <div class="nav-search">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+      <input id="navSearch" type="search" placeholder="Search tools, topics, or goals…" autocomplete="off" aria-label="Search tools">
+      <kbd>⌘K</kbd>
+    </div>
+    <div class="site-actions">
+      <a class="premium-btn" href="#" data-billing>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5 7.5 12l4.5-5 4.5 5L20 8.5V17H4Z"/></svg>
+        Go Premium
+      </a>
+      <span class="nav-divider"></span>
+      <div class="account">
+        <button type="button" class="account-btn" id="accountBtn" aria-expanded="false">
+          <span class="avatar" id="accountInitials">SB</span>
+          <span class="hello">Hello, <b id="accountName">there</b></span>
+          <svg class="caret" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+        </button>
+        <div class="account-menu" id="accountMenu" hidden>
+          <span class="account-email" id="accountEmail">Signed in</span>
+          <a href="blueprint.html">Open Financial Blueprint</a>
+          <button type="button" data-logout>Log out</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="shell tool-wrap sx-page">
+
+  <div class="tool-topbar">
+    <a class="back-btn" href="home.html">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H6"/><path d="m11 6-6 6 6 6"/></svg>
+      Back to tools
+    </a>
+    <div class="topbar-right">
+      <button type="button" class="send-btn" id="sendBtn">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 3.5 10.5 13.5"/><path d="M20.5 3.5 14 20.5l-3.5-7-7-3.5Z"/></svg>
+        Send to client
+      </button>
+      <div class="more">
+        <button type="button" class="more-btn" id="moreBtn" aria-label="More options" aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="18" cy="12" r="1.3"/></svg>
+        </button>
+        <div class="more-menu" id="moreMenu" hidden>
+          <button type="button" id="printBtn">Print or save as PDF</button>
+          <button type="button" id="resetBtn">Reset to example figures</button>
+          <a href="penalty.html">Tax Penalty Impact</a>
+          <a href="withdraw.html">Retirement Withdrawals</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       the banner
+       ============================================================ -->
+  <section class="banner">
+    <div class="bn-q">
+      <span class="bn-eyebrow">Taxes</span>
+      <h1>State Tax Comparison</h1>
+      <p>What moving states would really do to your take-home &mdash; income tax, property tax and sales tax together, not just the headline rate.</p>
+    </div>
+    <div class="bn-a">
+      <small id="bnLabel">&mdash;</small>
+      <b id="bnBig">&mdash;</b>
+      <em id="bnSub">&mdash;</em>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       the household
+       ============================================================ -->
+  <section class="calc">
+    <div class="calc-head">
+      <div class="calc-title">
+        <h2>Your Household</h2>
+        <p>The same figures are run against every state.</p>
+      </div>
+      <div class="calc-tools">
+        <button type="button" class="rail-reset" id="resetBtn2">Reset</button>
+      </div>
+    </div>
+
+    <div class="calc-sides">
+      <section class="side" data-side="a">
+        <header>
+          <span class="side-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v9"/><path d="M14.5 10a2.5 2.5 0 0 0-5 .3c0 2.4 5 1.3 5 3.6a2.5 2.5 0 0 1-5 .3"/></svg></span>
+          <span class="side-name"><b>What comes in</b><em>Income and Social Security</em></span>
+        </header>
+
+        <div class="sx-seg" role="group" aria-label="Type of income">
+          <button type="button" data-group="kind" data-val="retirement" aria-pressed="true">Retirement income</button>
+          <button type="button" data-group="kind" data-val="working" aria-pressed="false">Working income</button>
+        </div>
+
+        <div class="side-grid">
+          <div class="field sx-wide">
+            <label for="sIncome" id="incomeLab">Yearly Withdrawals and Pension ($)</label>
+            <div class="money-in"><i>$</i><input id="sIncome" type="number" min="0" step="1000" value="80000" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="sSS">Yearly Social Security ($)</label>
+            <div class="money-in"><i>$</i><input id="sSS" type="number" min="0" step="1000" value="36000" inputmode="numeric"></div>
+          </div>
+        </div>
+
+        <div class="sx-seg" role="group" aria-label="Filing status">
+          <button type="button" data-group="filing" data-val="joint" aria-pressed="true">Married filing jointly</button>
+          <button type="button" data-group="filing" data-val="single" aria-pressed="false">Single</button>
+        </div>
+
+        <p class="side-fact"><span>Total coming in each year</span><b id="factIn">&mdash;</b></p>
+      </section>
+
+      <section class="side" data-side="b">
+        <header>
+          <span class="side-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 11 8-6.5 8 6.5"/><path d="M6.5 10v9.5h11V10"/></svg></span>
+          <span class="side-name"><b>What you own and spend</b><em>Where the other two taxes land</em></span>
+        </header>
+        <div class="side-grid">
+          <div class="field">
+            <label for="sHome">Home Value ($)</label>
+            <div class="money-in"><i>$</i><input id="sHome" type="number" min="0" step="10000" value="450000" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="sSpend">Yearly Spending ($)</label>
+            <div class="money-in"><i>$</i><input id="sSpend" type="number" min="0" step="1000" value="45000" inputmode="numeric"></div>
+            <small>The part you would pay sales tax on.</small>
+          </div>
+          <div class="field">
+            <label for="sYears">Years to Add Up</label>
+            <div class="pct-in"><input id="sYears" type="number" min="1" max="40" step="1" value="20" inputmode="numeric"><i>yrs</i></div>
+          </div>
+        </div>
+        <p class="side-fact"><span>Property and sales tax where you are</span><b id="factOwn">&mdash;</b></p>
+        <p class="sx-hint" id="hintOwn">&mdash;</p>
+      </section>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       the two states
+       ============================================================ -->
+  <div class="results">
+    <div class="sx-pick">
+      <div class="field">
+        <label for="sFrom">Where you are now</label>
+        <select id="sFrom" class="ti-sel"></select>
+      </div>
+      <button type="button" class="sx-swap" id="swapBtn" aria-label="Swap the two states">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h11l-3-3"/><path d="M17 17H6l3 3"/></svg>
+      </button>
+      <div class="field">
+        <label for="sTo">Where you're thinking of</label>
+        <select id="sTo" class="ti-sel"></select>
+      </div>
+    </div>
+
+    <div class="sx-quickrow">
+      <span>Often asked about</span>
+      <div class="sx-quick" id="quickRow"></div>
+    </div>
+
+    <div class="sx-cards">
+      <article class="sx-card" id="card_a" data-side="a">
+        <header><b id="nm_a">&mdash;</b><span class="sx-badge">Now</span></header>
+        <strong id="tot_a">&mdash;</strong>
+        <small>a year in state tax</small>
+        <p class="sx-meta"><span id="eff_a">&mdash;</span><i></i><span id="mon_a">&mdash;</span></p>
+        <ul class="rb-lines">
+          <li><span>Income tax<em id="rate_a"></em></span><b id="inc_a">&mdash;</b></li>
+          <li><span>Property tax<em id="prate_a"></em></span><b id="prp_a">&mdash;</b></li>
+          <li><span>Sales tax<em id="srate_a"></em></span><b id="sal_a">&mdash;</b></li>
+        </ul>
+        <ul class="sx-notes" id="note_a"></ul>
+      </article>
+
+      <article class="sx-card" id="card_b" data-side="b">
+        <header><b id="nm_b">&mdash;</b><span class="sx-badge">Thinking of</span></header>
+        <strong id="tot_b">&mdash;</strong>
+        <small>a year in state tax</small>
+        <p class="sx-meta"><span id="eff_b">&mdash;</span><i></i><span id="mon_b">&mdash;</span></p>
+        <ul class="rb-lines">
+          <li><span>Income tax<em id="rate_b"></em></span><b id="inc_b">&mdash;</b></li>
+          <li><span>Property tax<em id="prate_b"></em></span><b id="prp_b">&mdash;</b></li>
+          <li><span>Sales tax<em id="srate_b"></em></span><b id="sal_b">&mdash;</b></li>
+        </ul>
+        <ul class="sx-notes" id="note_b"></ul>
+      </article>
+    </div>
+
+    <p class="sx-over" id="overOut">&mdash;</p>
+
+    <section class="runway sx-chart">
+      <div class="rw-head">
+        <div>
+          <h2>One Year Of State Tax</h2>
+          <p id="chartLead">&mdash;</p>
+        </div>
+        <div class="rw-key">
+          <span><i class="k-inc"></i>Income</span>
+          <span><i class="k-prp"></i>Property</span>
+          <span><i class="k-sal"></i>Sales</span>
+        </div>
+      </div>
+      <div class="sx-bars">
+        <div class="sx-barrow"><span id="barlab_a">&mdash;</span><div class="sx-track"><div class="sx-bar" id="bar_a"></div></div><b id="barval_a">&mdash;</b></div>
+        <div class="sx-barrow"><span id="barlab_b">&mdash;</span><div class="sx-track"><div class="sx-bar" id="bar_b"></div></div><b id="barval_b">&mdash;</b></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============================================================
+       all fifty-one, ranked for these numbers
+       ============================================================ -->
+  <section class="panel sx-rankbox" data-fold="Every State, Ranked For Your Numbers" data-fold-note="Tap any state to load it on the right">
+    <div class="sx-rank-head">
+      <p class="sx-rank-lead" id="rankLead">&mdash;</p>
+      <div class="sx-find">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+        <input id="rankFind" type="search" placeholder="Find a state…" autocomplete="off" aria-label="Find a state">
+      </div>
+    </div>
+    <div class="sx-ranks" id="rankRows"></div>
+    <p class="sx-rank-none" id="rankNone" hidden>No state matches that.</p>
+  </section>
+
+  <footer class="fineprint" data-fold="The fine print" data-fold-quiet="1">
+    <span class="d-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5"/><path d="M12 7.6h.01"/></svg></span>
+    <p>Educational estimate only. Income tax uses published single-filer brackets applied to the amount entered; filing status here changes the Social Security thresholds only. Property tax and sales tax use statewide averages, and both vary widely by county and city &mdash; two homes of the same value one county apart can differ by thousands. This does not model deductions, exemptions, credits, local income taxes, homestead caps, or the federal return, and it does not attempt to price the cost of living. Rates change, sometimes mid-year. Confirm with a qualified tax professional before deciding to move. Rates from the Tax Foundation (income tax 2026; sales tax January 2026), WalletHub (effective property tax 2026), and Kiplinger and AARP (Social Security treatment 2026).</p>
+    <span class="d-sign"><i></i> A brighter financial tomorrow</span>
+  </footer>
+</div>
+
+<script src="auth.js?v=51"></script>
+<script src="agent.js?v=51"></script>
+<script src="site.js?v=51"></script>
+<script src="explain.js?v=51"></script>
+<script src="states.js?v=51"></script>
+<script src="fold.js?v=51"></script>
+</body>
+</html>

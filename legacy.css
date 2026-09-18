@@ -224,3 +224,6 @@
 @media print {
   .closer { box-shadow: none; }
 }
+
+/* a seven-figure goal was being clipped by the shared 54px field width */
+.goal-row .t-in input { width: 96px; }

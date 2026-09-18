@@ -1,0 +1,186 @@
+/* ============================================================
+   WEALTHDEMO — When Do You Want to Pay Taxes?
+   (builds on paycheck.css for .banner, .calc, .side, .results,
+    .runway, .panel; rentbuy.css for .rb-lines)
+   ============================================================ */
+
+/* the three timings share one palette, set once here */
+[data-tint="a"] { --v-c: #9a6a12; --v-ink: #7a520c; --v-wash: rgba(154, 106, 18, .07); --v-line: rgba(154, 106, 18, .22); }
+[data-tint="b"] { --v-c: #2d5b9a; --v-ink: #234a80; --v-wash: rgba(45, 91, 154, .07);  --v-line: rgba(45, 91, 154, .22); }
+[data-tint="c"] { --v-c: #0d7a5f; --v-ink: #0b5e4a; --v-wash: rgba(13, 122, 95, .07);  --v-line: rgba(13, 122, 95, .22); }
+
+/* a couple of the labels run to two lines; reserve the room so every input
+   in the row starts on the same line */
+.calc-sides .side-grid > .field > label { min-height: 40px; align-items: flex-start; }
+
+/* ============================================================
+   the same-start strip
+   ============================================================ */
+.tx-strip {
+  margin: 0; padding: 14px 20px; border-radius: 13px; text-align: center;
+  background: rgba(13, 122, 95, .06); border: 1px solid rgba(13, 122, 95, .18);
+  font-size: 14.5px; line-height: 1.6; color: var(--wd-ink-soft);
+}
+.tx-strip b { color: var(--wd-ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* ============================================================
+   follow your money
+   ============================================================ */
+.tx-block { display: grid; gap: 16px; }
+.tx-block .eyebrow { color: var(--wd-muted); }
+
+.tx-cards {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 14px; align-items: stretch;
+}
+.tx-card {
+  display: flex; flex-direction: column;
+  padding: 20px 22px 18px; border-radius: 16px;
+  border: 1px solid var(--v-line);
+  background: linear-gradient(180deg, var(--v-wash), #fff 62%);
+  box-shadow: inset 0 2px 0 var(--v-c), 0 14px 30px -28px rgba(6, 26, 20, .55);
+}
+.tx-card > header { display: grid; gap: 7px; margin-bottom: 10px; }
+.tx-card > header b {
+  font-family: var(--wd-serif, "Playfair Display", Georgia, serif);
+  font-size: 19px; font-weight: 600; letter-spacing: -.012em; color: var(--v-ink);
+}
+.tx-badge {
+  justify-self: start; padding: 4px 9px; border-radius: 6px;
+  background: var(--v-wash); border: 1px solid var(--v-line);
+  font-size: 9.5px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--v-ink);
+}
+.tx-card > p {
+  margin: 0 0 14px; font-size: 12.5px; line-height: 1.65; color: var(--wd-muted);
+}
+.tx-card .rb-lines { margin: 0 0 16px; }
+.tx-card > footer {
+  margin-top: auto; padding: 14px 16px; border-radius: 12px;
+  background: rgba(255, 255, 255, .72); border: 1px solid var(--v-line);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+}
+.tx-card > footer small {
+  display: block; font-size: 10px; font-weight: 700; letter-spacing: .09em;
+  text-transform: uppercase; color: var(--wd-muted); margin-bottom: 6px;
+}
+.tx-card > footer b {
+  display: block;
+  font-family: var(--wd-serif, "Playfair Display", Georgia, serif);
+  font-size: clamp(26px, 3.3vw, 32px); font-weight: 600; line-height: 1;
+  letter-spacing: -.022em; color: var(--v-ink); font-variant-numeric: tabular-nums;
+}
+
+/* ============================================================
+   the three side by side
+   ============================================================ */
+.tx-bars { display: grid; gap: 10px; }
+.tx-bar {
+  display: grid; grid-template-columns: 170px minmax(0, 1fr) auto;
+  gap: 14px; align-items: center;
+}
+.tx-bar > span { font-size: 12.5px; font-weight: 600; color: var(--v-ink); }
+.tx-bar > i {
+  display: block; height: 10px; border-radius: 5px;
+  background: rgba(6, 26, 20, .07); overflow: hidden;
+}
+.tx-bar > i > u {
+  display: block; height: 100%; width: 0; border-radius: 5px;
+  background: linear-gradient(90deg, var(--v-c), color-mix(in srgb, var(--v-c) 72%, #fff));
+  transition: width .4s cubic-bezier(.22, .8, .3, 1);
+}
+.tx-bar > b {
+  font-size: 13.5px; font-weight: 600; color: var(--wd-ink);
+  font-variant-numeric: tabular-nums; min-width: 82px; text-align: right;
+}
+
+/* ============================================================
+   the picture
+   ============================================================ */
+.tx-chart .rw-key i.k-now   { background: #9a6a12; }
+.tx-chart .rw-key i.k-later { background: #2d5b9a; }
+.tx-chart .rw-key i.k-free  { background: #0d7a5f; }
+
+.tx-svg { width: 100%; height: auto; display: block; }
+/* app.css puts a currentColor stroke on every svg; text and dots want fill only */
+.tx-svg text { stroke: none; }
+
+.tx-grid { stroke: rgba(6, 26, 20, .06); stroke-width: 1; }
+.tx-line { fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.tx-l-now   { stroke: #9a6a12; }
+.tx-l-later { stroke: #2d5b9a; }
+.tx-l-free  { stroke: #0d7a5f; }
+
+.tx-bite { stroke: #b3283c; stroke-width: 2.6; stroke-dasharray: 3 3; opacity: .75; }
+.tx-svg text.tx-bite-lab {
+  fill: #8f2031; font-size: 10px; font-weight: 700; letter-spacing: .02em;
+  font-variant-numeric: tabular-nums;
+  paint-order: stroke fill; stroke: #fff; stroke-width: 3.2px; stroke-linejoin: round;
+}
+
+.tx-dot { stroke: #fff; stroke-width: 1.6; }
+.tx-d-now   { fill: #9a6a12; }
+.tx-d-later { fill: #2d5b9a; }
+.tx-d-free  { fill: #0d7a5f; }
+
+.tx-end { font-size: 11px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.tx-e-now   { fill: #7a520c; }
+.tx-e-later { fill: #234a80; }
+.tx-e-free  { fill: #0b5e4a; }
+
+/* ============================================================
+   which makes the most sense to you
+   ============================================================ */
+.tx-pickbox { display: grid; gap: 20px; }
+.tx-pick-head h2 {
+  margin: 0 0 5px;
+  font-family: var(--wd-serif, "Playfair Display", Georgia, serif);
+  font-size: clamp(19px, 2.2vw, 22px); font-weight: 600; letter-spacing: -.014em;
+  color: var(--wd-ink);
+}
+.tx-pick-head p { margin: 0; font-size: 13px; color: var(--wd-muted); }
+
+.tx-picks {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px;
+}
+.tx-pick {
+  display: grid; gap: 5px; text-align: left; cursor: pointer;
+  padding: 16px 18px; border-radius: 14px;
+  border: 1px solid rgba(6, 26, 20, .1); background: #fff;
+  transition: border-color .16s ease, box-shadow .16s ease, transform .16s ease, background .16s ease;
+}
+.tx-pick b { font-size: 14.5px; font-weight: 700; color: var(--wd-ink); }
+.tx-pick em { font-style: normal; font-size: 12.5px; line-height: 1.55; color: var(--wd-muted); }
+.tx-pick:hover { border-color: var(--v-line); transform: translateY(-1px); box-shadow: 0 12px 26px -24px rgba(6, 26, 20, .6); }
+.tx-pick:focus-visible { outline: 2px solid var(--v-c); outline-offset: 2px; }
+.tx-pick.is-on {
+  border-color: var(--v-line);
+  background: linear-gradient(180deg, var(--v-wash), #fff 62%);
+  box-shadow: inset 0 2px 0 var(--v-c), 0 14px 30px -28px rgba(6, 26, 20, .55);
+}
+.tx-pick.is-on b { color: var(--v-ink); }
+
+.tx-pick-in { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+
+.tx-pick-out {
+  margin: 0; padding: 16px 20px; border-radius: 13px;
+  background: rgba(13, 122, 95, .06); border: 1px solid rgba(13, 122, 95, .18);
+  font-size: 14.5px; line-height: 1.7; color: var(--wd-ink-soft);
+}
+.tx-pick-out b { color: var(--wd-ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+.tx-pick-out.is-set { background: rgba(6, 26, 20, .035); border-color: rgba(6, 26, 20, .1); }
+
+/* ============================================================
+   narrower
+   ============================================================ */
+@media (max-width: 760px) {
+  .tx-bar { grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; }
+  .tx-bar > span { grid-column: 1; }
+  .tx-bar > b { grid-column: 2; grid-row: 1; }
+  .tx-bar > i { grid-column: 1 / -1; }
+}
+
+@media print {
+  .tx-card, .tx-pick { box-shadow: none; }
+  .tx-pick:not(.is-on) { display: none; }
+}

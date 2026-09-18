@@ -50,6 +50,42 @@
 .st-hero[data-tone="bad"]  { --h-c: var(--bad); }
 .st-hero[data-tone="warn"] { --h-c: var(--warn); }
 .st-hero[data-tone="good"] { --h-c: var(--good); }
+/* what the number actually means, in one line, never folded away */
+.st-means {
+  margin: 12px 0 0;
+  font-size: 15px; line-height: 1.6; color: var(--as-soft);
+  max-width: 48ch;
+}
+.st-find .st-means { font-size: 13.5px; margin-top: 8px; }
+
+/* ---------- where the number sits ---------- */
+.st-scale { margin: 18px 0 2px; max-width: 460px; }
+.st-scale-track {
+  position: relative; height: 8px; border-radius: 5px;
+  background: rgba(20, 32, 29, .09); overflow: hidden;
+}
+.st-scale-track i {
+  display: block; height: 100%; border-radius: 5px;
+  background: linear-gradient(90deg, var(--h-c, var(--a-c)), var(--h-c, var(--a-c)));
+  opacity: .85;
+}
+.st-scale-track u {
+  position: absolute; top: -2px; width: 2px; height: 12px;
+  background: rgba(20, 32, 29, .32); transform: translateX(-1px);
+}
+.st-scale-marks {
+  position: relative; height: 15px; margin-top: 6px;
+}
+.st-scale-marks span {
+  position: absolute; top: 0; transform: translateX(-50%);
+  font-size: 10.5px; color: var(--as-mute); white-space: nowrap;
+}
+.st-scale-marks span:first-child { transform: translateX(-20%); }
+.st-scale-marks span:last-child { transform: translateX(-80%); }
+.st-head .st-scale { --h-c: var(--bad); }
+.st-find[data-tone="bad"] .st-scale { --h-c: var(--bad); }
+.st-find[data-tone="warn"] .st-scale { --h-c: var(--warn); }
+
 .st-big {
   margin: 0;
   font-family: var(--as-serif);
@@ -89,6 +125,9 @@
 .st-cell[data-tone="warn"] { --c-c: var(--warn); --c-line: rgba(154,106,18,.28); }
 .st-cell[data-tone="ok"]   { --c-c: var(--good); --c-line: rgba(13,122,95,.26); }
 .st-cell[data-tone="none"] { --c-c: #9aa5a1; --c-line: var(--as-line); }
+/* a check that could not apply — quieter than a pass, and clearly not one */
+.st-cell[data-tone="na"] { --c-c: #a8b2ae; --c-line: var(--as-line); opacity: .72; }
+.st-cell[data-tone="na"] small { font-weight: 500; }
 .st-cell.is-tap {
   cursor: pointer; position: relative;
   transition: border-color .15s ease, transform .12s ease;
@@ -133,6 +172,13 @@
   font-variant-numeric: tabular-nums;
 }
 .st-lever p { margin: 0; font-size: 13.5px; line-height: 1.5; color: var(--as-soft); }
+/* the reachable version of an unreachable lump sum */
+.st-or {
+  display: block; margin-top: 4px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 14.5px; font-weight: 500; letter-spacing: 0;
+  color: var(--as-soft);
+}
 
 /* ============================================================
    the rest

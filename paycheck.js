@@ -93,7 +93,7 @@
   }
 
   /* ============================================================
-     the runway
+     how long the benefit lasts
      ============================================================ */
   function geom() {
     const w = window.innerWidth;

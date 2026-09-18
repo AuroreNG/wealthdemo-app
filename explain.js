@@ -226,6 +226,46 @@ window.WD = window.WD || {};
       plain: "The rate the carrier credits to cash value that is out on loan. Some contracts keep crediting the full rate — that is what makes a policy loan attractive. Many credit loaned value at a lower rate, or at the loan rate itself, which quietly removes most of the advantage. It is a contract term, not a market question, so the illustration has to be read rather than assumed.",
       say: "Ask one question about the loan: while my money is out on loan, is it still being credited the same as the rest? The answer changes the whole picture."
     },
+    apr: {
+      term: "APR",
+      plain: "The yearly rate the card charges. Card issuers divide it by twelve to get a monthly rate and apply that to whatever is left owing, so the interest falls only as the balance does. It is quoted per year but charged every month.",
+      say: "The rate is annual, but it's charged monthly on whatever's still sitting there."
+    },
+    extrapayment: {
+      term: "Extra monthly payment",
+      plain: "Anything above the payment already being made. It goes straight against the balance rather than the interest, so it removes that amount from every future month's interest calculation as well. That is why a small, steady increase does more than it looks like it should.",
+      say: "Every extra dollar comes off the balance, so it also cancels the interest that dollar would have been charged for the rest of the term."
+    },
+    firstpmt: {
+      term: "First payment interest",
+      plain: "The share of the very first payment that is swallowed by interest rather than reducing what is owed. On a high-rate card it is often more than half, which is why a balance can feel like it barely moves at the start.",
+      say: "More than half of that first payment never touches the balance — it just pays for the privilege of carrying it."
+    },
+    origination: {
+      term: "Origination fee",
+      plain: "A charge for setting up the loan, usually a percentage of the amount borrowed, and usually added to the balance rather than paid separately. It means the loan starts larger than the debt it is replacing, and the interest is charged on that larger figure.",
+      say: "The fee is rolled in, so you borrow more than you owe and pay interest on the difference too."
+    },
+    taxbracket: {
+      term: "Your tax rate today",
+      plain: "The rate that would apply to this money if you paid tax on it now. It is not the rate on everything you earn — only on the next dollars, which is what matters when you are deciding whether to pay tax on an amount this year or a later one.",
+      say: "This is the rate on the next dollar, not the average across everything you earn."
+    },
+    growthrate: {
+      term: "An assumed growth rate",
+      plain: "A single rate stood in for every year, because a calculator needs one number. Real returns never arrive that evenly \u2014 they come in a jagged order, and the order itself changes the answer. Use a rate you would be comfortable defending out loud, then look at what happens a couple of points either side of it.",
+      say: "One steady rate is a way to compare choices, not a forecast. Try it two points lower and see what still holds."
+    },
+    costrise: {
+      term: "The yearly rise in college costs",
+      plain: "College has gone up faster than ordinary prices for most of the last forty years \u2014 an average of about 3.9% a year since 2010. It matters more than the growth rate on your savings, because it applies to the whole bill while your growth only applies to what you have actually put away.",
+      say: "The price is moving too. That's why starting earlier does more than saving harder later."
+    },
+    taxdrag: {
+      term: "Tax drag",
+      plain: "Tax taken out of the growth each year rather than at the end. Because the money that leaves is money that would otherwise have kept compounding, the effect builds on itself: a 6% return taxed at 22% every year behaves like a 4.68% return, and over decades that gap is the whole difference.",
+      say: "Paying tax on the growth each year doesn't just cost you the tax — it costs you everything that tax would have earned."
+    },
     lapse: {
       term: "Lapse risk on a loaned policy",
       plain: "If unpaid loan interest keeps compounding, the loan can grow until it exceeds the cash value. At that point the policy lapses — the cover ends, and the forgiven loan can become a taxable event in the year it happens. The larger the loan is as a share of cash value, the less room there is for a bad year.",
@@ -265,6 +305,31 @@ window.WD = window.WD || {};
       term: "Grossing up",
       plain: "Working backwards from the money you actually want in your hand to the larger amount you have to withdraw, because tax comes off on the way.",
       say: "If you want fifty thousand to spend, you have to ask for more than fifty thousand."
+    },
+    safewithdrawal: {
+      term: "Safe withdrawal rate",
+      plain: "The share of a retirement balance you can draw in the first year, then raise with inflation, and still expect the money to last a full retirement. The long-standing rule of thumb is about 4%, which is where the dashed line comes from. It is a yardstick to measure a plan against, not a promise.",
+      say: "This is the industry's yardstick \u2014 about 4% a year, rising with inflation. It's not a rule, but it tells us quickly whether a plan is inside the lines."
+    },
+    levelreturn: {
+      term: "A level return",
+      plain: "The same percentage earned every single year, with no good or bad years at all. No real account behaves this way. It is used here as the baseline, so the second line can show what changes when the identical average arrives in a different order.",
+      say: "This line assumes every year is identical. Nothing does that \u2014 it's the control we measure the real-world line against."
+    },
+    netheirs: {
+      term: "Net to heirs",
+      plain: "What actually reaches the people you name, after debts are cleared, income tax is paid on anything that was never taxed, and the cost of settling the estate comes out. It is almost always smaller than the figure on the statements.",
+      say: "The statement total isn't the inheritance. Net to heirs is, and that's the number worth planning around."
+    },
+    coveragegap: {
+      term: "Coverage gap",
+      plain: "The difference between what the family would need and the cover already in force. Only the gap has to be solved \u2014 the existing policies and savings are doing the rest of the job already.",
+      say: "We're not insuring the whole need. We're insuring the gap, which is a much smaller conversation."
+    },
+    outofpocket: {
+      term: "Out of pocket",
+      plain: "Money that came from you, as opposed to money the account earned. Comparing two plans by what each one cost you out of pocket separates the saving you did from the growth you were given.",
+      say: "This is what came out of your pocket. Everything above it was earned, not contributed."
     }
   };
 
@@ -405,6 +470,9 @@ window.WD = window.WD || {};
   }
 
   /* the Explain switch — plain lines appear where a tool declares them */
+  /* the same plain-language definitions, readable by the assistant */
+  window.WD.glossary = GLOSSARY;
+
   const KEY = "wealthdemo.explain";
   function on() {
     try { return localStorage.getItem(KEY) === "1"; } catch (e) { return false; }

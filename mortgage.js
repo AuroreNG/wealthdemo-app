@@ -377,7 +377,7 @@
         "Put a policy loan in and a second panel appears here for the loan itself, on the same timeline.");
     } else {
       const a = on(w.trad.track, 0.62, YA);
-      at(a.x, a.y - 20, "trad", "Red is doing nothing — the mortgage runs its full " +
+      at(a.x, a.y - 20, "trad", "Red is the current schedule — the mortgage runs its full " +
         span(w.trad.months) + ".");
 
       at(g.PL + 26, YA(p.bal - w.applied / 2), "strat",
@@ -449,6 +449,8 @@
 
     return {
       svg: '<svg viewBox="0 0 ' + CW + ' ' + CH + '" class="mg-svg" role="img" ' +
+        'data-cs-scale="' + aBot + ',0,' + YA(aMax).toFixed(2) + ',' + aMax + '" ' +
+        'data-cs-band="' + aTop + ',' + aBot + '" data-cs-xword="year" data-cs-low="1" ' +
         'aria-label="Two panels on one timeline: the mortgage balance under three strategies, ' +
         'and the policy loan balance beneath it.">' + out + '</svg>',
       notes: notes
@@ -692,7 +694,7 @@
           ? "Top panel is the house, bottom panel is the loan. The thick green band and the blue dashed line sit on top of " +
             "each other — that is the whole finding. Borrow and apply, or just pay the same money on, and you land in the same place."
           : "Top panel is the house, bottom panel is the loan. Compare the green band with the blue dashed line: that gap is " +
-            "what the borrowing is worth. The red line is doing nothing at all."));
+            "what the borrowing is worth. The red line is the current schedule."));
 
     /* ---- the three path cards ---- */
     const pg = $("pathGrid");
@@ -723,7 +725,7 @@
       : (w.flaw ? "—" : (w.real >= 0 ? usd(w.real) : usd(-w.real)));
     $("fairRealNote").textContent = w.flaw === "grows"
       ? "borrowed " + usd(w.applied) + ", never repaid"
-      : "against the same money paid straight on";
+      : "against extra principal payments";
     $("fairBox").classList.toggle("is-bad", w.flaw === "grows" || w.flaw === "nopay" || (!w.flaw && w.real < 0));
     if (w.flaw === "nopay") {
       $("fairTitle").textContent = "The mortgage payment doesn't cover its own interest.";
@@ -744,7 +746,7 @@
         " There is no saving to measure here — unpaid loan interest is a lapse problem, not a payoff strategy.";
     } else if (w.flaw === "noloan" || w.flaw === "nobal") {
       $("fairTitle").textContent = "No policy loan in the comparison yet.";
-      $("fairBody").textContent = "Put in a loan amount and a monthly repayment, and this will test it against the same money paid straight onto the mortgage.";
+      $("fairBody").textContent = "Put in a loan amount and a monthly repayment, and this will test it against the same money paid as extra principal.";
     } else if (w.real > 0) {
       $("fairTitle").textContent = "Most of the headline is the extra money, not the loan.";
       $("fairBody").textContent =

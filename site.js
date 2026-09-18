@@ -58,6 +58,8 @@
     {
       name: "Wealth & Growth", note: "Grow with purpose.", icon: "chart", tint: "sage",
       tools: [
+        { name: "Family Bank Goal Calculator", icon: "target", href: "family.html",
+          desc: "Short-, mid- and long-term goals on one timeline \u2014 and whether one account covers all three." },
         { name: "Rule of 72", icon: "pct", href: "rule72.html",
           desc: "Two clocks are always running. See which one is winning." },
         { name: "Cost of Waiting", icon: "hourglass", href: "waiting.html",
@@ -84,30 +86,32 @@
           desc: "The year buying finally pulls ahead — or whether it does." },
         { name: "Mortgage Payoff Strategy", icon: "chart", href: "mortgage.html",
           desc: "A policy loan against the mortgage — and the fair test of it." },
-        { name: "Debt Payoff & Interest Calculator", icon: "pct",
-          desc: "Snowball or avalanche, and what each one saves." }
+        { name: "Debt Payoff & Interest Calculator", icon: "pct", href: "debt.html",
+          desc: "The cost of the debt, what paying more does, and whether consolidating helps." }
       ]
     },
     {
       name: "Taxes", note: "Keep more of what you earn.", icon: "doc", tint: "lilac",
       tools: [
-        { name: "When Do You Want to Pay Taxes?", icon: "calendar", href: "blueprint.html?step=6&open=tax-timing-section",
-          desc: "Pay now or pay later — see both timelines." },
-        { name: "Tax Impact on Your Investments", icon: "doc", href: "blueprint.html?step=6",
-          desc: "What your returns look like after tax drag." },
-        { name: "State Tax Comparison", icon: "doc",
-          desc: "What moving states would do to your take-home." }
+        { name: "When Do You Want to Pay Taxes?", icon: "calendar", href: "taxes.html",
+          desc: "Pay now, pay later, or pay first — the same money under three timings." },
+        { name: "Tax Impact on Your Investments", icon: "doc", href: "taximpact.html",
+          desc: "How much of what you own is taxed now, later, or not at all." },
+        { name: "Tax Penalty Impact", icon: "pct", href: "penalty.html",
+          desc: "What an early withdrawal costs in income tax and in penalty." },
+        { name: "State Tax Comparison", icon: "home", href: "states.html",
+          desc: "What moving states would really cost — income, property and sales tax together." }
       ]
     },
     {
       name: "College & Life Setup", note: "Invest in what's next.", icon: "cap", tint: "teal",
       tools: [
-        { name: "Family College Funding Calculator", icon: "cap", href: "blueprint.html?step=2",
-          desc: "What tuition costs by the year they start." },
-        { name: "529 Plan Growth Estimator", icon: "chart",
-          desc: "Project a 529 balance from today's contribution." },
-        { name: "Build Their Future", icon: "target",
-          desc: "Set a goal for a child and find the monthly number." }
+        { name: "Family College Funding Calculator", icon: "cap", href: "college.html",
+          desc: "The whole degree by the year they start — and the monthly number that gets you there." },
+        { name: "529 Plan Growth Estimator", icon: "chart", href: "plan529.html",
+          desc: "Project the balance — and what the tax break is worth against a taxable account." },
+        { name: "Build Their Future", icon: "target", href: "future.html",
+          desc: "Savings, a 529 and permanent life insurance side by side — what job the money is for." }
       ]
     }
   ];
@@ -124,6 +128,12 @@
     return list;
   }, []);
   const TOOL_COUNT = ALL_TOOLS.length;
+  /* the Studio needs the same list to grant one tool at a time, and this is
+     the only place it is defined — a second copy would go stale the first
+     time a tool is added */
+  window.WD = window.WD || {};
+  window.WD.catalogue = CATEGORIES;
+  window.WD.allTools = ALL_TOOLS;
   const PER_TOOL = 14.99;
   const SUITE = 89.99;
 

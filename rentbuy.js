@@ -387,6 +387,7 @@
     out += ticks;
 
     return '<svg viewBox="0 0 ' + CW + ' ' + CH + '" class="rb-svg' + (up ? "" : " is-cost") + '" role="img" ' +
+      'data-cs-scale="' + base + ',' + lo + ',' + Y(hi).toFixed(2) + ',' + hi + '" data-cs-xword="year" ' + (up ? "" : 'data-cs-low="1" ') + +
       'aria-label="' + (up ? "Net position over time" : "Net cost over time") + ', two paths compared">' + out + '</svg>';
   }
 
@@ -690,11 +691,20 @@
               (Math.round(w.cross / 12 * 10) / 10) + "."
             : "Net cost is cash out less what the car is still worth. Leasing stays cheaper across the whole period.");
     } else {
-      $("crossLead").textContent = w.cross
-        ? "Both paths start from the same day. Buying overtakes in year " +
-          (Math.round(w.cross / 12 * 10) / 10) + "."
-        : "Both paths start from the same day. Buying does not overtake inside " + m.maxYears +
-          " years on these assumptions.";
+      /* two different year counts were on screen at once — the window they
+         chose, and the 30 the crossover search runs over. Say both. */
+      const win = p.years;
+      const at = w.cross ? Math.round(w.cross / 12 * 10) / 10 : null;
+      const opening = "Each line is what you would walk away with if you stopped in that year — " +
+        "the renter's invested deposit and monthly savings, against the owner's equity after selling costs. ";
+      $("crossLead").textContent = opening + (
+        at === null
+          ? "Buying never pulls ahead: not inside your " + win + " years, and not in the " + m.maxYears +
+            " this looks across."
+          : at <= win
+            ? "Buying pulls ahead in year " + at + ", inside the " + win + " you plan to stay."
+            : "Buying pulls ahead in year " + at + " \u2014 after the " + win + " you plan to stay, so within your window renting is still ahead."
+      );
     }
     $("yearsOut").textContent = p.years + (p.years === 1 ? " year" : " years");
     const sl = $("rYears");

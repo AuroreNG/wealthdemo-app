@@ -17,6 +17,8 @@ window.WD = window.WD || {};
     name: "", firm: "", title: "", licence: "",
     email: "", phone: "", book: "", colour: "#0d4435",
     site: "",             /* where the published site lives, e.g. https://you.github.io/app/ */
+    footer: "",           /* the compliance wording that has to appear on everything */
+    logo: "",             /* a small data URL — resized on upload, never the original file */
     tier: "full"          /* full | core — which tools this account may send */
   };
 
