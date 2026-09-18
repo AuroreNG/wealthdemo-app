@@ -702,3 +702,58 @@ body[data-page="app"] .tool-wrap { padding-bottom: 96px; }
 .client-field input { border: none; outline: none; background: none; font-size: 14px; width: 190px; }
 .client-field:focus-within { border-color: #0b0f0d; box-shadow: 0 0 0 1px #0b0f0d; }
 
+
+/* ============================================================
+   Home, with the repetition taken out
+
+   The hero used to carry a headline, three selling points, and a
+   slogan card that said the same three things again — and then
+   the Financial Blueprint was pitched a second time, in full,
+   directly underneath. The word "tomorrow" appeared four times
+   above the fold. Now the hero states what this is and offers
+   the one way in; the tools speak for themselves below.
+   ============================================================ */
+.site-hero .hero-inner { align-items: center; }
+
+.hero-go {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 26px;
+  padding: 13px 24px;
+  border-radius: 999px;
+  background: var(--gold, #c9a227);
+  color: #2a2205;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 16px 34px -20px rgba(201, 162, 39, .9);
+  transition: transform .16s ease, filter .16s ease;
+}
+.hero-go:hover { transform: translateY(-1px); filter: brightness(1.05); }
+.hero-go svg {
+  width: 17px; height: 17px;
+  fill: none; stroke: currentColor; stroke-width: 2;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+.hero-note {
+  margin: 12px 0 0;
+  max-width: 46ch;
+  font-size: 14px;
+  opacity: .85;
+}
+
+/* one search box, not two. The hub has its own, which actually filters;
+   the nav one would sit directly above it saying the same thing. */
+/* home.html shares data-page="app" with the tools, so it is identified by
+   the hub it contains rather than by an attribute it does not have */
+body:has(.hub) .nav-search { display: none; }
+
+/* :has() is wide but not universal; this is the same rule, done in JS-free
+   fallback form, so an older browser still only shows one box */
+.hub ~ * .nav-search,
+.site-nav:has(+ .site-hero + .hub) .nav-search { display: none; }
+
+/* with the slogan card gone the hero can breathe rather than sprawl */
+@media (min-width: 900px) {
+  .site-hero .hero-copy { max-width: 60ch; }
+}
