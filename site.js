@@ -61,77 +61,90 @@
        ------------------------------------------------------------ */
     {
       name: "Money", note: "Grow it, keep it, make it last.", icon: "coins", tint: "mint",
+      subs: [{ id: "retire", name: "Retirement" },
+               { id: "grow",   name: "Growing it" },
+               { id: "college", name: "College" }],
       tools: [
-        { name: "Retirement Readiness Scorecard", icon: "target", href: "form.html?f=retire-ready",
+        { name: "Retirement Readiness Scorecard", icon: "target", href: "form.html?f=retire-ready", sub: "retire",
           desc: "Whether what they are putting away actually reaches what they want to spend." },
-        { name: "Retirement Withdrawal Calculator", icon: "chart", href: "withdraw.html",
+        { name: "Retirement Withdrawal Calculator", icon: "chart", href: "withdraw.html", sub: "retire",
           desc: "How long your savings last at the pace you spend." },
-        { name: "Retirement Account Match-Up", icon: "coins", href: "accounts.html",
+        { name: "Retirement Account Match-Up", icon: "coins", href: "accounts.html", sub: "retire",
           desc: "Which account should the money come out of, and what it costs." },
-        { name: "Family Bank Goal Calculator", icon: "target", href: "family.html",
+        { name: "Family Bank Goal Calculator", icon: "target", href: "family.html", sub: "grow",
           desc: "Short-, mid- and long-term goals on one timeline \u2014 and whether one account covers all three." },
-        { name: "Rule of 72", icon: "pct", href: "rule72.html",
+        { name: "Rule of 72", icon: "pct", href: "rule72.html", sub: "grow",
           desc: "Two clocks are always running. See which one is winning." },
-        { name: "Cost of Waiting", icon: "hourglass", href: "waiting.html",
+        { name: "Cost of Waiting", icon: "hourglass", href: "waiting.html", sub: "grow",
           desc: "Same money, started later. See what the delay takes." },
-        { name: "What a Loss Really Costs", icon: "trend", href: "loss.html",
+        { name: "What a Loss Really Costs", icon: "trend", href: "loss.html", sub: "grow",
           desc: "Fall 30% and you need 42.9% back. See why." },
-        { name: "Family College Funding Calculator", icon: "cap", href: "college.html",
+        { name: "Family College Funding Calculator", icon: "cap", href: "college.html", sub: "college",
           desc: "The whole degree by the year they start \u2014 and the monthly number that gets you there." },
-        { name: "529 Plan Growth Estimator", icon: "chart", href: "plan529.html",
+        { name: "529 Plan Growth Estimator", icon: "chart", href: "plan529.html", sub: "college",
           desc: "Project the balance \u2014 and what the tax break is worth against a taxable account." },
-        { name: "Build Their Future", icon: "target", href: "future.html",
+        { name: "Build Their Future", icon: "target", href: "future.html", sub: "college",
           desc: "Savings, a 529 and permanent life insurance side by side \u2014 what job the money is for." }
       ]
     },
     {
       name: "Taxes", note: "When you pay, and how much.", icon: "doc", tint: "sun",
+      subs: [{ id: "timing", name: "Timing" },
+               { id: "invest", name: "Investments & property" },
+               { id: "retire", name: "In retirement" },
+               { id: "paper",  name: "Paperwork" }],
       tools: [
-        { name: "Tax Document Checklist", icon: "doc", href: "form.html?f=tax-docs",
+        { name: "Tax Document Checklist", icon: "doc", href: "form.html?f=tax-docs", sub: "paper",
           desc: "What this household has to send you — and nothing that does not apply to them." },
-        { name: "Will My Social Security Be Taxed?", icon: "clock", href: "tool.html",
+        { name: "Will My Social Security Be Taxed?", icon: "clock", href: "tool.html", sub: "retire",
           desc: "See how much of your benefit the IRS can reach." },
-        { name: "When Do You Want to Pay Taxes?", icon: "calendar", href: "taxes.html",
+        { name: "When Do You Want to Pay Taxes?", icon: "calendar", href: "taxes.html", sub: "timing",
           desc: "Pay now, pay later, or pay first \u2014 the same money under three timings." },
-        { name: "Tax Impact on Your Investments", icon: "doc", href: "taximpact.html",
+        { name: "Tax Impact on Your Investments", icon: "doc", href: "taximpact.html", sub: "invest",
           desc: "How much of what you own is taxed now, later, or not at all." },
-        { name: "Tax Penalty Impact", icon: "pct", href: "penalty.html",
+        { name: "Tax Penalty Impact", icon: "pct", href: "penalty.html", sub: "timing",
           desc: "What an early withdrawal costs in income tax and in penalty." },
-        { name: "State Tax Comparison", icon: "home", href: "states.html",
+        { name: "State Tax Comparison", icon: "home", href: "states.html", sub: "invest",
           desc: "What moving states would really cost \u2014 income, property and sales tax together." }
       ]
     },
     {
       name: "Real Estate", note: "Buy, hold, or pay it down.", icon: "home", tint: "sand",
+      subs: [{ id: "lending", name: "Lending" },
+               { id: "buying",  name: "Buying" },
+               { id: "owning",  name: "Owning" }],
       tools: [
-        { name: "Mortgage Readiness Assessment", icon: "home", href: "form.html?f=mortgage-ready",
+        { name: "Mortgage Readiness Assessment", icon: "home", href: "form.html?f=mortgage-ready", sub: "lending",
           desc: "Whether a lender would take this file today, and what is standing in the way." },
-        { name: "Borrower Document Checklist", icon: "doc", href: "form.html?f=borrower-docs",
+        { name: "Borrower Document Checklist", icon: "doc", href: "form.html?f=borrower-docs", sub: "lending",
           desc: "Only the documents this borrower has to produce — and what is still outstanding." },
-        { name: "Buyer Readiness Assessment", icon: "target", href: "form.html?f=buyer-ready",
+        { name: "Buyer Readiness Assessment", icon: "target", href: "form.html?f=buyer-ready", sub: "buying",
           desc: "Whether this buyer can transact, before you spend six Saturdays on them." },
-        { name: "Prequalification Tracker", icon: "chart", href: "form.html?f=prequal",
+        { name: "Prequalification Tracker", icon: "chart", href: "form.html?f=prequal", sub: "lending",
           desc: "Everyone in the pipeline, and which stage each of them is stuck at." },
-        { name: "Rent vs. Buy", icon: "home", href: "rentbuy.html",
+        { name: "Rent vs. Buy", icon: "home", href: "rentbuy.html", sub: "buying",
           desc: "The year buying finally pulls ahead \u2014 or whether it does." },
-        { name: "Mortgage Payoff Strategy", icon: "chart", href: "mortgage.html",
+        { name: "Mortgage Payoff Strategy", icon: "chart", href: "mortgage.html", sub: "owning",
           desc: "A policy loan against the mortgage \u2014 and the fair test of it." },
-        { name: "Debt Payoff & Interest Calculator", icon: "pct", href: "debt.html",
+        { name: "Debt Payoff & Interest Calculator", icon: "pct", href: "debt.html", sub: "owning",
           desc: "The cost of the debt, what paying more does, and whether consolidating helps." }
       ]
     },
     {
       name: "Protection", note: "What happens if it stops.", icon: "shield", tint: "rose",
+      subs: [{ id: "cover",  name: "Cover" },
+               { id: "estate", name: "Estate & legacy" },
+               { id: "review", name: "Reviews" }],
       tools: [
-        { name: "Estate Document Checklist", icon: "heart", href: "form.html?f=estate-docs",
+        { name: "Estate Document Checklist", icon: "heart", href: "form.html?f=estate-docs", sub: "estate",
           desc: "What this family should have signed, and what is missing." },
-        { name: "Policy Review Tracker", icon: "shield", href: "form.html?f=policy-review",
+        { name: "Policy Review Tracker", icon: "shield", href: "form.html?f=policy-review", sub: "review",
           desc: "Which policies are due a look, and where each conversation got to." },
-        { name: "How Much Life Insurance", icon: "shield", href: "dime.html",
+        { name: "How Much Life Insurance", icon: "shield", href: "dime.html", sub: "cover",
           desc: "Four things to pay for, less what you already have." },
-        { name: "What Would You Leave Behind?", icon: "heart", href: "legacy.html",
+        { name: "What Would You Leave Behind?", icon: "heart", href: "legacy.html", sub: "estate",
           desc: "What an estate looks like on paper, and what really arrives." },
-        { name: "If the Paycheck Stopped", icon: "wallet", href: "paycheck.html",
+        { name: "If the Paycheck Stopped", icon: "wallet", href: "paycheck.html", sub: "cover",
           desc: "Month by month, who pays the bills \u2014 and when it gets tight." }
       ]
     }
@@ -278,37 +291,67 @@
     return '<svg class="' + (cls || "") + '" viewBox="0 0 24 24" aria-hidden="true">' + (ICONS[name] || ICONS.chart) + '</svg>';
   }
 
+  /* ------------------------------------------------------------
+     The grid.
+
+     Four tall columns looked ragged, because the categories are
+     not the same size: Money has ten tools and Protection five,
+     so one column ran twice as long as another and the page ended
+     in a staircase.
+
+     They are horizontal bands now. Each band carries its own
+     subcategories, so a ten-tool category is three short lists
+     rather than one long one, and a band shows four tools until
+     you ask it for the rest.
+     ------------------------------------------------------------ */
+  let openSub = {};          /* category name -> subcategory id, or "all" */
+
+  function toolsIn(cat, who, q) {
+    return (cat.tools || []).filter(function (t) {
+      if (!forPro(t.href, who)) return false;
+      return !q || t.name.toLowerCase().indexOf(q) > -1 ||
+             (t.desc || "").toLowerCase().indexOf(q) > -1 ||
+             cat.name.toLowerCase().indexOf(q) > -1;
+    });
+  }
+
+  function card(t) {
+    const a = document.createElement("a");
+    a.className = "calc" + (t.href ? "" : " soon");
+    a.href = t.href || "#";
+    if (!t.href) a.addEventListener("click", function (e) { e.preventDefault(); });
+    a.innerHTML =
+      '<span class="calc-ico">' + icon(t.icon) + "</span>" +
+      '<b class="calc-name"></b>' +
+      '<span class="calc-desc"></span>' +
+      (t.href ? '<span class="calc-go">Open<svg viewBox="0 0 24 24" aria-hidden="true">' +
+                '<path d="M5 12h13"/><path d="M13 6l6 6-6 6"/></svg></span>'
+              : '<span class="calc-go soon">Soon</span>');
+    a.querySelector(".calc-name").textContent = t.name;
+    a.querySelector(".calc-desc").textContent = t.desc || "";
+    return a;
+  }
+
   function render() {
     if (!grid) return;
     const q = query.trim().toLowerCase();
+    const who = pro();
     grid.innerHTML = "";
     let shown = 0;
 
-    /* Four columns while you are browsing; a plain grid of results the
-       moment you narrow to one category or start typing, because at that
-       point the column headings are telling you what you already know. */
-    const narrow = active !== "All" || !!q;
-    grid.classList.toggle("is-one", narrow);
-
-    /* ---------- the adviser's own two, kept out of the calculator grid ----
-
-       "Before the meeting" and "Placement" are not calculators. They are
-       things you do around a client, and standing them in the grid as
-       one-tool categories made them look like the runts of a list they
-       do not belong to. They get their own strip, above everything, in
-       the adviser's own colour. */
+    /* ---------- the adviser's own two ---------- */
     const strip = document.getElementById("adviserRow");
     if (strip) {
       strip.innerHTML = "";
       CATEGORIES.filter(function (c) { return c.agentOnly; }).forEach(function (cat) {
         (cat.tools || []).forEach(function (t) {
-          if (!forPro(t.href, pro())) return;
+          if (!forPro(t.href, who)) return;
           const a = document.createElement("a");
           a.className = "adv-card";
           a.href = t.href || "#";
           a.innerHTML =
             '<span class="adv-ico">' + icon(cat.icon) + "</span>" +
-            "<span class=\"adv-text\"><b></b><small></small></span>" +
+            '<span class="adv-text"><b></b><small></small></span>' +
             '<svg class="adv-go" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13"/><path d="M13 6l6 6-6 6"/></svg>';
           a.querySelector("b").textContent = t.name;
           a.querySelector("small").textContent = t.desc || cat.note || "";
@@ -317,60 +360,106 @@
       });
     }
 
-    /* ---------- one tile per calculator ----------
-
-       It used to be a box per category holding a plain list of names —
-       boxes inside boxes, and the one-line description each tool already
-       carries was never shown. Now the category is a quiet heading and
-       every calculator is its own tile with its own sentence, which is
-       both less furniture and more information. */
+    /* ---------- one band per category ---------- */
     VISIBLE().forEach(function (cat) {
       if (cat.hideInGrid || cat.agentOnly) return;
       if (active !== "All" && cat.name !== active) return;
-      const who = pro();
-      const tools = cat.tools.filter(function (t) {
-        if (!forPro(t.href, who)) return false;
-        return !q || t.name.toLowerCase().indexOf(q) > -1 ||
-               (t.desc || "").toLowerCase().indexOf(q) > -1 ||
-               cat.name.toLowerCase().indexOf(q) > -1;
-      }).slice().sort(SORTS[sort] || SORTS.featured);
-      if (!tools.length) return;
-      shown += tools.length;
+
+      const all = toolsIn(cat, who, q);
+      if (!all.length) return;
+
+      /* Every tool in the band is on screen. An earlier version showed four
+         and hid the rest behind a button, which meant the commonest thing
+         anyone does here — look down a list of calculators — took a click
+         first. The subcategory chips are the way to shorten a long band. */
+      const pick = openSub[cat.name] || "all";
+      const cut = (pick === "all") ? all : all.filter(function (t) { return t.sub === pick; });
+      shown += cut.length;
 
       const sec = document.createElement("section");
-      sec.className = "cat";
+      sec.className = "band";
       sec.setAttribute("data-tint", cat.tint || "mint");
+      sec.setAttribute("data-cat", cat.name);
       sec.innerHTML =
-        '<header class="cat-head">' +
+        '<header class="band-head">' +
           '<span class="cat-ico">' + icon(cat.icon) + "</span>" +
           "<h3></h3><p></p>" +
-          '<span class="cat-n">' + tools.length + "</span>" +
-        '</header><div class="cat-grid"></div>';
+          '<span class="band-rule"></span>' +
+          '<span class="band-n">' + all.length + "</span>" +
+          '<span class="band-nav" hidden>' +
+            '<button type="button" class="band-arrow" data-dir="-1" aria-label="Previous">' +
+              '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></button>' +
+            '<button type="button" class="band-arrow" data-dir="1" aria-label="Next">' +
+              '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 6 6 6-6 6"/></svg></button>' +
+          "</span>" +
+        "</header>" +
+        '<div class="band-subs"></div>' +
+        '<div class="band-grid"></div>';
       sec.querySelector("h3").textContent = cat.name;
       sec.querySelector("p").textContent = cat.note;
-      /* the pressed square above already names it */
-      if (active !== "All") sec.querySelector(".cat-head").hidden = true;
 
-      const box = sec.querySelector(".cat-grid");
-      tools.forEach(function (t) {
-        const a = document.createElement("a");
-        a.className = "calc" + (t.href ? "" : " soon");
-        a.href = t.href || "#";
-        if (!t.href) a.addEventListener("click", function (e) { e.preventDefault(); });
-        /* One photograph per column, on the card at the top of it. A picture
-           on all twenty-eight would be a wall of stock imagery and would cost
-           more to load than the whole rest of the page. */
-        a.innerHTML =
-          '<span class="calc-ico">' + icon(t.icon) + "</span>" +
-          '<b class="calc-name"></b>' +
-          '<span class="calc-desc"></span>' +
-          (t.href ? '<span class="calc-go">Open<svg viewBox="0 0 24 24" aria-hidden="true">' +
-                    '<path d="M5 12h13"/><path d="M13 6l6 6-6 6"/></svg></span>'
-                  : '<span class="calc-go soon">Soon</span>');
-        a.querySelector(".calc-name").textContent = t.name;
-        a.querySelector(".calc-desc").textContent = t.desc || "";
-        box.appendChild(a);
+      /* the subcategories. Only worth drawing when the category has more
+         than one of them with anything in it. */
+      const subsBox = sec.querySelector(".band-subs");
+      const subs = (cat.subs || []).map(function (sb) {
+        return { id: sb.id, name: sb.name,
+                 n: all.filter(function (t) { return t.sub === sb.id; }).length };
+      }).filter(function (sb) { return sb.n > 0; });
+
+      if (subs.length > 1) {
+        const chip = function (id, name, n, on) {
+          const b2 = document.createElement("button");
+          b2.type = "button";
+          b2.className = "sub";
+          b2.setAttribute("aria-pressed", on ? "true" : "false");
+          b2.innerHTML = "<span></span><i>" + n + "</i>";
+          b2.querySelector("span").textContent = name;
+          b2.addEventListener("click", function () {
+            openSub[cat.name] = (pick === id) ? "all" : id;
+            render();
+          });
+          return b2;
+        };
+        subsBox.appendChild(chip("all", "All", all.length, pick === "all"));
+        subs.forEach(function (sb) {
+          subsBox.appendChild(chip(sb.id, sb.name, sb.n, pick === sb.id));
+        });
+      } else {
+        subsBox.remove();
+      }
+
+      const box = sec.querySelector(".band-grid");
+      cut.forEach(function (t) { box.appendChild(card(t)); });
+
+      /* ------------------------------------------------------------
+         Four on screen, the rest a swipe away.
+
+         A "show the other six" button put a click in front of the
+         commonest thing anyone does here. A row that slides costs
+         nothing to ignore: the first four are always visible, and
+         the rest are one flick of a trackpad or one arrow away.
+
+         The arrows only appear when there is somewhere to go, and
+         each one is switched off at its end of the row — nothing
+         worse than an arrow that does nothing.
+         ------------------------------------------------------------ */
+      const nav = sec.querySelector(".band-nav");
+      nav.querySelectorAll(".band-arrow").forEach(function (b2) {
+        b2.addEventListener("click", function () {
+          box.scrollBy({ left: box.clientWidth * (+b2.getAttribute("data-dir")), behavior: "smooth" });
+        });
       });
+      const sync = function () {
+        const room = box.scrollWidth - box.clientWidth;
+        nav.hidden = room < 8;
+        const at = box.scrollLeft;
+        nav.querySelector('[data-dir="-1"]').disabled = at < 8;
+        nav.querySelector('[data-dir="1"]').disabled = at > room - 8;
+      };
+      box.addEventListener("scroll", sync, { passive: true });
+      /* the row has no width until it is in the document */
+      requestAnimationFrame(sync);
+      window.addEventListener("resize", sync);
 
       grid.appendChild(sec);
     });

@@ -716,8 +716,9 @@
           const digits = input.value.replace(/[^0-9]/g, "");
           input.value = digits ? Number(digits).toLocaleString("en-US") : "";
         }
+        const live = ROWS.filter(function (r) { return r.id === id; })[0] || row;
         const val = parse({ kind: f.kind, allowZero: true }, input.value);
-        row[f.id] = f.kind === "text" ? input.value : val;
+        live[f.id] = f.kind === "text" ? input.value : val;
       });
     });
 
@@ -726,12 +727,18 @@
        field does not always, and a row that silently loses its figure is
        worse than one that is read twice. */
     function harvest() {
+      /* Look the row up again rather than trusting the one captured when
+         this editor opened. Anything that rebuilds ROWS between opening
+         and closing would leave that reference pointing at an object no
+         longer in the list, and the edit would vanish silently — which is
+         exactly the bug this chased for two runs out of four. */
+      const live = ROWS.filter(function (r) { return r.id === id; })[0] || row;
       (FORM.fields || []).forEach(function (f) {
         const input = box.querySelector("#f_" + f.id);
         if (!input) return;
-        if (f.kind === "text") { row[f.id] = input.value.trim(); return; }
+        if (f.kind === "text") { live[f.id] = input.value.trim(); return; }
         const val = parse({ kind: f.kind, allowZero: true }, input.value);
-        if (val === undefined) delete row[f.id]; else row[f.id] = val;
+        if (val === undefined) delete live[f.id]; else live[f.id] = val;
       });
     }
     function close(keep) {
