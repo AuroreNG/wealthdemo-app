@@ -16,6 +16,58 @@ window.WD = window.WD || {};
 
 (function () {
   const GLOSSARY = {
+    /* ---------- lending, for the readiness scorecards ---------- */
+    requiredpot: {
+      term: "What the plan needs",
+      plain: "The pot that would produce the income they are short of, drawn at the rate they have set, in the money of the year they retire. It is not a target somebody chose \u2014 it falls out of the spending, the social security and the drawdown rate together.",
+      say: "This isn't a number I picked. It's what your own spending, minus your own social security, drawn at your own rate, adds up to."
+    },
+    readiness: {
+      term: "Readiness score",
+      plain: "Four things a lender looks at, weighted the way a lender weights them: your credit, how much of your income is already spoken for, how much you are putting down, and how long you have been in the job. Out of 100.",
+      say: "This isn't my opinion of the file. It's the four things an underwriter actually checks, scored the way they weight them."
+    },
+    creditband: {
+      term: "Credit band",
+      plain: "Lenders do not price every score separately \u2014 they price in bands, and the big steps are at 620, 680 and 740. Moving from 739 to 740 can be worth more than moving from 700 to 739, because one crosses a line and the other does not.",
+      say: "It's the band that matters, not the number. You're one band under the good one."
+    },
+    backratio: {
+      term: "Debt-to-income",
+      plain: "Every monthly payment you owe \u2014 the new mortgage plus car loans, cards and student loans \u2014 added up and divided by what you earn before tax. It is the single number most likely to decide whether a file is approved.",
+      say: "Everything you owe each month, against everything you earn each month. This is the one that gets files declined."
+    },
+    dticeiling: {
+      term: "The 43% ceiling",
+      plain: "Most lenders stop at 43% debt-to-income, and the better rates stop earlier than that, around 36%. Past 43% it is usually not a negotiation \u2014 the file does not pass.",
+      say: "43% is where most lenders stop. 36% is where the good rates stop."
+    },
+    downpayment: {
+      term: "Deposit / down payment",
+      plain: "The part of the price you pay yourself rather than borrow. Below 20% the lender adds insurance to the payment to cover itself; at 20% that goes away.",
+      say: "Under twenty per cent, the lender adds insurance on top. At twenty, it disappears."
+    },
+    mortgageins: {
+      term: "Mortgage insurance",
+      plain: "An extra monthly charge when the deposit is under 20%. It protects the lender, not you. You may ask for it to come off once the balance reaches 80% of the value, and it comes off on its own at 78% \u2014 but only if somebody asks, or waits.",
+      say: "This one protects them, not you. Ask for it to come off the moment you're at eighty per cent \u2014 nobody will remind you."
+    },
+    jobhistory: {
+      term: "Time in the job",
+      plain: "Two years in the same line of work is what a lender wants to see. It does not have to be the same employer \u2014 moving jobs inside the same field usually counts, and changing field usually resets it.",
+      say: "Two years in the same line of work. Changing employers is fine; changing careers isn't."
+    },
+    preapproval: {
+      term: "Pre-approval",
+      plain: "Three different things get called this. A prequalification is a phone call and worth little. A pre-approval means documents were checked. Fully underwritten means a human has already said yes, subject only to the property \u2014 and that is the one that wins a competitive offer.",
+      say: "There are three kinds, and only one of them wins you a house you're bidding on."
+    },
+    borrowingpower: {
+      term: "Borrowing power",
+      plain: "The most a lender would lend on this income once every other monthly payment is counted. Clearing a debt does not just save you its payment \u2014 it raises this by roughly the whole loan that payment could have supported.",
+      say: "Clearing a payment doesn't save you that payment. It gives you back everything that payment could have borrowed."
+    },
+
     qualified: {
       term: "Qualified / tax-deferred",
       plain: "Money you put in before tax was taken out. You got the break up front, so the IRS taxes it on the way out — and before 59½ they usually add another 10% on top.",

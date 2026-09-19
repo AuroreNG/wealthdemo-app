@@ -99,6 +99,34 @@
     return floor === undefined ? 0 : floor;
   }
 
+  /* ------------------------------------------------------------
+     The band tables, written down once.
+
+     compute() scores against these and the scorecard draws them,
+     so what is on screen and what is in the number can never
+     drift apart. Move a lender's threshold here and the picture
+     and the score both move with it.
+
+     Each is [cut, fraction] in descending order of cut, read by
+     steps() upwards or stepsDown() downwards.
+     ------------------------------------------------------------ */
+  const T = {
+    credit:    [[740, 1], [680, .85], [620, .6], [580, .3]],
+    dti:       [[36, 1], [40, .8], [43, .6], [50, .35]],
+    downPct:   [[20, 1], [10, .75], [5, .5], [3, .3]],
+    jobYears:  [[2, 1], [1, .6]],
+    buyerDown: [[20, 1], [10, .8], [5, .5], [3, .3]]
+  };
+
+  /* what a lever is worth: the form's own compute(), run again on
+     changed answers. Nothing is modelled twice. */
+  function withPatch(v, patch) {
+    const out = {};
+    for (const k in v) out[k] = v[k];
+    for (const k in patch) out[k] = patch[k];
+    return out;
+  }
+
   /* ============================================================
      1 · Mortgage Readiness Assessment        Real Estate · ask
      ============================================================ */
@@ -150,6 +178,140 @@
 
     seed: { term: 30, rate: 6.5, firstTime: true },
 
+    /* ------------------------------------------------------------
+       The scorecard.
+
+       A readiness score is four weighted judgements, not one
+       number, and an adviser is owed the four. Each gate names
+       the table it is scored against — the same constant
+       compute() uses — so the lanes on screen are the lender's
+       real thresholds and not a drawing of them.
+       ------------------------------------------------------------ */
+    gates: [
+      { id: "credit", label: "Credit score", term: "creditband", weight: 34, dir: "up",
+        table: T.credit, floor: 0, scale: [560, 820], ticks: [620, 680, 740],
+        value: function (v, r) { return num(v.credit); },
+        show:  function (v, r) { return String(Math.round(num(v.credit))); },
+        note:  function (v, r) { return num(v.credit) >= 740 ? "Top band" : "One band under 740"; } },
+
+      { id: "dti", label: "Debt-to-income", term: "backratio", weight: 34, dir: "down",
+        table: T.dti, floor: 0, scale: [30, 55],
+        ticks: [[36, "36%"], [40, "40%"], [43, "43% ceiling"]],
+        value: function (v, r) { return r.back; },
+        show:  function (v, r) { return pct(r.back); },
+        note:  function (v, r) { return r.back > 43 ? "Past the ceiling"
+                                      : (r.back > 36 ? "Inside the ceiling" : "Best band"); } },
+
+      { id: "down", label: "Deposit", term: "downpayment", weight: 22, dir: "up",
+        table: T.downPct, floor: 0, scale: [0, 25],
+        ticks: [[5, "5%"], [10, "10%"], [20, "20% \u00b7 no insurance"]],
+        value: function (v, r) { return r.downPct; },
+        show:  function (v, r) { return pct(r.downPct, 1); },
+        note:  function (v, r) { return r.pmi > 0
+                  ? money(r.pmi) + " a month insurance" : "No mortgage insurance"; } },
+
+      { id: "job", label: "Time in the job", term: "jobhistory", weight: 10, dir: "up",
+        table: T.jobYears, floor: .3, scale: [0, 6], ticks: [[1, "1 yr"], [2, "2 yrs"]],
+        value: function (v, r) { return num(v.jobYears); },
+        show:  function (v, r) { const n = num(v.jobYears); return n + (n === 1 ? " yr" : " yrs"); },
+        note:  function (v, r) { return num(v.jobYears) >= 2 ? "Full marks" : "Under two years"; } }
+    ],
+
+    /* Each lever is re-run through compute(). The engine ranks them by
+       what they actually score, so the page can say which one matters
+       rather than listing four in the order somebody typed them. */
+    levers: [
+      { id: "debts", when: function (v, r) { return num(v.debts) > 0; },
+        label: function (v, r) { return "Clear the " + money(num(v.debts)) + " of other debt"; },
+        head:  function (v, r) { return "It is the other debt, not the house."; },
+        why:   function (v, r) {
+          return money(num(v.debts)) + " a month of other debt is what is failing the file \u2014 "
+               + "not the price, the credit or the deposit. Clear it and the ratio lands inside "
+               + "every lender's ceiling at the same " + money(num(v.price)) + "."; },
+        patch: function (v, r) { return { debts: 0 }; } },
+
+      { id: "down20", when: function (v, r) { return r.downPct < 20 && num(v.price) > 0; },
+        label: function (v, r) { return money(num(v.price) * 0.2 - num(v.down)) + " more down"; },
+        head:  function (v, r) { return "The deposit is the short leg."; },
+        why:   function (v, r) {
+          return "Reaching 20% removes the " + money(r.pmi) + " a month of mortgage insurance "
+               + "on day one and moves the ratio with it."; },
+        patch: function (v, r) { return { down: num(v.price) * 0.2 }; } },
+
+      { id: "price", when: function (v, r) { return r.maxLender !== null && r.maxLender < num(v.price); },
+        label: function (v, r) { return "Offer " + money(r.maxLender) + " instead"; },
+        head:  function (v, r) { return "The price is what has to move."; },
+        why:   function (v, r) {
+          return money(r.maxLender) + " is the most this income carries at the 43% ceiling. "
+               + "Everything else on the file already passes."; },
+        patch: function (v, r) { return { price: r.maxLender }; } },
+
+      { id: "credit740", when: function (v, r) { return num(v.credit) < 740 && num(v.credit) > 0; },
+        label: function (v, r) { return "Credit up to 740"; },
+        head:  function (v, r) { return "One credit band is the whole gap."; },
+        why:   function (v, r) {
+          return "Worth asking about a rapid rescore before the application goes in. "
+               + "It cannot be done afterwards."; },
+        patch: function (v, r) { return { credit: 740 }; } }
+    ],
+
+    /* what the client says, answered by running this form again */
+    guide: [
+      { kind: "objection", said: "Can we just offer over asking? We really want this one.",
+        text: function (c) {
+          if (c.raw.maxLender === null) return "";
+          return "Not on this income. The ceiling is <b>" + c.money(c.raw.maxLender) +
+            "</b> and they are already asking <b>" + c.money(c.num(c.v.price)) +
+            "</b>. Every dollar over comes out of the deposit, which pushes the loan-to-value " +
+            "the wrong way \u2014 and it is the ratio failing, not the deposit."; },
+        say: "I can get you approved at the ceiling today. Above that I am not the one saying no \u2014 the underwriter is.",
+        ran: "Solved the price against this form's own ratio" },
+
+      { kind: "objection", said: "Why would I pay off a car at 3% to borrow at 6.5%?",
+        text: function (c) {
+          if (!(c.num(c.v.debts) > 0)) return "";
+          const after = c.ifChanged({ debts: 0 });
+          return "Because the lender is not pricing the car, it is counting the payment. That <b>" +
+            c.money(c.num(c.v.debts)) + "</b> a month is worth <b>" + (after.score - c.score) +
+            " points</b> of readiness \u2014 the ratio goes from <b>" + c.pct(c.raw.back) +
+            "</b> to <b>" + c.pct(after.raw.back) + "</b>. The interest rate on it is beside the point."; },
+        say: "Clearing a payment does not save you that payment. It gives you back everything that payment could have borrowed.",
+        ran: "Ran this form again with the other debt cleared" },
+
+      { kind: "question", said: "My credit is fine. Why does it matter if I have the deposit?",
+        text: function (c) {
+          const cr = c.num(c.v.credit);
+          if (!cr || cr >= 740) return "";
+          const after = c.ifChanged({ credit: 740 });
+          return "It is not the deposit, it is the band the deposit is borrowed at. <b>" + cr +
+            "</b> is under 740, and lenders price in bands rather than by the point. Crossing it " +
+            "is worth <b>" + (after.score - c.score) + " points</b> here."; },
+        say: "It is the band that matters, not the number. You are one band under the good one.",
+        ran: "Ran this form again at 740" },
+
+      { kind: "check", said: "",
+        text: function (c) {
+          if (!(c.raw.pmi > 0)) return "";
+          const yrs = function (mo) { return Math.round(mo / 12 * 10) / 10; };
+          return "Mortgage insurance is <b>" + c.money(c.raw.pmi) + "</b> a month and it is not forever. " +
+            (c.raw.pmiAskMonths
+              ? "They may ask for it to come off at about <b>" + yrs(c.raw.pmiAskMonths) +
+                " years</b> and it drops on its own at <b>" + yrs(c.raw.pmiAutoMonths) +
+                "</b> \u2014 <b>" + c.money(c.raw.pmi * c.raw.pmiAutoMonths) + "</b> paid if nobody asks."
+              : "Worth telling them when it comes off before they sign."); },
+        say: "",
+        ran: "Amortised this file's own loan" },
+
+      { kind: "check", said: "",
+        text: function (c) {
+          if (c.v.selfEmployed !== true) return "";
+          return "They are self-employed, so the income on this form is the one a lender will " +
+            "re-derive from two years of returns \u2014 after expenses, not before. Worth agreeing " +
+            "which figure you are both using before this goes any further."; },
+        say: "",
+        ran: "Read off the answers on this form" }
+    ],
+
     bands: [
       { min: 85, label: "Ready to apply", tone: "good",
         say: "Nothing here would stop a lender. Start the application." },
@@ -199,10 +361,10 @@
       }
 
       const score = Math.round(
-        0.34 * steps(credit, [[740, 1], [680, .85], [620, .6], [580, .3]], 0) * 100 +
-        0.34 * stepsDown(back, [[36, 1], [40, .8], [43, .6], [50, .35]], 0) * 100 +
-        0.22 * steps(h.downPct, [[20, 1], [10, .75], [5, .5], [3, .3]], 0) * 100 +
-        0.10 * steps(jobYears, [[2, 1], [1, .6]], .3) * 100
+        0.34 * steps(credit, T.credit, 0) * 100 +
+        0.34 * stepsDown(back, T.dti, 0) * 100 +
+        0.22 * steps(h.downPct, T.downPct, 0) * 100 +
+        0.10 * steps(jobYears, T.jobYears, .3) * 100
       );
 
       const figures = [
@@ -250,6 +412,7 @@
 
       return { score: score, figures: figures, notes: notes,
                raw: { total: h.total, back: back, front: front, ltv: h.ltv,
+                      downPct: h.downPct, price: price, debts: debts, credit: credit,
                       maxLender: maxLender, maxSafe: maxSafe, pmi: h.pmi,
                       pmiAskMonths: pmiAskMonths, pmiAutoMonths: pmiAutoMonths } };
     }
@@ -384,7 +547,7 @@
     cat: "Money",
     tint: "mint",
     icon: "target",
-    who: "Retirement",
+    who: "Financial advisers",
     lede: "Whether what they are putting away actually reaches what they want to spend.",
     minutes: 3,
     sendable: true,
@@ -420,6 +583,117 @@
     ],
 
     seed: { growth: 6, inflation: 2.5, swr: 4, retAge: 65 },
+
+    /* ------------------------------------------------------------
+       This one is not four gates.
+
+       Mortgage and buyer readiness are weighted judgements a
+       lender or an agent makes. Retirement readiness is one
+       ratio: what they will have against what the plan needs.
+       Drawing it as four lanes would be dressing it up as
+       something it is not.
+
+       So it gets a build-up instead — where the money comes
+       from, against the line it has to reach. Same idea, honest
+       to the maths underneath it.
+       ------------------------------------------------------------ */
+    build: {
+      title: "Where the money comes from",
+      term: "timevalue",
+      note: "and the line it has to reach",
+      parts: function (v, r) {
+        return [
+          { id: "saved", label: "Already saved", n: r.saved, tint: "deep" },
+          { id: "paid", label: "Still to go in", n: r.contributed, tint: "mid" },
+          { id: "growth", label: "What growth adds", n: r.growthAdded, tint: "light",
+            term: "timevalue" }
+        ];
+      },
+      mark: function (v, r) {
+        return { label: "What the plan needs", n: r.required, term: "requiredpot" };
+      }
+    },
+
+    levers: [
+      { id: "save", when: function (v, r) { return r.needMonthly !== null; },
+        label: function (v, r) { return money(r.needMonthly) + " a month instead of " + money(num(v.monthly)); },
+        head:  function (v, r) { return "It is a monthly number, not a miracle."; },
+        why:   function (v, r) {
+          return "Saving " + money(r.needMonthly) + " a month from now closes it by " +
+            num(v.retAge) + " on the same assumptions."; },
+        patch: function (v, r) { return { monthly: r.needMonthly }; } },
+
+      { id: "later", when: function (v, r) { return r.needAge !== null; },
+        label: function (v, r) { return "Stop at " + r.needAge + " instead of " + num(v.retAge); },
+        head:  function (v, r) { return "The date is the cheapest lever they have."; },
+        why:   function (v, r) {
+          return "Same saving, later date. " + (r.needAge - num(v.retAge)) +
+            ((r.needAge - num(v.retAge)) === 1 ? " more year" : " more years") +
+            " of paying in and one fewer of drawing out."; },
+        patch: function (v, r) { return { retAge: r.needAge }; } },
+
+      { id: "spend", when: function (v, r) { return num(v.spend) > 0 && r.ratio < 1; },
+        label: function (v, r) { return money(Math.round(num(v.spend) * 0.9)) + " a month instead of " + money(num(v.spend)); },
+        head:  function (v, r) { return "Ten per cent less to live on."; },
+        why:   function (v, r) {
+          return "Spending is the only lever that works immediately and the only one they control " +
+            "completely. Ten per cent is usually invisible in practice."; },
+        patch: function (v, r) { return { spend: Math.round(num(v.spend) * 0.9) }; } },
+
+      { id: "growth", when: function (v, r) { return num(v.growth) < 7; },
+        label: function (v, r) { return "Assume " + (num(v.growth) + 1) + "% growth"; },
+        head:  function (v, r) { return "Most of the gap is the assumption."; },
+        why:   function (v, r) {
+          return "Worth knowing what one point of return is worth here \u2014 but it is the one " +
+            "lever nobody controls. Never sell it as a plan."; },
+        patch: function (v, r) { return { growth: num(v.growth) + 1 }; } }
+    ],
+
+    guide: [
+      { kind: "question", said: "So am I going to be all right?",
+        text: function (c) {
+          return "On these figures they reach <b>" + c.money(c.raw.projected) + "</b> against a plan " +
+            "that needs <b>" + c.money(c.raw.required) + "</b> \u2014 " +
+            (c.raw.ratio >= 1
+              ? "covered, with room."
+              : "<b>" + c.money(c.raw.required - c.raw.projected) + "</b> short. " +
+                "Every figure here rests on assumptions, and the assumptions are the fragile part."); },
+        say: "The honest answer is a range, and the number moves the day any of these assumptions does.",
+        ran: "Read straight off this form" },
+
+      { kind: "objection", said: "Can I not just work a couple more years if it comes to it?",
+        text: function (c) {
+          if (c.raw.needAge === null) return "";
+          const after = c.ifChanged({ retAge: c.raw.needAge });
+          return "You can, and it works \u2014 stopping at <b>" + c.raw.needAge + "</b> instead of <b>" +
+            c.num(c.v.retAge) + "</b> takes this from <b>" + c.score + "</b> to <b>" + after.score +
+            "</b>. The part worth saying out loud is that it is a decision made now, not then: " +
+            "the later you leave it the more years it takes."; },
+        say: "Working longer is a real answer. It is just a more expensive one the longer you wait to choose it.",
+        ran: "Ran this form again at the later date" },
+
+      { kind: "check", said: "",
+        text: function (c) {
+          if (!(c.num(c.v.ss) > 0) || !(c.num(c.v.spend) > 0)) return "";
+          const share = c.num(c.v.ss) / c.num(c.v.spend) * 100;
+          if (share < 40) return "";
+          return "Social security is carrying <b>" + c.pct(share, 0) + "</b> of what they want to " +
+            "spend. That is a lot of the plan resting on one figure from one statement \u2014 worth " +
+            "checking it is their own number and not a guess."; },
+        say: "",
+        ran: "Read off this form's own figures" },
+
+      { kind: "check", said: "",
+        text: function (c) {
+          const g = c.num(c.v.growth);
+          if (!g || g <= 6) return "";
+          const lower = c.ifChanged({ growth: 6 });
+          return "Growth is set to <b>" + g + "%</b>. At 6% the score is <b>" + lower.score +
+            "</b>. Whichever you show them, say out loud that it is an assumption and not a rate " +
+            "anybody is promising."; },
+        say: "",
+        ran: "Ran this form again at 6%" }
+    ],
 
     bands: [
       { min: 100, label: "There, with room", tone: "good",
@@ -499,9 +773,13 @@
         notes.push({ tone: "good", head: "Nothing has to change",
           body: "On these assumptions. Assumptions are the fragile part — say so out loud." });
       }
+      const contributed = monthly * Math.round(years * 12);
       return { score: score, figures: figures, notes: notes,
                raw: { projected: projected, required: required, ratio: ratio,
-                      needMonthly: needMonthly, needAge: needAge, years: years } };
+                      needMonthly: needMonthly, needAge: needAge, years: years,
+                      saved: saved, contributed: contributed,
+                      growthAdded: Math.max(0, projected - saved - contributed),
+                      gapMonthly: gapMonthly, spend: spend, ss: ss, pension: pension } };
     }
   };
 
@@ -515,7 +793,7 @@
     cat: "Real Estate",
     tint: "sand",
     icon: "target",
-    who: "Real estate agents",
+    who: "Buyer's agents",
     lede: "Whether this buyer can actually transact, before you spend six Saturdays on them.",
     minutes: 2,
     sendable: true,
@@ -558,6 +836,105 @@
         placeholder: "e.g. three bedrooms, that school, a garage" }
     ],
 
+    gates: [
+      { id: "lender", label: "With a lender", term: "preapproval", weight: 40, dir: "up",
+        kind: "steps", scale: [0, 3], stops: ["Not spoken", "Prequalified", "Pre-approved", "Underwritten"],
+        value: function (v, r) { return num(v.approved); },
+        frac:  function (v, r) { return num(v.approved) / 3; },
+        show:  function (v, r) { return ["Not yet", "Prequalified", "Pre-approved", "Underwritten"][num(v.approved)] || "\u2014"; },
+        note:  function (v, r) { return num(v.approved) >= 2 ? "Real approval" : "No real approval"; } },
+
+      { id: "timing", label: "When they move", term: null, weight: 25, dir: "up",
+        kind: "steps", scale: [0, 3], stops: ["Just looking", "6\u201312 months", "3\u20136 months", "Inside 3"],
+        value: function (v, r) { return num(v.when); },
+        frac:  function (v, r) { return num(v.when) / 3; },
+        show:  function (v, r) { return ["Just looking", "6\u201312 months", "3\u20136 months", "Inside 3 months"][num(v.when)] || "\u2014"; },
+        note:  function (v, r) { return num(v.when) >= 2 ? "Inside six months" : "No date pressure"; } },
+
+      { id: "cash", label: "Cash against budget", term: "downpayment", weight: 20, dir: "up",
+        table: T.buyerDown, floor: .1, scale: [0, 25],
+        ticks: [[5, "5%"], [10, "10%"], [20, "20% \u00b7 no insurance"]],
+        value: function (v, r) { return r.pctDown; },
+        show:  function (v, r) { return pct(r.pctDown, 1); },
+        note:  function (v, r) { return money(num(v.down)) + " of " + money(num(v.budget)); } },
+
+      { id: "agreed", label: "Agreed with each other", term: null, weight: 15, dir: "up",
+        kind: "steps", scale: [0, 1], stops: ["Not yet", "Agreed"],
+        value: function (v, r) { return v.agreed === false ? 0 : 1; },
+        frac:  function (v, r) { return v.agreed === false ? 0 : 1; },
+        show:  function (v, r) { return v.agreed === false ? "No" : "Yes"; },
+        note:  function (v, r) { return v.agreed === false ? "The quiet deal-killer" : "One answer, not two"; } }
+    ],
+
+    /* the -15 for selling without listing is a penalty, not a gate: it is
+       shown on its own so the four weights still add to 100 */
+    penalty: function (v, r) {
+      return r.penalty ? { label: "Selling first, and not on the market", points: 15,
+                           note: "Their timeline is their own listing's timeline." } : null;
+    },
+
+    levers: [
+      { id: "approve", when: function (v, r) { return num(v.approved) < 3; },
+        label: function (v, r) { return num(v.approved) < 2 ? "Get them properly pre-approved" : "Get it underwritten"; },
+        head:  function (v, r) { return "Everything waits on the lender."; },
+        why:   function (v, r) {
+          return "This is the heaviest thing on the scorecard and the one entirely inside your "
+               + "control this week. Introduce a lender before the next viewing."; },
+        patch: function (v, r) { return { approved: 3 }; } },
+
+      { id: "list", when: function (v, r) { return v.sellFirst === true && v.listed !== true; },
+        label: function (v, r) { return "Get their own place listed"; },
+        head:  function (v, r) { return "They are buying on someone else's timeline."; },
+        why:   function (v, r) {
+          return "Until their own place is on the market their date is a wish. Listing it is what "
+               + "turns this from a browser into a buyer."; },
+        patch: function (v, r) { return { listed: true }; } },
+
+      { id: "agree", when: function (v, r) { return v.agreed === false; },
+        label: function (v, r) { return "An hour on what each of them wants"; },
+        head:  function (v, r) { return "They are not looking for the same house."; },
+        why:   function (v, r) {
+          return "The cheapest hour in the whole transaction, and the one nobody books."; },
+        patch: function (v, r) { return { agreed: true }; } },
+
+      { id: "cash20", when: function (v, r) { return r.pctDown < 20 && num(v.budget) > 0; },
+        label: function (v, r) { return money(num(v.budget) * 0.2 - num(v.down)) + " more cash"; },
+        head:  function (v, r) { return "The cash is the short leg."; },
+        why:   function (v, r) { return "20% makes the offer stronger than most in their bracket."; },
+        patch: function (v, r) { return { down: num(v.budget) * 0.2 }; } }
+    ],
+
+    guide: [
+      { kind: "objection", said: "We just want to look at a few first.",
+        text: function (c) {
+          if (c.num(c.v.approved) >= 2) return "";
+          const after = c.ifChanged({ approved: 3 });
+          return "Looking is free until they find one. Without an approval this file scores <b>" +
+            c.score + "</b>; with one it is <b>" + after.score + "</b>. The difference is whether " +
+            "an offer gets taken seriously on the day it matters."; },
+        say: "Let us look at anything you like. I just do not want you falling for something you cannot offer on by Friday.",
+        ran: "Ran this form again with an underwritten approval" },
+
+      { kind: "question", said: "How much of a deposit do we actually need?",
+        text: function (c) {
+          return "They have <b>" + c.pct(c.raw.pctDown, 1) + "</b> of a " +
+            c.money(c.num(c.v.budget)) + " budget. 20% is where mortgage insurance stops \u2014 " +
+            (c.raw.pctDown >= 20 ? "which they are already past."
+              : "<b>" + c.money(c.num(c.v.budget) * 0.2 - c.num(c.v.down)) + "</b> more gets them there."); },
+        say: "There is no minimum that matters as much as the one where the insurance stops.",
+        ran: "Read off this form's own cash and budget" },
+
+      { kind: "check", said: "",
+        text: function (c) {
+          if (!(c.v.sellFirst === true && c.v.listed !== true)) return "";
+          const after = c.ifChanged({ listed: true });
+          return "They have to sell first and their place is not listed. That is <b>15 points</b> " +
+            "off the score on its own, and it is the single thing most likely to lose you the six " +
+            "Saturdays. Listing it takes them to <b>" + after.score + "</b>."; },
+        say: "",
+        ran: "Ran this form again with their own place listed" }
+    ],
+
     bands: [
       { min: 80, label: "Transaction-ready", tone: "good", say: "Show them houses. This one will close." },
       { min: 55, label: "Nearly", tone: "warn", say: "One thing is missing, and it is usually the lender." },
@@ -573,7 +950,7 @@
       let score = Math.round(
         0.40 * (approved / 3) * 100 +
         0.25 * (when / 3) * 100 +
-        0.20 * steps(pctDown, [[20, 1], [10, .8], [5, .5], [3, .3]], .1) * 100 +
+        0.20 * steps(pctDown, T.buyerDown, .1) * 100 +
         0.15 * (v.agreed === false ? 0 : 100)
       );
       if (v.sellFirst === true && v.listed !== true) score = Math.max(0, score - 15);
@@ -608,7 +985,9 @@
           body: "No mortgage insurance, and a stronger offer than most in their bracket." });
       }
       return { score: score, figures: figures, notes: notes,
-               raw: { pctDown: pctDown, approved: approved } };
+               raw: { pctDown: pctDown, approved: approved, when: when,
+                      budget: budget, down: down,
+                      penalty: (v.sellFirst === true && v.listed !== true) } };
     }
   };
 
@@ -746,7 +1125,7 @@
     cat: "Protection",
     tint: "rose",
     icon: "heart",
-    who: "Estate and legacy",
+    who: "Estate planners",
     lede: "What this family should have signed, and what is missing.",
     minutes: 2,
     sendable: true,

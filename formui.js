@@ -93,6 +93,12 @@
     } catch (e) { return null; }
   }
 
+  /* A finished ask form is a report, not a form. This is the way back:
+     "Change any of them" sets it, and it stays set until the form is
+     reset, so the page does not snap out from under somebody who is
+     halfway through a correction. */
+  let EDITING = false;
+
   let V = {};       /* answers — for a check, the setup answers */
   let MARK = {};    /* check only: item id -> "need" | "have" | "na" */
   let ROWS = [];    /* track only */
@@ -236,7 +242,7 @@
   /* one change may hide another question, so an ask re-renders its groups */
   function changed(now) {
     save(now);
-    if (FORM.kind === "ask") { paintGroups(); paintAnswer(); }
+    if (FORM.kind === "ask") { paint(); }
     else if (FORM.kind === "check") { paintCheck(); }
   }
 
@@ -293,6 +299,7 @@
           "<p></p>" +
         "</div>" +
         '<div class="f-hero-fig" id="fHeroFig"></div>' +
+        '<div class="f-hero-scale" id="fHeroScale" hidden></div>' +
       "</section>";
 
     mount.innerHTML = top + hero +
@@ -480,6 +487,376 @@
     setTimeout(function () { try { inp.select(); } catch (e) {} }, 50);
   }
 
+  /* ============================================================
+     THE SCORECARD
+
+     A readiness score is not one number, it is several weighted
+     judgements, and an adviser is owed the several. Each gate
+     draws the very table compute() scored against — forms.js
+     hands both of them the same constant — so the lanes on
+     screen are the real thresholds rather than a picture of
+     them.
+     ============================================================ */
+
+  /* how good is this value, 0..1, and where do the bands sit across the lane */
+  function zonesUp(g) {
+    const lo = g.scale[0], hi = g.scale[1], out = [];
+    const asc = g.table.slice().reverse();          /* lowest cut first */
+    let x = lo, frac = g.floor === undefined ? 0 : g.floor;
+    asc.forEach(function (row) {
+      const at = Math.max(lo, Math.min(hi, row[0]));
+      if (at > x) out.push({ from: x, to: at, frac: frac });
+      x = at; frac = row[1];
+    });
+    if (x < hi) out.push({ from: x, to: hi, frac: frac });
+    return out;
+  }
+  function zonesDown(g) {
+    const lo = g.scale[0], hi = g.scale[1], out = [];
+    let x = lo;
+    g.table.forEach(function (row) {
+      const at = Math.max(lo, Math.min(hi, row[0]));
+      if (at > x) out.push({ from: x, to: at, frac: row[1] });
+      x = at;
+    });
+    if (x < hi) out.push({ from: x, to: hi, frac: g.floor === undefined ? 0 : g.floor });
+    return out;
+  }
+  function gateFrac(g, v, raw) {
+    if (g.frac) return Math.max(0, Math.min(1, g.frac(v, raw)));
+    const val = g.value(v, raw);
+    const rows = g.table || [];
+    for (let i = 0; i < rows.length; i++) {
+      if (g.dir === "down" ? val <= rows[i][0] : val >= rows[i][0]) return rows[i][1];
+    }
+    return g.floor === undefined ? 0 : g.floor;
+  }
+
+  const BANDCOL = [
+    [1,   "#2f8f68"], [.75, "#b7d8c6"], [.5, "#e8cfa8"], [.25, "#edd3d6"], [0, "#cf919b"]
+  ];
+  function bandColour(f) {
+    for (let i = 0; i < BANDCOL.length; i++) if (f >= BANDCOL[i][0]) return BANDCOL[i][1];
+    return BANDCOL[BANDCOL.length - 1][1];
+  }
+  function toneOf(f) { return f >= 1 ? "good" : (f >= .6 ? "warn" : "bad"); }
+
+  /* a term marked for explain.js, with the dashed underline and the circled i */
+  function t(label, term) {
+    return term ? '<span data-term="' + esc(term) + '">' + esc(label) + "</span>" : esc(label);
+  }
+
+  function gateLane(g, v, raw) {
+    const lo = g.scale[0], hi = g.scale[1], span = (hi - lo) || 1;
+    const at = function (n) { return Math.max(0, Math.min(100, (n - lo) / span * 100)); };
+    const html = [];
+
+    if (g.kind === "steps") {
+      const n = g.stops.length, got = Math.round(g.value(v, raw));
+      html.push('<div class="f-lane-track is-steps">');
+      for (let i = 0; i < n; i++) {
+        html.push('<i style="background:' + (i <= got ? bandColour(i / (n - 1)) : "#e8edeb") + '"></i>');
+      }
+      html.push("</div>");
+      html.push('<div class="f-lane-ticks">' + g.stops.map(function (label, i) {
+        return '<span' + (i === got ? ' class="is-at"' : "") + '>' + esc(label) + "</span>";
+      }).join("") + "</div>");
+    } else {
+      const zones = g.dir === "down" ? zonesDown(g) : zonesUp(g);
+      html.push('<div class="f-lane-track">');
+      zones.forEach(function (z) {
+        html.push('<i style="width:' + ((z.to - z.from) / span * 100).toFixed(2) +
+          '%;background:' + bandColour(z.frac) + '"></i>');
+      });
+      html.push("</div>");
+      html.push('<span class="f-lane-pin" style="left:' + at(g.value(v, raw)).toFixed(2) + '%"></span>');
+      html.push('<div class="f-lane-ticks is-abs">' + (g.ticks || []).map(function (tk) {
+        const n = (tk instanceof Array) ? tk[0] : tk;
+        const label = (tk instanceof Array) ? tk[1] : String(tk);
+        const best = g.dir === "down" ? (n === g.table[0][0]) : (n === g.table[0][0]);
+        return '<span class="' + (best ? "is-best" : "") + '" style="left:' + at(n).toFixed(2) + '%">' +
+          (g.term && best ? t(label, g.term) : esc(label)) + "</span>";
+      }).join("") + "</div>");
+    }
+    return html.join("");
+  }
+
+  function scorecard(v, out) {
+    const raw = out.raw || {};
+
+    /* the build-up shape, for a score that is one ratio rather than gates */
+    if (FORM.build) {
+      const parts = FORM.build.parts(v, raw).filter(function (x) { return x.n > 0; });
+      const mark = FORM.build.mark(v, raw);
+      const total = parts.reduce(function (a, x) { return a + x.n; }, 0);
+      const top = Math.max(total, mark.n) * 1.04;
+      const markAt = top > 0 ? mark.n / top * 100 : 0;
+      const TINT = { deep: "#0d4435", mid: "#2f8f68", light: "#9ccfb6" };
+      return '<section class="f-panel f-score-card">' +
+        '<div class="f-panel-h"><h3>' + t(FORM.build.title, FORM.build.term) + "</h3>" +
+          '<span class="f-panel-note">' + esc(FORM.build.note || "") + "</span></div>" +
+        '<div class="f-build">' +
+          '<div class="f-build-track">' +
+            parts.map(function (x) {
+              return '<i style="width:' + (x.n / top * 100).toFixed(2) + '%;background:' +
+                (TINT[x.tint] || "#2f8f68") + '"></i>';
+            }).join("") +
+            '<span class="f-build-mark" style="left:' + (mark.n / top * 100).toFixed(2) + '%"></span>' +
+          "</div>" +
+          '<div class="f-build-mark-l' + (markAt > 72 ? " is-right" : (markAt < 28 ? " is-left" : "")) +
+            '" style="left:' + markAt.toFixed(2) + '%">' +
+            "<b>" + esc(M.money(mark.n)) + "</b><span>" + t(mark.label, mark.term) + "</span></div>" +
+        "</div>" +
+        '<div class="f-build-key">' + parts.map(function (x) {
+          return '<div class="f-key"><i style="background:' + (TINT[x.tint] || "#2f8f68") + '"></i>' +
+            "<span>" + t(x.label, x.term) + "</span><b>" + esc(M.money(x.n)) + "</b></div>";
+        }).join("") + "</div>" +
+      "</section>";
+    }
+
+    if (!FORM.gates) return "";
+
+    const pen = FORM.penalty ? FORM.penalty(v, raw) : null;
+    const rows = FORM.gates.map(function (g) {
+      const f = gateFrac(g, v, raw);
+      const pts = g.weight * f;
+      const tone = toneOf(f);
+      return '<div class="f-gate" data-tone="' + tone + '">' +
+        '<div class="f-gate-id">' +
+          '<div class="f-gate-l">' + t(g.label, g.term) + "</div>" +
+          '<div class="f-gate-v">' + esc(g.show(v, raw)) + "</div>" +
+        "</div>" +
+        '<div class="f-lane">' + gateLane(g, v, raw) + "</div>" +
+        '<div class="f-gate-pts">' +
+          "<b>" + (Math.round(pts * 10) / 10) + "</b><span>of " + g.weight + "</span>" +
+          '<span class="f-gate-bar" style="width:' + g.weight + '%">' +
+            '<i style="width:' + Math.round(f * 100) + '%"></i></span>' +
+          '<span class="f-gate-n">' + esc(g.note(v, raw)) + "</span>" +
+        "</div>" +
+      "</div>";
+    }).join("");
+
+    return '<section class="f-panel f-score-card">' +
+      '<div class="f-panel-h"><h3>' + t(FORM.gatesTitle || "What this score is made of", "readiness") + "</h3>" +
+        '<span class="f-panel-note">the wider the bar, the more of the score it decides</span></div>' +
+      '<div class="f-gates">' + rows + "</div>" +
+      (pen ? '<div class="f-penalty"><b>−' + pen.points + "</b><span><b>" + esc(pen.label) +
+             "</b>" + esc(pen.note || "") + "</span></div>" : "") +
+    "</section>";
+  }
+
+  /* ============================================================
+     THE ONE THING — every lever re-run through compute()
+     ============================================================ */
+  function levers(v, out) {
+    if (!FORM.levers) return null;
+    const raw = out.raw || {};
+    const list = [];
+    FORM.levers.forEach(function (L) {
+      let ok = true;
+      try { ok = L.when ? L.when(v, raw) : true; } catch (e) { ok = false; }
+      if (!ok) return;
+      let res = null, patch = null;
+      try { patch = L.patch(v, raw); res = FORM.compute(patchOf(v, patch)); }
+      catch (e) { return; }
+      if (!res || res.score <= out.score) return;
+      list.push({ L: L, patch: patch, to: res.score, gain: res.score - out.score,
+                  label: L.label(v, raw) });
+    });
+    list.sort(function (a, b) { return b.to - a.to; });
+    return list;
+  }
+  function patchOf(v, patch) {
+    const o = {};
+    for (const k in v) o[k] = v[k];
+    for (const k in patch) o[k] = patch[k];
+    return o;
+  }
+
+  function oneThing(v, out, band) {
+    const list = levers(v, out);
+    if (!list || !list.length) {
+      return '<section class="f-one is-clear">' +
+        '<div class="f-one-main"><span class="f-eyebrow">Where this lands</span>' +
+        "<h2>" + esc(band.label) + "</h2><p>" + esc(band.say || "") + "</p></div></section>";
+    }
+    const best = list[0], rest = list.slice(1);
+    const raw = out.raw || {};
+    let head = "", why = "";
+    try { head = best.L.head ? best.L.head(v, raw) : best.label; } catch (e) { head = best.label; }
+    try { why = best.L.why ? best.L.why(v, raw) : ""; } catch (e) { why = ""; }
+    const toBand = R.band(FORM.bands || [{ min: 0, label: "" }], best.to);
+
+    return '<section class="f-one">' +
+      '<div class="f-one-main">' +
+        '<span class="f-eyebrow">The one thing</span>' +
+        "<h2>" + esc(head) + "</h2>" +
+        "<p>" + esc(why) + "</p>" +
+        '<div class="f-jump">' +
+          '<span class="f-jump-a">' + out.score + "</span>" +
+          '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13"></path><path d="m13 6 6 6-6 6"></path></svg>' +
+          '<span class="f-jump-b">' + best.to + "</span>" +
+          "<span><b>" + esc(toBand.label) + "</b><small>" + esc(best.label) + "</small></span>" +
+        "</div>" +
+      "</div>" +
+      (rest.length
+        ? '<div class="f-one-rest"><span class="f-eyebrow">Everything else, ranked</span>' +
+          rest.map(function (x) {
+            return '<div class="f-rung"><b>' + x.to + "</b>" +
+              '<span class="f-rung-bar"><i style="width:' + Math.min(100, x.to) + '%"></i></span>' +
+              "<span>" + esc(x.label) + "</span></div>";
+          }).join("") + "</div>"
+        : "") +
+    "</section>";
+  }
+
+  /* ============================================================
+     THE GUIDE — answered by running this form again
+     ============================================================ */
+  function guideSection(v, out, band) {
+    const pairs = FORM.guide || [];
+    if (!pairs.length) return "";
+    const raw = out.raw || {};
+    const c = {
+      v: v, raw: raw, score: out.score, band: band,
+      money: M.money, pct: M.pct, num: M.num,
+      ifChanged: function (patch) { return FORM.compute(patchOf(v, patch)); }
+    };
+    const drawn = [];
+    pairs.forEach(function (p) {
+      let body = "";
+      try { body = p.text(c) || ""; } catch (e) { body = ""; }
+      if (!body) return;
+      drawn.push(
+        '<div class="f-pair" data-kind="' + esc(p.kind) + '">' +
+          (p.said
+            ? '<div class="f-said">“' + esc(p.said) + "”</div>"
+            : '<div class="f-said is-check">They will not ask this one. You should look.</div>') +
+          '<div class="f-pair-a">' + body + "</div>" +
+          (p.say ? '<div class="f-say"><span>Say it like this</span><q>' + esc(p.say) + "</q></div>" : "") +
+          (p.ran ? '<div class="f-ran">' + svg("arrow") + esc(p.ran) + "</div>" : "") +
+        "</div>");
+    });
+    if (!drawn.length) return "";
+
+    return '<section class="f-panel f-guide">' +
+      '<div class="f-panel-h"><h3>What they will say, and what you say back</h3>' +
+        '<span class="f-count">' + drawn.length + " for this file</span>" +
+        '<span class="f-panel-note">worked out on the scorecard above</span></div>' +
+      '<div class="f-pairs">' + drawn.join("") + "</div>" +
+      '<div class="f-askbox">' +
+        '<label for="fAsk">Or ask:</label>' +
+        '<input id="fAsk" type="text" placeholder="' + esc(FORM.askHint || "what if one thing changed?") + '">' +
+        '<button type="button" id="fAskGo" aria-label="Ask">' + svg("arrow") + "</button>" +
+      "</div>" +
+    "</section>";
+  }
+
+  /* An answer read back is not the same string as an answer typed in.
+     fmt() exists to fill an input, so it hands back "false" and "9800";
+     this is the reading version. */
+  function shown(it, val) {
+    if (it.kind === "bool") return val === true ? "Yes" : "No";
+    if (it.kind === "choice") {
+      const hit = (it.options || []).filter(function (o) { return String(o.v) === String(val); })[0];
+      return hit ? hit.label : String(val);
+    }
+    if (it.kind === "money") return M.money(M.num(val));
+    if (it.kind === "rate") return M.num(val) + "%";
+    return String(val);
+  }
+
+  /* the answers, small, at the foot of a finished report */
+  function answersStrip(v) {
+    const bits = [];
+    (FORM.items || []).forEach(function (it) {
+      if (!R.applies(it, V) || V[it.id] === undefined) return;
+      const label = String(it.ask || "").replace(/\?$/, "");
+      bits.push("<span>" + esc(label) + " <b>" + esc(shown(it, V[it.id])) + "</b></span>");
+    });
+    return '<section class="f-answers">' +
+      '<div class="f-answers-h"><span class="f-eyebrow">The answers behind this</span>' +
+        '<i></i><button type="button" id="fEdit">Change any of them</button></div>' +
+      '<div class="f-answers-b">' + bits.join("") + "</div>" +
+    "</section>";
+  }
+
+  /* ------------------------------------------------------------
+     An ask form has two states and should not try to be both.
+
+     While it is being filled in it is a form: questions on the
+     left, progress on the right. The moment every question has
+     an answer it becomes a one-page report, and the questions
+     fold down to a line of small grey figures at the foot of it.
+     Trying to be both at once is what made these pages crowded.
+
+     EDITING is the way back: "Change any of them" sets it, and
+     it stays set until the form is reset, so a page does not
+     snap out from under somebody who is mid-correction.
+     ------------------------------------------------------------ */
+  function paint() {
+    const st = ready();
+    if (st.ok && !CLIENT && !EDITING) return paintReport();
+    mount.removeAttribute("data-state");
+    const scale = $("fHeroScale");
+    if (scale) { scale.hidden = true; scale.innerHTML = ""; }
+    paintGroups();
+    paintAnswer();
+  }
+
+  /* ============================================================
+     the finished report
+     ============================================================ */
+  function paintReport() {
+    const out = FORM.compute(V);
+    const b = R.band(FORM.bands || [{ min: 0, label: "", tone: "" }], out.score);
+    const main = $("fMain");
+
+    heroFig({ label: "Readiness", value: out.score + "/100", tone: b.tone || "", note: b.label });
+
+    /* the score on the scale it is judged against */
+    const scale = $("fHeroScale");
+    if (scale && (FORM.bands || []).length) {
+      const asc = FORM.bands.slice().reverse();      /* lowest first */
+      /* the scale has to run past the top band's own floor, or a band that
+         starts at 100 — "There, with room" — comes out zero pixels wide */
+      const top = Math.max(100, out.score, asc[asc.length - 1].min * 1.15);
+      const segs = asc.map(function (bd, i) {
+        const from = bd.min, to = i + 1 < asc.length ? asc[i + 1].min : top;
+        return { w: (to - from) / top * 100, label: bd.label, on: bd === b, tone: bd.tone };
+      });
+      scale.hidden = false;
+      scale.innerHTML =
+        '<div class="f-scale">' + segs.map(function (g) {
+          return '<i style="width:' + g.w.toFixed(2) + '%"' + (g.on ? ' class="is-on"' : "") +
+            ' data-tone="' + esc(g.tone || "") + '"></i>';
+        }).join("") +
+          '<span class="f-scale-pin" style="left:' + Math.min(100, out.score / top * 100).toFixed(2) + '%"></span>' +
+        "</div>" +
+        '<div class="f-scale-l">' + segs.map(function (g) {
+          return '<span style="width:' + g.w.toFixed(2) + '%"' + (g.on ? ' class="is-on"' : "") + ">" +
+            esc(g.label) + "</span>";
+        }).join("") + "</div>";
+    }
+
+    main.innerHTML =
+      scorecard(V, out) +
+      oneThing(V, out, b) +
+      guideSection(V, out, b) +
+      answersStrip(V) +
+      '<div class="f-report-acts">' + actions() + "</div>";
+
+    const ed = $("fEdit");
+    if (ed) ed.addEventListener("click", function () { EDITING = true; paint(); });
+    wireActions();
+    /* the scorecard is drawn in JavaScript, so explain.js has to be told to
+       look again — it only scans [data-term] once, on DOMContentLoaded */
+    if (window.WD && window.WD.explain && window.WD.explain.refresh) {
+      try { window.WD.explain.refresh(); } catch (e) {}
+    }
+    mount.setAttribute("data-state", "report");
+  }
+
   /* the figures live in the main column, below the questions */
   function figuresInMain(out) {
     const main = $("fMain");
@@ -546,22 +923,36 @@
         return { name: g.name, done: done, of: items.length };
       }).filter(function (g) { return g.of; });
 
-      const next = groups.filter(function (g) { return g.done < g.of; })[0];
+      /* ----------------------------------------------------------
+         The next group is marked in the spine, not written into a
+         sentence.
+
+         It used to say "Next up is <name>." — which works for "the
+         borrower" and for almost nothing else. These groups are
+         called "When", "Where they are", "What it has to pay for",
+         "What comes in, what goes out". The live site read
+         "Next up is when." A label cannot be trusted to decline
+         into a sentence, so it is shown as a label.
+         ---------------------------------------------------------- */
+      let marked = false;
 
       rail.innerHTML =
         '<div class="f-waiting">' +
           "<h2>" + (st.have
             ? esc((st.need - st.have) + " " + (st.need - st.have === 1 ? "answer" : "answers") + " to go")
             : "Start anywhere") + "</h2>" +
-          "<p>" + (next
-            ? "Next up is <b>" + esc(next.name.toLowerCase()) + "</b>."
-            : "Fill the questions on the left and the verdict appears here.") +
-            " Nothing is worked out until every question has an answer, so the number is never half-true.</p>" +
+          "<p>Nothing is worked out until every question has an answer, " +
+          "so the number is never half-true.</p>" +
           '<div class="f-spine">' +
             groups.map(function (g) {
-              return '<div class="f-spine-row' + (g.done === g.of ? " is-done" : "") + '">' +
+              const done = g.done === g.of;
+              const next = !done && !marked;
+              if (next) marked = true;
+              return '<div class="f-spine-row' + (done ? " is-done" : "") +
+                (next ? " is-next" : "") + '">' +
                 '<span class="f-spine-n">' + g.done + "/" + g.of + "</span>" +
-                '<span class="f-spine-name">' + esc(g.name) + "</span>" +
+                '<span class="f-spine-name">' + esc(g.name) +
+                  (next ? '<em>next</em>' : "") + "</span>" +
                 '<span class="f-meter"><i style="width:' +
                   Math.round((g.of ? g.done / g.of : 0) * 100) + '%"></i></span>' +
               "</div>";
@@ -1200,7 +1591,7 @@
      go
      ============================================================ */
   shell();
-  if (FORM.kind === "ask") { paintGroups(); paintAnswer(); }
+  if (FORM.kind === "ask") { paint(); }
   else if (FORM.kind === "check") { paintCheck(); }
   else { paintTrack(); }
 
@@ -1212,13 +1603,13 @@
     result: result,
     set: function (id, val) {                /* used by tests and by the assistant */
       V[id] = val;
-      if (FORM.kind === "ask") { paintGroups(); paintAnswer(); } else { paintCheck(); }
+      if (FORM.kind === "ask") { paint(); } else { paintCheck(); }
       return result();
     },
-    reset: function () { V = {}; MARK = {}; ROWS = [];
+    reset: function () { V = {}; MARK = {}; ROWS = []; EDITING = false;
       for (const k in (FORM.seed || {})) V[k] = FORM.seed[k];
       save();
-      if (FORM.kind === "ask") { paintGroups(); paintAnswer(); }
+      if (FORM.kind === "ask") { paint(); }
       else if (FORM.kind === "check") paintCheck(); else paintTrack(); }
   };
 })();
