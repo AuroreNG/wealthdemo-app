@@ -19,7 +19,8 @@
     wallet: '<rect x="3.5" y="6.5" width="17" height="12" rx="2.5"/><path d="M16 12.5h2"/>',
     hourglass: '<path d="M7 4h10"/><path d="M7 20h10"/><path d="M8 4c0 4 4 4.5 4 8s-4 4-4 8"/><path d="M16 4c0 4-4 4.5-4 8s4 4 4 8"/>',
     pct: '<path d="M7 17 17 7"/><circle cx="8" cy="8" r="2"/><circle cx="16" cy="16" r="2"/>',
-    calendar: '<rect x="4.5" y="6" width="15" height="13.5" rx="2.5"/><path d="M4.5 10.5h15"/><path d="M9 4.5V7M15 4.5V7"/>'
+    calendar: '<rect x="4.5" y="6" width="15" height="13.5" rx="2.5"/><path d="M4.5 10.5h15"/><path d="M9 4.5V7M15 4.5V7"/>',
+    grid: '<circle cx="8" cy="8" r="2.6"/><circle cx="16" cy="8" r="2.6"/><circle cx="8" cy="16" r="2.6"/><circle cx="16" cy="16" r="2.6"/>'
   };
 
   const CATEGORIES = [
@@ -243,7 +244,11 @@
   window.WD.professions = PROFESSIONS;
   window.WD.pro = pro;
 
-  const TOOL_COUNT = ALL_TOOLS.length;
+  /* what the bar counts is what the banner must count: calculators you can
+     press in the grid, which is neither the adviser's two nor the Blueprint */
+  const TOOL_COUNT = CATEGORIES.reduce(function (n, c) {
+    return (c.hideInGrid || c.agentOnly) ? n : n + (c.tools || []).length;
+  }, 0);
   /* the Studio needs the same list to grant one tool at a time, and this is
      the only place it is defined — a second copy would go stale the first
      time a tool is added */
@@ -278,6 +283,12 @@
     const q = query.trim().toLowerCase();
     grid.innerHTML = "";
     let shown = 0;
+
+    /* Four columns while you are browsing; a plain grid of results the
+       moment you narrow to one category or start typing, because at that
+       point the column headings are telling you what you already know. */
+    const narrow = active !== "All" || !!q;
+    grid.classList.toggle("is-one", narrow);
 
     /* ---------- the adviser's own two, kept out of the calculator grid ----
 
@@ -346,6 +357,9 @@
         a.className = "calc" + (t.href ? "" : " soon");
         a.href = t.href || "#";
         if (!t.href) a.addEventListener("click", function (e) { e.preventDefault(); });
+        /* One photograph per column, on the card at the top of it. A picture
+           on all twenty-eight would be a wall of stock imagery and would cost
+           more to load than the whole rest of the page. */
         a.innerHTML =
           '<span class="calc-ico">' + icon(t.icon) + "</span>" +
           '<b class="calc-name"></b>' +
@@ -436,14 +450,19 @@
   /* The chooser. Three doors, switchable whenever they like, because one
      person genuinely can be a financial professional who also does taxes.
      It draws itself from PROFESSIONS, so a fourth needs no code here. */
-  function buildChooser() {
-    const box = document.getElementById("proChooser");
-    if (!box) return;
-    const who = pro();
+  /* ------------------------------------------------------------
+     The profession, as a control rather than a row.
 
-    /* count exactly what the grid below will show, or the number on the
-       button quietly disagrees with the tiles under it — the Blueprint has
-       its own panel and the adviser strip is not a calculator */
+     It used to be a band across the page with four buttons and
+     four counts — a lot of furniture for a setting somebody
+     changes about once. It now sits at the end of the bar and
+     says only what it currently is; pressing it opens the list.
+     ------------------------------------------------------------ */
+  function buildChooser() {
+    const btn = document.getElementById("proBtn");
+    const pop = document.getElementById("proPop");
+    if (!btn || !pop) return;
+
     const count = function (id) {
       let n = 0;
       CATEGORIES.forEach(function (cat) {
@@ -453,28 +472,24 @@
       return n;
     };
 
-    box.innerHTML =
-      '<span class="pro-lead">I am a\u2026</span><div class="pro-seg">' +
-      PROFESSIONS.map(function (p) {
-        return '<button type="button" data-pro="' + p.id + '"' +
-          (who === p.id ? ' aria-pressed="true"' : ' aria-pressed="false"') + '>' +
-          '<b>' + p.name.replace(" professional", "") + '</b>' +
-          '<small>' + count(p.id) + ' tools</small></button>';
-      }).join("") +
-      '<button type="button" data-pro="all"' +
-      (who === "all" ? ' aria-pressed="true"' : ' aria-pressed="false"') +
-      '><b>Everything</b><small>' + count("all") + ' tools</small></button>' +
-      "</div>";
+    const who = pro();
+    const me = PROFESSIONS.filter(function (p) { return p.id === who; })[0];
+    const nameEl = document.getElementById("proBtnName");
+    if (nameEl) nameEl.textContent = me ? me.name.replace(" professional", "") : "Everyone";
 
-    const note = PROFESSIONS.filter(function (p) { return p.id === who; })[0];
-    const n = document.createElement("p");
-    n.className = "pro-note";
-    n.textContent = note ? note.note : "Every calculator on the site, whoever you are.";
-    box.appendChild(n);
+    pop.innerHTML = PROFESSIONS.map(function (p) {
+      return '<button type="button" data-pro="' + p.id + '"' +
+        (who === p.id ? ' aria-pressed="true"' : ' aria-pressed="false"') +
+        '><b>' + p.name + '</b><small>' + p.note + ' \u00b7 ' + count(p.id) + ' tools</small></button>';
+    }).join("") +
+    '<button type="button" data-pro="all"' + (who === "all" ? ' aria-pressed="true"' : ' aria-pressed="false"') +
+    '><b>Everyone</b><small>Every calculator on the site \u00b7 ' + count("all") + ' tools</small></button>';
 
-    box.querySelectorAll("[data-pro]").forEach(function (b2) {
+    pop.querySelectorAll("[data-pro]").forEach(function (b2) {
       b2.addEventListener("click", function () {
         setPro(b2.getAttribute("data-pro"));
+        pop.hidden = true;
+        btn.setAttribute("aria-expanded", "false");
         active = "All";
         buildChooser();
         buildFilters();
@@ -482,6 +497,24 @@
       });
     });
   }
+
+  /* opening and closing the list, once, however many times it is rebuilt */
+  (function wirePro() {
+    const btn = document.getElementById("proBtn");
+    const pop = document.getElementById("proPop");
+    if (!btn || !pop) return;
+    btn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      const open = pop.hidden;
+      pop.hidden = !open;
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+    document.addEventListener("click", function () {
+      pop.hidden = true;
+      btn.setAttribute("aria-expanded", "false");
+    });
+    pop.addEventListener("click", function (e) { e.stopPropagation(); });
+  })();
 
   /* Categories as squares you can press.
 
@@ -510,45 +543,32 @@
       return n + c.tools.filter(function (t) { return forPro(t.href, who); }).length;
     }, 0);
 
-    const square = function (name, tint, ico, n, on) {
+    /* One segment per category, plus Everything. No orb, no lozenge —
+       a mark, a word and a figure, on the glass. */
+    const seg = function (name, tint, ico, n, on) {
       const b2 = document.createElement("button");
       b2.type = "button";
       b2.className = "catbtn";
       b2.setAttribute("data-tint", tint || "mint");
       b2.setAttribute("aria-pressed", on ? "true" : "false");
       b2.innerHTML =
-        '<span class="catbtn-ico">' + icon(ico) + "</span>" +
-        "<b></b><small>" + n + "</small>";
+        '<span class="catbtn-ico">' + icon(ico) + "</span><b></b><small>" + n + "</small>";
       b2.querySelector("b").textContent = name;
       b2.addEventListener("click", function () {
-        active = (active === name) ? "All" : name;   /* press again to clear */
+        active = (active === name) ? "All" : name;
         buildFilters();
         render();
       });
       return b2;
     };
 
-    filters.appendChild(square("All", "", "chart", total, active === "All"));
+    filters.appendChild(seg("Everything", "", "grid", total, active === "All"));
     live.forEach(function (c) {
       const n = c.tools.filter(function (t) { return forPro(t.href, who); }).length;
-      filters.appendChild(square(c.name, c.tint, c.icon, n, active === c.name));
-    });
-    return;
-    if (VISIBLE().every(function (c) { return c.name !== active; })) active = "All";
-    ["All"].concat(VISIBLE().filter(function (c) { return !c.hideInGrid; }).map(function (c) { return c.name; })).forEach(function (name) {
-      const b = document.createElement("button");
-      b.type = "button";
-      b.className = "filter-chip" + (name === active ? " active" : "");
-      b.textContent = name;
-      b.addEventListener("click", function () {
-        active = name;
-        Array.prototype.forEach.call(filters.children, function (c) { c.classList.remove("active"); });
-        b.classList.add("active");
-        render();
-      });
-      filters.appendChild(b);
+      filters.appendChild(seg(c.name, c.tint, c.icon, n, active === c.name));
     });
   }
+
   buildChooser();
   buildFilters();
 
@@ -579,23 +599,27 @@
     return Math.max(0, TRIAL_DAYS - used);
   }
 
-  /* ---------- banner ---------- */
-  const banner = document.getElementById("trialBanner");
-  if (banner) {
+  /* ---------- the trial, folded into the hero ----------
+
+     It used to be a full-width strip between the hero and the tools,
+     in a colour nothing else on the page used, saying a thing nobody
+     needed twice. It is now a line inside the card already sitting in
+     the hero — visible, not shouted. */
+  const heroNote = document.getElementById("heroNote");
+  if (heroNote) {
     const left = daysLeft();
-    banner.innerHTML =
-      '<span class="trial-pill">' +
-        '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 4 2.3 5 5.2.6-3.9 3.5 1.1 5.1L12 15.6 7.3 18.2l1.1-5.1L4.5 9.6l5.2-.6Z"/></svg>' +
-        'FREE TRIAL</span>' +
-      '<strong class="trial-left"></strong>' +
-      '<i class="trial-divider"></i>' +
-      '<span class="trial-copy">All ' + TOOL_COUNT + ' tools are unlocked. Activate before your trial ends to keep them.</span>' +
-      '<button type="button" class="trial-cta" data-billing>See plans' +
-        '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13"/><path d="M13 6l6 6-6 6"/></svg>' +
-      '</button>';
-    banner.querySelector(".trial-left").textContent =
+    heroNote.innerHTML =
+      "<b>A more<br>confident tomorrow</b><i></i>" +
+      '<p><span class="trial-left"></span>' +
+      (left === 0
+        ? "Your trial has ended. Activate to keep all " + TOOL_COUNT + " tools."
+        : "All " + TOOL_COUNT + " tools are unlocked. Activate before it ends to keep them.") +
+      "</p>" +
+      '<button type="button" class="hero-go" style="margin-top:16px" data-billing>See plans' +
+        '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13"/><path d="m13 6 6 6-6 6"/></svg>' +
+      "</button>";
+    heroNote.querySelector(".trial-left").textContent =
       left === 0 ? "Trial ended" : left + (left === 1 ? " day left" : " days left");
-    banner.hidden = false;
   }
 
   /* ---------- modal ---------- */

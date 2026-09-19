@@ -757,3 +757,591 @@ body:has(.hub) .nav-search { display: none; }
 @media (min-width: 900px) {
   .site-hero .hero-copy { max-width: 60ch; }
 }
+
+/* ============================================================
+   The catalogue, rebuilt
+
+   It was a box per category holding a plain list of names —
+   boxes inside boxes — while the one-line description each tool
+   already carries went unused. Now the category is a quiet
+   heading and every calculator is its own glassy tile with its
+   own sentence: less furniture, more information.
+   ============================================================ */
+
+/* ---------- the adviser's own two, above the calculators ---------- */
+.adviser-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 14px;
+  margin: 0 0 34px;
+}
+.adv-card {
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr) 20px;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 20px;
+  border-radius: 18px;
+  text-decoration: none;
+  color: #eaf3ef;
+  background:
+    radial-gradient(120% 160% at 0% 0%, rgba(255, 255, 255, .14), rgba(255, 255, 255, 0) 60%),
+    linear-gradient(135deg, #0d4435, #10362c);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .14),
+    0 20px 40px -26px rgba(9, 38, 30, .85);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.adv-card:hover {
+  transform: translateY(-2px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 26px 50px -26px rgba(9, 38, 30, .95);
+}
+.adv-ico {
+  width: 46px; height: 46px;
+  display: grid; place-items: center;
+  border-radius: 13px;
+  background: rgba(255, 255, 255, .1);
+}
+.adv-ico svg { width: 21px; height: 21px; fill: none; stroke: #d8c98a; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.adv-text b { display: block; font-size: 16px; letter-spacing: -.01em; }
+.adv-text small { display: block; margin-top: 3px; font-size: 13px; color: rgba(234, 243, 239, .72); line-height: 1.45; }
+.adv-go { width: 20px; height: 20px; fill: none; stroke: rgba(234, 243, 239, .55); stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ---------- a category is now a heading, not a box ---------- */
+.tool-grid { display: block; }
+
+.cat { margin: 0 0 38px; }
+.cat-head {
+  display: grid;
+  grid-template-columns: 34px auto 1fr auto;
+  align-items: baseline;
+  gap: 12px;
+  padding: 0 2px 14px;
+  border-bottom: 1px solid rgba(13, 68, 53, .1);
+  margin-bottom: 18px;
+}
+.cat-ico {
+  grid-row: 1;
+  width: 34px; height: 34px;
+  display: grid; place-items: center;
+  border-radius: 10px;
+  align-self: center;
+  background: rgba(13, 68, 53, .07);
+}
+.cat-ico svg { width: 17px; height: 17px; fill: none; stroke: var(--green, #0d4435); stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.cat-head h3 {
+  margin: 0;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 23px;
+  font-weight: 600;
+  letter-spacing: -.01em;
+}
+.cat-head p { margin: 0; font-size: 13.5px; color: var(--ink-3, #5c6b66); }
+.cat-n {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-3, #5c6b66);
+  font-variant-numeric: tabular-nums;
+}
+@media (max-width: 620px) {
+  .cat-head { grid-template-columns: 34px 1fr auto; }
+  .cat-head p { grid-column: 2 / -1; }
+}
+
+/* ---------- one tile per calculator ---------- */
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+}
+.calc {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px 20px 18px;
+  border-radius: 18px;
+  text-decoration: none;
+  color: inherit;
+  overflow: hidden;
+  background:
+    radial-gradient(130% 150% at 0% 0%, rgba(255, 255, 255, .92), rgba(255, 255, 255, .6)),
+    linear-gradient(180deg, rgba(13, 68, 53, .045), rgba(13, 68, 53, .015));
+  backdrop-filter: blur(20px) saturate(155%);
+  -webkit-backdrop-filter: blur(20px) saturate(155%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .92),
+    0 16px 34px -26px rgba(9, 38, 30, .6);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+/* the 2px colour hairline, the house signature */
+.calc::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--tint, #0d4435), rgba(13, 68, 53, 0));
+  opacity: .8;
+}
+.cat[data-tint="mint"]  .calc { --tint: #2f8f68; }
+.cat[data-tint="sage"]  .calc { --tint: #5b8f72; }
+.cat[data-tint="ice"]   .calc { --tint: #3c6e8c; }
+.cat[data-tint="rose"]  .calc { --tint: #b4707a; }
+.cat[data-tint="sun"]   .calc { --tint: #c9a227; }
+.cat[data-tint="sand"]  .calc { --tint: #a8894f; }
+
+.calc:hover {
+  transform: translateY(-2px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .95), 0 24px 44px -26px rgba(9, 38, 30, .7);
+}
+.calc-ico {
+  width: 38px; height: 38px;
+  display: grid; place-items: center;
+  border-radius: 11px;
+  background: rgba(13, 68, 53, .06);
+}
+.calc-ico svg { width: 18px; height: 18px; fill: none; stroke: var(--tint, #0d4435); stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.calc-name {
+  font-size: 15.5px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -.01em;
+}
+.calc-desc {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-3, #5c6b66);
+  flex: 1;
+}
+.calc-go {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 4px;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: .02em;
+  color: var(--green, #0d4435);
+  opacity: 0;
+  transform: translateY(3px);
+  transition: opacity .18s ease, transform .18s ease;
+}
+.calc-go svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.calc:hover .calc-go, .calc:focus-visible .calc-go { opacity: 1; transform: none; }
+.calc-go.soon { opacity: .55; transform: none; color: var(--ink-3, #5c6b66); }
+.calc.soon { opacity: .66; cursor: default; }
+.calc.soon:hover { transform: none; }
+
+/* ---------- the gold, dialled right back ----------
+   It was on every button at once, which made none of them the
+   important one. Green is the brand and now carries the actions;
+   gold is left for what it is good at — a badge, a hairline. */
+.primary-btn,
+.hero-go,
+.premium-btn,
+.trial-banner .primary-btn {
+  background: linear-gradient(180deg, #14503e, #0d4435);
+  color: #f2f7f4;
+  box-shadow: 0 16px 34px -22px rgba(9, 38, 30, .95);
+}
+.primary-btn:hover,
+.hero-go:hover,
+.premium-btn:hover { filter: brightness(1.1); }
+.premium-btn svg, .primary-btn svg, .hero-go svg { stroke: currentColor; }
+
+/* The tiles stretch to a common height per row, which is tidy — but with
+   "Open" only appearing on hover the bottom of a short tile was dead
+   space. It now sits there quietly and simply brightens, so the height is
+   doing something and the affordance is visible before you touch it. */
+.calc-go { opacity: .45; transform: none; }
+.calc:hover .calc-go, .calc:focus-visible .calc-go { opacity: 1; }
+.calc-desc { flex: 1 0 auto; }
+.calc { padding-bottom: 16px; gap: 7px; }
+
+/* ============================================================
+   The tiles, given some material
+
+   Flat white rectangles with a hairline on top read as plain
+   because nothing about them is glass — there is no depth, no
+   colour, and no light. These have all three: a wash in the
+   category's own colour, a lit top edge, a real shadow, and a
+   soft glow in the corner so the surface has somewhere to catch
+   the light. The name moves to the serif the rest of the house
+   uses for anything that matters.
+   ============================================================ */
+
+/* every category carries its colour twice — solid for marks,
+   translucent for the glass it is mixed into */
+.cat[data-tint="mint"]  { --t: #2f8f68; --t-a: 47, 143, 104; }
+.cat[data-tint="sage"]  { --t: #5b8f72; --t-a: 91, 143, 114; }
+.cat[data-tint="ice"]   { --t: #3c6e8c; --t-a: 60, 110, 140; }
+.cat[data-tint="rose"]  { --t: #a95f6b; --t-a: 169, 95, 107; }
+.cat[data-tint="sun"]   { --t: #a8863a; --t-a: 168, 134, 58; }
+.cat[data-tint="sand"]  { --t: #97794a; --t-a: 151, 121, 74; }
+.cat { --t: #0d4435; --t-a: 13, 68, 53; }
+
+.calc {
+  --tint: var(--t);
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 22px 22px 18px;
+  border-radius: 20px;
+  text-decoration: none;
+  color: inherit;
+  overflow: hidden;
+
+  background:
+    /* the light, caught in the top-left */
+    radial-gradient(120% 90% at 8% 0%, rgba(255, 255, 255, .95), rgba(255, 255, 255, .55) 46%, rgba(255, 255, 255, .3) 70%),
+    /* the category's own colour, as a wash rather than a stripe */
+    linear-gradient(158deg, rgba(var(--t-a), .13) 0%, rgba(var(--t-a), .05) 44%, rgba(var(--t-a), .02) 100%),
+    #fbfcfb;
+
+  backdrop-filter: blur(22px) saturate(165%);
+  -webkit-backdrop-filter: blur(22px) saturate(165%);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .95),
+    inset 0 0 0 1px rgba(var(--t-a), .13),
+    0 2px 5px -2px rgba(9, 38, 30, .16),
+    0 22px 38px -26px rgba(9, 38, 30, .55);
+
+  transition: transform .2s cubic-bezier(.22, 1, .36, 1),
+              box-shadow .2s ease,
+              background .2s ease;
+}
+
+/* the glow that gives the surface somewhere to fall off */
+.calc::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  right: -34%;
+  bottom: -46%;
+  width: 78%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(var(--t-a), .2), rgba(var(--t-a), 0) 68%);
+  opacity: .75;
+  transition: opacity .25s ease, transform .35s cubic-bezier(.22, 1, .36, 1);
+}
+
+/* the lit top edge, brightest where the light lands */
+.calc::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2px;
+  background: linear-gradient(90deg,
+    rgba(var(--t-a), .85) 0%,
+    rgba(var(--t-a), .5) 34%,
+    rgba(var(--t-a), 0) 88%);
+}
+
+.calc:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    inset 0 0 0 1px rgba(var(--t-a), .2),
+    0 3px 7px -2px rgba(9, 38, 30, .2),
+    0 34px 54px -28px rgba(9, 38, 30, .68);
+}
+.calc:hover::after { opacity: 1; transform: scale(1.12); }
+
+/* the icon, a lit orb rather than a grey square */
+.calc-ico {
+  width: 42px; height: 42px;
+  display: grid; place-items: center;
+  border-radius: 13px;
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, .9), rgba(255, 255, 255, .35)),
+    linear-gradient(160deg, rgba(var(--t-a), .3), rgba(var(--t-a), .14));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .95),
+    inset 0 0 0 1px rgba(var(--t-a), .18),
+    0 6px 14px -8px rgba(var(--t-a), .7);
+}
+.calc-ico svg { width: 19px; height: 19px; stroke: var(--t); stroke-width: 1.8; }
+
+/* the name, in the serif the house keeps for what matters */
+.calc-name {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 18.5px;
+  font-weight: 600;
+  line-height: 1.24;
+  letter-spacing: -.012em;
+  margin-top: 2px;
+}
+.calc-desc {
+  font-size: 13.2px;
+  line-height: 1.55;
+  color: var(--ink-2, #46564f);
+  opacity: .9;
+}
+
+/* the action, under a hairline so the tile has a floor */
+.calc-go {
+  margin-top: 12px;
+  padding-top: 11px;
+  border-top: 1px solid rgba(var(--t-a), .16);
+  color: var(--t);
+  opacity: .82;
+  font-size: 12px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.calc:hover .calc-go { opacity: 1; }
+.calc-go svg { transition: transform .2s ease; }
+.calc:hover .calc-go svg { transform: translateX(3px); }
+
+/* the category heading, given the same colour so the page reads in bands */
+.cat-ico {
+  background: linear-gradient(160deg, rgba(var(--t-a), .22), rgba(var(--t-a), .1));
+  box-shadow: inset 0 0 0 1px rgba(var(--t-a), .18);
+}
+.cat-ico svg { stroke: var(--t); }
+.cat-head { border-bottom-color: rgba(var(--t-a), .18); }
+.cat-n {
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: rgba(var(--t-a), .12);
+  color: var(--t);
+}
+
+/* ============================================================
+   Three doors, one engine
+
+   The same calculators, the same assessments, the same secure
+   route back — filtered to the person in front of them. A tax
+   professional has no use for a mortgage payoff comparison, and
+   putting it in their way is how a tool set starts feeling like
+   somebody else's.
+
+   It draws itself from the profession list, so a fourth door
+   needs no change here.
+   ============================================================ */
+.pro-chooser {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin: 0 0 22px;
+}
+.pro-lead {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 19px;
+  font-style: italic;
+  color: var(--ink-2, #46564f);
+  flex: none;
+}
+.pro-seg {
+  display: flex;
+  gap: 5px;
+  padding: 5px;
+  border-radius: 16px;
+  flex-wrap: wrap;
+  background:
+    radial-gradient(120% 160% at 0% 0%, rgba(255, 255, 255, .9), rgba(255, 255, 255, .55)),
+    linear-gradient(180deg, rgba(13, 68, 53, .06), rgba(13, 68, 53, .02));
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .9),
+    inset 0 0 0 1px rgba(13, 68, 53, .09),
+    0 14px 30px -24px rgba(9, 38, 30, .55);
+}
+.pro-seg button {
+  display: grid;
+  gap: 1px;
+  padding: 9px 18px;
+  border: 0;
+  border-radius: 12px;
+  background: none;
+  font: inherit;
+  text-align: left;
+  color: var(--ink-2, #46564f);
+  cursor: pointer;
+  transition: background .16s ease, color .16s ease, box-shadow .16s ease;
+}
+.pro-seg button b { font-size: 14.5px; font-weight: 600; letter-spacing: -.01em; }
+.pro-seg button small { font-size: 11.5px; opacity: .7; font-variant-numeric: tabular-nums; }
+.pro-seg button:hover { background: rgba(13, 68, 53, .06); }
+.pro-seg button[aria-pressed="true"] {
+  background: linear-gradient(180deg, #14503e, #0d4435);
+  color: #f2f7f4;
+  box-shadow: 0 10px 22px -14px rgba(9, 38, 30, .9);
+}
+.pro-seg button[aria-pressed="true"] small { opacity: .8; }
+
+.pro-note {
+  flex-basis: 100%;
+  margin: 0;
+  font-size: 13.5px;
+  color: var(--ink-3, #5c6b66);
+}
+
+@media (max-width: 700px) {
+  .pro-chooser { gap: 10px; }
+  .pro-lead { font-size: 17px; }
+  .pro-seg { width: 100%; }
+  .pro-seg button { flex: 1 1 42%; }
+}
+
+/* ============================================================
+   Categories you can press
+
+   Squares, not chips: each carries its own colour and icon, so
+   the row reads as a palette of the work rather than a list of
+   words. Pressing one narrows the page to that category and
+   hides its heading below — the pressed square is the heading,
+   and nothing is named twice.
+   ============================================================ */
+.tool-filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
+  gap: 10px;
+  margin: 0 0 26px;
+}
+
+.catbtn {
+  --t: #0d4435;
+  --t-a: 13, 68, 53;
+  position: relative;
+  display: grid;
+  justify-items: start;
+  gap: 7px;
+  padding: 15px 15px 13px;
+  border: 0;
+  border-radius: 16px;
+  font: inherit;
+  text-align: left;
+  color: var(--ink, #17231f);
+  cursor: pointer;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 110% at 6% 0%, rgba(255, 255, 255, .92), rgba(255, 255, 255, .55) 55%),
+    linear-gradient(160deg, rgba(var(--t-a), .1), rgba(var(--t-a), .03));
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .92),
+    inset 0 0 0 1px rgba(var(--t-a), .12),
+    0 12px 26px -22px rgba(9, 38, 30, .6);
+  transition: transform .16s cubic-bezier(.22, 1, .36, 1), box-shadow .16s ease, background .16s ease;
+}
+.catbtn[data-tint="mint"] { --t: #2f8f68; --t-a: 47, 143, 104; }
+.catbtn[data-tint="sage"] { --t: #5b8f72; --t-a: 91, 143, 114; }
+.catbtn[data-tint="ice"]  { --t: #3c6e8c; --t-a: 60, 110, 140; }
+.catbtn[data-tint="rose"] { --t: #a95f6b; --t-a: 169, 95, 107; }
+.catbtn[data-tint="sun"]  { --t: #a8863a; --t-a: 168, 134, 58; }
+.catbtn[data-tint="sand"] { --t: #97794a; --t-a: 151, 121, 74; }
+
+.catbtn:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 rgba(255,255,255,.95), inset 0 0 0 1px rgba(var(--t-a), .2), 0 18px 32px -22px rgba(9, 38, 30, .7); }
+
+.catbtn-ico {
+  width: 34px; height: 34px;
+  display: grid; place-items: center;
+  border-radius: 11px;
+  background: linear-gradient(160deg, rgba(var(--t-a), .26), rgba(var(--t-a), .12));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .8), inset 0 0 0 1px rgba(var(--t-a), .16);
+}
+.catbtn-ico svg { width: 16px; height: 16px; fill: none; stroke: var(--t); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+.catbtn b {
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -.005em;
+}
+.catbtn small {
+  font-size: 11.5px;
+  color: var(--ink-3, #5c6b66);
+  font-variant-numeric: tabular-nums;
+}
+
+/* the one you pressed */
+.catbtn[aria-pressed="true"] {
+  background:
+    radial-gradient(120% 110% at 6% 0%, rgba(255, 255, 255, .16), rgba(255, 255, 255, 0) 58%),
+    linear-gradient(160deg, var(--t), color-mix(in srgb, var(--t) 72%, #0b2b22));
+  color: #f4f8f6;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .22),
+    0 16px 30px -18px rgba(var(--t-a), .95);
+}
+.catbtn[aria-pressed="true"] small { color: rgba(244, 248, 246, .78); }
+.catbtn[aria-pressed="true"] .catbtn-ico {
+  background: rgba(255, 255, 255, .17);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .22);
+}
+.catbtn[aria-pressed="true"] .catbtn-ico svg { stroke: #fff; }
+
+/* browsers without color-mix still get a solid, correct-coloured press */
+@supports not (background: color-mix(in srgb, red 50%, blue)) {
+  .catbtn[aria-pressed="true"] { background: var(--t); }
+}
+
+@media (max-width: 520px) {
+  .tool-filters { grid-template-columns: repeat(auto-fit, minmax(104px, 1fr)); gap: 8px; }
+  .catbtn { padding: 12px 12px 11px; }
+  .catbtn b { font-size: 12.5px; }
+}
+
+/* .cat-head sets display:grid, and an explicit display beats the browser's
+   own [hidden] rule — so hiding the heading when a category is pressed
+   silently did nothing. It has to be said again, louder. */
+.cat-head[hidden] { display: none !important; }
+
+/* the squares are their own full-width row, not a thing wedged between the
+   search box and the sort control */
+.tool-filters { width: 100%; }
+
+/* ============================================================
+   Four squares, and smaller
+
+   With six categories the row wanted to wrap and each square had
+   to be wide enough for "College & Life Setup". Four short names
+   fit one row at any width worth designing for, so the squares
+   can shrink to what they actually are: a label, a count and a
+   mark. Everything about them tightens.
+   ============================================================ */
+.tool-filters {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));   /* All + four */
+  gap: 8px;
+  margin: 0 0 22px;
+  max-width: 860px;
+}
+.catbtn {
+  grid-template-columns: 26px 1fr;
+  grid-template-areas:
+    "ico name"
+    "ico n";
+  justify-items: start;
+  align-items: center;
+  column-gap: 10px;
+  row-gap: 0;
+  padding: 11px 13px;
+  border-radius: 13px;
+}
+.catbtn-ico {
+  grid-area: ico;
+  width: 26px; height: 26px;
+  border-radius: 8px;
+}
+.catbtn-ico svg { width: 13px; height: 13px; stroke-width: 1.9; }
+.catbtn b { grid-area: name; font-size: 12.8px; line-height: 1.2; }
+.catbtn small { grid-area: n; font-size: 10.5px; line-height: 1.3; opacity: .75; }
+
+@media (max-width: 860px) {
+  .tool-filters { max-width: none; }
+}
+@media (max-width: 620px) {
+  /* five across is too tight to read on a phone; two rows of soft squares */
+  .tool-filters { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; }
+  .catbtn { padding: 10px 11px; }
+  .catbtn b { font-size: 12px; }
+}
