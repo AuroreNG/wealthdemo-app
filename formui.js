@@ -268,11 +268,43 @@
           '<span class="f-saved" id="fSaved">Saved</span>' +
         "</header>";
 
-    mount.innerHTML = top +
+    /* ------------------------------------------------------------
+       The hero.
+
+       Every calculator on this site opens with a dark band that
+       says what the tool is and what it has found. A form opened
+       with a thin white strip and then grey — which is most of
+       the reason it read as a different product altogether.
+
+       The right-hand slot carries the live finding: the score,
+       the number of documents outstanding, the value in the
+       pipeline. That is the figure somebody wants at a glance,
+       and it was previously a bare ring floating in the rail
+       with nothing to say on an empty form.
+       ------------------------------------------------------------ */
+    const hero = CLIENT ? "" :
+      '<section class="f-hero">' +
+        '<span class="f-hero-tile">' + svg(FORM.icon || "doc") + "</span>" +
+        '<div class="f-hero-text">' +
+          '<span class="f-hero-eyebrow">' + esc(FORM.cat || "") +
+            (FORM.who ? " · " + esc(FORM.who) : "") +
+            (FORM.minutes ? " · about " + FORM.minutes + " min" : "") + "</span>" +
+          "<h1></h1>" +
+          "<p></p>" +
+        "</div>" +
+        '<div class="f-hero-fig" id="fHeroFig"></div>' +
+      "</section>";
+
+    mount.innerHTML = top + hero +
       '<div class="f-body">' +
         '<main class="f-main" id="fMain"></main>' +
         '<aside class="f-rail" id="fRail"></aside>' +
       "</div>";
+
+    if (!CLIENT) {
+      mount.querySelector(".f-hero h1").textContent = FORM.name;
+      mount.querySelector(".f-hero p").textContent = FORM.lede || "";
+    }
 
     if (CLIENT) {
       const name = FROM.name || "Your adviser";
@@ -309,7 +341,8 @@
     });
 
     const html = [];
-    html.push('<p class="f-lede">' + esc(FORM.lede) + "</p>");
+    /* the lede is in the hero now; a client has no hero, so it stays for them */
+    if (CLIENT) html.push('<p class="f-lede">' + esc(FORM.lede) + "</p>");
 
     (FORM.groups || [{ id: "_", name: "" }]).forEach(function (g, gi) {
       const items = (FORM.items || []).filter(function (i) {
@@ -347,6 +380,18 @@
       const box = main.querySelector('[data-item="' + it.id + '"]');
       if (box) wireField(box, it);
     });
+  }
+
+  /* the finding, in the hero — the one figure somebody wants at a glance */
+  function heroFig(parts) {
+    const el = $("fHeroFig");
+    if (!el) return;
+    if (!parts) { el.innerHTML = ""; el.hidden = true; return; }
+    el.hidden = false;
+    el.innerHTML =
+      '<span class="f-hero-eyebrow">' + esc(parts.label) + "</span>" +
+      '<b data-tone="' + esc(parts.tone || "") + '">' + esc(parts.value) + "</b>" +
+      (parts.note ? "<small>" + esc(parts.note) + "</small>" : "");
   }
 
   function ring(score) {
@@ -435,24 +480,108 @@
     setTimeout(function () { try { inp.select(); } catch (e) {} }, 50);
   }
 
+  /* the figures live in the main column, below the questions */
+  function figuresInMain(out) {
+    const main = $("fMain");
+    if (!main) return;
+    let box = $("fOut");
+    if (!out || !(out.figures || []).length) { if (box) box.remove(); return; }
+    if (!box) {
+      box = document.createElement("section");
+      box.className = "f-out";
+      box.id = "fOut";
+      main.appendChild(box);
+    }
+    box.innerHTML =
+      '<span class="f-eyebrow">What these answers come to</span>' +
+      '<div class="f-figs">' +
+      (out.figures || []).map(function (f) {
+        return '<div class="f-fig' + (f.big ? " is-big" : "") + '" data-tone="' + esc(f.tone || "") +
+          '" id="fig_' + esc(f.id) + '">' +
+          '<span class="f-fig-l">' + esc(f.label) + "</span>" +
+          '<b class="f-fig-v">' + esc(f.value) + "</b>" +
+          (f.meter !== undefined
+            ? '<span class="f-meter"><i style="width:' +
+              Math.round(Math.max(0, Math.min(1, f.meter)) * 100) + '%"></i>' +
+              (f.mark !== undefined ? '<em style="left:' + Math.round(f.mark * 100) + '%"></em>' : "") + "</span>"
+            : "") +
+          (f.note ? '<span class="f-fig-n">' + esc(f.note) + "</span>" : "") +
+        "</div>";
+      }).join("") +
+      "</div>";
+  }
+
   function paintAnswer() {
     const rail = $("fRail");
     if (CLIENT) return clientRail();
     const st = ready();
 
     if (!st.ok) {
-      /* The actions belong here too. Sending a blank form to a client is
-         the commonest thing an adviser does with one, and hiding the
-         button until the adviser has answered it themselves would be
-         exactly backwards. */
+      /* ----------------------------------------------------------
+         What an unfinished form should say.
+
+         It used to be a ring reading 0/10 and the sentence "the
+         answer builds as you go" — a progress bar dressed as a
+         verdict, on a page where the questions already carry their
+         own n-of-m counters. It told nobody anything.
+
+         Instead: which group is still open, and what the finished
+         answer will actually tell them. The second half is the
+         useful one — it is the reason to keep typing.
+
+         The actions belong here too. Sending a blank form to a
+         client is the commonest thing an adviser does with one,
+         and hiding the button until the adviser has answered it
+         themselves would be exactly backwards.
+         ---------------------------------------------------------- */
+      heroFig({ label: "Progress", value: st.have + " of " + st.need,
+                note: st.have ? "answered" : "nothing answered yet" });
+      figuresInMain(null);
+
+      const groups = (FORM.groups || []).map(function (g) {
+        const items = (FORM.items || []).filter(function (i) {
+          return (i.group || "_") === g.id && R.applies(i, V) && i.kind !== "text";
+        });
+        const done = items.filter(function (i) { return V[i.id] !== undefined; }).length;
+        return { name: g.name, done: done, of: items.length };
+      }).filter(function (g) { return g.of; });
+
+      const next = groups.filter(function (g) { return g.done < g.of; })[0];
+
       rail.innerHTML =
         '<div class="f-waiting">' +
-          '<div class="f-wait-ring">' + ring(st.need ? st.have / st.need * 100 : 0) +
-            '<b>' + st.have + "<small>/" + st.need + "</small></b></div>" +
-          "<h2>The answer builds as you go</h2>" +
-          "<p>" + (st.need - st.have) + " more " +
-          (st.need - st.have === 1 ? "answer" : "answers") + " and it can work the whole thing out.</p>" +
-        "</div>" + actions();
+          "<h2>" + (st.have
+            ? esc((st.need - st.have) + " " + (st.need - st.have === 1 ? "answer" : "answers") + " to go")
+            : "Start anywhere") + "</h2>" +
+          "<p>" + (next
+            ? "Next up is <b>" + esc(next.name.toLowerCase()) + "</b>."
+            : "Fill the questions on the left and the verdict appears here.") +
+            " Nothing is worked out until every question has an answer, so the number is never half-true.</p>" +
+          '<div class="f-spine">' +
+            groups.map(function (g) {
+              return '<div class="f-spine-row' + (g.done === g.of ? " is-done" : "") + '">' +
+                '<span class="f-spine-n">' + g.done + "/" + g.of + "</span>" +
+                '<span class="f-spine-name">' + esc(g.name) + "</span>" +
+                '<span class="f-meter"><i style="width:' +
+                  Math.round((g.of ? g.done / g.of : 0) * 100) + '%"></i></span>' +
+              "</div>";
+            }).join("") +
+          "</div>" +
+        "</div>" +
+        (FORM.bands && FORM.bands.length
+          ? '<div class="f-preview"><span class="f-eyebrow">What it will tell you</span>' +
+              FORM.bands.map(function (b, i, all) {
+                /* a band's range, read off its neighbours — "85+", "65–84" */
+                const hi = i === 0 ? null : all[i - 1].min - 1;
+                return '<div class="f-band" data-tone="' + esc(b.tone || "") + '">' +
+                  "<b>" + esc(b.label) + "</b>" +
+                  '<span>' + (hi === null ? b.min + "+"
+                            : (b.min === 0 ? "under " + (hi + 1) : b.min + "\u2013" + hi)) +
+                  "</span></div>";
+              }).join("") +
+            "</div>"
+          : "") +
+        actions();
       wireActions();
       return;
     }
@@ -460,25 +589,27 @@
     const out = FORM.compute(V);
     const b = R.band(FORM.bands || [{ min: 0, label: "", tone: "" }], out.score);
 
+    heroFig({ label: "Score", value: out.score + "/100", tone: b.tone || "", note: b.label });
+
     const html = [];
     html.push('<div class="f-verdict" data-tone="' + esc(b.tone || "") + '">' +
       '<div class="f-score">' + ring(out.score) + "<b>" + out.score + "<small>/100</small></b></div>" +
       "<div><h2>" + esc(b.label) + "</h2><p>" + esc(b.say || "") + "</p></div>" +
     "</div>");
 
-    html.push('<div class="f-figs">');
-    (out.figures || []).forEach(function (f) {
-      html.push('<div class="f-fig' + (f.big ? " is-big" : "") + '" data-tone="' + esc(f.tone || "") + '" id="fig_' + esc(f.id) + '">' +
-        '<span class="f-fig-l">' + esc(f.label) + "</span>" +
-        '<b class="f-fig-v">' + esc(f.value) + "</b>" +
-        (f.meter !== undefined
-          ? '<span class="f-meter"><i style="width:' + Math.round(Math.max(0, Math.min(1, f.meter)) * 100) + '%"></i>' +
-            (f.mark !== undefined ? '<em style="left:' + Math.round(f.mark * 100) + '%"></em>' : "") + "</span>"
-          : "") +
-        (f.note ? '<span class="f-fig-n">' + esc(f.note) + "</span>" : "") +
-      "</div>");
-    });
-    html.push("</div>");
+    /* ----------------------------------------------------------
+       The figures go under the questions, not in the rail.
+
+       They are what the answers on the left add up to — the
+       payment, the ratios, the deposit — and they read as the
+       result of that column. Stacked in the rail they also left
+       the left-hand side ending halfway up a tall page, which is
+       what the empty half of this screen used to be.
+
+       The rail keeps what it is for: the verdict, what would
+       change it, and what to do with the form.
+       ---------------------------------------------------------- */
+    figuresInMain(out);
 
     if ((out.notes || []).length) {
       html.push('<div class="f-notes"><span class="f-eyebrow">What would change it</span>');
@@ -503,7 +634,8 @@
   function paintCheck() {
     const main = $("fMain");
     const html = [];
-    html.push('<p class="f-lede">' + esc(FORM.lede) + "</p>");
+    /* the lede is in the hero now; a client has no hero, so it stays for them */
+    if (CLIENT) html.push('<p class="f-lede">' + esc(FORM.lede) + "</p>");
 
     /* The setup row — the answers that decide what the list contains.
        The client never sees it: the adviser already decided which case
@@ -580,27 +712,89 @@
     if (CLIENT) return clientRail();
     const s = checkStats();
     const html = [];
+
+    heroFig({
+      label: s.need.length ? "Outstanding" : "Status",
+      value: s.need.length ? String(s.need.length) : "Complete",
+      tone: s.need.length ? "warn" : "good",
+      note: s.have.length + " of " + s.of + " in"
+    });
+
+    /* ------------------------------------------------------------
+       The rail used to reprint the list.
+
+       Every document was on the left, and then every outstanding
+       document was on the right again under "Outstanding" — so on
+       an untouched checklist the page said the same six things
+       twice, which is the clearest way there is to tell somebody
+       a screen has not been thought about.
+
+       It now does the job the left column cannot: it says which
+       group is holding the file up, names the single next thing
+       to chase, and explains why this borrower's list is the
+       length it is.
+       ------------------------------------------------------------ */
     html.push('<div class="f-verdict" data-tone="' + (s.need.length ? "warn" : "good") + '">' +
       '<div class="f-score">' + ring(s.pct * 100) + "<b>" + s.have.length + "<small>/" + s.of + "</small></b></div>" +
       "<div><h2>" + (s.need.length ? s.need.length + " still needed" : "Everything is in") + "</h2>" +
       "<p>" + (s.need.length
-        ? "Nothing else on this list applies to them."
+        ? "Chase these and the file is ready to go out."
         : "Nothing outstanding on this file.") + "</p></div>" +
     "</div>");
 
+    /* where the gaps are, by group — not item by item */
+    const groups = (FORM.groups || []).map(function (g) {
+      const mine = s.items.filter(function (i) { return (i.group || "_") === g.id; });
+      const live = mine.filter(function (i) { return MARK[i.id] !== "na"; });
+      const got = mine.filter(function (i) { return MARK[i.id] === "have"; });
+      return { name: g.name, done: got.length, of: live.length };
+    }).filter(function (g) { return g.of; });
+
+    if (groups.length) {
+      html.push('<div class="f-spine">' + groups.map(function (g) {
+        return '<div class="f-spine-row' + (g.done === g.of ? " is-done" : "") + '">' +
+          '<span class="f-spine-n">' + g.done + "/" + g.of + "</span>" +
+          '<span class="f-spine-name">' + esc(g.name) + "</span>" +
+          '<span class="f-meter"><i style="width:' +
+            Math.round((g.of ? g.done / g.of : 0) * 100) + '%"></i></span>' +
+        "</div>";
+      }).join("") + "</div>");
+    }
+
+    /* one thing to chase, not a second copy of the list */
     if (s.need.length) {
-      html.push('<div class="f-notes"><span class="f-eyebrow">Outstanding</span>');
-      s.need.slice(0, 8).forEach(function (i) {
-        html.push('<div class="f-note" data-tone="bad"><b>' + esc(i.name) + "</b>" +
-          (i.note ? "<span>" + esc(i.note) + "</span>" : "") + "</div>");
+      const n = s.need[0];
+      html.push('<div class="f-next"><span class="f-eyebrow">Chase this one next</span>' +
+        "<b>" + esc(n.name) + "</b>" +
+        (n.note ? "<p>" + esc(n.note) + "</p>" : "") +
+        (s.need.length > 1
+          ? '<small>and ' + (s.need.length - 1) +
+            (s.need.length - 1 === 1 ? " other" : " others") + " on the left</small>"
+          : "") +
+      "</div>");
+    }
+
+    /* why this list is the length it is */
+    const why = (FORM.setup || []).filter(function (q) { return V[q.id] !== undefined; })
+      .map(function (q) {
+        const v = V[q.id];
+        const said = q.kind === "bool" ? (v ? "Yes" : "No")
+          : (q.options || []).filter(function (o) { return String(o.v) === String(v); })
+              .map(function (o) { return o.label; })[0] || String(v);
+        return { ask: q.ask, said: said };
       });
-      html.push("</div>");
+    if (why.length) {
+      html.push('<div class="f-why"><span class="f-eyebrow">Why this list</span>' +
+        why.map(function (w) {
+          return '<div class="f-why-row"><span>' + esc(w.ask) + "</span><b>" + esc(w.said) + "</b></div>";
+        }).join("") +
+        (s.na.length
+          ? "<small>" + s.na.length + (s.na.length === 1 ? " item is" : " items are") +
+            " not needed because of these, and are not counted.</small>"
+          : "") +
+      "</div>");
     }
-    if (s.na.length) {
-      html.push('<p class="f-quiet">' + s.na.length +
-        (s.na.length === 1 ? " item does" : " items do") + " not apply to this case and " +
-        (s.na.length === 1 ? "is" : "are") + " not counted.</p>");
-    }
+
     html.push(actions());
     $("fRail").innerHTML = html.join("");
     wireActions();
@@ -614,7 +808,8 @@
   function paintTrack() {
     const main = $("fMain");
     const html = [];
-    html.push('<p class="f-lede">' + esc(FORM.lede) + "</p>");
+    /* the lede is in the hero now; a client has no hero, so it stays for them */
+    if (CLIENT) html.push('<p class="f-lede">' + esc(FORM.lede) + "</p>");
     html.push('<div class="f-board">');
 
     (FORM.stages || []).forEach(function (st) {
@@ -647,7 +842,41 @@
       html.push("</div></section>");
     });
     html.push("</div>");
+
+    /* ------------------------------------------------------------
+       Seven stages do not fit in one screen, and the board was
+       simply cut off at five with nothing to say the other two
+       existed. Same arrows as the tool hub's bands: hidden when
+       everything already fits, so they never appear for nothing.
+       ------------------------------------------------------------ */
+    html.push('<div class="f-boardnav" hidden>' +
+      '<button type="button" class="f-barrow" data-dir="-1" aria-label="Earlier stages">' +
+        svg("back") + "</button>" +
+      '<button type="button" class="f-barrow" data-dir="1" aria-label="Later stages">' +
+        svg("arrow") + "</button>" +
+    "</div>");
+
     main.innerHTML = html.join("");
+
+    const board = main.querySelector(".f-board");
+    const bnav = main.querySelector(".f-boardnav");
+    if (board && bnav) {
+      bnav.querySelectorAll(".f-barrow").forEach(function (b) {
+        b.addEventListener("click", function () {
+          board.scrollBy({ left: board.clientWidth * 0.8 * (+b.getAttribute("data-dir")),
+                           behavior: "smooth" });
+        });
+      });
+      const syncNav = function () {
+        const room = board.scrollWidth - board.clientWidth;
+        bnav.hidden = room < 8;
+        bnav.querySelector('[data-dir="-1"]').disabled = board.scrollLeft < 8;
+        bnav.querySelector('[data-dir="1"]').disabled = board.scrollLeft > room - 8;
+      };
+      board.addEventListener("scroll", syncNav, { passive: true });
+      window.addEventListener("resize", syncNav);
+      syncNav();
+    }
 
     /* names and notes as text, never as markup */
     ROWS.forEach(function (r) {
@@ -767,13 +996,69 @@
     });
 
     const html = [];
+
+    heroFig(total
+      ? { label: "In the pipeline", value: value ? M.money(value) : String(live.length),
+          tone: stale.length ? "warn" : "good",
+          note: live.length + (live.length === 1 ? " file live" : " files live") }
+      : { label: "In the pipeline", value: "Empty", note: "nothing added yet" });
+
+    /* ------------------------------------------------------------
+       An empty board should say what to do with it, not report
+       zero in the language of a full one. "Nothing valued yet ·
+       0 live · everything has moved recently" was three sentences
+       about no data.
+       ------------------------------------------------------------ */
+    if (!total) {
+      html.push('<div class="f-empty">' +
+        '<span class="f-empty-ico">' + svg("plus") + "</span>" +
+        "<h2>Nothing in the pipeline yet</h2>" +
+        "<p>Add the first one under <b>" + esc((FORM.stages[0] || {}).name || "the first stage") +
+        "</b> on the left. Each card holds a name, an amount and what is holding it up — " +
+        "move it along as it goes, and anything that stops moving for " +
+        (FORM.staleAfter || 7) + " days shows up here.</p>" +
+      "</div>");
+      html.push(actions());
+      $("fRail").innerHTML = html.join("");
+      wireActions();
+      return;
+    }
+
     html.push('<div class="f-verdict" data-tone="' + (stale.length ? "warn" : "good") + '">' +
       '<div class="f-score is-plain"><b>' + live.length + "<small> live</small></b></div>" +
-      "<div><h2>" + (value ? M.money(value) + " moving" : "Nothing valued yet") + "</h2>" +
+      "<div><h2>" + (value ? M.money(value) + " moving" : live.length + " on the board") + "</h2>" +
       "<p>" + (stale.length
         ? stale.length + (stale.length === 1 ? " row has" : " rows have") + " not moved in " +
           FORM.staleAfter + " days."
         : "Everything has moved recently.") + "</p></div></div>");
+
+    /* the funnel — where the work actually is */
+    const ENDED = ["closed", "lost", "done", "nochange"];
+    const funnel = (FORM.stages || []).map(function (st) {
+      const mine = ROWS.filter(function (r) { return r.stage === st.id; });
+      return { name: st.name, tint: st.tint || "mist", n: mine.length,
+               ended: ENDED.indexOf(st.id) >= 0,
+               value: mine.reduce(function (a, r) { return a + (r.amount || 0); }, 0) };
+    }).filter(function (f) { return f.n; });
+    const most = funnel.reduce(function (a, f) { return Math.max(a, f.n); }, 0);
+
+    if (funnel.length) {
+      html.push('<div class="f-funnel"><span class="f-eyebrow">Where they are</span>' +
+        funnel.map(function (f) {
+          /* a finished row is still where it is, but it is not in the
+             total above it — so it is shown and visibly set apart,
+             rather than quietly swelling a bar that claims to be live */
+          return '<div class="f-fun-row' + (f.ended ? " is-ended" : "") +
+            '" data-tint="' + esc(f.tint) + '">' +
+            '<span class="f-fun-name">' + esc(f.name) + "</span>" +
+            '<span class="f-fun-bar"><i style="width:' +
+              Math.round((most ? f.n / most : 0) * 100) + '%"></i></span>' +
+            '<span class="f-fun-n">' + f.n + "</span>" +
+            (f.value ? '<span class="f-fun-v">' + esc(M.money(f.value)) +
+              (f.ended ? ' <em>done</em>' : "") + "</span>" : "") +
+          "</div>";
+        }).join("") + "</div>");
+    }
 
     if (stale.length) {
       html.push('<div class="f-notes"><span class="f-eyebrow">Stuck</span>');

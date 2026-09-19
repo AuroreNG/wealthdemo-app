@@ -51,26 +51,128 @@
 }
 .f-saved.is-on { opacity: 1; }
 
+/* ---------- the hero ----------------------------------------------
+
+   Every calculator on this site opens with a dark band. A form
+   opened with a thin white bar and then grey, which is most of the
+   reason it read as a different product. The right-hand slot holds
+   the live finding — the score, the documents outstanding, the
+   value on the board.
+   ------------------------------------------------------------------- */
+.f-hero {
+  position: relative;
+  display: flex; align-items: flex-start; gap: 20px;
+  max-width: 1420px;
+  margin: 18px auto 0;
+  padding: 26px clamp(18px, 3vw, 34px);
+  border-radius: 20px;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 150% at 88% 0%, rgba(var(--t-a), .34), rgba(var(--t-a), 0) 62%),
+    linear-gradient(104deg, #0b3628 0%, #0f4536 52%, #12513e 100%);
+  color: #eaf3ee;
+  box-shadow: 0 26px 48px -34px rgba(6, 26, 20, .9);
+}
+.f-hero::after {
+  content: "";
+  position: absolute; right: -60px; top: -80px;
+  width: 340px; height: 340px; border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, .07);
+  box-shadow: 0 0 0 42px rgba(255, 255, 255, .035), 0 0 0 96px rgba(255, 255, 255, .022);
+  pointer-events: none;
+}
+.f-hero-tile {
+  flex: none;
+  width: 52px; height: 52px;
+  display: grid; place-items: center;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, .09);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14);
+}
+.f-hero-tile svg {
+  width: 24px; height: 24px;
+  fill: none; stroke: #bfe3d0; stroke-width: 1.7;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+.f-hero-text { flex: 1; min-width: 0; position: relative; z-index: 1; }
+.f-hero-eyebrow {
+  display: block;
+  font-size: 10.5px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+  color: #8fc4ac;
+}
+.f-hero h1 {
+  margin: 9px 0 0;
+  font-family: var(--wd-font-display, Georgia, serif);
+  font-size: clamp(25px, 3vw, 35px); font-weight: 600;
+  letter-spacing: -.02em; line-height: 1.1;
+  color: #fff;
+}
+.f-hero p {
+  margin: 10px 0 0;
+  font-size: 14.5px; line-height: 1.55;
+  color: #c3dcd0;
+  max-width: 62ch;
+}
+
+/* the finding */
+.f-hero-fig {
+  position: relative; z-index: 1;
+  flex: none; min-width: 170px;
+  padding: 16px 20px;
+  border-radius: 15px;
+  text-align: right;
+  background: rgba(255, 255, 255, .07);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .12);
+}
+.f-hero-fig[hidden] { display: none; }
+.f-hero-fig .f-hero-eyebrow { color: #8fc4ac; }
+.f-hero-fig b {
+  display: block; margin-top: 7px;
+  font-family: var(--wd-font-display, Georgia, serif);
+  font-size: 31px; font-weight: 600; letter-spacing: -.02em; line-height: 1.05;
+  color: #fff;
+}
+.f-hero-fig b[data-tone="good"] { color: #9fdcc2; }
+.f-hero-fig b[data-tone="warn"] { color: #e9cf96; }
+.f-hero-fig b[data-tone="bad"]  { color: #f0b5bb; }
+.f-hero-fig small {
+  display: block; margin-top: 6px;
+  font-size: 12px; color: #a9cfbb;
+}
+
+@media (max-width: 760px) {
+  .f-hero { flex-wrap: wrap; margin: 12px 14px 0; padding: 20px; }
+  .f-hero-fig { width: 100%; text-align: left; min-width: 0; }
+}
+
 /* ---------- the two columns ---------- */
 .f-body {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 392px;
-  align-items: start;
+  align-items: stretch;
   gap: 0;
   max-width: 1420px; margin: 0 auto;
 }
 .f-main { padding: 26px clamp(16px, 3vw, 34px) 60px; min-width: 0; }
+
+/* The rail is a panel beside the questions, not a wall down the side of
+   the window. It used to be a full-bleed white column with a 100vh floor,
+   which is what produced the long grey nothing under a short form. */
 .f-rail {
-  position: sticky; top: 69px;
-  padding: 26px clamp(16px, 3vw, 28px) 40px;
-  border-left: 1px solid var(--wd-line, #dfe5e2);
+  position: sticky; top: 82px;
+  align-self: start;
+  margin: 26px clamp(16px, 3vw, 34px) 40px 0;
+  padding: 22px;
+  border-radius: 20px;
   background: #fff;
-  min-height: calc(100vh - 69px);
+  box-shadow: inset 0 0 0 1px rgba(7, 26, 20, .1),
+              0 1px 2px rgba(9, 38, 30, .05),
+              0 24px 44px -32px rgba(9, 38, 30, .5);
   display: flex; flex-direction: column; gap: 18px;
 }
 @media (max-width: 1040px) {
   .f-body { grid-template-columns: minmax(0, 1fr); }
-  .f-rail { position: static; min-height: 0; border-left: 0; border-top: 1px solid var(--wd-line, #dfe5e2); }
+  .f-rail { position: static; margin: 0 clamp(16px, 3vw, 34px) 34px; }
 }
 
 .f-lede {
@@ -219,8 +321,14 @@
   background: rgba(var(--t-a), .05);
   box-shadow: inset 0 0 0 1px rgba(var(--t-a), .14);
   display: flex; flex-direction: column;
-  min-height: 210px;
+  min-height: 150px;
 }
+/* An empty stage was a 210px box with a small button floating at the top
+   of it. The button now fills the space it is standing in, so an empty
+   column reads as somewhere to drop something rather than as a hole. */
+.f-col-b { flex: 1; }
+.f-col-b:has(> .f-add:only-child) { display: grid; place-items: stretch; }
+.f-col-b:has(> .f-add:only-child) .f-add { height: 100%; min-height: 86px; }
 .f-col-h {
   display: flex; align-items: center; gap: 8px;
   padding: 12px 14px 10px;
@@ -401,14 +509,33 @@
 }
 
 #formRoot[data-as="client"] .f-body { grid-template-columns: minmax(0, 1fr); max-width: 660px; }
+/* The client's rail is a bar pinned to the bottom of the screen, not a
+   panel beside the questions — they have one column and one job.
+
+   align-self and margin must both be reset here: the adviser's rail was
+   given `align-self: start` so it sticks under the header, and a
+   start-aligned box cannot also sit at the bottom of its row. Left in,
+   it floated over the middle of the form. */
 #formRoot[data-as="client"] .f-rail {
-  position: sticky; bottom: 0; top: auto;
-  min-height: 0;
-  border-left: 0; border-top: 1px solid var(--wd-line, #dfe5e2);
-  padding: 16px clamp(16px, 4vw, 26px) 20px;
-  box-shadow: 0 -14px 30px -26px rgba(7, 26, 20, .8);
+  position: sticky; bottom: 12px; top: auto;
+  align-self: end;
+  margin: 0 0 12px;
+  padding: 16px clamp(16px, 4vw, 22px) 18px;
+  border-radius: 18px;
+  box-shadow: inset 0 0 0 1px rgba(7, 26, 20, .1),
+              0 -6px 16px -10px rgba(7, 26, 20, .3),
+              0 18px 34px -24px rgba(7, 26, 20, .7);
 }
+/* The bar is sticky, so it passes over the questions as they scroll —
+   that is what a bottom bar does. What must not happen is a field
+   coming to rest underneath it with no way to scroll it clear, so the
+   column ends with room for the bar to sit in. */
 #formRoot[data-as="client"] .f-main { padding-bottom: 20px; }
+@media (max-width: 560px) {
+  #formRoot[data-as="client"] .f-rail { padding: 13px 15px 15px; gap: 12px; }
+  #formRoot[data-as="client"] .f-quiet { font-size: 11.5px; line-height: 1.45; }
+  #formRoot[data-as="client"] .f-cprog b { font-size: 17px; }
+}
 #formRoot[data-as="client"] .f-actions { margin-top: 0; padding-top: 0; }
 #formRoot[data-as="client"] .f-btn { flex: 1; }
 #formRoot[data-as="client"] .f-item-s { display: none; }
@@ -443,4 +570,259 @@
   .f-body { display: block; }
   .f-rail { border: 0; padding: 0 0 20px; }
   .f-item, .f-note, .f-card { break-inside: avoid; }
+}
+
+/* ============================================================
+   What the rail says instead of repeating the page
+
+   Three blocks, added when the old rail was found to be either
+   printing the left column a second time (the checklist), or
+   reporting zero in the language of a full board (the tracker),
+   or showing a progress ring next to questions that already
+   carry their own counters (the assessment).
+   ============================================================ */
+
+/* ---------- the spine: where the gaps are, by group ---------- */
+.f-spine { display: flex; flex-direction: column; gap: 9px; }
+.f-spine-row {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr);
+  align-items: center;
+  gap: 4px 10px;
+}
+.f-spine-row .f-meter { grid-column: 1 / -1; }
+.f-spine-n {
+  font-size: 11.5px; font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--wd-muted, #5f6d67);
+}
+.f-spine-name {
+  font-size: 13px; color: var(--wd-ink-soft, #2a3a34);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.f-spine-row.is-done .f-spine-n,
+.f-spine-row.is-done .f-spine-name { color: var(--t); font-weight: 600; }
+.f-spine .f-meter { margin: 0; }
+
+/* ---------- what the finished answer will tell you ---------- */
+.f-preview { display: flex; flex-direction: column; gap: 7px; }
+.f-band {
+  display: flex; align-items: baseline; gap: 10px;
+  padding: 9px 12px;
+  border-radius: 11px;
+  background: rgba(13, 68, 53, .045);
+}
+.f-band b { flex: 1; font-size: 13px; font-weight: 600; color: var(--wd-ink-soft, #2a3a34); }
+.f-band span {
+  font-size: 11.5px; font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--wd-muted, #5f6d67);
+}
+.f-band[data-tone="good"] { background: rgba(47, 143, 104, .12); }
+.f-band[data-tone="good"] b { color: #1f6b52; }
+.f-band[data-tone="warn"] { background: rgba(168, 134, 58, .14); }
+.f-band[data-tone="warn"] b { color: #8a6d2e; }
+.f-band[data-tone="bad"]  { background: rgba(169, 95, 107, .13); }
+.f-band[data-tone="bad"] b  { color: #8a4653; }
+
+/* ---------- the one thing to chase next ---------- */
+.f-next {
+  padding: 15px 16px;
+  border-radius: 14px;
+  background: linear-gradient(165deg, #14503e, #0b3a2d);
+  color: #e8f2ec;
+}
+.f-next .f-eyebrow { color: #8fd3b3; }
+.f-next b {
+  display: block; margin-top: 8px;
+  font-family: var(--wd-font-display, Georgia, serif);
+  font-size: 18px; font-weight: 600; letter-spacing: -.01em; line-height: 1.25;
+  color: #fff;
+}
+.f-next p { margin: 7px 0 0; font-size: 13px; line-height: 1.5; color: #b6d4c6; }
+.f-next small { display: block; margin-top: 9px; font-size: 11.5px; color: #8fb3a4; }
+
+/* ---------- why this list is the length it is ---------- */
+.f-why { display: flex; flex-direction: column; gap: 0; }
+.f-why .f-eyebrow { margin-bottom: 4px; }
+.f-why-row {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 14px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(7, 26, 20, .07);
+}
+.f-why-row:last-of-type { border-bottom: 0; }
+.f-why-row span { font-size: 12.5px; color: var(--wd-muted, #5f6d67); }
+.f-why-row b {
+  font-size: 12.5px; font-weight: 600; color: var(--wd-ink, #071a14);
+  text-align: right; white-space: nowrap;
+}
+.f-why small { display: block; margin-top: 8px; font-size: 11.5px; line-height: 1.45; color: var(--wd-muted, #5f6d67); }
+
+/* ---------- the funnel: where the work actually is ---------- */
+.f-funnel { display: flex; flex-direction: column; gap: 8px; }
+.f-funnel .f-eyebrow { margin-bottom: 2px; }
+.f-fun-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 62px 22px;
+  align-items: center;
+  gap: 9px;
+}
+.f-fun-row[data-tint="mint"] { --t: #2f8f68; --t-a: 47, 143, 104; }
+.f-fun-row[data-tint="sage"] { --t: #5b8f72; --t-a: 91, 143, 114; }
+.f-fun-row[data-tint="mist"] { --t: #6a7f8c; --t-a: 106, 127, 140; }
+.f-fun-row[data-tint="rose"] { --t: #a95f6b; --t-a: 169, 95, 107; }
+.f-fun-row[data-tint="sun"]  { --t: #a8863a; --t-a: 168, 134, 58; }
+.f-fun-name {
+  font-size: 12.5px; color: var(--wd-ink-soft, #2a3a34);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.f-fun-bar {
+  grid-column: 1 / -1; grid-row: 2;
+  height: 7px; border-radius: 99px;
+  background: rgba(var(--t-a), .14);
+  overflow: hidden;
+}
+.f-fun-bar i {
+  display: block; height: 100%; border-radius: 99px;
+  background: var(--t);
+  transition: width .35s cubic-bezier(.22, 1, .36, 1);
+}
+.f-fun-n {
+  font-size: 12.5px; font-weight: 700; text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: var(--t);
+}
+.f-fun-v {
+  grid-column: 2; grid-row: 1;
+  font-size: 11.5px; text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: var(--wd-muted, #5f6d67);
+}
+
+/* ---------- an empty board, saying what to do with it ---------- */
+.f-empty { text-align: center; padding: 26px 8px 10px; }
+.f-empty-ico {
+  display: grid; place-items: center;
+  width: 52px; height: 52px; margin: 0 auto 14px;
+  border-radius: 50%;
+  background: rgba(var(--t-a), .12);
+}
+.f-empty-ico svg {
+  width: 22px; height: 22px;
+  fill: none; stroke: var(--t); stroke-width: 2; stroke-linecap: round;
+}
+.f-empty h2 {
+  margin: 0 0 8px;
+  font-family: var(--wd-font-display, Georgia, serif);
+  font-size: 20px; font-weight: 600; letter-spacing: -.01em;
+}
+.f-empty p { margin: 0; font-size: 13.5px; line-height: 1.6; color: var(--wd-muted, #5f6d67); }
+.f-empty p b { color: var(--wd-ink-soft, #2a3a34); font-weight: 600; }
+
+/* ---------- the board's arrows, when seven stages do not fit ---------- */
+.f-board { scroll-snap-type: x proximity; }
+.f-col { scroll-snap-align: start; }
+.f-boardnav { display: flex; justify-content: flex-end; gap: 8px; margin-top: 2px; }
+.f-boardnav[hidden] { display: none; }
+.f-barrow {
+  width: 38px; height: 38px;
+  display: grid; place-items: center;
+  border: 0; border-radius: 11px;
+  background: #fff;
+  box-shadow: inset 0 0 0 1px var(--wd-line, #dfe5e2), 0 1px 2px rgba(7, 26, 20, .06);
+  cursor: pointer;
+}
+.f-barrow svg { width: 16px; height: 16px; fill: none; stroke: var(--wd-ink-soft, #2a3a34); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.f-barrow:disabled { opacity: .35; cursor: default; }
+.f-barrow:not(:disabled):hover { box-shadow: inset 0 0 0 1px var(--t), 0 1px 2px rgba(7, 26, 20, .06); }
+
+/* the waiting rail is no longer a centred ring */
+.f-waiting { text-align: left; padding: 0; }
+.f-waiting h2 { font-size: 21px; }
+.f-waiting p { margin: 0 0 16px; line-height: 1.6; }
+.f-waiting p b { color: var(--wd-ink, #071a14); font-weight: 600; }
+
+@media print {
+  .f-hero {
+    background: none; color: #000; box-shadow: none;
+    border-bottom: 1px solid #ccc; border-radius: 0; margin: 0; padding: 0 0 14px;
+  }
+  .f-hero::after, .f-hero-tile { display: none; }
+  .f-hero h1, .f-hero-fig b { color: #000; }
+  .f-hero p, .f-hero-eyebrow, .f-hero-fig small { color: #444; }
+  .f-hero-fig { background: none; box-shadow: none; padding: 0; }
+  .f-boardnav { display: none; }
+}
+
+/* ------------------------------------------------------------
+   The top bar on a narrow screen.
+
+   It is a single flex row — back, category, title, "Saved" — and
+   a long title pushed the whole thing four pixels past the edge,
+   which is enough to make the entire page scroll sideways. The
+   hero underneath now carries the full name, so up here the
+   title may simply truncate.
+   ------------------------------------------------------------ */
+@media (max-width: 720px) {
+  .f-top { gap: 10px; padding-left: 14px; padding-right: 14px; }
+  .f-name {
+    min-width: 0;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .f-saved { flex: none; }
+}
+@media (max-width: 520px) {
+  .f-cat, .f-div { display: none; }
+}
+
+/* a stage that has finished is shown but set apart: its money is not in
+   the total above it, and a full-strength bar beside a live one would
+   read as though it were */
+.f-fun-row.is-ended .f-fun-name,
+.f-fun-row.is-ended .f-fun-n { opacity: .55; }
+.f-fun-row.is-ended .f-fun-bar i { background: repeating-linear-gradient(135deg, rgba(var(--t-a), .5) 0 4px, rgba(var(--t-a), .22) 4px 8px); }
+.f-fun-v em {
+  font-style: normal; font-size: 9.5px; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--wd-muted, #5f6d67);
+}
+
+/* ---------- what the answers come to, under the questions ---------- */
+.f-out {
+  margin-top: 4px;
+  padding-top: 22px;
+  border-top: 1px solid var(--wd-line, #dfe5e2);
+}
+.f-out .f-eyebrow { margin-bottom: 14px; }
+.f-out .f-figs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 14px;
+}
+/* In the rail a figure is a label on the left and a number on the right,
+   stacked down a narrow column. Out here they sit side by side, so each
+   becomes a tile with the label over the number — otherwise they run into
+   one another and read as one long sentence of unrelated numbers. */
+.f-out .f-fig {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
+  padding: 15px 16px;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: inset 0 0 0 1px rgba(7, 26, 20, .09), 0 1px 2px rgba(9, 38, 30, .04);
+}
+.f-out .f-fig-l {
+  font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--wd-muted, #5f6d67);
+}
+.f-out .f-fig-v {
+  text-align: left;
+  font-size: 27px; letter-spacing: -.02em; line-height: 1.1;
+  margin-top: 4px;
+}
+.f-out .f-fig.is-big { grid-column: span 2; }
+.f-out .f-fig.is-big .f-fig-v { font-size: 34px; }
+.f-out .f-fig-n { margin-top: 5px; }
+.f-out .f-meter { width: 100%; margin: 9px 0 2px; }
+@media (max-width: 620px) {
+  .f-out .f-fig.is-big { grid-column: 1 / -1; }
 }
