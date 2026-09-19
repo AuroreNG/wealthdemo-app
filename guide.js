@@ -176,11 +176,13 @@ window.WD_SIMPLE = {
   withdraw: {
     tour: [
       { find: [".wd-ask"], t: "Five questions",
-        b: "What you have, when you stop, what you want to spend, what Social Security adds and what you assume it earns. Change any of them and everything above moves." },
+        b: "What you have, when you stop, what you want to spend, what Social Security adds and what you assume it earns. Change any of them and the answer beside you moves as you type — there is no Calculate button." },
       { find: [".ans-copy"], t: "One age, and the honest spread",
-        b: "A single estimate to hold on to, with the range underneath. The order returns arrive in moves the answer by years, even at the same average." },
+        b: "A single estimate to hold on to, with the range underneath. The order the returns arrive in moves this by years, even on the same average return." },
+      { find: [".timeline"], t: "The range is the point",
+        b: "The solid part is the money lasting. The hatched part is the years it might not reach, depending on whether the bad years land early or late. Two clients with identical figures can end up either side of it." },
       { find: ["#shortBox"], t: "What would have been needed",
-        b: "The balance that would have supported this spending from day one, against what you actually have." }
+        b: "The balance that would have supported this spending from day one, against what is actually there. It is the gap, stated once, without a lecture attached." }
     ],
     ask: ["wNest", "wRet", "wWant", "wSS", "wGrowth"],
     keep: [".tool-hero", ".wd-ask", ".answer", ".wd-layout"],

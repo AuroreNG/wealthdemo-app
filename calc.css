@@ -1,0 +1,351 @@
+/* ============================================================
+   WEALTHDEMO — the calculator pages, given a shape
+
+   One stylesheet, loaded after tool.css, that does three things
+   to any tool page:
+
+     · puts the answer beside the questions instead of below
+       them, and keeps it on screen while you type
+     · stops every money box being as wide as the page
+     · docks the Guide on the right of the answer
+
+   app.css and app.js are untouched, as always. The restructure
+   is done by calc.js moving existing elements, so nothing here
+   depends on a particular page's markup.
+   ============================================================ */
+
+.calc-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 408px;
+  gap: 20px;
+  align-items: start;
+  margin: 0 0 20px;
+}
+@media (max-width: 1080px) {
+  .calc-split { grid-template-columns: minmax(0, 1fr); }
+}
+
+.calc-ask { min-width: 0; display: flex; flex-direction: column; gap: 18px; }
+
+/* ---------- the questions, in a grid rather than a column ----------
+
+   Each tool names its field wrapper differently — .wd-fields on the
+   withdrawal calculator, .panel-body and .ask-grid elsewhere — so all
+   three get the same treatment. The pairs a page has already grouped
+   (.f2) dissolve into that same grid with display: contents, so a row
+   of two does not become a column of one inside a column of six.
+   ------------------------------------------------------------------- */
+.calc-ask .wd-fields,
+.calc-ask .panel-body,
+.calc-ask .ask-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(205px, 1fr));
+  gap: 15px 16px;
+  align-items: start;
+}
+.calc-ask .f2 { display: contents; }
+.calc-ask .field,
+.calc-ask .f-body { min-width: 0; }
+.calc-ask .field.is-wide,
+.calc-ask .from-blueprint { grid-column: 1 / -1; }
+.calc-ask .f-body small { display: block; margin-top: 5px; }
+
+/* a money box does not need to be 900px wide */
+.calc-ask input[type="text"],
+.calc-ask input[type="number"],
+.calc-ask select {
+  width: 100%;
+  max-width: none;
+  font-variant-numeric: tabular-nums;
+}
+
+/* the same number, in words a person reads — the input keeps its raw
+   digits so the calculator's own parser is untouched */
+.calc-echo {
+  display: block;
+  margin-top: 5px;
+  font-family: var(--wd-font-display, Georgia, serif);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--wd-emerald-600, #167254);
+  letter-spacing: -.01em;
+  min-height: 19px;
+}
+.calc-echo:empty { display: none; }
+
+/* ============================================================
+   the rail
+   ============================================================ */
+.calc-rail {
+  position: sticky;
+  /* clear of the site header, which is itself sticky at the top of every
+     page — at 14px the rail slid underneath it and took its own tabs with
+     it, and the Guide tab is the only way into the Guide */
+  top: calc(var(--wd-nav-h, 74px) + 12px);
+  align-self: start;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: inset 0 0 0 1px rgba(7, 26, 20, .1),
+              0 1px 2px rgba(9, 38, 30, .05),
+              0 24px 44px -32px rgba(9, 38, 30, .55);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - var(--wd-nav-h, 74px) - 26px);
+}
+@media (max-width: 1080px) {
+  .calc-rail { position: static; max-height: none; }
+}
+
+.calc-tabs {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 10px 12px 0;
+  border-bottom: 1px solid rgba(7, 26, 20, .1);
+}
+.calc-tab {
+  position: relative;
+  display: flex; align-items: center; gap: 8px;
+  padding: 11px 14px;
+  border: 0; background: none;
+  font: inherit; font-size: 13.5px; font-weight: 600;
+  color: var(--wd-muted, #5f6d67);
+  cursor: pointer;
+  min-height: 44px;
+  border-radius: 10px 10px 0 0;
+}
+.calc-tab:hover { color: var(--wd-ink, #071a14); }
+.calc-tab[aria-selected="true"] { color: var(--wd-ink, #071a14); }
+.calc-tab[aria-selected="true"]::after {
+  content: "";
+  position: absolute; left: 8px; right: 8px; bottom: -1px; height: 2px;
+  background: var(--wd-emerald-800, #0d4435);
+}
+.calc-tab i {
+  font-style: normal;
+  font-size: 11px; font-weight: 700;
+  color: var(--wd-emerald-600, #167254);
+  background: rgba(47, 143, 104, .14);
+  padding: 2px 7px; border-radius: 999px;
+}
+
+/* min-height: 0 is doing real work here. Without it a flex child refuses
+   to shrink below its own content, so the rail's max-height is quietly
+   ignored, the pane never scrolls and the bottom of the answer ends up
+   below the fold on a short screen. */
+.calc-pane { overflow-y: auto; min-height: 0; padding: 18px; }
+.calc-pane[hidden] { display: none; }
+
+/* ------------------------------------------------------------
+   The ask button crosses to the other corner.
+
+   It is fixed bottom-right, which is exactly where the rail now
+   is, so it sat on top of the answer. Reserving 88px at the
+   bottom of the rail fixed the overlap and caused a worse
+   problem: it made the rail taller, and a rail nearly as tall as
+   the column it lives in has no room to stay put — which is the
+   only reason it exists.
+
+   So the button moves to the bottom-left, under the questions,
+   where nothing is fixed any more. The rail keeps its height and
+   its stickiness, and the two controls stop competing for one
+   corner.
+   ------------------------------------------------------------ */
+@media (min-width: 1081px) {
+  body:has(.calc-split) .gd-open { left: 20px; right: auto; }
+}
+
+/* ============================================================
+   the answer, compacted to fit the rail
+
+   Everything below is the same markup the page has always had —
+   it is simply being asked to live in 370px instead of 1100px.
+   Three things break at that width and are fixed here: figures
+   that overflow, captions sitting on top of each other, and
+   letter-spaced eyebrows that wrap to four lines.
+   ============================================================ */
+.calc-rail .answer {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: none;
+}
+
+/* eyebrows are set wide for a wide page; in a column they wrap */
+.calc-rail .eyebrow { font-size: 9.5px; letter-spacing: .1em; }
+
+.calc-rail .ans-top { display: block; }
+.calc-rail .ans-copy h2 { font-size: 27px; letter-spacing: -.9px; line-height: 1.12; }
+.calc-rail .ans-copy p { margin-top: 9px; font-size: 13.5px; line-height: 1.55; max-width: none; }
+
+.calc-rail .ans-side {
+  width: auto;
+  margin-top: 14px;
+  padding: 13px 15px;
+  border-radius: 12px;
+}
+.calc-rail .ans-figure { font-size: 26px; letter-spacing: -.7px; margin-top: 4px; }
+.calc-rail .ans-side p { font-size: 12px; }
+
+/* ---- the timeline ----------------------------------------------
+   On a wide page the four captions are placed along the track by
+   percentage. In a narrow column they land on top of one another,
+   so here they leave the track and become a plain two-by-two:
+   the two ends first, then the two outcomes.
+   ---------------------------------------------------------------- */
+.calc-rail .timeline { margin-top: 20px; }
+.calc-rail .tl-labels {
+  position: static;
+  min-height: 0;
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 12px;
+}
+.calc-rail .tl-lab {
+  position: static;
+  left: auto; right: auto;
+  transform: none;
+  text-align: left;
+  white-space: normal;
+}
+.calc-rail .tl-lab.start { order: 0; }
+.calc-rail .tl-lab.end   { order: 1; }
+.calc-rail .tl-lab.float { order: 2; }
+.calc-rail .tl-lab b { font-size: 14px; }
+.calc-rail .tl-lab small { font-size: 11.5px; line-height: 1.35; }
+
+/* ---- the three figures underneath ------------------------------
+   Side by side they are three narrow columns and "$3,802/mo" runs
+   off the edge. Stacked, each is a label on the left and a figure
+   on the right, which also reads faster.
+   ---------------------------------------------------------------- */
+.calc-rail .ans-figures {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  margin-top: 18px;
+  padding-top: 8px;
+}
+.calc-rail .ans-figures > div {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 14px;
+  padding: 10px 0;
+  min-width: 0;
+}
+.calc-rail .ans-figures > div + div { padding-left: 0; border-left: 0; border-top: 1px solid #e2eae6; }
+.calc-rail .ans-figures small { font-size: 12px; }
+.calc-rail .ans-figures b {
+  margin-top: 0;
+  font-size: 22px; letter-spacing: -.5px;
+  text-align: right; white-space: nowrap;
+}
+.calc-rail .ans-figures b small { font-size: 12.5px; }
+
+/* ============================================================
+   the Guide
+   ============================================================ */
+.gd-pane { display: flex; flex-direction: column; gap: 0; }
+
+.gd-filter { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 14px; }
+.gd-chip {
+  font: inherit; font-size: 12px; font-weight: 600;
+  color: var(--wd-ink-soft, #2a3a34);
+  background: rgba(13, 68, 53, .06);
+  border: 0; border-radius: 999px;
+  padding: 7px 13px;
+  cursor: pointer;
+  min-height: 36px;
+}
+.gd-chip[aria-pressed="true"] { background: var(--wd-emerald-800, #0d4435); color: #fff; }
+
+.gd-pair { padding: 14px 0; border-bottom: 1px solid rgba(7, 26, 20, .08); }
+.gd-pair:last-of-type { border-bottom: 0; }
+
+.gd-said { display: flex; gap: 9px; align-items: flex-start; }
+.gd-said svg { width: 15px; height: 15px; flex: none; margin-top: 5px; stroke: #93a29c; stroke-width: 1.8; fill: none; }
+.gd-bubble {
+  flex: 1;
+  padding: 10px 13px;
+  border-radius: 12px 12px 12px 3px;
+  background: #eef2f0;
+  font-size: 13.5px; line-height: 1.45;
+  color: var(--wd-ink-soft, #2a3a34);
+}
+.gd-pair[data-kind="objection"] .gd-bubble { background: #f6edec; }
+.gd-pair[data-kind="check"] .gd-bubble {
+  background: none;
+  border: 1px dashed rgba(7, 26, 20, .2);
+  color: var(--wd-muted, #5f6d67);
+  font-size: 13px;
+}
+
+.gd-answer { margin: 9px 0 0 24px; }
+.gd-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.gd-tag {
+  font-size: 9.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  padding: 3px 8px; border-radius: 999px;
+}
+.gd-tag[data-t="question"]  { color: #1f6b52; background: rgba(47, 143, 104, .14); }
+.gd-tag[data-t="objection"] { color: #8a4653; background: rgba(169, 95, 107, .14); }
+.gd-tag[data-t="check"]     { color: #8a6d2e; background: rgba(168, 134, 58, .16); }
+.gd-tag[data-t="likely"]    { color: #8a6d2e; background: rgba(168, 134, 58, .16); }
+
+.gd-text { font-size: 13.5px; line-height: 1.58; color: var(--wd-ink-soft, #2a3a34); margin-top: 8px; }
+.gd-text b { font-weight: 600; color: var(--wd-ink, #071a14); }
+
+.gd-say {
+  margin-top: 10px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: linear-gradient(165deg, #14503e, #0b3a2d);
+  color: #e8f2ec;
+}
+.gd-say span {
+  display: block;
+  font-size: 9px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+  color: #8fd3b3;
+}
+.gd-say q {
+  display: block;
+  font-family: var(--wd-font-display, Georgia, serif);
+  font-style: italic;
+  font-size: 14.5px; line-height: 1.5;
+  margin-top: 7px;
+  quotes: "\201C" "\201D";
+}
+
+.gd-ran {
+  display: flex; align-items: center; gap: 7px;
+  margin-top: 9px;
+  font-size: 11.5px; color: #6b7a74;
+}
+.gd-ran svg { width: 13px; height: 13px; flex: none; stroke: var(--wd-emerald-500, #1e9370); stroke-width: 2.1; fill: none; }
+
+.gd-empty { font-size: 13px; color: var(--wd-muted, #5f6d67); padding: 10px 0; }
+
+/* ------------------------------------------------------------
+   Nothing in here may be called .gd-ask, .gd-body, .gd-top,
+   .gd-q or .gd-how. Those belong to the panel simple.js opens,
+   and this sheet loads after simple.css — a name borrowed here
+   would silently restyle that panel on every tool page.
+   ------------------------------------------------------------ */
+
+/* the Guide announces itself once, on its own tab, and then
+   stops — there is already one floating button on these pages
+   and a second one in the opposite corner is just clutter */
+@keyframes calc-tab-note {
+  0%, 100% { background: transparent; }
+  30%      { background: rgba(47, 143, 104, .16); }
+}
+.calc-tab[data-note="1"] { animation: calc-tab-note 1.1s ease 2; }
+
+@media print {
+  .calc-tabs { display: none !important; }
+  .calc-split { display: block; }
+  .calc-rail { box-shadow: none; max-height: none; }
+  .calc-pane[hidden] { display: block !important; }
+}

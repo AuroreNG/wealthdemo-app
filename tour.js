@@ -35,6 +35,18 @@
   /* and the handful of things that work the same on every page */
   const SHARED = [
     {
+      find: [".calc-rail"],
+      t: "The answer does not go away",
+      b: "It sits beside the questions and stays there while you type, so you can watch a figure move as you change the thing that moves it."
+    },
+    {
+      find: ["#calcTabG"],
+      w: 2,
+      t: "What they will ask, already answered",
+      b: "The questions and the pushback this tool tends to provoke, each one answered on the figures in front of you — worked out by running this page, so it can never say something the calculator does not.",
+      spot: "tight"
+    },
+    {
       find: [".sm-more", ".ask-more"],
       t: "The rest is one tap away",
       b: "Everything a calculator like this can ask is still here. It just waits until you want it."
@@ -58,7 +70,8 @@
       find: [".gd-open"],
       t: "And you can just ask",
       b: "Type a question in your own words \u2014 \u201cwhat if I paid $600 a month?\u201d \u2014 and it works the answer out on your figures.",
-      spot: "tight"
+      spot: "tight",
+      w: 3
     }
   ];
 
@@ -94,9 +107,17 @@
 
   let box = null, card = null, live = [], queue = [], at = 0;
 
-  /* whatever order they were written in, walk down the page */
+  /* Whatever order they were written in, walk down the page.
+
+     Two steps are exceptions, and say so with a weight: the ones
+     that explain how to ask a question. They live near the top of
+     the page — the Guide sits in a tab, the ask button is fixed to
+     a corner — but they only make sense once somebody has seen the
+     answer they would be asking about. So they go last. */
   function order(list) {
     return list.slice().sort(function (x, y) {
+      const wx = x.w || 0, wy = y.w || 0;
+      if (wx !== wy) return wx - wy;
       const ex = target(x), ey = target(y);
       if (!ex || !ey) return 0;
       const rel = ex.compareDocumentPosition(ey);
