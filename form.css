@@ -1129,3 +1129,34 @@
   .f-say { background: #f4f4f4; color: #000; }
   .f-card, .f-gate, .f-pair { break-inside: avoid; }
 }
+
+/* ------------------------------------------------------------
+   "These are example figures."
+
+   The assessments open pre-filled so the scorecard is visible on
+   arrival. That is only safe if the page says so in plain words
+   — an adviser must never take the example for their client's
+   file. It goes the moment anything is changed, and it is never
+   shown to a client.
+   ------------------------------------------------------------ */
+.f-example {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  max-width: 1420px;
+  margin: 12px auto 0;
+  padding: 11px 18px;
+  border-radius: 14px;
+  background: rgba(168, 134, 58, .12);
+  box-shadow: inset 0 0 0 1px rgba(168, 134, 58, .3);
+}
+.f-example[hidden] { display: none; }
+.f-example b { font-size: 13.5px; font-weight: 600; color: #7d6427; }
+.f-example span { flex: 1; min-width: 200px; font-size: 13px; color: var(--wd-ink-soft, #2a3a34); }
+.f-example button {
+  font: inherit; font-size: 12.5px; font-weight: 600;
+  color: #7d6427; background: #fff;
+  border: 0; box-shadow: inset 0 0 0 1px rgba(168, 134, 58, .45);
+  border-radius: 10px; padding: 9px 15px; min-height: 40px; cursor: pointer;
+}
+.f-example button:hover { box-shadow: inset 0 0 0 1px #a8863a; }
+@media (max-width: 760px) { .f-example { margin: 12px 14px 0; } }
+@media print { .f-example { display: none !important; } }

@@ -99,6 +99,19 @@
      halfway through a correction. */
   let EDITING = false;
 
+  /* ------------------------------------------------------------
+     Is what is on screen still the worked example?
+
+     The three assessments open pre-filled, the way every
+     calculator on this site does, so the scorecard is visible on
+     arrival instead of after two minutes of typing. That is only
+     safe if the page says so — an adviser must never mistake the
+     example for their client's figures. FRESH is true until the
+     first edit, and it is remembered, so it does not come back
+     when they return to a file they have already worked on.
+     ------------------------------------------------------------ */
+  let FRESH = false;
+
   let V = {};       /* answers — for a check, the setup answers */
   let MARK = {};    /* check only: item id -> "need" | "have" | "na" */
   let ROWS = [];    /* track only */
@@ -120,7 +133,9 @@
     }
 
     /* a form may open with sensible defaults rather than an empty page */
+    const untouched = !s && !sent;
     for (const k in (FORM.seed || {})) if (V[k] === undefined) V[k] = FORM.seed[k];
+    FRESH = untouched ? true : !!(s && s.fresh);
   })();
 
   /* ------------------------------------------------------------
@@ -143,7 +158,8 @@
     clearTimeout(saveTimer);
     saveTimer = null;
     try {
-      localStorage.setItem(KEY, JSON.stringify({ v: V, mark: MARK, rows: ROWS, at: Date.now() }));
+      localStorage.setItem(KEY, JSON.stringify({ v: V, mark: MARK, rows: ROWS,
+                                                 fresh: FRESH, at: Date.now() }));
     } catch (e) {}
     const s = $("fSaved");
     if (s) {
@@ -241,6 +257,7 @@
 
   /* one change may hide another question, so an ask re-renders its groups */
   function changed(now) {
+    FRESH = false;              /* these are somebody's real figures now */
     save(now);
     if (FORM.kind === "ask") { paint(); }
     else if (FORM.kind === "check") { paintCheck(); }
@@ -303,6 +320,11 @@
       "</section>";
 
     mount.innerHTML = top + hero +
+      '<div class="f-example" id="fExample" hidden>' +
+        "<b>These are example figures.</b>" +
+        "<span>Change any of them, or clear the form and start on a real file.</span>" +
+        '<button type="button" id="fClear">Clear it</button>' +
+      "</div>" +
       '<div class="f-body">' +
         '<main class="f-main" id="fMain"></main>' +
         '<aside class="f-rail" id="fRail"></aside>' +
@@ -312,6 +334,16 @@
       mount.querySelector(".f-hero h1").textContent = FORM.name;
       mount.querySelector(".f-hero p").textContent = FORM.lede || "";
     }
+
+    const clear = $("fClear");
+    if (clear) clear.addEventListener("click", function () {
+      V = {}; MARK = {}; ROWS = []; FRESH = false; EDITING = false;
+      save(true);
+      if (FORM.kind === "ask") paint();
+      else if (FORM.kind === "check") paintCheck();
+      else paintTrack();
+      markExample();
+    });
 
     if (CLIENT) {
       const name = FROM.name || "Your adviser";
@@ -387,6 +419,11 @@
       const box = main.querySelector('[data-item="' + it.id + '"]');
       if (box) wireField(box, it);
     });
+  }
+
+  function markExample() {
+    const el = $("fExample");
+    if (el) el.hidden = !(FRESH && !CLIENT);
   }
 
   /* the finding, in the hero — the one figure somebody wants at a glance */
@@ -795,6 +832,7 @@
      snap out from under somebody who is mid-correction.
      ------------------------------------------------------------ */
   function paint() {
+    markExample();
     const st = ready();
     if (st.ok && !CLIENT && !EDITING) return paintReport();
     mount.removeAttribute("data-state");
@@ -1023,6 +1061,7 @@
   const STATE_WORD = { need: "Still needed", have: "In", na: "Not needed" };
 
   function paintCheck() {
+    markExample();
     const main = $("fMain");
     const html = [];
     /* the lede is in the hero now; a client has no hero, so it stays for them */

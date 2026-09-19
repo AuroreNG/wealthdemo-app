@@ -176,7 +176,14 @@
         options: [{ v: 30, label: "30 years" }, { v: 20, label: "20 years" }, { v: 15, label: "15 years" }] }
     ],
 
-    seed: { term: 30, rate: 6.5, firstTime: true },
+    /* A worked example, so the page opens as a scorecard rather than as ten
+       empty boxes. Every calculator on this site arrives pre-filled; the
+       forms did not, which meant none of the work below was visible until
+       somebody had typed for two minutes. The engine marks it as an example
+       until the first edit. */
+    seed: { credit: 712, jobYears: 4, selfEmployed: false, firstTime: true,
+            income: 9800, debts: 640, price: 520000, down: 70000,
+            rate: 6.5, term: 30 },
 
     /* ------------------------------------------------------------
        The scorecard.
@@ -582,7 +589,8 @@
         ask: "Drawn down each year", hint: "4% is the usual rule of thumb." }
     ],
 
-    seed: { growth: 6, inflation: 2.5, swr: 4, retAge: 65 },
+    seed: { age: 42, retAge: 65, saved: 180000, monthly: 1400, growth: 6,
+            spend: 6500, ss: 2400, pension: 0, inflation: 2.5, swr: 4 },
 
     /* ------------------------------------------------------------
        This one is not four gates.
@@ -934,6 +942,9 @@
         say: "",
         ran: "Ran this form again with their own place listed" }
     ],
+
+    seed: { approved: 2, budget: 450000, down: 67500, when: 2,
+            sellFirst: false, agreed: true },
 
     bands: [
       { min: 80, label: "Transaction-ready", tone: "good", say: "Show them houses. This one will close." },
