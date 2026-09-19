@@ -44,20 +44,29 @@
           desc: "Your whole financial picture in seven guided steps." }
       ]
     },
+    /* ------------------------------------------------------------
+       Four, not six.
+
+       Retirement, Wealth & Growth and College & Life Setup were three
+       headings over one idea — money you are growing, keeping or
+       making last — and splitting them meant a client's whole
+       financial life was scattered across three squares. They are one
+       now. "Will My Social Security Be Taxed?" moved with them into
+       Taxes, where it always belonged: it is a tax question wearing a
+       retirement hat.
+
+       Four squares also fit one clean row on a phone, which six never
+       did.
+       ------------------------------------------------------------ */
     {
-      name: "Retirement", note: "Plan today for tomorrow.", icon: "leaf", tint: "mint",
+      name: "Money", note: "Grow it, keep it, make it last.", icon: "coins", tint: "mint",
       tools: [
-        { name: "Will My Social Security Be Taxed?", icon: "clock", href: "tool.html",
-          desc: "See how much of your benefit the IRS can reach." },
+        { name: "Retirement Readiness Scorecard", icon: "target", href: "form.html?f=retire-ready",
+          desc: "Whether what they are putting away actually reaches what they want to spend." },
         { name: "Retirement Withdrawal Calculator", icon: "chart", href: "withdraw.html",
           desc: "How long your savings last at the pace you spend." },
         { name: "Retirement Account Match-Up", icon: "coins", href: "accounts.html",
-          desc: "Which account should the money come out of, and what it costs." }
-      ]
-    },
-    {
-      name: "Wealth & Growth", note: "Grow with purpose.", icon: "chart", tint: "sage",
-      tools: [
+          desc: "Which account should the money come out of, and what it costs." },
         { name: "Family Bank Goal Calculator", icon: "target", href: "family.html",
           desc: "Short-, mid- and long-term goals on one timeline \u2014 and whether one account covers all three." },
         { name: "Rule of 72", icon: "pct", href: "rule72.html",
@@ -65,53 +74,64 @@
         { name: "Cost of Waiting", icon: "hourglass", href: "waiting.html",
           desc: "Same money, started later. See what the delay takes." },
         { name: "What a Loss Really Costs", icon: "trend", href: "loss.html",
-          desc: "Fall 30% and you need 42.9% back. See why." }
+          desc: "Fall 30% and you need 42.9% back. See why." },
+        { name: "Family College Funding Calculator", icon: "cap", href: "college.html",
+          desc: "The whole degree by the year they start \u2014 and the monthly number that gets you there." },
+        { name: "529 Plan Growth Estimator", icon: "chart", href: "plan529.html",
+          desc: "Project the balance \u2014 and what the tax break is worth against a taxable account." },
+        { name: "Build Their Future", icon: "target", href: "future.html",
+          desc: "Savings, a 529 and permanent life insurance side by side \u2014 what job the money is for." }
       ]
     },
     {
-      name: "Protection", note: "Help safeguard what matters.", icon: "shield", tint: "blush",
+      name: "Taxes", note: "When you pay, and how much.", icon: "doc", tint: "sun",
       tools: [
-        { name: "How Much Life Insurance", icon: "shield", href: "dime.html",
-          desc: "Four things to pay for, less what you already have." },
-        { name: "What Would You Leave Behind?", icon: "heart", href: "legacy.html",
-          desc: "What an estate looks like on paper, and what really arrives." },
-        { name: "If the Paycheck Stopped", icon: "wallet", href: "paycheck.html",
-          desc: "Month by month, who pays the bills — and when it gets tight." }
-      ]
-    },
-    {
-      name: "Real Estate", note: "Make informed housing decisions.", icon: "home", tint: "sand",
-      tools: [
-        { name: "Rent vs. Buy", icon: "home", href: "rentbuy.html",
-          desc: "The year buying finally pulls ahead — or whether it does." },
-        { name: "Mortgage Payoff Strategy", icon: "chart", href: "mortgage.html",
-          desc: "A policy loan against the mortgage — and the fair test of it." },
-        { name: "Debt Payoff & Interest Calculator", icon: "pct", href: "debt.html",
-          desc: "The cost of the debt, what paying more does, and whether consolidating helps." }
-      ]
-    },
-    {
-      name: "Taxes", note: "Keep more of what you earn.", icon: "doc", tint: "lilac",
-      tools: [
+        { name: "Tax Document Checklist", icon: "doc", href: "form.html?f=tax-docs",
+          desc: "What this household has to send you — and nothing that does not apply to them." },
+        { name: "Will My Social Security Be Taxed?", icon: "clock", href: "tool.html",
+          desc: "See how much of your benefit the IRS can reach." },
         { name: "When Do You Want to Pay Taxes?", icon: "calendar", href: "taxes.html",
-          desc: "Pay now, pay later, or pay first — the same money under three timings." },
+          desc: "Pay now, pay later, or pay first \u2014 the same money under three timings." },
         { name: "Tax Impact on Your Investments", icon: "doc", href: "taximpact.html",
           desc: "How much of what you own is taxed now, later, or not at all." },
         { name: "Tax Penalty Impact", icon: "pct", href: "penalty.html",
           desc: "What an early withdrawal costs in income tax and in penalty." },
         { name: "State Tax Comparison", icon: "home", href: "states.html",
-          desc: "What moving states would really cost — income, property and sales tax together." }
+          desc: "What moving states would really cost \u2014 income, property and sales tax together." }
       ]
     },
     {
-      name: "College & Life Setup", note: "Invest in what's next.", icon: "cap", tint: "teal",
+      name: "Real Estate", note: "Buy, hold, or pay it down.", icon: "home", tint: "sand",
       tools: [
-        { name: "Family College Funding Calculator", icon: "cap", href: "college.html",
-          desc: "The whole degree by the year they start — and the monthly number that gets you there." },
-        { name: "529 Plan Growth Estimator", icon: "chart", href: "plan529.html",
-          desc: "Project the balance — and what the tax break is worth against a taxable account." },
-        { name: "Build Their Future", icon: "target", href: "future.html",
-          desc: "Savings, a 529 and permanent life insurance side by side — what job the money is for." }
+        { name: "Mortgage Readiness Assessment", icon: "home", href: "form.html?f=mortgage-ready",
+          desc: "Whether a lender would take this file today, and what is standing in the way." },
+        { name: "Borrower Document Checklist", icon: "doc", href: "form.html?f=borrower-docs",
+          desc: "Only the documents this borrower has to produce — and what is still outstanding." },
+        { name: "Buyer Readiness Assessment", icon: "target", href: "form.html?f=buyer-ready",
+          desc: "Whether this buyer can transact, before you spend six Saturdays on them." },
+        { name: "Prequalification Tracker", icon: "chart", href: "form.html?f=prequal",
+          desc: "Everyone in the pipeline, and which stage each of them is stuck at." },
+        { name: "Rent vs. Buy", icon: "home", href: "rentbuy.html",
+          desc: "The year buying finally pulls ahead \u2014 or whether it does." },
+        { name: "Mortgage Payoff Strategy", icon: "chart", href: "mortgage.html",
+          desc: "A policy loan against the mortgage \u2014 and the fair test of it." },
+        { name: "Debt Payoff & Interest Calculator", icon: "pct", href: "debt.html",
+          desc: "The cost of the debt, what paying more does, and whether consolidating helps." }
+      ]
+    },
+    {
+      name: "Protection", note: "What happens if it stops.", icon: "shield", tint: "rose",
+      tools: [
+        { name: "Estate Document Checklist", icon: "heart", href: "form.html?f=estate-docs",
+          desc: "What this family should have signed, and what is missing." },
+        { name: "Policy Review Tracker", icon: "shield", href: "form.html?f=policy-review",
+          desc: "Which policies are due a look, and where each conversation got to." },
+        { name: "How Much Life Insurance", icon: "shield", href: "dime.html",
+          desc: "Four things to pay for, less what you already have." },
+        { name: "What Would You Leave Behind?", icon: "heart", href: "legacy.html",
+          desc: "What an estate looks like on paper, and what really arrives." },
+        { name: "If the Paycheck Stopped", icon: "wallet", href: "paycheck.html",
+          desc: "Month by month, who pays the bills \u2014 and when it gets tight." }
       ]
     }
   ];
@@ -127,6 +147,102 @@
     });
     return list;
   }, []);
+  /* ============================================================
+     Who is using this
+
+     The same engine serves three professions. They all need the
+     identical four things — advise simply, send an assessment,
+     collect the answers, communicate securely — so none of that
+     is duplicated. What differs is only which calculators are in
+     front of them.
+
+     Deliberately broad, because a title is not a job:
+       · financial   — planning, wealth management, insurance and
+                       protection all sit here
+       · tax         — CPA, EA, preparer
+       · realestate  — agents, brokers and mortgage loan officers,
+                       which is why it is "professional", not "agent"
+
+     A tool may belong to more than one. State Tax Comparison is a
+     tax tool and a real-estate tool, because property tax is half
+     of what it answers, and pretending otherwise would hide it
+     from the person who needs it most.
+
+     Adding a fourth profession is one entry here plus its tools'
+     tags. Nothing else in the file knows how many there are.
+     ============================================================ */
+  const PROFESSIONS = [
+    { id: "financial",  name: "Financial professional",
+      note: "Planning, wealth management, insurance and protection." },
+    { id: "tax",        name: "Tax professional",
+      note: "CPAs, EAs and preparers \u2014 the timing and the bill." },
+    { id: "realestate", name: "Real estate professional",
+      note: "Agents, brokers and mortgage loan officers." }
+  ];
+
+  const PRO = {
+    "withdraw.html":  ["financial"],
+    "accounts.html":  ["financial"],
+    "rule72.html":    ["financial", "realestate"],
+    "waiting.html":   ["financial"],
+    "loss.html":      ["financial"],
+    "family.html":    ["financial"],
+    "future.html":    ["financial"],
+    "college.html":   ["financial"],
+    "plan529.html":   ["financial", "tax"],
+    "dime.html":      ["financial"],
+    "legacy.html":    ["financial", "tax"],
+    "paycheck.html":  ["financial"],
+    "carriers.html":  ["financial"],
+
+    "tool.html":      ["tax", "financial"],
+    "taxes.html":     ["tax", "financial"],
+    "taximpact.html": ["tax", "financial"],
+    "penalty.html":   ["tax", "financial"],
+    "states.html":    ["tax", "realestate"],
+
+    "rentbuy.html":   ["realestate"],
+    "mortgage.html":  ["realestate", "financial"],
+    "debt.html":      ["realestate", "financial"],
+
+    /* the form engine's tools. They are keyed by the whole href, query
+       string included, because that is what render() puts in the link. */
+    "form.html?f=mortgage-ready": ["realestate", "financial"],
+    "form.html?f=borrower-docs":  ["realestate"],
+    "form.html?f=buyer-ready":    ["realestate"],
+    "form.html?f=prequal":        ["realestate"],
+    "form.html?f=retire-ready":   ["financial"],
+    "form.html?f=tax-docs":       ["tax"],
+    "form.html?f=policy-review":  ["financial"],
+    "form.html?f=estate-docs":    ["financial", "tax"],
+
+    /* the workflow pieces belong to everyone */
+    "send.html":      ["financial", "tax", "realestate"],
+    "blueprint.html": ["financial", "tax", "realestate"]
+  };
+
+  const PRO_KEY = "wealthdemo.pro";
+  function pro() {
+    try {
+      const v = localStorage.getItem(PRO_KEY);
+      return PROFESSIONS.some(function (p) { return p.id === v; }) ? v : "all";
+    } catch (e) { return "all"; }
+  }
+  function setPro(id) {
+    try { localStorage.setItem(PRO_KEY, id); } catch (e) {}
+  }
+  /* an untagged tool is shown to everyone rather than hidden from everyone —
+     a new calculator should never vanish because somebody forgot a tag */
+  function forPro(href, who) {
+    if (who === "all") return true;
+    const tags = PRO[href];
+    return !tags || tags.indexOf(who) >= 0;
+  }
+
+  window.WD = window.WD || {};
+  window.WD.professions = PROFESSIONS;
+  window.WD.pro = pro;
+
   const TOOL_COUNT = ALL_TOOLS.length;
   /* the Studio needs the same list to grant one tool at a time, and this is
      the only place it is defined — a second copy would go stale the first
@@ -163,44 +279,86 @@
     grid.innerHTML = "";
     let shown = 0;
 
+    /* ---------- the adviser's own two, kept out of the calculator grid ----
+
+       "Before the meeting" and "Placement" are not calculators. They are
+       things you do around a client, and standing them in the grid as
+       one-tool categories made them look like the runts of a list they
+       do not belong to. They get their own strip, above everything, in
+       the adviser's own colour. */
+    const strip = document.getElementById("adviserRow");
+    if (strip) {
+      strip.innerHTML = "";
+      CATEGORIES.filter(function (c) { return c.agentOnly; }).forEach(function (cat) {
+        (cat.tools || []).forEach(function (t) {
+          if (!forPro(t.href, pro())) return;
+          const a = document.createElement("a");
+          a.className = "adv-card";
+          a.href = t.href || "#";
+          a.innerHTML =
+            '<span class="adv-ico">' + icon(cat.icon) + "</span>" +
+            "<span class=\"adv-text\"><b></b><small></small></span>" +
+            '<svg class="adv-go" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13"/><path d="M13 6l6 6-6 6"/></svg>';
+          a.querySelector("b").textContent = t.name;
+          a.querySelector("small").textContent = t.desc || cat.note || "";
+          strip.appendChild(a);
+        });
+      });
+    }
+
+    /* ---------- one tile per calculator ----------
+
+       It used to be a box per category holding a plain list of names —
+       boxes inside boxes, and the one-line description each tool already
+       carries was never shown. Now the category is a quiet heading and
+       every calculator is its own tile with its own sentence, which is
+       both less furniture and more information. */
     VISIBLE().forEach(function (cat) {
-      if (cat.hideInGrid) return;
+      if (cat.hideInGrid || cat.agentOnly) return;
       if (active !== "All" && cat.name !== active) return;
+      const who = pro();
       const tools = cat.tools.filter(function (t) {
-        return !q || t.name.toLowerCase().indexOf(q) > -1 || cat.name.toLowerCase().indexOf(q) > -1;
+        if (!forPro(t.href, who)) return false;
+        return !q || t.name.toLowerCase().indexOf(q) > -1 ||
+               (t.desc || "").toLowerCase().indexOf(q) > -1 ||
+               cat.name.toLowerCase().indexOf(q) > -1;
       }).slice().sort(SORTS[sort] || SORTS.featured);
       if (!tools.length) return;
       shown += tools.length;
 
-      const card = document.createElement("section");
-      card.className = "tool-card";
-      card.setAttribute("data-tint", cat.tint || "mint");
-      card.innerHTML =
-        '<div class="tool-card-head">' +
-          '<span class="ico">' + icon(cat.icon) + '</span>' +
-          '<div><h3></h3><p></p></div>' +
-          '<span class="count">' + tools.length + ' tool' + (tools.length === 1 ? '' : 's') + '</span>' +
-        '</div><ul class="tool-list"></ul>';
-      card.querySelector("h3").textContent = cat.name;
-      card.querySelector("p").textContent = cat.note;
+      const sec = document.createElement("section");
+      sec.className = "cat";
+      sec.setAttribute("data-tint", cat.tint || "mint");
+      sec.innerHTML =
+        '<header class="cat-head">' +
+          '<span class="cat-ico">' + icon(cat.icon) + "</span>" +
+          "<h3></h3><p></p>" +
+          '<span class="cat-n">' + tools.length + "</span>" +
+        '</header><div class="cat-grid"></div>';
+      sec.querySelector("h3").textContent = cat.name;
+      sec.querySelector("p").textContent = cat.note;
+      /* the pressed square above already names it */
+      if (active !== "All") sec.querySelector(".cat-head").hidden = true;
 
-      const list = card.querySelector(".tool-list");
+      const box = sec.querySelector(".cat-grid");
       tools.forEach(function (t) {
-        const li = document.createElement("li");
         const a = document.createElement("a");
+        a.className = "calc" + (t.href ? "" : " soon");
         a.href = t.href || "#";
-        a.className = t.href ? "" : "soon";
         if (!t.href) a.addEventListener("click", function (e) { e.preventDefault(); });
-        a.innerHTML = '<span class="ti-wrap">' + icon(t.icon, "ti") + '</span><span class="label"></span>' +
-          (t.href
-            ? '<svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 6l6 6-6 6"/></svg>'
-            : '<span class="tag">Soon</span>');
-        a.querySelector(".label").textContent = t.name;
-        li.appendChild(a);
-        list.appendChild(li);
+        a.innerHTML =
+          '<span class="calc-ico">' + icon(t.icon) + "</span>" +
+          '<b class="calc-name"></b>' +
+          '<span class="calc-desc"></span>' +
+          (t.href ? '<span class="calc-go">Open<svg viewBox="0 0 24 24" aria-hidden="true">' +
+                    '<path d="M5 12h13"/><path d="M13 6l6 6-6 6"/></svg></span>'
+                  : '<span class="calc-go soon">Soon</span>');
+        a.querySelector(".calc-name").textContent = t.name;
+        a.querySelector(".calc-desc").textContent = t.desc || "";
+        box.appendChild(a);
       });
 
-      grid.appendChild(card);
+      grid.appendChild(sec);
     });
 
     if (empty) empty.hidden = shown > 0;
@@ -275,9 +433,107 @@
     }
   })();
 
+  /* The chooser. Three doors, switchable whenever they like, because one
+     person genuinely can be a financial professional who also does taxes.
+     It draws itself from PROFESSIONS, so a fourth needs no code here. */
+  function buildChooser() {
+    const box = document.getElementById("proChooser");
+    if (!box) return;
+    const who = pro();
+
+    /* count exactly what the grid below will show, or the number on the
+       button quietly disagrees with the tiles under it — the Blueprint has
+       its own panel and the adviser strip is not a calculator */
+    const count = function (id) {
+      let n = 0;
+      CATEGORIES.forEach(function (cat) {
+        if (cat.hideInGrid || cat.agentOnly) return;
+        (cat.tools || []).forEach(function (t) { if (forPro(t.href, id)) n++; });
+      });
+      return n;
+    };
+
+    box.innerHTML =
+      '<span class="pro-lead">I am a\u2026</span><div class="pro-seg">' +
+      PROFESSIONS.map(function (p) {
+        return '<button type="button" data-pro="' + p.id + '"' +
+          (who === p.id ? ' aria-pressed="true"' : ' aria-pressed="false"') + '>' +
+          '<b>' + p.name.replace(" professional", "") + '</b>' +
+          '<small>' + count(p.id) + ' tools</small></button>';
+      }).join("") +
+      '<button type="button" data-pro="all"' +
+      (who === "all" ? ' aria-pressed="true"' : ' aria-pressed="false"') +
+      '><b>Everything</b><small>' + count("all") + ' tools</small></button>' +
+      "</div>";
+
+    const note = PROFESSIONS.filter(function (p) { return p.id === who; })[0];
+    const n = document.createElement("p");
+    n.className = "pro-note";
+    n.textContent = note ? note.note : "Every calculator on the site, whoever you are.";
+    box.appendChild(n);
+
+    box.querySelectorAll("[data-pro]").forEach(function (b2) {
+      b2.addEventListener("click", function () {
+        setPro(b2.getAttribute("data-pro"));
+        active = "All";
+        buildChooser();
+        buildFilters();
+        render();
+      });
+    });
+  }
+
+  /* Categories as squares you can press.
+
+     These used to be plain pills that listed the same names as the
+     headings below them, which is why they were pulled. They are back as
+     something that earns its place: each carries the category's own
+     colour and icon, and pressing one narrows the page to that category
+     alone — at which point its heading is hidden, because the pressed
+     square is the heading. No name is ever on screen twice.
+
+     They redraw whenever the profession changes, so a tax professional is
+     never offered a category with nothing in it. */
   function buildFilters() {
     if (!filters) return;
+    filters.hidden = false;
     filters.innerHTML = "";
+
+    const who = pro();
+    const live = VISIBLE().filter(function (c) {
+      if (c.hideInGrid || c.agentOnly) return false;
+      return (c.tools || []).some(function (t) { return forPro(t.href, who); });
+    });
+    if (live.every(function (c) { return c.name !== active; })) active = "All";
+
+    const total = live.reduce(function (n, c) {
+      return n + c.tools.filter(function (t) { return forPro(t.href, who); }).length;
+    }, 0);
+
+    const square = function (name, tint, ico, n, on) {
+      const b2 = document.createElement("button");
+      b2.type = "button";
+      b2.className = "catbtn";
+      b2.setAttribute("data-tint", tint || "mint");
+      b2.setAttribute("aria-pressed", on ? "true" : "false");
+      b2.innerHTML =
+        '<span class="catbtn-ico">' + icon(ico) + "</span>" +
+        "<b></b><small>" + n + "</small>";
+      b2.querySelector("b").textContent = name;
+      b2.addEventListener("click", function () {
+        active = (active === name) ? "All" : name;   /* press again to clear */
+        buildFilters();
+        render();
+      });
+      return b2;
+    };
+
+    filters.appendChild(square("All", "", "chart", total, active === "All"));
+    live.forEach(function (c) {
+      const n = c.tools.filter(function (t) { return forPro(t.href, who); }).length;
+      filters.appendChild(square(c.name, c.tint, c.icon, n, active === c.name));
+    });
+    return;
     if (VISIBLE().every(function (c) { return c.name !== active; })) active = "All";
     ["All"].concat(VISIBLE().filter(function (c) { return !c.hideInGrid; }).map(function (c) { return c.name; })).forEach(function (name) {
       const b = document.createElement("button");
@@ -293,6 +549,7 @@
       filters.appendChild(b);
     });
   }
+  buildChooser();
   buildFilters();
 
   document.addEventListener("wd:role", function () { buildFilters(); render(); });
