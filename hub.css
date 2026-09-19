@@ -603,3 +603,39 @@ body[data-page="app"] { background: #f7f9f8; }
 
 /* the old trial banner is folded into the hero */
 .trial-banner { display: none !important; }
+
+/* ============================================================
+   Every mark on this page is sized here, on purpose
+
+   site.css opens with `svg { width: 100%; height: 100% }` and then
+   walks it back rule by rule for each component. That works right
+   up until one of those rules is missing — an older site.css, a
+   copy the browser cached, a file that did not finish uploading —
+   and then a 14px arrow expands to fill its card.
+
+   It has now happened twice, so this page stops relying on a rule
+   in another file and states its own sizes. Belt and braces: the
+   explicit sizes below, and a ceiling under them that catches any
+   mark nobody has thought of yet.
+   ============================================================ */
+.calc-go svg { width: 14px; height: 14px; flex: none; }
+.adv-go { width: 18px; height: 18px; flex: none; }
+.adv-ico svg { width: 19px; height: 19px; }
+.catbtn-ico svg { width: 17px; height: 17px; }
+.bar-search svg { width: 17px; height: 17px; flex: none; }
+.bar-pro svg { width: 13px; height: 13px; flex: none; }
+.hero-go svg { width: 16px; height: 16px; flex: none; }
+.hero-play i svg { width: 13px; height: 13px; }
+.featured-body .badge svg { width: 12px; height: 12px; flex: none; }
+.featured-cta .primary-btn svg { width: 16px; height: 16px; flex: none; }
+.foot-mark svg { width: 26px; height: 26px; flex: none; }
+.nav-search svg { width: 17px; height: 17px; flex: none; }
+.premium-btn svg { width: 15px; height: 15px; flex: none; }
+.account-btn .caret { width: 16px; height: 16px; flex: none; }
+
+/* the ceiling: no inline mark in the hub, the bar, the hero or the
+   footer may ever be bigger than a line of text */
+.site-hero svg,
+.tool-bar svg,
+.hub svg,
+.site-foot svg { max-width: 26px; max-height: 26px; }
