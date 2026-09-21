@@ -65,6 +65,8 @@
                { id: "grow",   name: "Growing it" },
                { id: "college", name: "College" }],
       tools: [
+        { name: "Retirement Readiness Calculator", icon: "target", href: "retire.html", sub: "retire",
+          desc: "Whether savings last as long as you do — and the one change that closes the gap." },
         { name: "Retirement Readiness Scorecard", icon: "target", href: "form.html?f=retire-ready", sub: "retire",
           desc: "Whether what they are putting away actually reaches what they want to spend." },
         { name: "Retirement Withdrawal Calculator", icon: "chart", href: "withdraw.html", sub: "retire",

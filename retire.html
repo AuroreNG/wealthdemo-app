@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  <title>Retirement Readiness — WEALTHDEMO</title>
+  <link rel="icon" href="wealthdemo-logo.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&amp;family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="tokens.css?v=70">
+  <link rel="stylesheet" href="site.css?v=70">
+  <link rel="stylesheet" href="hub.css?v=70">
+  <link rel="stylesheet" href="explain.css?v=70">
+  <link rel="stylesheet" href="retire.css?v=70">
+  <script src="config.js?v=70"></script>
+  <script src="cloud.js?v=70"></script>
+</head>
+<body data-page="app" class="nh rr">
+
+<header class="nh-nav">
+  <div class="nh-shell nh-nav-in">
+    <a class="nh-brand" href="home.html" aria-label="WEALTHDEMO — back to the tools">
+      <svg viewBox="0 0 34 24" aria-hidden="true"><path class="w1" d="M1 2h6l5 16 5-12"/><path class="w2" d="M13 2h5l5 16 5-12 1.5-4H33"/></svg>
+      <span>WEALTHDEMO</span>
+    </a>
+    <nav class="nh-links" aria-label="Main">
+      <a href="home.html" aria-current="page">Tools</a>
+      <a href="send.html">Assessments</a>
+      <a href="studio.html">Studio</a>
+    </nav>
+    <div class="nh-acts">
+      <button type="button" class="nh-plans" data-billing>Plans</button>
+      <div class="account">
+        <button type="button" class="nh-me" id="accountBtn" aria-expanded="false" aria-haspopup="true">
+          <span class="nh-avatar" id="accountInitials">WD</span>
+          <span class="nh-hello">Hello, <b id="accountName">there</b></span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+        </button>
+        <div class="account-menu nh-menu" id="accountMenu" hidden>
+          <span class="account-email" id="accountEmail">Signed in</span>
+          <a href="home.html">All tools</a>
+          <button type="button" data-logout>Log out</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="rr-main" data-tone="mint">
+  <div class="nh-shell">
+
+    <nav class="rr-crumbs" aria-label="Breadcrumb">
+      <a href="home.html">Tools</a>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+      <a href="home.html">Money</a>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+      <span aria-current="page">Retirement Readiness</span>
+    </nav>
+
+    <header class="rr-top">
+      <div class="rr-id">
+        <span class="nh-tile"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1"/></svg></span>
+        <div>
+          <h1>Retirement Readiness</h1>
+          <p>Will what you're saving last as long as you do?</p>
+        </div>
+      </div>
+      <div class="rr-top-r">
+        <div class="rr-seg" role="group" aria-label="Show amounts in">
+          <button type="button" data-view="today">Today's money</button>
+          <button type="button" data-view="future">Future money</button>
+        </div>
+        <button type="button" class="rr-reset" id="rrReset" title="Start over with the example figures">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4v4h4"/></svg><span>Start over</span></button>
+      </div>
+    </header>
+
+    <div class="rr-grid">
+      <!-- the inputs: four steps, one open at a time -->
+      <aside class="rr-side" aria-label="Your figures">
+        <div class="rr-steps" id="rrSteps"></div>
+        <div class="rr-mini" id="rrMini" aria-hidden="true"></div>
+      </aside>
+
+      <!-- the answer -->
+      <div class="rr-out" aria-live="polite">
+        <section class="rr-card rr-answer" id="rrAnswer"></section>
+
+        <section class="rr-card">
+          <div class="rr-card-h"><h3>Savings by age</h3><span id="rrChartSub">Hover for any age</span></div>
+          <div class="rr-chart" id="rrChart"></div>
+          <div class="rr-stress" id="rrStress"></div>
+        </section>
+
+        <div class="rr-two">
+          <section class="rr-card" id="rrLevers"></section>
+          <section class="rr-card" id="rrMix"></section>
+        </div>
+
+        <p class="rr-fine">Projections, not promises. One steady return stands in for every year, and real markets arrive in a jagged order that can change the answer — that is what the tough-markets line is for. Social Security is taken from your own estimate, rising with prices; full retirement age is 67 for anyone born in 1960 or later. Taxes use one rate on withdrawals, not the brackets.</p>
+      </div>
+    </div>
+
+    <div class="rr-undo" id="rrUndo" role="status" hidden></div>
+  </div>
+</main>
+
+<footer class="nh-foot">
+  <div class="nh-shell nh-foot-in">
+    <span class="nh-brand is-small"><svg viewBox="0 0 34 24" aria-hidden="true"><path class="w1" d="M1 2h6l5 16 5-12"/><path class="w2" d="M13 2h5l5 16 5-12 1.5-4H33"/></svg><span>WEALTHDEMO</span></span>
+    <span>The best financial conversations start with clarity.</span>
+  </div>
+</footer>
+
+<script src="explain.js?v=70"></script>
+<script src="auth.js?v=70"></script>
+<script src="agent.js?v=70"></script>
+<script src="site.js?v=70"></script>
+<script src="retire.js?v=70"></script>
+</body>
+</html>

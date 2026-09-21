@@ -64,6 +64,47 @@ window.WD = window.WD || {};
     },
 
     /* ---------- lending, for the readiness scorecards ---------- */
+    /* ---------- retirement readiness (retire.html) ---------- */
+    rrscore: {
+      term: "Retirement readiness",
+      plain: "What you are on course to have when you stop work, divided by what your plan needs on that day. 100% means the money lasts exactly to the age you planned to; above it, there is room to spare.",
+      say: "Under a hundred doesn't mean broke. It means the money runs out before the age we planned for."
+    },
+    rrneeded: {
+      term: "What the plan needs",
+      plain: "The amount that, invested at your return in retirement, pays every year's shortfall — your spending, less Social Security and any pension, grossed up for tax — from the day you retire to the age you plan to. It falls out of your own numbers; nobody picked it.",
+      say: "This isn't a target I chose. It's your own spending, less your own benefits, added up year by year."
+    },
+    employermatch: {
+      term: "Employer match",
+      plain: "Money your employer adds when you contribute — for example 50 cents for every dollar you put in, up to a limit. The match goes in before tax whatever kind of account you pay into, so it is taxed when you take it out.",
+      say: "It's part of your pay you only get if you contribute. Leaving it on the table is a pay cut."
+    },
+    claimage: {
+      term: "When Social Security starts",
+      plain: "You can start as early as 62 or as late as 70. For anyone born in 1960 or later the full amount comes at 67; starting at 62 pays 30% less for life, and each year you wait past 67 adds 8%, up to 70.",
+      say: "Waiting isn't all-or-nothing. Every year you hold off past 67 is a permanent eight percent raise."
+    },
+    cola: {
+      term: "Rises with prices (COLA)",
+      plain: "A cost-of-living adjustment: the payment goes up each year with inflation. Social Security has one. Most private pensions don't, so a fixed pension buys a little less every year.",
+      say: "A pension that never rises loses about a quarter of its value over twelve years at normal inflation."
+    },
+    blendedtax: {
+      term: "Tax on withdrawals",
+      plain: "Your expected income tax rate in retirement. It is applied in full to money from pre-tax accounts (a 401(k) or traditional IRA), to about half of what comes from a brokerage account, since only the growth is taxed, and not at all to Roth money.",
+      say: "Where the money sits decides how much of it you actually get to spend."
+    },
+    stresstest: {
+      term: "Tough markets",
+      plain: "The same plan with every return one point lower and prices rising one point faster, every year. Not a crash — just a disappointing couple of decades. If the plan still holds there, it is sturdy.",
+      say: "I don't plan on the good case. This is what happens if the next twenty years are merely mediocre."
+    },
+    planage: {
+      term: "Plan to age",
+      plain: "How long the money has to last. Planning to your life expectancy means a coin-flip chance of outliving it; most planners use 90 to 95.",
+      say: "We plan past the average on purpose. Running out at 88 is a much bigger problem than dying with money left."
+    },
     requiredpot: {
       term: "What the plan needs",
       plain: "The pot that would produce the income they are short of, drawn at the rate they have set, in the money of the year they retire. It is not a target somebody chose \u2014 it falls out of the spending, the social security and the drawdown rate together.",

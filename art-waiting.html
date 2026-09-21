@@ -18,6 +18,18 @@
   <link rel="stylesheet" href="rule72.css">
   <link rel="stylesheet" href="waiting.css">
   <link rel="stylesheet" href="fold.css">
+  <link rel="stylesheet" href="simple.css">
+  <link rel="stylesheet" href="chartsay.css">
+  <link rel="stylesheet" href="tour.css">
+  <script src="config.js"></script>
+  <script src="cloud.js"></script>
+  <script src="guide.js"></script>
+  <script src="insight.js"></script>
+  <script src="ask.js"></script>
+  <script src="ai.js"></script>
+  <script src="simple.js"></script>
+  <script src="chartsay.js"></script>
+  <script src="tour.js"></script>
 </head>
 <body data-page="app">
 
@@ -32,8 +44,8 @@
     </a>
     <nav class="site-links">
       <a href="home.html">Tools</a>
-      <a href="blueprint.html">Planning</a>
       <a href="send.html">Assessments</a>
+      <a href="studio.html">Studio</a>
       <a href="home.html#categories">Resources</a>
       <a href="home.html#about">About</a>
     </nav>
@@ -190,13 +202,13 @@
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17.5 9.5 12l3.5 3.2L20 7"/><path d="M15 7h5v5"/></svg>
     </span>
     <div class="cu-body">
-      <span class="eyebrow">To still finish in the same place</span>
+      <span class="eyebrow">To reach the same amount</span>
       <h3 id="cuTitle">&mdash;</h3>
       <p id="cuBody">&mdash;</p>
     </div>
     <div class="cu-figs">
       <div><small>Each month</small><b id="cuMonthly">&mdash;</b><em id="cuMonthlyWas">&mdash;</em></div>
-      <div><small>Of your own money</small><b id="cuTotal">&mdash;</b><em id="cuTotalWas">&mdash;</em></div>
+      <div><small><span data-term="outofpocket">Out of pocket</span></small><b id="cuTotal">&mdash;</b><em id="cuTotalWas">&mdash;</em></div>
     </div>
   </section>
 
@@ -204,7 +216,7 @@
   <section class="panel race-panel">
     <div class="panel-head">
       <span class="panel-ico" data-tint="ice"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 16.5 10 10l3.5 3L20 6"/><path d="M15 6h5v5"/></svg></span>
-      <div><h2><span data-term="timevalue">The Two Paths</span></h2><p id="raceSub">&mdash;</p></div>
+      <div><h2><span data-term="timevalue">Starting Now vs Starting Later</span></h2><p id="raceSub">&mdash;</p></div>
       <div class="chart-key">
         <span><i class="k-inv"></i> Start now</span>
         <span><i class="k-late"></i> Start later</span>
@@ -233,7 +245,7 @@
   <section class="panel moves-panel" data-fold="What would close the gap" data-fold-note="Ranked, with the number attached to each">
     <div class="panel-head">
       <span class="panel-ico" data-tint="sun"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18h5"/><path d="M4 12h9"/><path d="M4 6h16"/></svg></span>
-      <div><h2>Ways Back From It</h2><p>Every option worked out on these same figures, best first.</p></div>
+      <div><h2>Ways to Catch Up</h2><p>Every option worked out on these same figures, best first.</p></div>
       <span class="lever-need" id="moveBudget">&mdash;</span>
     </div>
     <div class="move-list" id="moveList"></div>
