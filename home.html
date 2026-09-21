@@ -3,69 +3,55 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#0d4435">
+  <meta name="theme-color" content="#ffffff">
   <title>Financial Tools — WEALTHDEMO</title>
   <link rel="icon" href="wealthdemo-logo.webp">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="tokens.css?v=63">
-  <link rel="stylesheet" href="site.css?v=63">
-  <link rel="stylesheet" href="hub.css?v=63">
-  <link rel="stylesheet" href="simple.css?v=63">
-  <link rel="stylesheet" href="chartsay.css?v=63">
-  <link rel="stylesheet" href="tour.css?v=63">
-  <script src="config.js?v=63"></script>
-  <script src="cloud.js?v=63"></script>
-  <script src="guide.js?v=63"></script>
-  <script src="insight.js?v=63"></script>
-  <script src="ask.js?v=63"></script>
-  <script src="ai.js?v=63"></script>
-  <script src="simple.js?v=63"></script>
-  <script src="chartsay.js?v=63"></script>
-  <script src="tour.js?v=63"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&amp;family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="tokens.css?v=65">
+  <link rel="stylesheet" href="site.css?v=65">
+  <link rel="stylesheet" href="hub.css?v=65">
+  <link rel="stylesheet" href="simple.css?v=65">
+  <link rel="stylesheet" href="chartsay.css?v=65">
+  <link rel="stylesheet" href="tour.css?v=65">
+  <script src="config.js?v=65"></script>
+  <script src="cloud.js?v=65"></script>
+  <script src="guide.js?v=65"></script>
+  <script src="insight.js?v=65"></script>
+  <script src="ask.js?v=65"></script>
+  <script src="ai.js?v=65"></script>
+  <script src="simple.js?v=65"></script>
+  <script src="chartsay.js?v=65"></script>
+  <script src="tour.js?v=65"></script>
 </head>
-<body data-page="app">
+<body data-page="app" class="nh">
 
-<header class="site-nav">
-  <div class="shell site-nav-inner">
-    <a class="brand-identity" href="home.html">
-      <img src="wealthdemo-logo.webp" alt="" aria-hidden="true">
-      <span class="brand-wordmark">
-        <strong>WEALTH<span>DEMO</span></strong>
-        <small>See What Your Money Can Do.</small>
-      </span>
+<header class="nh-nav">
+  <div class="nh-shell nh-nav-in">
+    <a class="nh-brand" href="home.html" aria-label="WEALTHDEMO — home">
+      <svg viewBox="0 0 34 24" aria-hidden="true"><path class="w1" d="M1 2h6l5 16 5-12"/><path class="w2" d="M13 2h5l5 16 5-12 1.5-4H33"/></svg>
+      <span>WEALTHDEMO</span>
     </a>
 
-    <nav class="site-links">
-      <a href="home.html" class="active">Tools</a>
+    <nav class="nh-links" aria-label="Main">
+      <a href="home.html" aria-current="page">Tools</a>
       <a href="send.html">Assessments</a>
       <a href="studio.html">Studio</a>
-      <a href="#categories">Resources</a>
-      <a href="#about">About</a>
     </nav>
 
-    <div class="nav-search">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
-      <input id="navSearch" type="search" placeholder="Search tools, topics, or goals…" autocomplete="off" aria-label="Search tools">
-      <kbd>⌘K</kbd>
-    </div>
-
-    <div class="site-actions">
-      <a class="premium-btn" href="#" data-billing>
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5 7.5 12l4.5-5 4.5 5L20 8.5V17H4Z"/></svg>
-        Go Premium
-      </a>
-      <span class="nav-divider"></span>
+    <div class="nh-acts">
+      <button type="button" class="nh-plans" data-billing>Plans</button>
       <div class="account">
-        <button type="button" class="account-btn" id="accountBtn" aria-expanded="false">
-          <span class="avatar" id="accountInitials">HB</span>
-          <span class="hello">Hello, <b id="accountName">there</b></span>
-          <svg class="caret" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+        <button type="button" class="nh-me" id="accountBtn" aria-expanded="false" aria-haspopup="true">
+          <span class="nh-avatar" id="accountInitials">WD</span>
+          <span class="nh-hello">Hello, <b id="accountName">there</b></span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
         </button>
-        <div class="account-menu" id="accountMenu" hidden>
+        <div class="account-menu nh-menu" id="accountMenu" hidden>
           <span class="account-email" id="accountEmail">Signed in</span>
           <a href="blueprint.html">Open Financial Blueprint</a>
+          <a href="taxblueprint.html">Open Tax Blueprint</a>
           <button type="button" data-logout>Log out</button>
         </div>
       </div>
@@ -73,106 +59,62 @@
   </div>
 </header>
 
-<section class="site-hero">
-  <div class="hero-art" aria-hidden="true"></div>
-  <div class="shell hero-in">
-    <div class="hero-copy">
-      <span class="eyebrow">Financial tools</span>
-      <h1>Financial Intelligence,<br><em>Made Visual.</em></h1>
-      <p class="hero-sub">Twenty-eight tools that turn a client&rsquo;s own numbers into something they can see.</p>
-      <div class="hero-cta">
-        <a class="hero-go" href="#categories">
-          Explore tools
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13"/><path d="m13 6 6 6-6 6"/></svg>
-        </a>
-        <a class="hero-play" href="blueprint.html">
-          <i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5Z"/></svg></i>
-          Start a Blueprint
-        </a>
+<main class="nh-main" id="categories">
+  <div class="nh-shell">
+
+    <section class="nh-top">
+      <div class="nh-title">
+        <h1>Explore your financial tools</h1>
+        <p><i aria-hidden="true"></i>A whole client journey, or one focused tool.</p>
       </div>
-    </div>
-
-    <aside class="hero-note" id="heroNote">
-      <b>A more<br>confident tomorrow</b>
-      <i></i>
-      <p>Better tools.<br>Brighter conversations.<br>Greater possibilities.</p>
-    </aside>
-  </div>
-</section>
-
-<main class="hub" id="categories">
-  <div class="shell">
-    <div class="trial-banner" id="trialBanner" hidden></div>
-
-    <div class="pro-chooser" id="proChooser" hidden></div>
-
-    <div class="tool-bar">
-      <div class="tool-filters" id="toolFilters"></div>
-      <span class="bar-div"></span>
-      <label class="bar-search" for="toolSearch">
+      <label class="nh-search" for="navSearch">
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
-        <input id="toolSearch" type="search" placeholder="Search tools…" autocomplete="off" aria-label="Search calculators">
+        <input id="navSearch" type="search" autocomplete="off" placeholder="Search tools — try “mortgage” or “529”" aria-label="Search tools">
+        <kbd aria-hidden="true">⌘K</kbd>
       </label>
-      <span class="bar-div"></span>
-      <button type="button" class="bar-pro" id="proBtn" aria-expanded="false">
-        <i></i><span id="proBtnName">Everything</span>
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-      </button>
-      <div class="pro-pop" id="proPop" hidden></div>
-    </div>
-
-
-
-    <section class="featured">
-      <div class="featured-media">
-        <div class="featured-media-copy">
-          <span>Turn your goals</span>
-          <strong>into a plan.</strong>
-          <i></i>
-        </div>
-      </div>
-
-      <div class="featured-body">
-        <span class="badge">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 4 2.3 5 5.2.6-3.9 3.5 1.1 5.1L12 15.6 7.3 18.2l1.1-5.1L4.5 9.6l5.2-.6Z"/></svg>
-          Featured tool
-        </span>
-        <h2>Financial Blueprint</h2>
-        <p>Their full picture in one guided conversation — seven steps, one question at a time.</p>
-      </div>
-
-      <div class="featured-cta">
-        <a class="primary-btn" href="blueprint.html">
-          Open Financial Blueprint
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13"/><path d="M13 6l6 6-6 6"/></svg>
-        </a>
-      </div>
     </section>
 
-    <div class="adviser-row" id="adviserRow"></div>
+    <!-- site.js writes the trial countdown in here -->
+    <div class="nh-trial" id="heroNote" aria-live="polite"></div>
 
-    <div class="tool-grid" id="toolGrid"></div>
-    <p class="tool-empty" id="toolEmpty" hidden>No calculator matches that search.</p>
+    <section class="nh-sec" aria-labelledby="bpH">
+      <header class="nh-head">
+        <h2 id="bpH">Complete Client Blueprints</h2>
+        <span>One connected journey — intake to follow-up, on one client file.</span>
+      </header>
+      <div class="nh-bps" id="nhBlueprints"></div>
+    </section>
+
+    <section class="nh-sec" aria-labelledby="toolsH">
+      <header class="nh-head">
+        <h2 id="toolsH">Individual tools</h2>
+        <span id="nhToolsNote">One question, answered on the spot.</span>
+      </header>
+      <div class="nh-tabs" id="nhTabs" role="tablist" aria-label="Tool categories"></div>
+      <div class="nh-panel" id="nhPanel" role="tabpanel" aria-labelledby="toolsH"></div>
+    </section>
+
+    <section class="nh-sec" aria-labelledby="pracH">
+      <header class="nh-head">
+        <h2 id="pracH" class="is-small">For your practice</h2>
+        <span>Before the meeting, and after it.</span>
+      </header>
+      <div class="nh-prac" id="nhPractice"></div>
+    </section>
+
   </div>
 </main>
 
-<footer class="site-foot" id="about">
-  <div class="shell site-foot-inner">
-    <span class="foot-line">Same numbers.<br>A clearer tomorrow.</span>
-    <div class="foot-quote">
-      <q>The best financial conversations start with clarity.</q>
-      <i></i>
-      <small>WealthDemo</small>
-    </div>
-    <span class="foot-mark">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19V11"/><path d="M12 19V5.5"/><path d="M19 19v-5.5"/></svg>
-      <span>Tools for a more<br>confident tomorrow.</span>
-    </span>
+<footer class="nh-foot" id="about">
+  <div class="nh-shell nh-foot-in">
+    <span class="nh-brand is-small"><svg viewBox="0 0 34 24" aria-hidden="true"><path class="w1" d="M1 2h6l5 16 5-12"/><path class="w2" d="M13 2h5l5 16 5-12 1.5-4H33"/></svg><span>WEALTHDEMO</span></span>
+    <span>The best financial conversations start with clarity.</span>
   </div>
 </footer>
 
-<script src="auth.js?v=63"></script>
-<script src="agent.js?v=63"></script>
-<script src="site.js?v=63"></script>
+<script src="auth.js?v=65"></script>
+<script src="agent.js?v=65"></script>
+<script src="site.js?v=65"></script>
+<script src="hub.js?v=65"></script>
 </body>
 </html>

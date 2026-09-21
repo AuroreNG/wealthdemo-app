@@ -1193,13 +1193,331 @@
   };
 
   /* ============================================================
+     9 · Tax Intake                                 Taxes · ask
+
+     An intake, not a score. The client picks from lists rather
+     than typing — nobody spells "qualifying surviving spouse"
+     correctly on a phone — and what comes back out is the thing
+     a preparer actually wants before the first meeting: the
+     document list these particular answers generate, and the
+     schedules the return is likely to need.
+
+     Nothing here is tax advice and the copy says so. Every
+     schedule is offered as "likely", because the return decides
+     and the preparer confirms.
+     ============================================================ */
+  const TAX_INTAKE = {
+    id: "tax-intake",
+    kind: "ask",
+    name: "Tax Intake",
+    cat: "Taxes",
+    tint: "sun",
+    icon: "doc",
+    who: "Tax professionals",
+    lede: "What this return involves, and every document it needs — answered by picking, not typing.",
+    minutes: 4,
+    sendable: true,
+    pro: ["tax"],
+
+    /* Each of the last four holds a single question, so the group name and
+       the question must not be the same words — the page read "What might
+       come off / What might come off" all the way down. */
+    groups: [
+      { id: "you",   name: "Personal" },
+      { id: "in",    name: "Income" },
+      { id: "out",   name: "Deductions" },
+      { id: "paid",  name: "Payments" },
+      { id: "docs",  name: "Documents" }
+    ],
+
+    items: [
+      /* ---------- 1 · personal ---------- */
+      { id: "filing", group: "you", kind: "select", ask: "Filing status",
+        hint: "If two of these could be true, say so — which one is better is worth working out.",
+        options: [
+          { v: "single",  label: "Single" },
+          { v: "joint",   label: "Married filing jointly" },
+          { v: "sep",     label: "Married filing separately" },
+          { v: "hoh",     label: "Head of household" },
+          { v: "widow",   label: "Qualifying surviving spouse" },
+          { v: "unsure",  label: "Not sure" }
+        ] },
+
+      { id: "deps", group: "you", kind: "multi", ask: "Dependents",
+        options: [
+          { v: "none",    label: "No dependents", only: true },
+          { v: "kids",    label: "Children" },
+          { v: "college", label: "College students" },
+          { v: "rel",     label: "Parents or other relatives" }
+        ] },
+
+      { id: "life", group: "you", kind: "multi", ask: "Anything change this year?",
+        options: [
+          { v: "nochange", label: "No major changes", only: true },
+          { v: "marriage", label: "Marriage or divorce" },
+          { v: "newdep",   label: "New child or dependent" },
+          { v: "moved",    label: "Moved to another state" },
+          { v: "home",     label: "Bought or sold a home" },
+          { v: "biz",      label: "Started or closed a business" },
+          { v: "retired",  label: "Retired" }
+        ] },
+
+      /* ---------- 2 · income ---------- */
+      { id: "income", group: "in", kind: "multi", ask: "Where the money came from",
+        hint: "Everything that applies, even the small ones.",
+        options: [
+          { v: "w2",      label: "Employment", note: "W-2" },
+          { v: "self",    label: "Self-employment or a business" },
+          { v: "gig",     label: "Contract or gig work", note: "1099-NEC" },
+          { v: "invest",  label: "Investments or cryptocurrency" },
+          { v: "rental",  label: "Rental property" },
+          { v: "retire",  label: "Retirement income", note: "1099-R" },
+          { v: "ss",      label: "Social Security", note: "SSA-1099" },
+          { v: "unemp",   label: "Unemployment", note: "1099-G" },
+          { v: "other",   label: "Something else" }
+        ] },
+
+      /* ---------- 3 · deductions ---------- */
+      { id: "deduct", group: "out", kind: "multi", ask: "What might come off",
+        hint: "Ticking one does not mean you will claim it — it means we will look.",
+        options: [
+          { v: "none",     label: "None of these", only: true },
+          { v: "bizexp",   label: "Business expenses" },
+          { v: "child",    label: "Childcare" },
+          { v: "edu",      label: "Education" },
+          { v: "medical",  label: "Medical expenses" },
+          { v: "mortgage", label: "Mortgage interest or property taxes" },
+          { v: "charity",  label: "Charitable contributions" },
+          { v: "retcont",  label: "Retirement contributions" },
+          { v: "student",  label: "Student-loan interest" }
+        ] },
+
+      /* ---------- 4 · payments ---------- */
+      { id: "paid", group: "paid", kind: "multi", ask: "Tax already paid",
+        options: [
+          { v: "none",   label: "No additional tax payments", only: true },
+          { v: "fed",    label: "Federal estimated payments" },
+          { v: "state",  label: "State estimated payments" },
+          { v: "other",  label: "Tax paid in another state" },
+          { v: "ext",    label: "An extension payment" }
+        ] },
+
+      /* ---------- 5 · documents ---------- */
+      { id: "files", group: "docs", kind: "upload", optional: true,
+        ask: "Anything you already have",
+        hint: "Pick what it is, then choose the file. Nothing is sent until you press the button at the bottom.",
+        options: [
+          { v: "prior",    label: "Previous tax return" },
+          { v: "w2",       label: "W-2" },
+          { v: "1099",     label: "1099" },
+          { v: "biz",      label: "Business documents" },
+          { v: "inv",      label: "Investment statements" },
+          { v: "rental",   label: "Rental-property documents" },
+          { v: "edu",      label: "Education or childcare documents" },
+          { v: "receipts", label: "Receipts" },
+          { v: "other",    label: "Other supporting documents" }
+        ] }
+    ],
+
+    bands: [
+      { min: 90, label: "Ready to start", tone: "good",
+        say: "Everything needed is here. This one can go straight into preparation." },
+      { min: 65, label: "Nearly there", tone: "good",
+        say: "The picture is complete. A couple of documents to collect." },
+      { min: 35, label: "Half the paperwork", tone: "warn",
+        say: "We know what this return involves. Now it is a chase." },
+      { min: 0,  label: "Just started", tone: "warn",
+        say: "Worth finishing the questions first — they decide which documents matter." }
+    ],
+
+    compute: function (v) {
+      const has = function (id, val) {
+        const a = v[id]; return Array.isArray(a) && a.indexOf(val) >= 0;
+      };
+      const files = Array.isArray(v.files) ? v.files : [];
+      const gotType = function (label) {
+        return files.filter(function (f) { return f.type === label; }).length;
+      };
+
+      /* --------------------------------------------------------
+         The document list, derived from the answers.
+
+         One rule per document, each carrying the answer that
+         asked for it — so a client can see why they are being
+         asked, which is most of why these lists get ignored.
+         -------------------------------------------------------- */
+      const RULES = [
+        { t: "Previous tax return", on: true,
+          why: "Last year's return is the fastest way to carry forward everything that has not changed." },
+        { t: "W-2", on: has("income", "w2"),
+          why: "One from every employer either of you worked for." },
+        { t: "1099", on: has("income", "gig") || has("income", "invest") || has("income", "retire") ||
+                        has("income", "ss") || has("income", "unemp") || has("income", "other"),
+          why: "Every 1099 that arrived — NEC, INT, DIV, B, R, G. They all count." },
+        { t: "Business documents", on: has("income", "self") || has("deduct", "bizexp") || has("life", "biz"),
+          why: "Income and expenses for the year, however you keep them." },
+        { t: "Investment statements", on: has("income", "invest"),
+          why: "Year-end statements, and the cost basis for anything sold. Crypto included." },
+        { t: "Rental-property documents", on: has("income", "rental"),
+          why: "Rent received, and what you spent on the property." },
+        { t: "Education or childcare documents", on: has("deduct", "edu") || has("deduct", "child") ||
+                        has("deps", "college"),
+          why: "1098-T from the school, or the provider's details and what you paid." },
+        { t: "Receipts", on: has("deduct", "medical") || has("deduct", "charity") || has("deduct", "bizexp"),
+          why: "Only the categories you ticked — not a shoebox." },
+        { t: "Other supporting documents", on: has("life", "home") || has("life", "moved") ||
+                        has("paid", "fed") || has("paid", "state") || has("paid", "other") ||
+                        has("paid", "ext") || has("deduct", "mortgage") || has("deduct", "student") ||
+                        has("deduct", "retcont"),
+          why: "Closing statements, payment records, 1098, 1098-E, 5498 — whichever of those you have." }
+      ];
+      const needs = RULES.filter(function (r) { return r.on; })
+        .map(function (r) { return { name: r.t, why: r.why, have: gotType(r.t) }; });
+      const got = needs.filter(function (n) { return n.have > 0; }).length;
+
+      /* --------------------------------------------------------
+         What the return is likely to involve. "Likely" is doing
+         real work in that sentence and the note below says so.
+         -------------------------------------------------------- */
+      const SCHED = [
+        { on: has("income", "self") || has("income", "gig"), n: "Schedule C", d: "business or self-employment income" },
+        { on: has("income", "self") || has("income", "gig"), n: "Schedule SE", d: "self-employment tax" },
+        { on: has("income", "invest"), n: "Schedule D and Form 8949", d: "anything sold during the year" },
+        { on: has("income", "rental"), n: "Schedule E", d: "rental income and expenses" },
+        { on: has("deduct", "medical") || has("deduct", "mortgage") || has("deduct", "charity"),
+          n: "Schedule A", d: "worth comparing against the standard deduction" },
+        { on: has("deduct", "child"), n: "Form 2441", d: "the childcare credit" },
+        { on: has("deduct", "edu") || has("deps", "college"), n: "Form 8863", d: "education credits" },
+        { on: has("income", "unemp") || has("deduct", "student") || has("income", "self"),
+          n: "Schedule 1", d: "income and adjustments that are not on the front page" },
+        { on: has("life", "moved") || has("paid", "other"),
+          n: "More than one state return", d: "part-year or non-resident, and a credit for tax paid elsewhere" }
+      ].filter(function (x) { return x.on; });
+
+      /* --------------------------------------------------------
+         Completeness. The questions decide which documents
+         matter, so they carry the first third of it.
+         -------------------------------------------------------- */
+      const asked = ["filing", "deps", "life", "income", "deduct", "paid"];
+      const answered = asked.filter(function (k) {
+        const a = v[k];
+        return Array.isArray(a) ? a.length > 0 : a !== undefined;
+      }).length;
+      const qPart = answered / asked.length * 35;
+      const dPart = needs.length ? (got / needs.length) * 65 : 0;
+      const score = Math.round(qPart + dPart);
+
+      const figures = [
+        { id: "docs", label: "Documents needed", value: String(needs.length), big: true,
+          note: got + " of " + needs.length + " attached",
+          meter: needs.length ? got / needs.length : 0,
+          tone: needs.length && got === needs.length ? "good" : (got ? "warn" : "bad") },
+        { id: "sched", label: "Schedules this is likely to need", value: String(SCHED.length || 1),
+          note: SCHED.length ? SCHED.map(function (x) { return x.n; }).join(" · ")
+                             : "A straightforward 1040" },
+        { id: "status", label: "Filing status",
+          value: ({ single: "Single", joint: "Married, jointly", sep: "Married, separately",
+                    hoh: "Head of household", widow: "Qualifying surviving spouse",
+                    unsure: "Not settled" })[v.filing] || "—",
+          tone: v.filing === "unsure" ? "warn" : "" }
+      ];
+
+      const notes = [];
+      needs.filter(function (n) { return !n.have; }).slice(0, 6).forEach(function (n) {
+        notes.push({ tone: "warn", head: n.name, body: n.why });
+      });
+      if (v.filing === "unsure") {
+        notes.push({ tone: "warn", head: "Filing status is not settled",
+          body: "It changes the standard deduction, the brackets and several credits. Worth ten minutes before anything else." });
+      }
+      if (has("life", "moved") || has("paid", "other")) {
+        notes.push({ tone: "warn", head: "More than one state",
+          body: "Two returns and a credit for tax paid to the other one. Say which dates you lived where." });
+      }
+      if (has("income", "invest")) {
+        notes.push({ tone: "warn", head: "Cost basis, not just proceeds",
+          body: "A 1099-B often reports what something sold for and not what it cost. Without the basis the whole sale is taxed as gain." });
+      }
+      if (!needs.filter(function (n) { return !n.have; }).length && needs.length) {
+        notes.push({ tone: "good", head: "Everything is attached",
+          body: "Nothing outstanding on this intake." });
+      }
+
+      return { score: score, figures: figures, notes: notes,
+               raw: { needs: needs, got: got, schedules: SCHED, answered: answered,
+                      asked: asked.length, files: files.length } };
+    },
+
+    /* the scorecard shape: what is in, and what is still to come */
+    build: {
+      title: "What this return needs",
+      note: "derived from the answers above",
+      parts: function (v, r) {
+        return [
+          { id: "in", label: "Attached", n: r.got, tint: "deep" },
+          { id: "out", label: "Still to collect", n: Math.max(0, r.needs.length - r.got), tint: "light" }
+        ];
+      },
+      mark: function (v, r) { return { label: "Everything this return needs", n: r.needs.length }; },
+      /* documents, not dollars */
+      unit: function (n) { return n === 1 ? "1 document" : n + " documents"; },
+      /* and the list itself — the thing a preparer actually chases */
+      list: function (v, r) {
+        return (r.needs || []).map(function (n) {
+          return { label: n.name, why: n.why, have: n.have };
+        }).sort(function (a, b) { return (a.have ? 1 : 0) - (b.have ? 1 : 0); });
+      }
+    },
+
+    levers: [
+      { id: "settle", when: function (v, r) { return v.filing === "unsure"; },
+        label: function (v, r) { return "Settle the filing status"; },
+        head:  function (v, r) { return "Start with the filing status."; },
+        why:   function (v, r) {
+          return "It decides the standard deduction, the brackets and several of the credits. "
+               + "Everything else on this return is worked out after it."; },
+        patch: function (v, r) { return { filing: "joint" }; } }
+    ],
+
+    guide: [
+      { kind: "question", said: "Do I really need all of these?",
+        text: function (c) {
+          const left = c.raw.needs.filter(function (n) { return !n.have; });
+          if (!left.length) return "";
+          return "Every one on this list came from something you ticked — <b>" + left.length +
+            "</b> still to come. Nothing is on it by default except last year's return, and that one " +
+            "saves the most time of all of them."; },
+        say: "This isn't a standard list. It's the list your own answers made.",
+        ran: "Built from the answers on this form" },
+
+      { kind: "objection", said: "Can you not just do it and tell me what you need later?",
+        text: function (c) {
+          return "I can start, but the return will sit at whichever document is missing, and that is " +
+            "usually the week before the deadline. There are <b>" +
+            c.raw.needs.filter(function (n) { return !n.have; }).length +
+            "</b> outstanding now, and they are cheaper to find in February than in April."; },
+        say: "Every year the returns that go late are the ones waiting on one document nobody chased in February.",
+        ran: "Counted against this form's own list" },
+
+      { kind: "check", said: "",
+        text: function (c) {
+          const s = c.raw.schedules;
+          if (!s.length) return "";
+          return "This looks like a <b>" + s.length + "-schedule</b> return — " +
+            s.map(function (x) { return "<b>" + x.n + "</b> for " + x.d; }).join(", ") +
+            ". Worth pricing on that before the first meeting rather than after it."; },
+        say: "",
+        ran: "Read off the answers on this form" }
+    ]
+  };
+
+  /* ============================================================
      the registry
      ============================================================ */
   const ALL = [
     MORTGAGE_READY, BORROWER_DOCS, PREQUAL,
     RETIRE_READY, BUYER_READY,
-    TAX_DOCS, POLICY_REVIEW, ESTATE_DOCS
-  ];
+    TAX_DOCS, POLICY_REVIEW, ESTATE_DOCS, TAX_INTAKE];
 
   const BY_ID = {};
   ALL.forEach(function (f) { BY_ID[f.id] = f; });

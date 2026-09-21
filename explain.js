@@ -16,6 +16,53 @@ window.WD = window.WD || {};
 
 (function () {
   const GLOSSARY = {
+    /* ---------- tax, for the Tax Blueprint (2026 rules) ---------- */
+    agi: {
+      term: "Adjusted gross income (AGI)",
+      plain: "Everything that came in during the year, less a short list of adjustments — half the self-employment tax, retirement contributions like a SEP, a few others. It is the number most credits and phase-outs are measured against, which is why moving it by a few thousand dollars can matter more than the tax on those dollars.",
+      say: "Most of what you qualify for is decided by this one number, not by what you take home."
+    },
+    stddeduction: {
+      term: "Standard deduction",
+      plain: "A flat amount everyone may subtract instead of listing their deductions: $32,200 for a married couple filing jointly in 2026, $16,100 single, $24,150 head of household. Itemising only helps when the list is bigger than this — and in 2026, people who take the standard deduction can still deduct up to $1,000 of cash to charity ($2,000 joint).",
+      say: "The IRS gives you this amount for free. Listing your deductions only pays if the list beats it."
+    },
+    itemised: {
+      term: "Itemised deductions (Schedule A)",
+      plain: "Mortgage interest, state and local taxes up to the $40,400 cap, charity above half a percent of AGI, and medical costs above 7.5% of AGI, added up. Worth claiming only when the total beats the standard deduction.",
+      say: "A house doesn't automatically mean itemising — it has to beat a number that's already large."
+    },
+    aotc: {
+      term: "American Opportunity Tax Credit",
+      plain: "Up to $2,500 a year per student for the first four years of college: all of the first $2,000 of tuition and a quarter of the next $2,000. Up to 40% of it is paid out even with no tax to offset. Needs the school's Form 1098-T.",
+      say: "This is money off the tax itself, not off income — $2,500 here is $2,500 back."
+    },
+    phaseout: {
+      term: "Phase-out",
+      plain: "The income band over which a credit shrinks to nothing. The American Opportunity Credit shrinks between $160,000 and $180,000 of income on a joint return ($80,000–$90,000 single), and those lines are not raised for inflation — so more families drift into them every year.",
+      say: "You didn't do anything wrong. Your income crossed a line, and part of the credit quietly went with it."
+    },
+    sepira: {
+      term: "SEP-IRA",
+      plain: "A retirement account for the self-employed. Contributions come off income before the tax is worked out — up to about 20% of business profit after half the self-employment tax — and can be made for last year right up to the filing deadline, extensions included.",
+      say: "It's still your money, in your retirement account. It just gets counted for last year's tax."
+    },
+    qbi: {
+      term: "Qualified business income deduction (QBI)",
+      plain: "Owners of a sole proprietorship or other pass-through business can deduct up to 20% of the business's profit. It is limited to 20% of taxable income, and above an income threshold it can be restricted further — this page flags that rather than working it out.",
+      say: "One fifth of the business's profit isn't taxed at all."
+    },
+    setax: {
+      term: "Self-employment tax",
+      plain: "Social Security and Medicare for someone with no employer to pay half: 15.3% of 92.35% of the profit, with the Social Security part stopping at $184,500 of combined wages and profit in 2026. Half of it comes off income.",
+      say: "An employer normally pays half of this for you. Working for yourself, you're both halves."
+    },
+    safeharbor: {
+      term: "Safe harbour for estimated tax",
+      plain: "Pay in at least as much as this year's total tax — 110% of it if AGI was over $150,000 — through withholding and four quarterly payments next year, and there is no underpayment penalty whatever the final bill turns out to be.",
+      say: "Hit this number and April can't come with a penalty attached."
+    },
+
     /* ---------- lending, for the readiness scorecards ---------- */
     requiredpot: {
       term: "What the plan needs",

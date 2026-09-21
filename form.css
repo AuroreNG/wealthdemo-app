@@ -16,7 +16,19 @@
 [data-tint="rose"] { --t: #a95f6b; --t-a: 169, 95, 107; }
 [data-tint="sun"]  { --t: #a8863a; --t-a: 168, 134, 58; }
 [data-tint="sand"] { --t: #97794a; --t-a: 151, 121, 74; }
+
+/* The root's fallback, and then the tints again AT THE ROOT'S OWN
+   SPECIFICITY. An id beats an attribute selector, so `#formRoot { --t }`
+   alone was quietly winning against `[data-tint="sun"]` on the very
+   element that carries the tint — every form rendered in the default
+   emerald whatever category it belonged to. */
 #formRoot { --t: #0d4435; --t-a: 13, 68, 53; }
+#formRoot[data-tint="mint"] { --t: #2f8f68; --t-a: 47, 143, 104; }
+#formRoot[data-tint="sage"] { --t: #5b8f72; --t-a: 91, 143, 114; }
+#formRoot[data-tint="mist"] { --t: #6a7f8c; --t-a: 106, 127, 140; }
+#formRoot[data-tint="rose"] { --t: #a95f6b; --t-a: 169, 95, 107; }
+#formRoot[data-tint="sun"]  { --t: #a8863a; --t-a: 168, 134, 58; }
+#formRoot[data-tint="sand"] { --t: #97794a; --t-a: 151, 121, 74; }
 
 /* ---------- header ---------- */
 .f-top {
@@ -1002,6 +1014,25 @@
 .f-key i { width: 12px; height: 12px; border-radius: 3px; flex: none; }
 .f-key b { font-family: var(--wd-font-display, Georgia, serif); font-size: 17px; font-weight: 600; }
 
+/* the build-up's own list — for a bar that counts things rather than money,
+   the things are the point, so they sit under it rather than in a note */
+.f-need { list-style: none; margin: 20px 0 0; padding: 18px 0 0; border-top: 1px solid var(--wd-line, #dfe5e2); display: grid; gap: 2px; }
+.f-need li { display: flex; align-items: flex-start; gap: 12px; padding: 11px 13px; border-radius: 11px; }
+.f-need li.is-out { background: rgba(168, 134, 58, .07); }
+.f-need-m { flex: none; width: 21px; height: 21px; border-radius: 999px; display: grid; place-items: center; margin-top: 1px; }
+.f-need-m svg { width: 12px; height: 12px; fill: none; stroke: #fff; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.f-need li.is-in .f-need-m { background: var(--wd-emerald-800, #0d4435); }
+.f-need li.is-out .f-need-m { background: #c9b072; }
+.f-need li.is-out .f-need-m svg { fill: #fff; stroke: none; width: 7px; height: 7px; }
+.f-need-t { flex: 1; min-width: 0; }
+.f-need-t b { display: block; font-size: 13.5px; font-weight: 600; color: var(--wd-ink, #071a14); }
+.f-need-t small { display: block; margin-top: 3px; font-size: 12.5px; line-height: 1.45; color: var(--wd-muted, #5f6d67); }
+.f-need-s { flex: none; font-size: 10.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--wd-muted, #5f6d67); padding-top: 4px; }
+.f-need li.is-in .f-need-s { color: var(--wd-emerald-700, #167254); }
+@media (max-width: 560px) {
+  .f-need-s { display: none; }
+}
+
 /* ---------- the one thing ---------- */
 .f-one {
   position: relative;
@@ -1160,3 +1191,146 @@
 .f-example button:hover { box-shadow: inset 0 0 0 1px #a8863a; }
 @media (max-width: 760px) { .f-example { margin: 12px 14px 0; } }
 @media print { .f-example { display: none !important; } }
+
+/* ============================================================
+   SELECT ALL THAT APPLY
+
+   Real <input type="checkbox"> inside a real <label>, visually
+   hidden rather than replaced — so Tab reaches every option,
+   space toggles it, and a screen reader reads the group. These
+   get filled in on phones by people who are not enjoying it.
+   ============================================================ */
+.f-multi { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 8px; }
+.f-check {
+  /* position: relative matters — the real checkbox inside is absolutely
+     positioned to hide it, and without a containing block here it escapes
+     to whatever ancestor happens to be positioned, which is wherever the
+     click target then lives */
+  position: relative;
+  display: flex; align-items: flex-start; gap: 11px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: inset 0 0 0 1px var(--wd-line, #dfe5e2);
+  cursor: pointer;
+  min-height: 46px;
+  transition: box-shadow .13s ease, background .13s ease;
+}
+.f-check:hover { box-shadow: inset 0 0 0 1px rgba(var(--t-a), .45); }
+.f-check input { position: absolute; left: 14px; top: 13px; opacity: 0; width: 19px; height: 19px; margin: 0; }
+/* .f-tick, not .f-box — the checklist form already owns .f-box (a 26px
+   rose-bordered button up at line ~298), and since that rule sets `border`
+   while this one only sets `box-shadow`, its border survived here and every
+   tick box on every multi question rendered rose. Same trap as .f-card. */
+.f-tick {
+  flex: none; width: 19px; height: 19px; margin-top: 1px;
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: inset 0 0 0 1.5px #cfd9d4;
+  display: grid; place-items: center;
+}
+.f-tick svg { width: 12px; height: 12px; fill: none; stroke: #fff; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; opacity: 0; }
+.f-check.is-on { background: rgba(var(--t-a), .07); box-shadow: inset 0 0 0 1.5px var(--t); }
+.f-check.is-on .f-tick { background: var(--t); box-shadow: none; }
+.f-check.is-on .f-tick svg { opacity: 1; }
+.f-check input:focus-visible + .f-tick { box-shadow: 0 0 0 3px rgba(var(--t-a), .35), inset 0 0 0 1.5px var(--t); }
+.f-check-l { font-size: 13.5px; line-height: 1.35; color: var(--wd-ink, #071a14); }
+.f-check-l small { display: block; margin-top: 2px; font-size: 11.5px; color: var(--wd-muted, #5f6d67); }
+/* the exclusive one sits apart, because it undoes the rest */
+.f-check.is-only { grid-column: 1 / -1; background: rgba(13, 68, 53, .035); }
+.f-check.is-only.is-on { background: rgba(var(--t-a), .07); }
+
+/* ============================================================
+   DOCUMENTS
+   ============================================================ */
+.f-drop {
+  padding: 15px 16px;
+  border-radius: 14px;
+  background: rgba(13, 68, 53, .03);
+  box-shadow: inset 0 0 0 1.5px rgba(13, 68, 53, .12);
+}
+.f-drop-in { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.f-drop-l {
+  font-size: 10.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--wd-muted, #5f6d67);
+}
+.f-sel {
+  flex: 1; min-width: 190px;
+  font: inherit; font-size: 13.5px; color: var(--wd-ink, #071a14);
+  padding: 11px 38px 11px 13px; min-height: 44px;
+  border: 0; border-radius: 11px; background: #fff;
+  box-shadow: inset 0 0 0 1px var(--wd-line, #dfe5e2);
+  /* same drawn chevron as .f-select — otherwise the two dropdowns on the
+     same page wear different arrows, one native and one ours */
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #5f6d67 50%),
+    linear-gradient(135deg, #5f6d67 50%, transparent 50%);
+  background-position: calc(100% - 19px) 20px, calc(100% - 14px) 20px;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+}
+.f-sel:focus-visible { outline: none; box-shadow: inset 0 0 0 1.5px var(--t), 0 0 0 3px rgba(var(--t-a), .25); }
+.f-drop-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 11px 17px; min-height: 44px;
+  border-radius: 11px; cursor: pointer;
+  background: var(--wd-emerald-800, #0d4435); color: #fff;
+  font-size: 13.5px; font-weight: 600;
+}
+.f-drop-btn svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
+.f-drop-btn:hover { background: var(--wd-emerald-900, #08291f); }
+.f-drop-none { margin: 12px 0 0; font-size: 12.5px; line-height: 1.5; color: var(--wd-muted, #5f6d67); }
+
+.f-files { list-style: none; margin: 13px 0 0; padding: 0; display: flex; flex-direction: column; gap: 7px; }
+.f-files li {
+  display: flex; align-items: center; gap: 11px;
+  padding: 9px 11px 9px 13px;
+  border-radius: 10px; background: #fff;
+  box-shadow: inset 0 0 0 1px var(--wd-line, #dfe5e2);
+}
+.f-file-t {
+  flex: none;
+  font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--t); background: rgba(var(--t-a), .12);
+  padding: 4px 8px; border-radius: 999px;
+}
+.f-file-n { flex: 1; min-width: 0; font-size: 13px; color: var(--wd-ink, #071a14); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.f-file-s { flex: none; font-size: 11.5px; color: var(--wd-muted, #5f6d67); font-variant-numeric: tabular-nums; }
+.f-file-x {
+  flex: none; width: 30px; height: 30px;
+  display: grid; place-items: center;
+  border: 0; border-radius: 8px; background: none; cursor: pointer;
+}
+.f-file-x svg { width: 13px; height: 13px; fill: none; stroke: var(--wd-muted, #5f6d67); stroke-width: 2.2; stroke-linecap: round; }
+.f-file-x:hover { background: rgba(169, 95, 107, .12); }
+.f-file-x:hover svg { stroke: #8a4653; }
+
+/* a multi-select or an upload wants the whole row to itself */
+.calc-ask .f-field:has(.f-multi), .calc-ask .f-field:has(.f-drop) { grid-column: 1 / -1; }
+.f-field:has(.f-multi), .f-field:has(.f-drop) { grid-column: 1 / -1; }
+
+@media print {
+  .f-drop-btn, .f-file-x { display: none !important; }
+  .f-check { break-inside: avoid; }
+}
+
+
+/* a one-choice question with more than a handful of answers is a dropdown,
+   not eight buttons that wrap into four ragged rows */
+.f-select {
+  width: 100%;
+  font: inherit; font-size: 14px; color: var(--wd-ink, #071a14);
+  padding: 12px 14px; min-height: 46px;
+  border: 0; border-radius: 11px; background: #fff;
+  box-shadow: inset 0 0 0 1px var(--wd-line, #dfe5e2);
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #5f6d67 50%),
+    linear-gradient(135deg, #5f6d67 50%, transparent 50%);
+  background-position: calc(100% - 19px) 21px, calc(100% - 14px) 21px;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  padding-right: 38px;
+}
+.f-select:focus-visible { outline: none; box-shadow: inset 0 0 0 1.5px var(--t), 0 0 0 3px rgba(var(--t-a), .25); }

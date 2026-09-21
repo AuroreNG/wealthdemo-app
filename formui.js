@@ -41,7 +41,8 @@
     arrow: '<path d="M5 12h13"/><path d="m13 6 6 6-6 6"/>',
     back:  '<path d="M19 12H5"/><path d="m11 6-6 6 6 6"/>',
     plus:  '<path d="M12 5.5v13M5.5 12h13"/>',
-    cross: '<path d="m7 7 10 10M17 7 7 17"/>'
+    cross: '<path d="m7 7 10 10M17 7 7 17"/>',
+    dot:   '<circle cx="12" cy="12" r="4.5"/>'
   };
   function svg(name, cls) {
     return '<svg class="' + (cls || "") + '" viewBox="0 0 24 24" aria-hidden="true">' +
@@ -199,6 +200,79 @@
           '" data-v="' + esc(o.v) + '">' + esc(o.label) + "</button>";
       }).join("") + "</div>";
     }
+    /* ------------------------------------------------------------
+       Select all that apply.
+
+       Real checkboxes with real labels, not divs pretending — a
+       tax intake gets filled in on a phone by somebody who may
+       be using a screen reader, and Tab has to reach every one.
+
+       An option marked `only` is exclusive: "None of these" and
+       "No major changes" clear everything else, and picking
+       anything else clears them. Without that rule every one of
+       these lists ends up with somebody having ticked both.
+       ------------------------------------------------------------ */
+    if (it.kind === "multi") {
+      const on = Array.isArray(val) ? val : [];
+      return '<div class="f-multi" role="group" aria-label="' + esc(it.ask) + '">' +
+        (it.options || []).map(function (o, i) {
+          const cid = id + "_" + i;
+          const checked = on.indexOf(o.v) >= 0;
+          return '<label class="f-check' + (checked ? " is-on" : "") + (o.only ? " is-only" : "") +
+            '" for="' + cid + '">' +
+            '<input type="checkbox" id="' + cid + '" value="' + esc(o.v) + '"' +
+              (checked ? " checked" : "") + (o.only ? ' data-only="1"' : "") + ">" +
+            '<span class="f-tick">' + svg("tick") + "</span>" +
+            '<span class="f-check-l">' + esc(o.label) +
+              (o.note ? '<small>' + esc(o.note) + "</small>" : "") + "</span>" +
+          "</label>";
+        }).join("") + "</div>";
+    }
+
+    /* ------------------------------------------------------------
+       Documents.
+
+       Nothing leaves the browser. The file is listed by name and
+       size so both sides can see what has been attached, and the
+       actual upload happens when the form is sent — which is the
+       only point at which there is somewhere to send it to.
+       ------------------------------------------------------------ */
+    if (it.kind === "upload") {
+      const files = Array.isArray(val) ? val : [];
+      return '<div class="f-drop" data-item="' + esc(it.id) + '">' +
+        '<div class="f-drop-in">' +
+          '<label class="f-drop-l" for="' + id + '_t">Document type</label>' +
+          '<select class="f-sel" id="' + id + '_t">' +
+            (it.options || []).map(function (o) {
+              return '<option value="' + esc(o.v) + '">' + esc(o.label) + "</option>";
+            }).join("") +
+          "</select>" +
+          '<label class="f-drop-btn" for="' + id + '">' + svg("plus") + "Choose a file" +
+            '<input type="file" id="' + id + '" multiple hidden></label>' +
+        "</div>" +
+        (files.length
+          ? '<ul class="f-files">' + files.map(function (f, i) {
+              return '<li><span class="f-file-t">' + esc(f.type) + "</span>" +
+                '<span class="f-file-n">' + esc(f.name) + "</span>" +
+                '<span class="f-file-s">' + esc(f.size) + "</span>" +
+                '<button type="button" class="f-file-x" data-i="' + i + '" aria-label="Remove ' +
+                  esc(f.name) + '">' + svg("cross") + "</button></li>";
+            }).join("") + "</ul>"
+          : '<p class="f-drop-none">Nothing attached yet. Anything you have is useful — ' +
+            'last year\u2019s return first, if you have it.</p>') +
+      "</div>";
+    }
+
+    if (it.kind === "select") {
+      return '<select id="' + id + '" class="f-select">' +
+        '<option value=""' + (val === undefined ? " selected" : "") + ' disabled>' +
+          esc(it.placeholder || "Choose one") + "</option>" +
+        (it.options || []).map(function (o) {
+          return '<option value="' + esc(o.v) + '"' +
+            (String(val) === String(o.v) ? " selected" : "") + ">" + esc(o.label) + "</option>";
+        }).join("") + "</select>";
+    }
+
     if (it.kind === "text") {
       return '<input id="' + id + '" type="text" class="f-in" autocomplete="off" value="' +
         esc(val === undefined ? "" : val) + '" placeholder="' + esc(it.placeholder || "") + '">';
@@ -218,6 +292,7 @@
     return String(v);
   }
   function parse(it, raw) {
+    if (it.kind === "multi" || it.kind === "upload" || it.kind === "select") return V[it.id];
     if (it.kind === "text") return String(raw || "").trim();
     const n = parseFloat(String(raw).replace(/[^0-9.\-]/g, ""));
     if (!isFinite(n)) return undefined;
@@ -228,6 +303,18 @@
   }
 
   function wireField(box, it) {
+    if (it.kind === "multi") return wireMulti(box, it);
+    if (it.kind === "upload") return wireUpload(box, it);
+    if (it.kind === "select") {
+      const sel = box.querySelector("select");
+      if (sel) sel.addEventListener("change", function () {
+        const raw = sel.value;
+        V[it.id] = isFinite(+raw) && raw !== "" ? +raw : raw;
+        box.classList.remove("is-empty");
+        changed(true);
+      });
+      return;
+    }
     const input = box.querySelector("input");
     if (input) {
       input.addEventListener("input", function () {
@@ -256,6 +343,64 @@
   }
 
   /* one change may hide another question, so an ask re-renders its groups */
+  function wireMulti(box, it) {
+    box.querySelectorAll('input[type="checkbox"]').forEach(function (cb) {
+      cb.addEventListener("change", function () {
+        const only = cb.getAttribute("data-only") === "1";
+        let on = Array.isArray(V[it.id]) ? V[it.id].slice() : [];
+        if (cb.checked) {
+          if (only) {
+            on = [cb.value];                       /* "None of these" stands alone */
+          } else {
+            on = on.filter(function (v) {          /* and anything else clears it */
+              const o = (it.options || []).filter(function (x) { return x.v === v; })[0];
+              return !(o && o.only);
+            });
+            if (on.indexOf(cb.value) < 0) on.push(cb.value);
+          }
+        } else {
+          on = on.filter(function (v) { return v !== cb.value; });
+        }
+        if (on.length) V[it.id] = on; else delete V[it.id];
+        box.classList.toggle("is-empty", !on.length);
+        changed(true);
+      });
+    });
+  }
+
+  function niceSize(n) {
+    if (!isFinite(n)) return "";
+    if (n < 1024) return n + " B";
+    if (n < 1024 * 1024) return Math.round(n / 1024) + " KB";
+    return (Math.round(n / 1024 / 102.4) / 10) + " MB";
+  }
+
+  function wireUpload(box, it) {
+    const picker = box.querySelector('input[type="file"]');
+    const type = box.querySelector("select");
+    if (picker) picker.addEventListener("change", function () {
+      const label = type
+        ? (it.options || []).filter(function (o) { return o.v === type.value; })
+            .map(function (o) { return o.label; })[0] || type.value
+        : "Document";
+      const list = Array.isArray(V[it.id]) ? V[it.id].slice() : [];
+      Array.prototype.forEach.call(picker.files || [], function (f) {
+        list.push({ type: label, name: f.name, size: niceSize(f.size) });
+      });
+      picker.value = "";
+      if (list.length) V[it.id] = list; else delete V[it.id];
+      changed(true);
+    });
+    box.querySelectorAll(".f-file-x").forEach(function (b) {
+      b.addEventListener("click", function () {
+        const i = +b.getAttribute("data-i");
+        const list = (Array.isArray(V[it.id]) ? V[it.id] : []).filter(function (_, k) { return k !== i; });
+        if (list.length) V[it.id] = list; else delete V[it.id];
+        changed(true);
+      });
+    });
+  }
+
   function changed(now) {
     FRESH = false;              /* these are somebody's real figures now */
     save(now);
@@ -423,7 +568,10 @@
 
   function markExample() {
     const el = $("fExample");
-    if (el) el.hidden = !(FRESH && !CLIENT);
+    /* a form with no seed has no example to warn about — the banner used to
+       appear over a completely blank intake, which read as nonsense */
+    const seeded = Object.keys(FORM.seed || {}).length > 0;
+    if (el) el.hidden = !(FRESH && seeded && !CLIENT);
   }
 
   /* the finding, in the hero — the one figure somebody wants at a glance */
@@ -450,7 +598,7 @@
 
   function ready() {
     const need = (FORM.items || []).filter(function (i) {
-      return R.applies(i, V) && i.kind !== "text";
+      return R.applies(i, V) && i.kind !== "text" && i.kind !== "upload" && !i.optional;
     });
     const have = need.filter(function (i) { return V[i.id] !== undefined; });
     return { have: have.length, need: need.length, ok: have.length === need.length };
@@ -629,6 +777,10 @@
       const top = Math.max(total, mark.n) * 1.04;
       const markAt = top > 0 ? mark.n / top * 100 : 0;
       const TINT = { deep: "#0d4435", mid: "#2f8f68", light: "#9ccfb6" };
+      /* not every build-up counts money. A tax intake counts documents, and
+         "$3 attached of $8" is nonsense on a shelf of paperwork. */
+      const unit = FORM.build.unit || function (n) { return M.money(n); };
+      const list = FORM.build.list ? FORM.build.list(v, raw) : null;
       return '<section class="f-panel f-score-card">' +
         '<div class="f-panel-h"><h3>' + t(FORM.build.title, FORM.build.term) + "</h3>" +
           '<span class="f-panel-note">' + esc(FORM.build.note || "") + "</span></div>" +
@@ -642,12 +794,19 @@
           "</div>" +
           '<div class="f-build-mark-l' + (markAt > 72 ? " is-right" : (markAt < 28 ? " is-left" : "")) +
             '" style="left:' + markAt.toFixed(2) + '%">' +
-            "<b>" + esc(M.money(mark.n)) + "</b><span>" + t(mark.label, mark.term) + "</span></div>" +
+            "<b>" + esc(unit(mark.n)) + "</b><span>" + t(mark.label, mark.term) + "</span></div>" +
         "</div>" +
         '<div class="f-build-key">' + parts.map(function (x) {
           return '<div class="f-key"><i style="background:' + (TINT[x.tint] || "#2f8f68") + '"></i>' +
-            "<span>" + t(x.label, x.term) + "</span><b>" + esc(M.money(x.n)) + "</b></div>";
+            "<span>" + t(x.label, x.term) + "</span><b>" + esc(unit(x.n)) + "</b></div>";
         }).join("") + "</div>" +
+        (list && list.length ? '<ul class="f-need">' + list.map(function (n) {
+          return '<li class="' + (n.have ? "is-in" : "is-out") + '">' +
+            '<span class="f-need-m">' + svg(n.have ? "tick" : "dot") + "</span>" +
+            '<span class="f-need-t"><b>' + t(n.label, n.term) + "</b>" +
+              (n.why ? "<small>" + esc(n.why) + "</small>" : "") + "</span>" +
+            '<span class="f-need-s">' + (n.have ? "attached" : "to collect") + "</span></li>";
+        }).join("") + "</ul>" : "") +
       "</section>";
     }
 
@@ -793,6 +952,21 @@
      fmt() exists to fill an input, so it hands back "false" and "9800";
      this is the reading version. */
   function shown(it, val) {
+    if (it.kind === "select" || it.kind === "choice") {
+      const o = (it.options || []).filter(function (x) { return String(x.v) === String(val); })[0];
+      return o ? o.label : String(val);
+    }
+    if (it.kind === "multi") {
+      const on = Array.isArray(val) ? val : [];
+      return on.map(function (v) {
+        const o = (it.options || []).filter(function (x) { return x.v === v; })[0];
+        return o ? o.label : v;
+      }).join(", ") || "None";
+    }
+    if (it.kind === "upload") {
+      const n = Array.isArray(val) ? val.length : 0;
+      return n + (n === 1 ? " file" : " files");
+    }
     if (it.kind === "bool") return val === true ? "Yes" : "No";
     if (it.kind === "choice") {
       const hit = (it.options || []).filter(function (o) { return String(o.v) === String(val); })[0];

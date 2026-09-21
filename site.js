@@ -94,6 +94,8 @@
                { id: "retire", name: "In retirement" },
                { id: "paper",  name: "Paperwork" }],
       tools: [
+        { name: "Tax Intake", icon: "doc", href: "form.html?f=tax-intake", sub: "paper",
+          desc: "Everything a return needs, picked from lists \u2014 and the document list those picks make." },
         { name: "Tax Document Checklist", icon: "doc", href: "form.html?f=tax-docs", sub: "paper",
           desc: "What this household has to send you — and nothing that does not apply to them." },
         { name: "Will My Social Security Be Taxed?", icon: "clock", href: "tool.html", sub: "retire",
@@ -226,6 +228,7 @@
     "form.html?f=buyer-ready":    ["realestate"],
     "form.html?f=prequal":        ["realestate"],
     "form.html?f=retire-ready":   ["financial"],
+    "form.html?f=tax-intake":     ["tax"],
     "form.html?f=tax-docs":       ["tax"],
     "form.html?f=policy-review":  ["financial"],
     "form.html?f=estate-docs":    ["financial", "tax"],
@@ -268,6 +271,34 @@
   window.WD = window.WD || {};
   window.WD.catalogue = CATEGORIES;
   window.WD.allTools = ALL_TOOLS;
+  /* hub.js draws the new hub from the same icons — one set, not two */
+  window.WD.icons = ICONS;
+  window.WD.toolCount = TOOL_COUNT;
+
+  /* ------------------------------------------------------------
+     The Complete Client Blueprints.
+
+     Kept apart from CATEGORIES on purpose. Everything in CATEGORIES
+     that is not agent-only ends up in ALL_TOOLS, and ALL_TOOLS is the
+     billing modal's list at $14.99 a month each — which is not what a
+     Blueprint is. A Blueprint is one client, start to finish, at its
+     own price. The Financial Blueprint also stays in "Planning" so the
+     Studio can still grant it, exactly as before.
+
+     No href = not built yet. The hub says so instead of linking to
+     nothing.
+     ------------------------------------------------------------ */
+  window.WD.blueprints = [
+    { id: "financial", name: "Financial Blueprint", icon: "doc", href: "blueprint.html", price: 69.99,
+      desc: "Discovery, analysis and recommendations.",
+      stages: ["Discovery", "Analysis", "Advice", "Follow-up"] },
+    { id: "tax", name: "Tax Blueprint", icon: "pct", href: "taxblueprint.html", price: 69.99, isNew: true,
+      desc: "Intake, documents, analysis and the plan.",
+      stages: ["Intake", "Documents", "Analysis", "Plan"] },
+    { id: "realestate", name: "Real Estate Blueprint", icon: "home", href: "", price: 69.99,
+      desc: "Qualification, the buyer journey, financing and closing.",
+      stages: ["Qualify", "Search", "Finance", "Close"] }
+  ];
   const PER_TOOL = 14.99;
   const SUITE = 89.99;
 
@@ -489,8 +520,11 @@
   }
   document.addEventListener("keydown", function (e) {
     if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+      /* a page with no search box (the Tax Blueprint) lets ⌘K through */
+      const box = navSearch && navSearch.offsetParent !== null ? navSearch : search;
+      if (!box) return;
       e.preventDefault();
-      (navSearch && navSearch.offsetParent !== null ? navSearch : search).focus();
+      box.focus();
     }
   });
 
@@ -520,8 +554,13 @@
       const saved = JSON.parse(localStorage.getItem("wealthdemo.progress.v2") || "{}");
       if (saved && typeof saved.firstName === "string") name = saved.firstName.trim();
     } catch (err) {}
+    /* A name is a name. The header once read "Hello, {"Email":"A" — whatever
+       lands in that field, anything that is not plainly a person's name is
+       ignored rather than printed. */
+    if (!/^[\p{L}][\p{L}' .-]{0,28}$/u.test(name)) name = "";
     let email = "";
     try { email = localStorage.getItem("wealthdemo.session") || ""; } catch (err) {}
+    if (!/^[^\s@{}"]+@[^\s@{}"]+\.[^\s@{}"]+$/.test(email)) email = "";
     if (!name && email) {
       name = email.split("@")[0].replace(/[._-]+/g, " ").replace(/\b\w/g, function (c) { return c.toUpperCase(); });
     }
