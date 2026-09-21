@@ -539,3 +539,308 @@ body.nh {
   --glass-edge: inset 0 1px 0 #ffffff, 0 0 0 1px rgba(14, 26, 61, .08);
   --glass-drop: 0 1px 2px rgba(14, 26, 61, .05), 0 18px 38px -28px rgba(14, 26, 61, .32);
 }
+
+/* =========================================================
+   v68 — lean. Bizzall: "a professional lean look, not too much
+   unnecessary words or things", colour kept but "toned down".
+
+   · no subtitles under headings, tabs or tools
+   · blueprint cards: name, price, Explore — nothing else
+   · the colour carries in the icon and a thin underline; the
+     chosen tab is white with coloured text, not a coloured fill
+   · "For your practice" is the fifth tab, in slate
+   ========================================================= */
+[data-tone="slate"] { --c-rgb: 61, 74, 102; --c: #3d4a66; --c-txt: #33405a; --c-bg: #eef1f6; --c-line: #d6dce7; }
+
+.nh-main { padding-top: 34px; }
+.nh-top { align-items: center; }
+.nh-title h1 { font-size: clamp(28px, 2.8vw, 36px); }
+
+/* the trial, one short line under the title: "7 days left · See plans" */
+.nh-top .nh-trial {
+  margin-top: 8px; padding: 0; background: none; box-shadow: none; gap: 10px; flex-wrap: nowrap;
+  -webkit-backdrop-filter: none; backdrop-filter: none;
+}
+.nh-top .nh-trial p { flex: none; min-width: 0; font-size: 0; }
+.nh-top .nh-trial .trial-left { font-size: 12px; margin: 0; letter-spacing: .08em; color: var(--nh-muted); }
+.nh-top .nh-trial .hero-go {
+  min-height: 32px; padding: 0 2px; background: none; box-shadow: none; font-size: 13px; color: var(--nh-gold-txt);
+}
+.nh-top .nh-trial .hero-go::before { content: "·"; margin-right: 8px; color: var(--nh-faint); font-weight: 400; }
+.nh-top .nh-trial .hero-go svg { display: none; }
+.nh-top .nh-trial .hero-go:hover { text-decoration: underline; }
+
+.nh-sec { margin-top: 34px; }
+.nh-head h2 { font-size: 21px; }
+.nh-note { font-size: 14px; color: var(--nh-muted); }
+.nh-note:empty { display: none; }
+
+/* blueprints — small */
+.nh-bps { margin-top: 14px; gap: 14px; }
+.nh-bp { flex-direction: row; align-items: center; gap: 14px; padding: 16px 16px 16px 20px; border-radius: 14px; }
+.nh-bp::before { inset: 0 18px auto; }
+.nh-bp-t { flex: 1; min-width: 0; }
+.nh-bp-t h3 { margin: 0; font-family: var(--nh-serif); font-size: 17.5px; font-weight: 700; color: var(--nh-navy); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nh-bp-p { display: block; margin-top: 2px; font-family: var(--nh-serif); font-size: 16px; font-weight: 600; color: var(--nh-gold-txt); }
+.nh-bp.is-soon .nh-bp-p { color: var(--nh-faint); }
+.nh-bp-foot { margin: 0; padding: 0; box-shadow: none; flex: none; }
+.nh-bp .nh-btn { min-height: 44px; padding: 0 16px; font-size: 14px; }
+.nh-bp .nh-btn.is-off { font-size: 13px; padding: 0 12px; }
+.nh-flag { top: -9px; right: 16px; padding: 3px 9px; font-size: 10px; }
+.nh-bp:hover { transform: translateY(-2px); }
+
+/* tabs — quiet: white, a coloured icon, a coloured underline when chosen */
+.nh-tabs { margin-top: 14px; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
+.nh-tab[data-tone] {
+  min-height: 60px; padding: 10px 14px; gap: 11px; border-radius: 12px;
+  background: #fff; box-shadow: var(--glass-edge), 0 1px 2px rgba(14, 26, 61, .04);
+}
+.nh-tab[data-tone]:hover { box-shadow: var(--glass-edge), 0 0 0 1px rgba(var(--c-rgb), .25), 0 8px 18px -14px rgba(14, 26, 61, .4); }
+.nh-tab[data-tone] .nh-tile { width: 34px; height: 34px; border-radius: 9px; background: rgba(var(--c-rgb), .07); box-shadow: none; }
+.nh-tab[data-tone] .nh-tile svg { width: 19px; height: 19px; stroke: var(--c); }
+.nh-tab-t b { font-family: var(--nh-sans); font-size: 15px; font-weight: 600; color: var(--nh-navy); }
+.nh-tab[data-tone] .nh-n { background: none; color: var(--nh-faint); font-weight: 600; padding: 0; min-width: 0; }
+.nh-tab[data-tone].is-on {
+  background: #fff;
+  box-shadow: var(--glass-edge), inset 0 -2.5px 0 var(--c), 0 10px 22px -16px rgba(var(--c-rgb), .55);
+}
+.nh-tab[data-tone].is-on .nh-tab-t b { color: var(--c-txt); }
+.nh-tab[data-tone].is-on .nh-tile { background: rgba(var(--c-rgb), .11); }
+.nh-tab[data-tone].is-on .nh-n { background: none; color: var(--c-txt); box-shadow: none; }
+
+/* the panel — white, a hairline of the chosen colour */
+.nh-panel { margin-top: 10px; padding: 18px 22px 12px; border-radius: 14px; }
+.nh-panel[data-tone] { background: #fff; box-shadow: var(--glass-edge), var(--glass-drop); }
+.nh-panel[data-tone]::before { height: 2px; left: 22px; right: 22px; background: rgba(var(--c-rgb), .55); }
+.nh-col-h { padding-bottom: 8px; }
+.nh-col-h h3 { font-family: var(--nh-sans); font-size: 12.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.nh-col-h::before { display: none; }
+.nh-col-h span { font-size: 12px; }
+.nh-row { min-height: 46px; padding: 8px 6px; }
+.nh-row-t b { font-size: 14.5px; }
+.nh-panel[data-tone] .nh-row-i, .nh-col[data-tone] .nh-row-i { width: 28px; height: 28px; background: none; box-shadow: none; }
+.nh-panel[data-tone] .nh-row-i svg, .nh-col[data-tone] .nh-row-i svg { width: 18px; height: 18px; stroke: var(--c); opacity: .85; }
+.nh-panel[data-tone] .nh-row:hover, .nh-col[data-tone] .nh-row:hover { background: rgba(var(--c-rgb), .05); }
+.nh-row .nh-chev { color: #b4bdcc; }
+
+@media (max-width: 1100px) {
+  .nh-tabs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 860px) {
+  .nh-top { align-items: stretch; }
+  .nh-bp { flex: 0 0 76%; }
+}
+@media (max-width: 700px) {
+  .nh-tabs { display: flex; }
+  .nh-tab[data-tone] { min-height: 44px; padding: 0 14px; border-radius: 999px; box-shadow: var(--glass-edge); }
+  .nh-tab[data-tone]::before { width: 7px; height: 7px; }
+  .nh-tab[data-tone].is-on { background: rgba(var(--c-rgb), .1); box-shadow: inset 0 0 0 1.5px var(--c); }
+  .nh-tab[data-tone].is-on::before { background: var(--c); }
+  .nh-tab[data-tone].is-on .nh-tab-t b { color: var(--c-txt); }
+  .nh-tab[data-tone].is-on .nh-n { background: none; color: var(--c-txt); }
+  .nh-bps { flex-direction: row; }
+  .nh-bp { flex: 0 0 78%; }
+}
+
+/* =========================================================
+   v68 — the Tools section in its own frame, so it reads as a
+   separate place from the Blueprints above it. A fine line all
+   the way round, a whisper of grey inside so the white tabs and
+   panel stand forward, and the heading sits inside the frame.
+   ========================================================= */
+.nh-frame {
+  margin-top: 30px; padding: 22px 22px 22px; border-radius: 20px;
+  background: linear-gradient(180deg, #f8fafc, #f4f7fa);
+  box-shadow: inset 0 0 0 1px #dfe5ec, inset 0 1px 0 #ffffff, 0 1px 2px rgba(14, 26, 61, .04);
+}
+.nh-frame .nh-head { padding: 0 2px; }
+.nh-frame .nh-tabs { margin-top: 14px; }
+.nh-frame .nh-panel { box-shadow: 0 0 0 1px #e1e7ee, 0 12px 28px -24px rgba(14, 26, 61, .4); }
+.nh-frame .nh-tab[data-tone] { box-shadow: 0 0 0 1px #e1e7ee, 0 1px 2px rgba(14, 26, 61, .04); }
+.nh-frame .nh-tab[data-tone]:hover { box-shadow: 0 0 0 1px rgba(var(--c-rgb), .35), 0 8px 18px -14px rgba(14, 26, 61, .35); }
+.nh-frame .nh-tab[data-tone].is-on { box-shadow: 0 0 0 1px rgba(var(--c-rgb), .35), inset 0 -2.5px 0 var(--c), 0 10px 22px -16px rgba(var(--c-rgb), .55); }
+@media (max-width: 700px) {
+  .nh-frame { margin-inline: -6px; padding: 16px 12px 12px; border-radius: 16px; }
+  .nh-frame .nh-tabs { margin-inline: -12px; padding-inline: 12px; }
+  .nh-frame .nh-tab[data-tone].is-on { box-shadow: inset 0 0 0 1.5px var(--c); }
+}
+
+/* =========================================================
+   v68 — the Tools frame, darker: the base finish (slate grey).
+   The coloured finishes are in "Tools frame finishes" below.
+   ========================================================= */
+.nh-frame {
+  padding: 24px 24px 24px; border-radius: 22px;
+  background:
+    radial-gradient(120% 90% at 0% 0%, rgba(255, 255, 255, .55), transparent 55%),
+    linear-gradient(180deg, #e9eef4, #e1e8ef);
+  box-shadow: inset 0 0 0 1px #cbd5e0, inset 0 1px 0 rgba(255, 255, 255, .8),
+              0 1px 2px rgba(14, 26, 61, .05), 0 22px 40px -34px rgba(14, 26, 61, .45);
+}
+.nh-frame .nh-head h2 { font-size: 22px; }
+.nh-frame .nh-tab[data-tone] { box-shadow: 0 0 0 1px #d3dbe5, 0 1px 2px rgba(14, 26, 61, .06); }
+.nh-frame .nh-panel { box-shadow: 0 0 0 1px #d3dbe5, 0 16px 32px -26px rgba(14, 26, 61, .5); }
+
+/* =========================================================
+   v68 — Tools frame finishes. Bizzall: "not green, not too
+   pigmented, not too dark, a nice contrast colour that goes
+   well." Each carries a faint dot texture for depth.
+     .is-sand   C · champagne — warm, echoes the gold
+     .is-mist   D · mist — cool blue-grey, echoes the navy
+     .is-pewter E · pewter — muted mid grey-blue, white heading
+   ========================================================= */
+.nh-frame { position: relative; isolation: isolate; }
+.nh-frame::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
+  background-image: radial-gradient(rgba(14, 26, 61, .09) 1px, transparent 1.2px);
+  background-size: 14px 14px;
+  -webkit-mask-image: linear-gradient(180deg, #000, transparent 70%); mask-image: linear-gradient(180deg, #000, transparent 70%);
+}
+
+/* C · champagne */
+.nh-frame.is-sand {
+  background: linear-gradient(180deg, #f5efe4, #eee5d5);
+  box-shadow: inset 0 0 0 1px #e0d2b8, inset 0 1px 0 rgba(255, 255, 255, .85), 0 22px 40px -34px rgba(90, 64, 20, .45);
+}
+.nh-frame.is-sand::after { background-image: radial-gradient(rgba(120, 88, 30, .12) 1px, transparent 1.2px); }
+.nh-frame.is-sand .nh-tab[data-tone], .nh-frame.is-sand .nh-panel { box-shadow: 0 0 0 1px #e6dac4, 0 1px 2px rgba(90, 64, 20, .06); }
+.nh-frame.is-sand .nh-panel { box-shadow: 0 0 0 1px #e6dac4, 0 16px 32px -26px rgba(90, 64, 20, .45); }
+
+/* D · mist */
+.nh-frame.is-mist {
+  background: linear-gradient(180deg, #e9eef6, #dfe6f0);
+  box-shadow: inset 0 0 0 1px #c9d3e2, inset 0 1px 0 rgba(255, 255, 255, .85), 0 22px 40px -34px rgba(14, 26, 61, .5);
+}
+.nh-frame.is-mist::after { background-image: radial-gradient(rgba(40, 60, 110, .11) 1px, transparent 1.2px); }
+.nh-frame.is-mist .nh-tab[data-tone], .nh-frame.is-mist .nh-panel { box-shadow: 0 0 0 1px #d0d9e6, 0 1px 2px rgba(14, 26, 61, .06); }
+.nh-frame.is-mist .nh-panel { box-shadow: 0 0 0 1px #d0d9e6, 0 16px 32px -26px rgba(14, 26, 61, .5); }
+
+/* E · pewter */
+.nh-frame.is-pewter {
+  background:
+    radial-gradient(80% 100% at 0% 0%, rgba(255, 255, 255, .10), transparent 60%),
+    linear-gradient(170deg, #6f7b90, #616d82);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .10), inset 0 1px 0 rgba(255, 255, 255, .18), 0 24px 44px -32px rgba(20, 28, 48, .6);
+}
+.nh-frame.is-pewter::after { background-image: radial-gradient(rgba(255, 255, 255, .10) 1px, transparent 1.2px); }
+.nh-frame.is-pewter .nh-head h2 { color: #ffffff; }
+.nh-frame.is-pewter .nh-note { color: #e3e8f0; }
+.nh-frame.is-pewter .nh-tab[data-tone] { box-shadow: 0 1px 2px rgba(20, 28, 48, .25); }
+.nh-frame.is-pewter .nh-tab[data-tone].is-on { box-shadow: inset 0 -3px 0 var(--c), 0 12px 24px -14px rgba(20, 28, 48, .6); }
+.nh-frame.is-pewter .nh-panel { box-shadow: 0 18px 36px -24px rgba(20, 28, 48, .6); }
+@media (max-width: 700px) {
+  .nh-frame.is-pewter .nh-tab[data-tone].is-on { background: #fff; box-shadow: inset 0 0 0 1.5px var(--c); }
+}
+
+/* =========================================================
+   v68 — the folder. Bizzall picked this: the chosen tab opens
+   straight into its panel, both outlined in the category's
+   colour, one shape. The other tabs wear a faint outline of
+   their own colour. Inside: "Taxes tools · 7 tools available",
+   serif column heads with a coloured underline, hairline
+   dividers between columns, tinted icon tiles, and the kind
+   of tool under each name.
+   ========================================================= */
+.nh-folder { margin-top: 34px; }
+.nh-folder .nh-tabs { margin-top: 14px; gap: 12px; align-items: end; position: relative; z-index: 2; }
+
+.nh-folder .nh-tab[data-tone] {
+  min-height: 74px; padding: 12px 16px; gap: 12px; margin-bottom: 8px;
+  border-radius: 16px; background: #fff;
+  box-shadow: inset 0 0 0 1px rgba(var(--c-rgb), .30), inset 0 2px 0 rgba(var(--c-rgb), .55), 0 6px 16px -14px rgba(14, 26, 61, .35);
+  transition: box-shadow .15s ease, transform .15s ease, margin .15s ease;
+}
+.nh-folder .nh-tab[data-tone]:hover { transform: translateY(-1px); box-shadow: inset 0 0 0 1px rgba(var(--c-rgb), .5), inset 0 2px 0 var(--c), 0 10px 22px -16px rgba(var(--c-rgb), .5); }
+.nh-folder .nh-tab[data-tone] .nh-tile {
+  width: 44px; height: 44px; border-radius: 12px;
+  background: linear-gradient(160deg, #fff, rgba(var(--c-rgb), .10));
+  box-shadow: 0 0 0 1px rgba(var(--c-rgb), .22), inset 0 1px 0 #fff;
+}
+.nh-folder .nh-tab[data-tone] .nh-tile svg { width: 22px; height: 22px; stroke: var(--c); }
+.nh-folder .nh-tab-t b { font-family: var(--nh-serif); font-size: 18.5px; font-weight: 700; color: var(--nh-navy); }
+.nh-folder .nh-tab-t small { display: block; margin-top: 2px; font-size: 12.5px; line-height: 1.35; color: var(--nh-blue); }
+.nh-folder .nh-tab[data-tone] .nh-n {
+  min-width: 28px; height: 28px; padding: 0 8px; box-sizing: border-box; display: grid; place-items: center;
+  border-radius: 999px; background: rgba(var(--c-rgb), .11); color: var(--c-txt); font-size: 12.5px; font-weight: 700;
+}
+
+/* the chosen tab: grows down into the panel, same outline, no seam */
+.nh-folder .nh-tab[data-tone].is-on {
+  margin-bottom: -1.5px; padding-bottom: 20px; min-height: 84px;
+  border-radius: 16px 16px 0 0;
+  background: linear-gradient(180deg, rgba(var(--c-rgb), .06), #fff 70%);
+  box-shadow: inset 1.5px 0 0 rgba(var(--c-rgb), .6), inset -1.5px 0 0 rgba(var(--c-rgb), .6), inset 0 1.5px 0 rgba(var(--c-rgb), .6),
+              0 -8px 22px -18px rgba(var(--c-rgb), .6);
+}
+.nh-folder .nh-tab[data-tone].is-on .nh-tab-t b { color: var(--nh-navy); }
+.nh-folder .nh-tab[data-tone].is-on .nh-n { background: var(--c); color: #fff; box-shadow: 0 4px 10px -4px rgba(var(--c-rgb), .8); }
+.nh-folder .nh-tab[data-tone].is-on .nh-tile { background: linear-gradient(160deg, #fff, rgba(var(--c-rgb), .14)); }
+
+/* the panel */
+.nh-folder .nh-panel { margin-top: 0; padding: 22px 26px 18px; border-radius: 18px; position: relative; z-index: 1; }
+.nh-folder .nh-panel[data-tone] {
+  background: #fff;
+  box-shadow: inset 0 0 0 1.5px rgba(var(--c-rgb), .6), 0 22px 44px -30px rgba(var(--c-rgb), .45);
+}
+.nh-folder .nh-panel[data-tone]::before { display: none; }
+.nh-folder .nh-panel.is-search { box-shadow: inset 0 0 0 1.5px rgba(14, 26, 61, .14), var(--glass-drop); }
+.nh-panel-h { display: flex; align-items: baseline; gap: 14px; padding: 0 2px 16px; }
+.nh-panel-h h3 { margin: 0; font-family: var(--nh-serif); font-size: 24px; font-weight: 700; color: var(--nh-navy); }
+.nh-panel-h span { font-size: 14px; color: var(--nh-faint); }
+
+.nh-folder .nh-cols { gap: 0; }
+.nh-folder .nh-col { padding: 0 20px; }
+.nh-folder .nh-col:first-child { padding-left: 2px; }
+.nh-folder .nh-col:last-child { padding-right: 2px; }
+.nh-folder .nh-col + .nh-col { box-shadow: inset 1px 0 0 #eceff4; }
+.nh-folder .nh-col-h { position: relative; padding: 0 0 12px; margin-bottom: 6px; }
+.nh-folder .nh-col-h h3 { font-family: var(--nh-serif); font-size: 18.5px; font-weight: 700; letter-spacing: 0; text-transform: none; color: var(--nh-navy); }
+.nh-folder .nh-col-h span { font-size: 12.5px; color: var(--nh-faint); }
+.nh-folder .nh-col-h::before { display: block; content: ""; position: absolute; left: 0; bottom: 2px; width: 30px; height: 2.5px; border-radius: 2px; background: var(--c); }
+.nh-folder .nh-panel[data-tone] .nh-col-h::before, .nh-folder .nh-col[data-tone] .nh-col-h::before { background: var(--c); }
+
+.nh-folder .nh-row { min-height: 58px; padding: 10px 4px; gap: 12px; }
+.nh-folder .nh-row-t b { font-size: 14.5px; font-weight: 500; }
+.nh-folder .nh-row-t small { display: block; margin-top: 3px; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #95a0b5; }
+.nh-folder .nh-panel[data-tone] .nh-row-i, .nh-folder .nh-col[data-tone] .nh-row-i {
+  width: 34px; height: 34px; border-radius: 10px;
+  background: linear-gradient(160deg, #fff, rgba(var(--c-rgb), .10));
+  box-shadow: 0 0 0 1px rgba(var(--c-rgb), .2);
+}
+.nh-folder .nh-panel[data-tone] .nh-row-i svg, .nh-folder .nh-col[data-tone] .nh-row-i svg { width: 18px; height: 18px; stroke: var(--c); opacity: 1; }
+.nh-folder .nh-row .nh-chev { color: var(--nh-navy); }
+.nh-folder .nh-panel[data-tone] .nh-row:hover .nh-chev { color: var(--c); }
+
+@media (max-width: 1100px) {
+  .nh-folder .nh-col + .nh-col { box-shadow: none; }
+  .nh-folder .nh-col { padding: 0 8px; }
+}
+@media (max-width: 700px) {
+  .nh-folder .nh-tab[data-tone], .nh-folder .nh-tab[data-tone].is-on {
+    min-height: 44px; margin-bottom: 8px; padding: 0 14px; border-radius: 999px;
+  }
+  .nh-folder .nh-tab-t small { display: none; }
+  .nh-folder .nh-tab-t b { font-family: var(--nh-sans); font-size: 14.5px; font-weight: 600; }
+  .nh-folder .nh-tab[data-tone] .nh-n { min-width: 22px; height: 22px; font-size: 11.5px; }
+  .nh-folder .nh-tab[data-tone].is-on { background: rgba(var(--c-rgb), .08); box-shadow: inset 0 0 0 1.5px var(--c); }
+  .nh-folder .nh-panel { padding: 16px 14px 8px; }
+  .nh-panel-h h3 { font-size: 20px; }
+  .nh-folder .nh-col { padding: 0 !important; }
+}
+/* tab descriptions never run past two lines */
+.nh-folder .nh-tab-t small { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+@media (max-width: 700px) { .nh-folder .nh-tab-t small { display: none; } }
+/* the corner under an end tab is square, so the folder has no notch */
+.nh-folder:has(.nh-tab.is-on:first-child) .nh-panel { border-top-left-radius: 0; }
+.nh-folder:has(.nh-tab.is-on:last-child) .nh-panel { border-top-right-radius: 0; }
+@media (max-width: 700px) {
+  .nh-folder:has(.nh-tab.is-on:first-child) .nh-panel, .nh-folder:has(.nh-tab.is-on:last-child) .nh-panel { border-radius: 18px; }
+}
+/* solid edge colour for the folder, so where the tab's side meets the
+   panel's top line the two do not stack into a darker dot */
+.nh-folder [data-tone] { --c-edge: color-mix(in srgb, var(--c) 58%, #ffffff); }
+.nh-folder .nh-tab[data-tone].is-on {
+  box-shadow: inset 1.5px 0 0 var(--c-edge), inset -1.5px 0 0 var(--c-edge), inset 0 1.5px 0 var(--c-edge),
+              0 -8px 22px -18px rgba(var(--c-rgb), .6);
+}
+.nh-folder .nh-panel[data-tone] { box-shadow: inset 0 0 0 1.5px var(--c-edge), 0 22px 44px -30px rgba(var(--c-rgb), .45); }

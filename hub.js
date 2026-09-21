@@ -1,5 +1,5 @@
 /* ============================================================
-   WEALTHDEMO — the hub, new look (v65)
+   WEALTHDEMO — the hub, new look (v65), lean (v68)
 
    Draws home.html from what site.js already publishes:
      WD.catalogue   the categories and every tool in them
@@ -19,12 +19,24 @@
     return !c.hideInGrid && !c.agentOnly && (c.tools || []).length;
   });
   const PRACTICE = (WD.catalogue || []).filter(function (c) { return c.agentOnly; });
+  /* "For your practice" is a tab now, not a row of its own. It is built from the
+     agent-only categories — each one a column — with the Desk beside Send an
+     Assessment, because that is where what you sent comes back. */
+  if (PRACTICE.length) {
+    const tools = [], subs = [];
+    PRACTICE.forEach(function (c, i) {
+      subs.push({ id: "p" + i, name: c.name });
+      c.tools.forEach(function (t) { tools.push(Object.assign({}, t, { sub: "p" + i, desc: t.desc || c.note })); });
+      if (i === 0) tools.push({ name: "Your Desk", href: "desk.html", icon: "grid", sub: "p0", desc: "Where finished assessments land." });
+    });
+    CATS.push({ name: "Practice", note: "Send, receive, place.", icon: "grid", tint: "slate", tools: tools, subs: subs, practice: true });
+  }
   const ICONS = WD.icons || {};
   const TAB_KEY = "wealthdemo.hub.tab";
 
   const $ = function (id) { return document.getElementById(id); };
   const tabsEl = $("nhTabs"), panel = $("nhPanel"), bpsEl = $("nhBlueprints"),
-        pracEl = $("nhPractice"), search = $("navSearch"), note = $("nhToolsNote");
+        search = $("navSearch"), note = $("nhToolsNote");
   if (!tabsEl || !panel) return;
 
   function esc(s) {
@@ -37,10 +49,11 @@
   }
   const CHEV = '<svg class="nh-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>';
 
-  /* What kind of tool it is, read off where it lives — so a new form
-     is labelled correctly without anyone remembering to label it. */
+  /* What kind of tool it is, read off where it lives — so a new form is
+     labelled correctly without anyone remembering to label it. */
   function kind(t) {
     const h = t.href || "";
+    if (/desk\.html|send\.html|carriers\.html/.test(h)) return "Workspace";
     if (h.indexOf("form.html") !== 0) return "Calculator";
     if (/checklist/i.test(t.name)) return "Checklist";
     if (/tracker/i.test(t.name)) return "Tracker";
@@ -59,15 +72,8 @@
       const live = !!b.href;
       return '<article class="nh-bp' + (b.isNew ? " is-new" : "") + (live ? "" : " is-soon") + '">' +
         (b.isNew ? '<span class="nh-flag">New</span>' : "") +
-        '<div class="nh-bp-top">' +
-          '<span class="nh-tile">' + icon(b.icon) + "</span>" +
-          "<div><h3>" + esc(b.name) + "</h3><p>" + esc(b.desc) + "</p></div>" +
-        "</div>" +
-        '<ol class="nh-track" aria-label="Stages">' +
-          (b.stages || []).map(function (s) { return "<li><i></i>" + esc(s) + "</li>"; }).join("") +
-        "</ol>" +
+        '<div class="nh-bp-t"><h3>' + esc(b.name) + '</h3><b class="nh-bp-p">$' + b.price.toFixed(2) + "</b></div>" +
         '<div class="nh-bp-foot">' +
-          '<div class="nh-price"><b>$' + b.price.toFixed(2) + "</b><small>Complete suite</small></div>" +
           (live
             ? '<a class="nh-btn" href="' + esc(b.href) + '">Explore' + CHEV + "</a>"
             : '<span class="nh-btn is-off" aria-disabled="true">Coming soon</span>') +
@@ -147,7 +153,7 @@
       return;
     }
 
-    if (note) note.textContent = "One question, answered on the spot.";
+    if (note) note.textContent = "";
     const cat = CATS.filter(function (c) { return c.name === active; })[0];
     if (!cat) { panel.innerHTML = ""; return; }
 
@@ -164,30 +170,15 @@
     panel.className = "nh-panel";
     panel.setAttribute("data-cat", cat.name);
     panel.setAttribute("data-tone", cat.tint || "mint");
-    panel.innerHTML = '<div class="nh-cols" style="--n:' + Math.min(groups.length, 4) + '">' +
+    panel.innerHTML =
+      '<div class="nh-panel-h"><h3>' + esc(cat.name) + ' tools</h3><span>' +
+        count(cat.tools.length, "tool") + ' available</span></div>' +
+      '<div class="nh-cols" style="--n:' + Math.min(groups.length, 4) + '">' +
       groups.map(function (g) { return column(g.name, g.tools, count(g.tools.length, "tool")); }).join("") +
       "</div>";
   }
 
   function draw() { drawTabs(); drawPanel(); }
-
-  /* ---------------------------------------------------------
-     For your practice: the adviser's own tools, plus the Desk
-     --------------------------------------------------------- */
-  function drawPractice() {
-    if (!pracEl) return;
-    const items = [];
-    PRACTICE.forEach(function (c) {
-      c.tools.forEach(function (t) { items.push({ name: t.name, href: t.href, note: c.note, icon: c.icon }); });
-    });
-    items.splice(1, 0, { name: "Your Desk", href: "desk.html", note: "Where finished assessments land.", icon: "grid" });
-    pracEl.innerHTML = items.map(function (t) {
-      return '<a class="nh-pc" href="' + esc(t.href) + '">' +
-        '<span class="nh-pc-i">' + icon(t.icon) + "</span>" +
-        '<span class="nh-row-t"><b>' + esc(t.name) + "</b><small>" + esc(t.note) + "</small></span>" +
-        CHEV + "</a>";
-    }).join("");
-  }
 
   if (search) {
     search.addEventListener("input", function () { query = search.value; draw(); });
@@ -198,7 +189,6 @@
 
   drawBlueprints();
   draw();
-  drawPractice();
 
   /* exported for the tests */
   WD.hub = { active: function () { return active; }, cats: CATS };
