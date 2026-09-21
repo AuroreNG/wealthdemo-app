@@ -397,3 +397,52 @@
   .tb-close { padding: 22px 18px; gap: 16px; }
   .tb-close .nh-btn { width: 100%; justify-content: center; }
 }
+
+/* =========================================================
+   GLASS (v66) — the same material as the hub, so the two
+   pages read as one site. Tokens come from hub.css.
+   ========================================================= */
+.tb-buy, .tb-facts li, .tb-step, .tb-card, .tb-close, .tb-figs-box, .tb-sums-box, .tb-owe, .tb-ramp, .tb-stats > div {
+  background: var(--glass);
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-edge), var(--glass-drop);
+}
+.tb-card, .tb-buy, .tb-close { border-radius: 18px; }
+.tb-card { position: relative; }
+.tb-card::before {
+  content: ""; position: absolute; inset: 0 28px auto; height: 2px; border-radius: 0 0 2px 2px;
+  background: linear-gradient(90deg, transparent, rgba(176, 107, 9, .5), transparent);
+}
+.tb-card.is-hot {
+  background: radial-gradient(90% 50% at 50% 0%, rgba(11, 95, 88, .08), transparent 70%), var(--glass);
+  box-shadow: var(--glass-edge), 0 0 0 1.5px rgba(11, 95, 88, .75), 0 30px 56px -34px rgba(4, 77, 72, .55);
+}
+.tb-card.is-hot::before { background: linear-gradient(90deg, transparent, rgba(11, 95, 88, .7), transparent); }
+.tb-step.is-hot {
+  background: radial-gradient(130% 140% at 0% 0%, rgba(11, 95, 88, .16), rgba(11, 95, 88, .05) 60%), var(--glass);
+  box-shadow: var(--glass-edge), 0 0 0 1.5px rgba(11, 95, 88, .8), 0 18px 34px -18px rgba(11, 95, 88, .55);
+}
+.tb-step:hover { box-shadow: var(--glass-edge), 0 0 0 1px rgba(14, 26, 61, .12), 0 26px 44px -26px rgba(14, 26, 61, .45); }
+.tb-tile { background: linear-gradient(160deg, #fffaf1, #f8eedb); box-shadow: inset 0 1px 0 #fff, 0 0 0 1px rgba(176, 107, 9, .16); }
+.tb-proof {
+  background: radial-gradient(120% 160% at 0% 0%, rgba(234, 246, 244, .96), rgba(222, 240, 236, .72));
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .9), 0 0 0 1px rgba(11, 95, 88, .18), 0 24px 46px -30px rgba(4, 77, 72, .45);
+}
+.tb-example {
+  background: radial-gradient(120% 140% at 0% 0%, rgba(255, 250, 240, .95), rgba(252, 244, 228, .72));
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .95), 0 0 0 1px rgba(176, 107, 9, .16);
+}
+.tb-find.is-plain { background: rgba(255, 255, 255, .55); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .9), 0 0 0 1px rgba(14, 26, 61, .06); }
+.tb-find.is-money {
+  background: radial-gradient(120% 120% at 0% 0%, rgba(234, 246, 244, .95), rgba(222, 240, 236, .7));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .9), 0 0 0 1px rgba(11, 95, 88, .16);
+}
+.tb-find.is-lever {
+  background: radial-gradient(120% 120% at 0% 0%, rgba(255, 250, 240, .95), rgba(252, 244, 228, .7));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .9), 0 0 0 1px rgba(176, 107, 9, .16);
+}
+.tb-plan-col { background: rgba(255, 255, 255, .5); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .9), 0 0 0 1px rgba(14, 26, 61, .07); }
+.tb-in, .tb-field select, .tb-field > input[type="text"] { background: rgba(255, 255, 255, .82); }
+.tb-chips li { background: rgba(234, 246, 244, .85); }

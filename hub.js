@@ -88,7 +88,7 @@
     const q = query.trim();
     tabsEl.innerHTML = CATS.map(function (c) {
       const on = !q && c.name === active;
-      return '<button type="button" role="tab" class="nh-tab' + (on ? " is-on" : "") + '"' +
+      return '<button type="button" role="tab" class="nh-tab' + (on ? " is-on" : "") + '" data-tone="' + esc(c.tint || "mint") + '"' +
         ' aria-selected="' + (on ? "true" : "false") + '" data-cat="' + esc(c.name) + '">' +
         '<span class="nh-tile">' + icon(c.icon) + "</span>" +
         '<span class="nh-tab-t"><b>' + esc(c.name) + "</b><small>" + esc(c.note || "") + "</small></span>" +
@@ -113,8 +113,8 @@
       CHEV + "</a>";
   }
 
-  function column(title, tools, sub) {
-    return '<div class="nh-col">' +
+  function column(title, tools, sub, tone) {
+    return '<div class="nh-col"' + (tone ? ' data-tone="' + esc(tone) + '"' : "") + ">" +
       '<div class="nh-col-h"><h3>' + esc(title) + "</h3><span>" + esc(sub) + "</span></div>" +
       tools.map(row).join("") + "</div>";
   }
@@ -136,10 +136,11 @@
       const n = hits.reduce(function (a, h) { return a + h.m.length; }, 0);
       if (note) note.textContent = n ? count(n, "tool") + " match “" + query.trim() + "”." : "Nothing matches “" + query.trim() + "”.";
       panel.className = "nh-panel is-search";
+    panel.removeAttribute("data-tone");
       panel.innerHTML = n
         ? '<div class="nh-cols" style="--n:' + Math.min(hits.length, 4) + '">' +
             hits.map(function (h) {
-              return column(h.c.name, h.m, h.m.length === 1 ? "1 match" : h.m.length + " matches");
+              return column(h.c.name, h.m, h.m.length === 1 ? "1 match" : h.m.length + " matches", h.c.tint);
             }).join("") +
           "</div>"
         : '<p class="nh-empty">No tool matches that. Try a shorter word — “tax”, “home”, “retire”.</p>';
@@ -162,6 +163,7 @@
 
     panel.className = "nh-panel";
     panel.setAttribute("data-cat", cat.name);
+    panel.setAttribute("data-tone", cat.tint || "mint");
     panel.innerHTML = '<div class="nh-cols" style="--n:' + Math.min(groups.length, 4) + '">' +
       groups.map(function (g) { return column(g.name, g.tools, count(g.tools.length, "tool")); }).join("") +
       "</div>";

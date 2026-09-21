@@ -1,5 +1,5 @@
 /* ============================================================
-   WEALTHDEMO — the hub, new look (v65)
+   WEALTHDEMO — the hub, new look (v65), colour + glass (v66)
 
    Palette taken from the "Explore Your Financial Tools" build
    Bizzall supplied: navy serif headings, blue body, teal buttons,
@@ -344,4 +344,198 @@ body.nh {
   .nh-cols { grid-template-columns: 1fr; gap: 14px; }
   .nh-prac { grid-template-columns: 1fr; gap: 10px; }
   .nh-trial p { min-width: 0; }
+}
+
+/* ---------------------------------------------------------
+   one colour per category (v66)
+
+   Keyed off the tint each category already carries in site.js,
+   so a new category picks up a colour without touching this
+   file. --c is the mark, --c-txt the text version of it (each
+   passes 4.5:1 on white), --c-bg the wash, --c-line its edge.
+   Real Estate is tagged "sand" but drawn blue — a true sand
+   sits too close to the gold of Taxes to tell apart.
+   --------------------------------------------------------- */
+[data-tone] { --c-rgb: 11, 95, 88; --c: var(--nh-teal); --c-txt: var(--nh-green); --c-bg: var(--nh-mint); --c-line: var(--nh-mint-line); }
+[data-tone="mint"] { --c-rgb: 11, 95, 88; --c: #0b5f58; --c-txt: #00574d; --c-bg: #eaf6f4; --c-line: #cfe7e2; }
+[data-tone="sun"] { --c-rgb: 184, 115, 12; --c: #b8730c; --c-txt: #8c570a; --c-bg: #fdf4e2; --c-line: #f0dcb2; }
+[data-tone="sand"] { --c-rgb: 47, 94, 168; --c: #2f5ea8; --c-txt: #2a5395; --c-bg: #ebf1fb; --c-line: #cbdaf1; }
+[data-tone="rose"] { --c-rgb: 163, 64, 106; --c: #a3406a; --c-txt: #8b3459; --c-bg: #fbedf3; --c-line: #efcddc; }
+
+/* tabs: every tab wears its colour, the chosen one wears it fully */
+.nh-tab[data-tone] .nh-tile { background: var(--c-bg); box-shadow: inset 0 0 0 1px var(--c-line); }
+.nh-tab[data-tone] .nh-tile svg { stroke: var(--c); }
+.nh-tab[data-tone] { box-shadow: inset 0 0 0 1px var(--nh-line), inset 0 3px 0 var(--c); }
+.nh-tab[data-tone]:hover { box-shadow: inset 0 0 0 1px var(--c-line), inset 0 3px 0 var(--c); }
+.nh-tab[data-tone] .nh-n { background: var(--c-bg); color: var(--c-txt); }
+.nh-tab[data-tone].is-on { background: var(--c-bg); box-shadow: inset 0 0 0 1.5px var(--c), 0 12px 24px -18px var(--c); }
+.nh-tab[data-tone].is-on .nh-tile { background: #fff; box-shadow: inset 0 0 0 1px var(--c-line); }
+.nh-tab[data-tone].is-on .nh-tab-t b { color: var(--c-txt); }
+.nh-tab[data-tone].is-on .nh-n { background: var(--c); color: #fff; }
+
+/* the panel takes the chosen category's colour */
+.nh-panel[data-tone] { position: relative; overflow: hidden; box-shadow: inset 0 0 0 1px var(--c-line), 0 18px 36px -32px rgba(14, 26, 61, .4); }
+.nh-panel[data-tone]::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 4px; background: var(--c); }
+.nh-panel[data-tone] .nh-col-h h3, .nh-col[data-tone] .nh-col-h h3 { color: var(--c-txt); }
+.nh-panel[data-tone] .nh-col-h::before, .nh-col[data-tone] .nh-col-h::before { background: var(--c); }
+.nh-panel[data-tone] .nh-row-i, .nh-col[data-tone] .nh-row-i { background: var(--c-bg); }
+.nh-panel[data-tone] .nh-row-i svg, .nh-col[data-tone] .nh-row-i svg { stroke: var(--c); }
+.nh-panel[data-tone] .nh-row:hover, .nh-col[data-tone] .nh-row:hover { background: var(--c-bg); }
+.nh-panel[data-tone] .nh-row:hover .nh-chev, .nh-col[data-tone] .nh-row:hover .nh-chev { color: var(--c); }
+
+@media (max-width: 700px) {
+  .nh-tab[data-tone] { box-shadow: inset 0 0 0 1px var(--nh-line); }
+  .nh-tab[data-tone]::before { content: ""; flex: none; width: 9px; height: 9px; border-radius: 50%; background: var(--c); }
+  .nh-tab[data-tone].is-on { background: var(--c); box-shadow: none; }
+  .nh-tab[data-tone].is-on::before { background: #fff; }
+  .nh-tab[data-tone].is-on .nh-tab-t b { color: #fff; }
+  .nh-tab[data-tone].is-on .nh-n { background: rgba(255, 255, 255, .22); color: #fff; }
+}
+
+/* =========================================================
+   GLASS (v66) — "make it better, professional, glassy"
+
+   The house recipe from the build log: a fixed wash of soft
+   colour pools behind the page, and every surface the same
+   frosted material over it — translucent white, a 22px blur,
+   a bright top highlight, a fine edge, a deep soft shadow.
+   The pools are the four category colours plus the brand
+   teal, faint enough that the page still reads as white.
+   ========================================================= */
+body.nh {
+  --glass: radial-gradient(130% 120% at 0% 0%, rgba(255, 255, 255, .94), rgba(255, 255, 255, .72) 55%, rgba(255, 255, 255, .62)),
+           linear-gradient(165deg, rgba(255, 255, 255, .5), rgba(236, 242, 248, .42));
+  --glass-blur: blur(22px) saturate(165%);
+  --glass-edge: inset 0 1px 0 rgba(255, 255, 255, .95), inset 0 0 0 1px rgba(255, 255, 255, .6), 0 0 0 1px rgba(14, 26, 61, .07);
+  --glass-drop: 0 1px 2px rgba(14, 26, 61, .05), 0 22px 44px -30px rgba(14, 26, 61, .42);
+  background: #f3f6f9;
+}
+body.nh::before {
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(38vw 34vw at 6% 4%,   rgba(11, 95, 88, .16), transparent 70%),
+    radial-gradient(30vw 28vw at 96% 10%, rgba(184, 115, 12, .12), transparent 70%),
+    radial-gradient(34vw 30vw at 88% 62%, rgba(47, 94, 168, .12), transparent 70%),
+    radial-gradient(32vw 30vw at 8% 78%,  rgba(163, 64, 106, .09), transparent 70%),
+    radial-gradient(40vw 36vw at 46% 42%, rgba(31, 122, 77, .07), transparent 72%),
+    linear-gradient(180deg, #f6f9fb, #eef3f7);
+}
+.nh-main, .nh-foot { position: relative; }
+
+/* the frosted material, one rule for every surface */
+.nh-search, .nh-trial, .nh-bp, .nh-tab, .nh-panel, .nh-pc {
+  background: var(--glass);
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-edge), var(--glass-drop);
+}
+.nh-nav { background: rgba(255, 255, 255, .72); box-shadow: 0 1px 0 rgba(14, 26, 61, .07), 0 10px 30px -24px rgba(14, 26, 61, .35); }
+.nh-foot { background: rgba(255, 255, 255, .55); -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); box-shadow: 0 -1px 0 rgba(14, 26, 61, .07); }
+
+/* search */
+.nh-search { border-radius: 14px; }
+.nh-search:focus-within { box-shadow: var(--glass-edge), 0 0 0 1.5px var(--nh-teal), 0 0 0 5px rgba(11, 95, 88, .12), var(--glass-drop); }
+
+/* trial line — warm glass */
+.nh-trial {
+  background: radial-gradient(120% 140% at 0% 0%, rgba(255, 250, 240, .95), rgba(252, 244, 228, .7)), linear-gradient(165deg, rgba(255, 255, 255, .4), rgba(248, 236, 212, .35));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .95), 0 0 0 1px rgba(176, 107, 9, .16), var(--glass-drop);
+}
+.nh-trial .hero-go { background: rgba(255, 255, 255, .85); }
+
+/* blueprint cards */
+.nh-bp { border-radius: 18px; }
+.nh-bp::before {
+  content: ""; position: absolute; inset: 0 22px auto; height: 2px; border-radius: 0 0 2px 2px;
+  background: linear-gradient(90deg, transparent, rgba(176, 107, 9, .55), transparent);
+}
+.nh-bp:hover { transform: translateY(-3px); box-shadow: var(--glass-edge), 0 2px 4px rgba(14, 26, 61, .05), 0 30px 54px -30px rgba(14, 26, 61, .5); }
+.nh-bp.is-new {
+  background: radial-gradient(120% 100% at 50% 0%, rgba(11, 95, 88, .10), transparent 60%), var(--glass);
+  box-shadow: var(--glass-edge), 0 0 0 1.5px rgba(11, 95, 88, .85), 0 26px 50px -28px rgba(4, 77, 72, .55);
+}
+.nh-bp.is-new::before { background: linear-gradient(90deg, transparent, rgba(11, 95, 88, .7), transparent); }
+.nh-bp.is-soon { background: var(--glass); opacity: .88; }
+.nh-bp-foot { box-shadow: inset 0 1px 0 rgba(14, 26, 61, .07); }
+.nh-tile { background: linear-gradient(160deg, #fffaf1, #f8eedb); box-shadow: inset 0 1px 0 #fff, 0 0 0 1px rgba(176, 107, 9, .16), 0 6px 14px -10px rgba(176, 107, 9, .5); }
+.nh-btn { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .22), 0 10px 22px -12px rgba(4, 77, 72, .85); }
+.nh-btn.is-off { box-shadow: none; }
+
+/* tabs — glass carrying a breath of their own colour */
+.nh-tab[data-tone] {
+  border-radius: 16px;
+  background: radial-gradient(120% 130% at 0% 0%, rgba(var(--c-rgb), .07), transparent 60%), var(--glass);
+  box-shadow: var(--glass-edge), inset 0 3px 0 rgba(var(--c-rgb), .9), var(--glass-drop);
+}
+.nh-tab[data-tone]:hover { box-shadow: var(--glass-edge), inset 0 3px 0 var(--c), 0 0 0 1px rgba(var(--c-rgb), .25), var(--glass-drop); }
+.nh-tab[data-tone] .nh-tile {
+  background: linear-gradient(160deg, rgba(255, 255, 255, .95), rgba(var(--c-rgb), .12));
+  box-shadow: inset 0 1px 0 #fff, 0 0 0 1px rgba(var(--c-rgb), .2), 0 6px 14px -10px rgba(var(--c-rgb), .6);
+}
+.nh-tab[data-tone].is-on {
+  background: radial-gradient(130% 140% at 0% 0%, rgba(var(--c-rgb), .16), rgba(var(--c-rgb), .05) 60%), var(--glass);
+  box-shadow: var(--glass-edge), 0 0 0 1.5px rgba(var(--c-rgb), .85), 0 18px 34px -18px rgba(var(--c-rgb), .6);
+}
+.nh-tab[data-tone].is-on .nh-tile { background: #fff; }
+.nh-tab[data-tone].is-on .nh-n { box-shadow: 0 4px 10px -4px rgba(var(--c-rgb), .8); }
+
+/* the panel — glass, lit from the top in the chosen colour */
+.nh-panel { border-radius: 18px; }
+.nh-panel[data-tone] {
+  background: radial-gradient(90% 60% at 50% 0%, rgba(var(--c-rgb), .08), transparent 70%), var(--glass);
+  box-shadow: var(--glass-edge), 0 0 0 1px rgba(var(--c-rgb), .16), 0 26px 50px -32px rgba(var(--c-rgb), .45);
+}
+.nh-panel[data-tone]::before { height: 3px; left: 24px; right: 24px; border-radius: 0 0 3px 3px; background: linear-gradient(90deg, rgba(var(--c-rgb), .15), var(--c), rgba(var(--c-rgb), .15)); }
+.nh-panel.is-search { box-shadow: var(--glass-edge), 0 0 0 1.5px rgba(11, 95, 88, .6), var(--glass-drop); }
+.nh-row { box-shadow: inset 0 -1px 0 rgba(14, 26, 61, .06); }
+.nh-row:last-child { box-shadow: none; }
+.nh-panel[data-tone] .nh-row:hover, .nh-col[data-tone] .nh-row:hover { background: rgba(var(--c-rgb), .07); }
+.nh-panel[data-tone] .nh-row-i, .nh-col[data-tone] .nh-row-i {
+  background: linear-gradient(160deg, #fff, rgba(var(--c-rgb), .1));
+  box-shadow: inset 0 1px 0 #fff, 0 0 0 1px rgba(var(--c-rgb), .16);
+}
+
+/* for your practice */
+.nh-pc { border-radius: 15px; }
+.nh-pc:hover { box-shadow: var(--glass-edge), 0 0 0 1px rgba(11, 95, 88, .25), 0 26px 44px -28px rgba(14, 26, 61, .45); }
+.nh-pc-i { background: linear-gradient(160deg, #fff, rgba(11, 95, 88, .12)); box-shadow: inset 0 1px 0 #fff, 0 0 0 1px rgba(11, 95, 88, .16); }
+
+/* browsers without backdrop-filter get the same card, just more opaque */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  body.nh { --glass: linear-gradient(165deg, rgba(255, 255, 255, .97), rgba(248, 250, 252, .95)); }
+}
+@media (prefers-reduced-transparency: reduce) {
+  body.nh { --glass: #fff; }
+  body.nh::before { opacity: .4; }
+}
+@media (max-width: 700px) {
+  body.nh::before {
+    background:
+      radial-gradient(90vw 70vw at 0% 0%, rgba(11, 95, 88, .16), transparent 70%),
+      radial-gradient(80vw 70vw at 100% 40%, rgba(47, 94, 168, .11), transparent 70%),
+      radial-gradient(80vw 70vw at 0% 90%, rgba(184, 115, 12, .10), transparent 70%),
+      linear-gradient(180deg, #f6f9fb, #eef3f7);
+  }
+  .nh-tab[data-tone] { background: var(--glass); box-shadow: var(--glass-edge), 0 6px 14px -10px rgba(14, 26, 61, .3); }
+  .nh-tab[data-tone].is-on { background: linear-gradient(180deg, rgba(var(--c-rgb), .95), var(--c)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .25), 0 10px 20px -10px rgba(var(--c-rgb), .8); }
+}
+
+/* =========================================================
+   v67 — white page, brand teal (Bizzall: "i prefer this green,
+   also want background white, but tools diff colors")
+
+   The colour wash behind the page is gone; the page is plain
+   white. Cards keep their edge, top highlight and soft shadow,
+   so they still lift off it. Money now wears the brand teal
+   (#0b5f58, the green of the Tax Blueprint's analysis) instead
+   of the yellower #1f7a4d. Taxes, Real Estate and Protection
+   keep their own colours.
+   ========================================================= */
+body.nh { background: #ffffff; }
+body.nh::before { content: none; }
+.nh-foot { background: #ffffff; }
+.nh-nav { background: rgba(255, 255, 255, .9); }
+body.nh {
+  --glass: #ffffff;
+  --glass-edge: inset 0 1px 0 #ffffff, 0 0 0 1px rgba(14, 26, 61, .08);
+  --glass-drop: 0 1px 2px rgba(14, 26, 61, .05), 0 18px 38px -28px rgba(14, 26, 61, .32);
 }
