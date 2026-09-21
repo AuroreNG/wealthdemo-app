@@ -457,3 +457,14 @@ body.rr {
   .rr-stats div + div { padding-left: 10px; }
   .rr-lv { grid-template-columns: 38px 1fr auto; }
 }
+
+/* ---------- realism flags (v71) ---------- */
+.rr-tax.is-cash { background: #f3f6f8; color: var(--nh-muted); }
+.rr-tax.is-life { background: var(--rr-plum-bg); color: var(--rr-plum); }
+.rr-flag { margin: 0; display: grid; gap: 4px; font-size: 12.5px; line-height: 1.45; padding: 8px 10px; border-radius: 9px; }
+.rr-flag[hidden] { display: none; }
+.rr-flag.is-info { background: #fff; color: var(--nh-muted); box-shadow: inset 0 0 0 1px var(--nh-line-soft); }
+.rr-flag.is-warn { background: var(--rr-gold-bg); color: #7a5410; box-shadow: inset 0 0 0 1px var(--rr-gold-line); }
+.rr-flag.is-warn span:first-child { font-weight: 600; }
+.rr-flag b { color: var(--nh-navy); }
+#rrPostFlag { margin-top: 10px; }

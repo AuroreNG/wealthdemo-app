@@ -1,5 +1,5 @@
 /* ============================================================
-   WEALTHDEMO — Retirement Readiness (v69, colour pass v70)
+   WEALTHDEMO — Retirement Readiness (v69, colour pass v70, realistic accounts v71)
 
    Bizzall's calculator, rebuilt in the new look. One model:
      accumulate → drawdown → evaluate
@@ -16,19 +16,36 @@
      accounts
      --------------------------------------------------------- */
   const TYPES = {
-    "401k":      { label: "401(k) / 403(b)",   tax: "pre",     employer: true },
-    "roth401k":  { label: "Roth 401(k)",       tax: "roth",    employer: true },
-    "trad":      { label: "Traditional IRA",   tax: "pre" },
-    "rothira":   { label: "Roth IRA",          tax: "roth" },
-    "hsa":       { label: "HSA",               tax: "roth" },
-    "brokerage": { label: "Brokerage",         tax: "taxable" },
-    "cash":      { label: "Savings / cash",    tax: "taxable" }
+    "401k":      { label: "401(k) / 403(b)",            tax: "pre",     wtax: 1,   rate: 6,   group: "plan", employer: true },
+    "roth401k":  { label: "Roth 401(k)",                tax: "roth",    wtax: 0,   rate: 6,   group: "plan", employer: true },
+    "trad":      { label: "Traditional IRA",            tax: "pre",     wtax: 1,   rate: 6,   group: "ira" },
+    "rothira":   { label: "Roth IRA",                   tax: "roth",    wtax: 0,   rate: 6,   group: "ira" },
+    "hsa":       { label: "HSA",                        tax: "roth",    wtax: 0,   rate: 5,   group: "hsa" },
+    "brokerage": { label: "Brokerage",                  tax: "taxable", wtax: 0.5, rate: 6 },
+    "cash":      { label: "Savings / cash",             tax: "cash",    wtax: 0,   rate: 3,   drag: true },
+    "life":      { label: "Cash-value life insurance",  tax: "life",    wtax: 0,   rate: 4.5 }
   };
-  const TAXWORD = { pre: "Taxed when you take it", roth: "Tax-free", taxable: "Only growth is taxed" };
+  const TAXWORD = {
+    pre: "Taxed when you take it", roth: "Tax-free", taxable: "Only growth is taxed",
+    cash: "Interest taxed every year", life: "Tax-free through policy loans"
+  };
+  /* what an account type has realistically earned over the long run — above this, the page says so */
+  const CEILING = { cash: 5, life: 6.5, invest: 10 };
+  const SPILL_RATE = 6;   /* money over an IRS limit goes to a plain brokerage account */
+
+  /* IRS annual limits in 2026 dollars (IR-2025-111; Rev. Proc. 2025-19), with the age catch-ups.
+     They rise with inflation in the projection, as the IRS indexes them. */
+  function limit(group, a) {
+    if (group === "plan") return 24500 + (a >= 60 && a <= 63 ? 11250 : a >= 50 ? 8000 : 0);
+    if (group === "ira") return 7500 + (a >= 50 ? 1100 : 0);
+    if (group === "hsa") return 8750 + (a >= 55 ? 1000 : 0);
+    return null;
+  }
+  const GROUPNAME = { plan: "401(k) / 403(b)", ira: "IRA", hsa: "HSA" };
 
   const DEFAULT = {
     age: 45, retireAge: 67, planAge: 92, inflation: 2.5, contribGrowth: 2, postReturn: 4,
-    goal: 7000, social: 2800, ssAge: 67, other: 500, otherCola: false, taxRate: 15, extra: 0,
+    goal: 7000, social: 2800, ssAge: 67, other: 500, otherCola: false, taxRate: 15, extra: 0, v: 71,
     saved: [{ type: "401k", bal: 125000, rate: 6 }, { type: "rothira", bal: 50000, rate: 6.5 }],
     contrib: [{ type: "401k", mo: 900, rate: 6, match: 50, cap: 400 },
               { type: "rothira", mo: 300, rate: 6.5, match: 0, cap: 0 }]
@@ -38,7 +55,7 @@
   function patch(s, kw) { return Object.assign(clone(s), kw); }
 
   /* ---------------------------------------------------------
-     the model  (≡ retref.py)
+     the model  (≡ retref.py, v71)
      --------------------------------------------------------- */
   function ssFactor(a) {
     const m = Math.round((a - 67) * 12);
@@ -46,40 +63,67 @@
     const e = -m;
     return 1 - (Math.min(e, 36) * 5 / 9 + Math.max(0, e - 36) * 5 / 12) / 100;
   }
-
-  function accumulate(s) {
-    const yrs = Math.max(0, s.retireAge - s.age), n = yrs * 12, g = s.contribGrowth / 100;
-    const b = { pre: 0, roth: 0, taxable: 0 };
-    const path = new Array(yrs + 1).fill(0);
-    function run(bal, mo, match, cap, rate, bucket) {
-      const r = rate / 100 / 12;
-      let own = bal, emp = 0;
-      path[0] += bal;
-      for (let m = 0; m < n; m++) {
-        const y = Math.floor(m / 12), grow = Math.pow(1 + g, y);
-        const c = mo * grow;
-        const mt = match ? Math.min(c * match / 100, cap * grow) : 0;
-        own = own * (1 + r) + c;
-        emp = emp * (1 + r) + mt;
-        if ((m + 1) % 12 === 0) path[(m + 1) / 12] += own + emp;
-      }
-      b[bucket] += own;
-      b.pre += emp;
-    }
-    s.saved.forEach(function (a) { run(a.bal, 0, 0, 0, a.rate, TYPES[a.type].tax); });
-    let extraDone = false;
-    s.contrib.forEach(function (a) {
-      const mo = a.mo + (extraDone ? 0 : s.extra);
-      extraDone = true;
-      run(0, mo, TYPES[a.type].employer ? a.match : 0, a.cap, a.rate, TYPES[a.type].tax);
-    });
-    if (!extraDone && s.extra) run(0, s.extra, 0, 0, 6, "taxable");
-    return { b: b, path: path };
+  function netRate(s, typ, rate) {
+    const r = rate + (s.shift || 0);
+    return TYPES[typ].drag ? r * (1 - s.taxRate / 100) : r;
   }
 
-  function drawdown(s, total, blend, until) {
+  function accumulate(s) {
+    const yrs = Math.max(0, s.retireAge - s.age), g = s.contribGrowth / 100, i = s.inflation / 100;
+    const pots = [], cpots = [];
+    s.saved.forEach(function (a) { pots.push({ typ: a.type, r: netRate(s, a.type, a.rate), bal: +a.bal, emp: 0 }); });
+    s.contrib.forEach(function (a) {
+      const p = { typ: a.type, r: netRate(s, a.type, a.rate), bal: 0, emp: 0, src: a };
+      pots.push(p); cpots.push(p);
+    });
+    const spill = { typ: "brokerage", r: SPILL_RATE + (s.shift || 0), bal: 0, emp: 0 };
+    pots.push(spill);
+    if (!s.contrib.length && s.extra) {
+      const p = { typ: "brokerage", r: SPILL_RATE + (s.shift || 0), bal: 0, emp: 0, src: { mo: 0, match: 0, cap: 0 } };
+      cpots.push(p); pots.push(p);
+    }
+    const sum = function () { let t = 0; pots.forEach(function (p) { t += p.bal + p.emp; }); return t; };
+    const path = [sum()];
+    let spilledFirst = 0;
+    for (let y = 0; y < yrs; y++) {
+      const grow = Math.pow(1 + g, y), idx = Math.pow(1 + i, y), ageY = s.age + y;
+      for (let m = 0; m < 12; m++) {
+        const room = {};
+        cpots.forEach(function (p, k) {
+          const src = p.src, T = TYPES[p.typ];
+          const c = (src.mo + (k === 0 ? s.extra : 0)) * grow;
+          let put = c;
+          if (T.group) {
+            if (!(T.group in room)) room[T.group] = limit(T.group, ageY) * idx / 12;
+            put = Math.min(c, room[T.group]); room[T.group] -= put;
+          }
+          p._c = put; p._o = c - put;
+          p._e = (T.employer && src.match) ? Math.min(put * src.match / 100, src.cap * grow) : 0;
+        });
+        pots.forEach(function (p) {
+          const r = p.r / 100 / 12;
+          p.bal = p.bal * (1 + r) + (p._c || 0);
+          p.emp = p.emp * (1 + r) + (p._e || 0);
+        });
+        let over = 0;
+        cpots.forEach(function (p) { over += p._o || 0; p._c = p._e = p._o = 0; });
+        spill.bal += over;
+        if (y === 0) spilledFirst += over;
+      }
+      path.push(sum());
+    }
+    let total = 0, wsum = 0, rsum = 0;
+    pots.forEach(function (p) {
+      total += p.bal + p.emp;
+      wsum += p.bal * TYPES[p.typ].wtax + p.emp;
+      rsum += (p.bal + p.emp) * p.r;
+    });
+    return { total: total, wsum: wsum, rsum: rsum, path: path, spilledFirst: spilledFirst, spill: spill.bal };
+  }
+
+  function drawdown(s, total, blend, postPct, until) {
     until = until || 105;
-    const i = s.inflation / 100, post = s.postReturn / 100;
+    const i = s.inflation / 100, post = postPct / 100;
     let bal = total, needed = 0, lasts = null;
     const rows = [];
     const end = Math.max(until, s.planAge);
@@ -98,12 +142,14 @@
   }
 
   function evaluate(s) {
-    const acc = accumulate(s), b = acc.b;
-    const total = b.pre + b.roth + b.taxable;
-    const blend = total ? (s.taxRate / 100) * (b.pre + 0.5 * b.taxable) / total : s.taxRate / 100;
-    const d = drawdown(s, total, blend);
-    return { total: total, buckets: b, blend: blend, needed: d.needed,
-             score: d.needed ? total / d.needed : 9.99, lasts: d.lasts, path: acc.path, rows: d.rows };
+    const acc = accumulate(s), total = acc.total;
+    const blend = total ? (s.taxRate / 100) * acc.wsum / total : s.taxRate / 100;
+    const earns = total ? acc.rsum / total : s.postReturn + (s.shift || 0);
+    const post = Math.min(s.postReturn, earns);
+    const d = drawdown(s, total, blend, post);
+    return { total: total, blend: blend, post: post, earns: earns, needed: d.needed,
+             score: d.needed ? total / d.needed : 9.99, lasts: d.lasts, path: acc.path, rows: d.rows,
+             spilledFirst: acc.spilledFirst, spill: acc.spill };
   }
 
   function bisect(fn, lo, hi) {
@@ -127,8 +173,7 @@
   }
   function stressed(s) {
     const t = clone(s);
-    t.postReturn -= 1; t.inflation += 1;
-    t.saved.concat(t.contrib).forEach(function (a) { a.rate -= 1; });
+    t.postReturn -= 1; t.inflation += 1; t.shift = (t.shift || 0) - 1;
     return t;
   }
   function claim70(s) {
@@ -138,7 +183,7 @@
 
   /* exported for the tests and the drift check */
   window.WD = window.WD || {};
-  WD.retire = { DEFAULT: DEFAULT, evaluate: evaluate, sustainable: sustainable, suggestedExtra: suggestedExtra,
+  WD.retire = { DEFAULT: DEFAULT, TYPES: TYPES, limit: limit, evaluate: evaluate, sustainable: sustainable, suggestedExtra: suggestedExtra,
                 laterRetirement: laterRetirement, earliestRetirement: earliestRetirement,
                 stressed: stressed, claim70: claim70, ssFactor: ssFactor, state: function () { return S; } };
 
@@ -148,11 +193,21 @@
   let S = clone(DEFAULT);
   try {
     const raw = localStorage.getItem(KEY);
-    if (raw) { const o = JSON.parse(raw); if (o && o.saved && o.contrib) S = Object.assign(clone(DEFAULT), o); }
+    if (raw) { const o = JSON.parse(raw); if (o && o.saved && o.contrib) { S = Object.assign(clone(DEFAULT), o); S.v = o.v || 0; } }
+    /* plans saved before v71 could hold cash or insurance at a stock-market rate (picking the type
+       didn't reset it). Bring those back to a realistic rate once; leave anything sensible alone. */
+    if ((S.v || 0) < 71) {
+      S.saved.concat(S.contrib).forEach(function (a) {
+        if (!TYPES[a.type]) { a.type = "brokerage"; a.rate = TYPES.brokerage.rate; }
+        const ceil = a.type === "cash" ? CEILING.cash : a.type === "life" ? CEILING.life : null;
+        if (ceil !== null && a.rate > ceil) a.rate = TYPES[a.type].rate;
+      });
+    }
   } catch (e) {}
   let VIEW = "today";
   try { VIEW = localStorage.getItem(KEY + ".view") || "today"; } catch (e) {}
   let OPEN = 1;
+  S.v = 71;
   function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
 
   /* ---------------------------------------------------------
@@ -221,6 +276,7 @@
             field({ key: "bal", path: "saved." + i, label: "Balance", pre: "$", val: Math.round(a.bal).toLocaleString("en-US") }) +
             field({ key: "rate", path: "saved." + i, label: "Grows at", suf: "% a year", val: a.rate, term: "growthrate" }) +
           "</div>" +
+          '<p class="rr-flag" data-flag="saved.' + i + '" hidden></p>' +
           (S.saved.length > 1 ? '<button type="button" class="rr-x" data-del="saved.' + i + '" aria-label="Remove this account">' + X + "</button>" : "") +
         "</div>";
       }).join("") + "</div>" +
@@ -229,6 +285,7 @@
       '<div class="rr-accts">' + S.contrib.map(function (a, i) {
         const emp = TYPES[a.type].employer;
         return '<div class="rr-acct">' + typeSelect("contrib." + i, a.type) +
+          '<span class="rr-tax is-' + TYPES[a.type].tax + '">' + TAXWORD[TYPES[a.type].tax] + "</span>" +
           '<div class="rr-grid2">' +
             field({ key: "mo", path: "contrib." + i, label: "You put in", pre: "$", suf: "/mo", val: Math.round(a.mo).toLocaleString("en-US") }) +
             field({ key: "rate", path: "contrib." + i, label: "Grows at", suf: "% a year", val: a.rate, term: "growthrate" }) +
@@ -237,6 +294,7 @@
                 field({ key: "cap", path: "contrib." + i, label: "Up to", pre: "$", suf: "/mo", val: Math.round(a.cap).toLocaleString("en-US") })
               : "") +
           "</div>" +
+          '<p class="rr-flag" data-flag="contrib.' + i + '" hidden></p>' +
           (S.contrib.length > 1 ? '<button type="button" class="rr-x" data-del="contrib.' + i + '" aria-label="Remove this contribution">' + X + "</button>" : "") +
         "</div>";
       }).join("") + "</div>" +
@@ -260,7 +318,7 @@
           field({ key: "inflation", label: "Prices rise", suf: "% a year", val: S.inflation }) +
           field({ key: "postReturn", label: "Return in retirement", suf: "%", val: S.postReturn, term: "growthrate" }) +
           field({ key: "taxRate", label: "Tax on withdrawals", suf: "%", val: S.taxRate, term: "blendedtax" }) +
-        "</div></details>");
+        "</div>" + '<p class="rr-flag is-info" id="rrPostFlag" hidden></p>' + "</details>");
     return "";
   }
   let OPEN_MORE = false;
@@ -285,11 +343,58 @@
       "</section>";
     }).join("");
     if (WD.explain) WD.explain.mark(host);
+    if (R) refreshSums();
   }
+  /* the realism checks, under each account — they never change a number, they say why it is what it is */
+  function flags() {
+    const put = function (path, items) {
+      const el = document.querySelector('[data-flag="' + path + '"]');
+      if (!el) return;
+      el.hidden = !items.length;
+      el.className = "rr-flag" + (items.some(function (x) { return x.warn; }) ? " is-warn" : " is-info");
+      el.innerHTML = items.map(function (x) { return "<span>" + x.t + "</span>"; }).join("");
+      if (WD.explain) WD.explain.mark(el);
+    };
+    function about(a) {
+      const T = TYPES[a.type], out = [];
+      const ceil = a.type === "cash" ? CEILING.cash : a.type === "life" ? CEILING.life : CEILING.invest;
+      if (a.rate > ceil) out.push({ warn: true, t: a.type === "cash"
+        ? "Cash has rarely earned more than " + ceil + "% for long. " + T.rate + "% is realistic."
+        : a.type === "life"
+          ? "Illustrated rates are before policy charges. About " + T.rate + "% is typical after them."
+          : "More than " + ceil + "% a year is optimistic over decades." });
+      if (a.type === "cash") out.push({ t: 'Interest is <span data-term="taxdrag">taxed every year</span>, so it grows at ' + pct(a.rate * (1 - S.taxRate / 100), 2) + " after tax." });
+      if (a.type === "life") out.push({ t: 'Rate after policy charges. Taken out as tax-free <span data-term="policyloan">policy loans</span>.' });
+      return out;
+    }
+    S.saved.forEach(function (a, i) { put("saved." + i, about(a)); });
+    /* the IRS limits, this year, shared across accounts of the same kind, in list order */
+    const used = {};
+    S.contrib.forEach(function (a, i) {
+      const out = about(a), g = TYPES[a.type].group;
+      if (g) {
+        const cap = limit(g, S.age) / 12, before = used[g] || 0;
+        const mine = a.mo + (i === 0 ? S.extra : 0);
+        used[g] = before + mine;
+        const over = Math.max(0, used[g] - Math.max(cap, before));
+        if (over > 0.5) out.unshift({ warn: true, t: 'Over the <span data-term="irslimit">IRS limit</span> for ' + (g === "ira" ? "an IRA" : "a" + (g === "hsa" ? "n HSA" : " 401(k)")) + ": " +
+          money(limit(g, S.age)) + " a year (" + money(cap) + "/mo). The other " + money(over) + "/mo is counted in a brokerage account." });
+      }
+      put("contrib." + i, out);
+    });
+  }
+
   function refreshSums() {
     STEPS.forEach(function (st) { const el = document.querySelector('[data-sum="' + st.n + '"]'); if (el) el.textContent = st.sum(); });
     const m = document.querySelector(".rr-more small");
-    if (m) m.textContent = pct(S.inflation) + " inflation · " + pct(S.postReturn) + " return after · " + pct(S.taxRate, 0) + " tax";
+    const capped = R && R.earns < S.postReturn - 0.005;
+    if (m) m.textContent = pct(S.inflation) + " inflation · " + pct(capped ? R.post : S.postReturn, 1) + " return after · " + pct(S.taxRate, 0) + " tax";
+    const pf = $("rrPostFlag");
+    if (pf) {
+      pf.hidden = !capped;
+      if (capped) pf.innerHTML = "In retirement the money earns <b>" + pct(R.post, 2) + "</b>, not " + pct(S.postReturn) + " — that's what your accounts earn. Cash stays cash.";
+    }
+    flags();
   }
 
   function target(el) {
@@ -314,7 +419,7 @@
       if (!k) return;
       const t = target(el);
       if (el.type === "checkbox") { t[k] = el.checked; const b = el.parentNode.querySelector("b"); if (b) b.textContent = el.checked ? "Yes" : "No"; }
-      else if (k === "type") { t[k] = el.value; }
+      else if (k === "type") { t[k] = el.value; t.rate = TYPES[el.value].rate; if (!TYPES[el.value].employer && "match" in t) { t.match = 0; t.cap = 0; } }
       else { t[k] = INT[k] ? Math.round(num(el.value)) : num(el.value); }
       if (el.type === "range") {
         keepAges();
@@ -483,8 +588,9 @@
       return '<g class="mk ' + cls + '"><line x1="' + x(age) + '" x2="' + x(age) + '" y1="' + P.t + '" y2="' + y(0) + '"/>' +
              '<text x="' + x(age) + '" y="' + (P.t - 4) + '" text-anchor="' + (x(age) > W - 70 ? "end" : "middle") + '">' + label + "</text></g>";
     };
-    let marks = mk(S.retireAge, "Retire " + S.retireAge, "is-ret");
-    if (S.ssAge !== S.retireAge) marks += mk(S.ssAge, "SS " + S.ssAge, "is-ss");
+    const near = S.ssAge !== S.retireAge && Math.abs(x(S.ssAge) - x(S.retireAge)) < 90;
+    let marks = mk(S.retireAge, "Retire " + S.retireAge + (near && S.social > 0 ? " · SS " + S.ssAge : ""), "is-ret");
+    if (S.ssAge !== S.retireAge && S.social > 0) marks += mk(S.ssAge, near ? "" : "SS " + S.ssAge, "is-ss");
     const out = R.lasts < S.planAge;
     const dot = out ? '<circle class="out" cx="' + x(R.lasts) + '" cy="' + y(0) + '" r="5"/><text class="out-t" x="' + x(R.lasts) + '" y="' + (y(0) - 18) + '" text-anchor="' + (x(R.lasts) > W - 90 ? "end" : "middle") + '">Runs out ' + R.lasts + "</text>" : "";
 

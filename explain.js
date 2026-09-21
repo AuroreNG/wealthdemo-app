@@ -92,7 +92,7 @@ window.WD = window.WD || {};
     },
     blendedtax: {
       term: "Tax on withdrawals",
-      plain: "Your expected income tax rate in retirement. It is applied in full to money from pre-tax accounts (a 401(k) or traditional IRA), to about half of what comes from a brokerage account, since only the growth is taxed, and not at all to Roth money.",
+      plain: "Your expected income tax rate in retirement. It is applied in full to money from pre-tax accounts (a 401(k) or traditional IRA), to about half of what comes from a brokerage account, since only the growth is taxed, and not at all to Roth or HSA money, to cash (its interest was already taxed each year) or to policy loans from life insurance.",
       say: "Where the money sits decides how much of it you actually get to spend."
     },
     stresstest: {
@@ -104,6 +104,11 @@ window.WD = window.WD || {};
       term: "Plan to age",
       plain: "How long the money has to last. Planning to your life expectancy means a coin-flip chance of outliving it; most planners use 90 to 95.",
       say: "We plan past the average on purpose. Running out at 88 is a much bigger problem than dying with money left."
+    },
+    irslimit: {
+      term: "IRS contribution limit",
+      plain: "The most you can put into a type of account each year. For 2026: $24,500 into a 401(k) or 403(b) ($8,000 more from 50, $11,250 more at 60–63), $7,500 into IRAs ($1,100 more from 50), and $8,750 into an HSA with family cover ($4,400 single). The limits rise with inflation, and an employer match doesn't count against yours.",
+      say: "Past this line the tax break stops. The money can still be invested — just in an ordinary account."
     },
     requiredpot: {
       term: "What the plan needs",
